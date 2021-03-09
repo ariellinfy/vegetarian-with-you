@@ -1,19 +1,13 @@
-.radio-button {
+.select-button {
   margin: 1em 0.175em;
   display: inline-block;
 
-  input[type="radio"] {
+  input[type="radio"],
+  input[type="checkbox"] {
     opacity: 0;
     width: 0;
     position: fixed;
-    visibility: hidden;
     margin: 0;
-
-    &:checked + label {
-      background: linear-gradient(45deg, #91cb3e, #7ac74f);
-      border: 2px solid #91cb3e;
-      color: white;
-    }
 
     &:focus {
       border: 2px dashed #444;
@@ -37,6 +31,12 @@
       color: #91cb3e;
       box-shadow: none;
       filter: brightness(105%);
+    }
+
+    &.selected {
+      background: linear-gradient(45deg, #91cb3e, #7ac74f);
+      border: 2px solid #91cb3e;
+      color: white;
     }
   }
 }

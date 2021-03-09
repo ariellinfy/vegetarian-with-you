@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioButton from '../radio-button-component';
+import RadioButton from '../select-button-component';
 import './rbtn-types-style.scss';
 
 class FormTypes extends React.Component {
