@@ -1,38 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './select-button-style.scss';
 
-class SelectButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedOption: '',
-        };
-    }
+const SelectButton = ({ id, name, value, ...otherProps }) => {
     
-    handleChange = event => {
-        this.setState({ selectedOption: event.target.value });
-        console.log(event.target)
-    }
+    const [selectedOption, setSelected] = useState('');
+    const isFirstRun = useRef(true);
+    const handleChange = event => {
+        const { value, name } = event.target;
+        // setSelected({ [name]: value });
+        setSelected({ selectedOption: value });
+        console.log(value, name, event.target, selectedOption);
+    };
 
-    render() {
-        const { id, name, value, ...otherProps } = this.props;
-        return (
-            <div className='select-button'>
-                <label className={`${this.state.selectedOption === value ? 'selected' : ''}`} htmlFor={id}>
-                    <input 
-                        id={id} 
-                        name={name}
-                        value={value} 
-                        checked={this.state.selectedOption === value}
-                        onChange={this.handleChange}
-                        {...otherProps} 
-                    />
-                    {value}
-                </label>
-            </div>
-        )
-    }
+    useEffect(() => {
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            return;
+            }
+        return;
+    }, handleChange);
+
+    return (
+        <div className='select-button'>
+            <label htmlFor={id}>
+                <input 
+                    className='btn-input'
+                    id={id} 
+                    name={name}
+                    value={value} 
+                    checked={selectedOption === value}
+                    onChange={handleChange}
+                    {...otherProps} 
+                />
+                <div className='btn-label'>{value}</div>
+            </label>
+        </div>
+    )
 }
 
 export default SelectButton;
-// className={`${this.state.selectedOption === value ? 'selected' : ''}`}

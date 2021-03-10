@@ -4,9 +4,9 @@ import './button-container-style.scss';
 
 const ButtonContainer = ({ title, name, values }) => {
     useEffect(() => {
-        const buttonGroup = document.querySelector(`.${name}`);
-        const label = buttonGroup.children;
-        label.classList.remove('selected');
+        // const buttonGroup = document.querySelector(`.${name}`);
+        // const label = buttonGroup.children;
+        // label.classList.remove('selected');
         // console.log(buttonGroup, label)
     })
 
