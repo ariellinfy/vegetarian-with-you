@@ -1,11 +1,11 @@
 import React from 'react';
-import SelectButton from '../select-button-component';
+import SelectButton from './select-button-component';
 import './button-container-style.scss';
 
 const ButtonContainer = ({ title, name, values }) => (
     <div className='button-container'>
         <p className='button-title'>{title}</p>
-        <div className={`button-group ${name}`}>
+        <div className='button-group'>
             {
                 values.map(({ id, ...otherValueProps }) => (
                     <SelectButton 

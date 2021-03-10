@@ -1,13 +1,15 @@
 import React from 'react';
 // import { Route, Switch, Redirect } from 'react-router-dom';
-import CreateRestaurantPage from './create-restaurant-page/create-restaurant-page-component';
+// import CreateRestaurantPage from './create-restaurant-page/create-restaurant-page-component';
+import CreateReviewPage from './create-review-page/create-review-page-component';
 
 import './App.css';
 
 const App = () => {
   return (
-    <div>
-      <CreateRestaurantPage />
+    <div className='App'>
+      {/* <CreateRestaurantPage /> */}
+      <CreateReviewPage />
       {/* <Header />
       <Switch>
         <Suspense>
