@@ -7,16 +7,89 @@
     padding: 1.25em;
     border-radius: 1em;
     box-shadow: 0 2.5px 20px 10px rgba(0, 0, 0, 0.25);
+    width: 35em;
     min-width: 25em;
+    display: flex;
+    flex-direction: column;
 
     @media screen and (max-width: 650px) {
       font-size: smaller;
     }
-  }
 
-  .buttons-group {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5em;
+    .rating-box {
+      display: flex;
+      margin: 0;
+      padding-bottom: 0.1em;
+
+      .rating-label {
+        margin-right: 1.5em;
+        width: 6.5em;
+      }
+    }
+
+    .text-field {
+      margin: 0.75em 0;
+    }
+
+    .selection-group {
+      margin: 0.5em 0;
+
+      .selection-label {
+        margin-bottom: 0.5em;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: row !important;
+
+        .select-label {
+          width: fit-content;
+        }
+      }
+
+      .upload-container {
+        width: fit-content;
+        margin-top: 0.5em;
+      }
+    }
+
+    .submit-review {
+      border-top: 2px solid black;
+      margin-top: 1em;
+
+      .disclosure-container {
+        margin-top: 1.5em;
+
+        .disclosure {
+          width: 100%;
+          display: flex;
+          font-size: 16px !important;
+          align-items: flex-start;
+
+          .MuiTypography-body1 {
+            font-size: 0.75rem;
+          }
+        }
+      }
+    }
+
+    .buttons-group {
+      display: flex;
+      justify-content: space-around;
+      margin: 1.5em 0;
+
+      .button-input {
+        margin: 0 1em;
+        width: 100%;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }
