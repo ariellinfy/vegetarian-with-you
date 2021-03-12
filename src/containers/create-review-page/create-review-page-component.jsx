@@ -37,7 +37,7 @@ const CreateReviewPage = () => {
     const [review, setReview] = useState({
         reviewTitle: '',
         reviewBody: '',
-        visitPeriod: today.getFullYear() + '-' + (today.getMonth().length > 1 ? today.getMonth() : ('0' + today.getMonth())),
+        visitPeriod: today.getFullYear() + '-' + ((today.getMonth() + 1).length > 1 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))),
         visitType: '',
         price: '',
         recommendDish: '',
@@ -215,7 +215,7 @@ const CreateReviewPage = () => {
                     fullWidth  
                 />
 
-                <FormControl className='selection-group' component="fieldset" required>
+                <FormControl className='selection-group' component="fieldset">
                     <FormLabel className='selection-label' component="legend">Do you have photo(s) to share?</FormLabel>
                     <input
                         accept="image/*"
