@@ -1,0 +1,16 @@
+.signin-signup-page {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .signin-signup-form-container {
+    width: 50%;
+    min-width: 20em;
+    margin: 6vw auto 8vw auto;
+    padding-top: 2.5vw;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #ffffff;
+    z-index: 1;
+  }
+}
