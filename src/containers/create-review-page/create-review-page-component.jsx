@@ -22,17 +22,17 @@ const CreateReviewPage = () => {
         foodRate: 2.5,
         serviceRate: 2.5,
         valueRate: 2.5,
-        atomsphereRate: 2.5
+        atmosphereRate: 2.5
     });
-    const { foodRate, serviceRate, valueRate, atomsphereRate } = rate;
+    const { foodRate, serviceRate, valueRate, atmosphereRate } = rate;
 
     const [hover, setHover] = useState({
         foodHover: 2.5,
         serviceHover: 2.5,
         valueHover: 2.5,
-        atomsphereHover: 2.5
+        atmosphereHover: 2.5
     });
-    const { foodHover, serviceHover, valueHover, atomsphereHover } = hover;
+    const { foodHover, serviceHover, valueHover, atmosphereHover } = hover;
 
     const [review, setReview] = useState({
         reviewTitle: '',
@@ -52,7 +52,7 @@ const CreateReviewPage = () => {
 
     const handleChange = event => {
         const { name, value, checked } = event.target;
-        if (name === 'foodRate' || name === 'serviceRate' || name === 'valueRate' || name === 'atomsphereRate') {
+        if (name === 'foodRate' || name === 'serviceRate' || name === 'valueRate' || name === 'atmosphereRate') {
             setRate({ ...rate, [name]: Number(value) });
         } else if (name === 'disclosure') {
             setReview({ ...review, [name]: checked })
@@ -100,15 +100,15 @@ const CreateReviewPage = () => {
                         {valueRate !== null && <Box className='rating-description' ml={2}>{labels[valueHover !== -1 ? valueHover : valueRate]}</Box>}
                     </Box>
                     <Box className='rating-box' component="fieldset" mb={3} borderColor="transparent">
-                        <Typography className='rating-label' component="span">Atomsphere</Typography>
+                        <Typography className='rating-label' component="span">Atmosphere</Typography>
                         <Rating 
-                            name="atomsphereRate" 
-                            value={atomsphereRate} 
+                            name="atmosphereRate" 
+                            value={atmosphereRate} 
                             precision={0.5} 
                             onChange={handleChange} 
-                            onChangeActive={(event, newHover) => setHover({ ...hover, atomsphereHover: newHover })} 
+                            onChangeActive={(event, newHover) => setHover({ ...hover, atmosphereHover: newHover })} 
                         />
-                        {atomsphereRate !== null && <Box className='rating-description' ml={2}>{labels[atomsphereHover !== -1 ? atomsphereHover : atomsphereRate]}</Box>}
+                        {atmosphereRate !== null && <Box className='rating-description' ml={2}>{labels[atmosphereHover !== -1 ? atmosphereHover : atmosphereRate]}</Box>}
                     </Box>
                 </FormControl>
 
