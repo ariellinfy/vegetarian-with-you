@@ -7,7 +7,9 @@
   width: 60%;
   min-width: 20em;
   margin: 6vw auto 8vw auto;
+  border-radius: 5px;
   z-index: 1;
+  box-shadow: 0 1px 5px 5px rgba(0, 0, 0, 0.25);
 
   @media screen and (max-width: 1020px) {
     font-size: smaller;
@@ -49,9 +51,14 @@
     }
   }
 
+  .restaurant-photos {
+    margin: 2em 0 0 0;
+  }
+    
   .restaurant-advance {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin: 2em 0;
 
     .advance-container {
@@ -61,7 +68,7 @@
       margin: 1em;
 
       &#features {
-        width: 100%;
+        // width: 100%;
       }
 
       .paper-title {

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Divider, Paper, Link } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes, faQuestion, faMapMarkedAlt, faPhoneAlt, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes, faQuestion, faMapMarkedAlt, faPhoneAlt, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import ImageGallery from 'react-image-gallery';
+import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 import './restaurant-page-style.scss';
 
 const RestaurantPage = () => {
@@ -67,7 +69,20 @@ const RestaurantPage = () => {
     const mapIcon = <FontAwesomeIcon icon={faMapMarkedAlt} color='orange' />
     const phoneIcon = <FontAwesomeIcon icon={faPhoneAlt} color='blue' />
     const websiteIcon = <FontAwesomeIcon icon={faExternalLinkAlt} color='black' />
-
+    const images = [
+        {
+          original: 'https://picsum.photos/id/1018/1000/600/',
+          thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+          original: 'https://picsum.photos/id/1015/1000/600/',
+          thumbnail: 'https://picsum.photos/id/1015/250/150/',
+        },
+        {
+          original: 'https://picsum.photos/id/1019/1000/600/',
+          thumbnail: 'https://picsum.photos/id/1019/250/150/',
+        },
+      ];
     return (
         <div className='restaurant-page'>
             <div className='restaurant-basic'>
@@ -103,7 +118,9 @@ const RestaurantPage = () => {
                 </div>
             </div>
             
-            <div className='restaurant-photos'></div>
+            <div className='restaurant-photos'>
+                <ImageGallery items={images} />
+            </div>
 
             <div className='restaurant-advance'>
                 <Paper id='ratings' className='advance-container'>
