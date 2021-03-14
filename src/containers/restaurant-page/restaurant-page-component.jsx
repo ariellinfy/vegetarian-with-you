@@ -2,10 +2,43 @@ import React, { useState } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Divider, Paper, Link } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes, faQuestion, faMapMarkedAlt, faPhoneAlt, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faQuestion, faMapMarkedAlt, faPhoneAlt, faExternalLinkAlt, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import ImageGallery from 'react-image-gallery';
 import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
+import ScrollMenu from 'react-horizontal-scrolling-menu';
+import ReviewPreview from '../../components/review-preview/review-preview-component';
 import './restaurant-page-style.scss';
+
+const list = [
+    {
+      original: 'https://picsum.photos/id/1018/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1018/250/150/',
+    },
+    {
+      original: 'https://picsum.photos/id/1015/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1015/250/150/',
+    },
+    {
+      original: 'https://picsum.photos/id/1019/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1019/250/150/',
+    },
+];
+
+const MenuItem = ({url, selected}) => (
+    <div className={`menu-item ${selected ? 'active' : ''}`}>
+        <img
+          style={{ height: "200px" }}
+          alt="test"
+          src={url}
+        />
+    </div>
+);
+
+export const Menu = (list, selected) =>
+    list.map(el => {
+      const { original } = el;
+      return <MenuItem url={original} key={original} selected={selected} />;
+});
 
 const RestaurantPage = () => {
     const [ restaurant, setRestaurant ] = useState({
@@ -69,20 +102,13 @@ const RestaurantPage = () => {
     const mapIcon = <FontAwesomeIcon icon={faMapMarkedAlt} color='orange' />
     const phoneIcon = <FontAwesomeIcon icon={faPhoneAlt} color='blue' />
     const websiteIcon = <FontAwesomeIcon icon={faExternalLinkAlt} color='black' />
-    const images = [
-        {
-          original: 'https://picsum.photos/id/1018/1000/600/',
-          thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-          original: 'https://picsum.photos/id/1015/1000/600/',
-          thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-          original: 'https://picsum.photos/id/1019/1000/600/',
-          thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
-      ];
+    const rightIcon = <FontAwesomeIcon icon={faChevronRight} className='arrow-prev' />
+    const leftIcon = <FontAwesomeIcon icon={faChevronLeft} className='arrow-prev' />
+
+    const [selected, setSelected] = useState('item1');
+
+    const menu = Menu(list, selected);
+
     return (
         <div className='restaurant-page'>
             <div className='restaurant-basic'>
@@ -119,7 +145,15 @@ const RestaurantPage = () => {
             </div>
             
             <div className='restaurant-photos'>
-                <ImageGallery items={images} />
+                <ScrollMenu
+                    data={menu}
+                    arrowLeft={leftIcon}
+                    arrowRight={rightIcon}
+                    selected={selected}
+                    onSelect={key => setSelected({ selected: key })}
+                />
+
+                {/* <ImageGallery items={images} /> */}
             </div>
 
             <div className='restaurant-advance'>
@@ -258,7 +292,17 @@ const RestaurantPage = () => {
                 </Paper>
             </div>
             
-            <div className='customer-reviews'></div>
+            <div className='customer-reviews'>
+                <div className='review-header'>
+                    <h4>Reviews ({reviewCount})</h4>
+                    {/* sort by button */}
+                    {/* write a review button */}
+                </div>
+                {
+                    // review data to map
+                }
+                <ReviewPreview />
+            </div>
         </div>
     )
 }
