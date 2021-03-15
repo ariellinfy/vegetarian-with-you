@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Rating from '@material-ui/lab/Rating';
-import { Typography, Box, Divider, Paper, Link } from '@material-ui/core';
+import { Typography, Box, Divider, Paper, Link, Button, FormControl, Select, MenuItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faQuestion, faMapMarkedAlt, faPhoneAlt, faExternalLinkAlt, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import ImageGallery from 'react-image-gallery';
@@ -24,7 +24,7 @@ const list = [
     },
 ];
 
-const MenuItem = ({url, selected}) => (
+const ImageItem = ({url, selected}) => (
     <div className={`menu-item ${selected ? 'active' : ''}`}>
         <img
           style={{ height: "200px" }}
@@ -34,10 +34,10 @@ const MenuItem = ({url, selected}) => (
     </div>
 );
 
-export const Menu = (list, selected) =>
+export const ImageMenu = (list, selected) =>
     list.map(el => {
       const { original } = el;
-      return <MenuItem url={original} key={original} selected={selected} />;
+      return <ImageItem url={original} key={original} selected={selected} />;
 });
 
 const RestaurantPage = () => {
@@ -107,11 +107,11 @@ const RestaurantPage = () => {
 
     const [selected, setSelected] = useState('item1');
 
-    const menu = Menu(list, selected);
+    const menu = ImageMenu(list, selected);
 
     return (
         <div className='restaurant-page'>
-            <div className='restaurant-basic'>
+            <div className='restaurant-container restaurant-basic'>
                 <h3 className='restaurant-name'>{restaurantName}</h3>
                 <div className='restaurant-basic-detail'>
                     <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
@@ -144,7 +144,7 @@ const RestaurantPage = () => {
                 </div>
             </div>
             
-            <div className='restaurant-photos'>
+            <div className='restaurant-container restaurant-photos'>
                 <ScrollMenu
                     data={menu}
                     arrowLeft={leftIcon}
@@ -156,7 +156,7 @@ const RestaurantPage = () => {
                 {/* <ImageGallery items={images} /> */}
             </div>
 
-            <div className='restaurant-advance'>
+            <div className='restaurant-container restaurant-advance'>
                 <Paper id='ratings' className='advance-container'>
                     <Typography className='paper-title' component="legend">Ratings</Typography>
                     <Box className='rate-container' component="fieldset" mb={3} borderColor="transparent">
@@ -292,11 +292,28 @@ const RestaurantPage = () => {
                 </Paper>
             </div>
             
-            <div className='customer-reviews'>
+            <div className='restaurant-container customer-reviews'>
                 <div className='review-header'>
-                    <h4>Reviews ({reviewCount})</h4>
-                    {/* sort by button */}
-                    {/* write a review button */}
+                    <div className='header-1'>
+                        <h4>Reviews ({reviewCount})</h4>
+                        <FormControl variant="outlined" className='sort-by-container'>
+                            <Select
+                            id="sortby-filter"
+                            value='Sort By'
+                            onChange=''
+                            >
+                                <MenuItem value={"Sort By"} data-query={""}>Sort By</MenuItem>
+                                <MenuItem value={"Most recent"} data-query=''>Most recent</MenuItem>
+                                <MenuItem value={"Top reviews"} data-query=''>Top reviews</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div className='header-2'>
+                        <Button variant="contained" color="primary" className='write-review'>
+                            Write a Review
+                        </Button>
+                    </div>
+                    
                 </div>
                 {
                     // review data to map

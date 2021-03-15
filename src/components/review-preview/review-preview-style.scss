@@ -6,11 +6,16 @@
         display: flex;
         justify-content: center;
         padding: 1em 0.5em;
+        box-sizing: border-box;
 
         .card-header{
             width: 15%;
             text-align: center;
-
+            
+            @media screen and (max-width: 1625px) {
+                width: 20%;
+            }
+            
             .header-avatar{
                 display: flex;
                 flex-direction: column;
@@ -25,6 +30,12 @@
                     height: 2em;
                     margin: 0;
                     font-size: 3em;
+                    
+                    @media screen and (max-width: 1625px) {
+                        width: 1.85em;
+                        height: 1.85em;
+                        font-size: 2.5em;
+                    }
                 }
             }
         }
@@ -32,6 +43,10 @@
 
         .card-body {
             width: 85%;
+
+            @media screen and (max-width: 1625px) {
+                width: 80%;
+            }
 
             .card-content {
                 .content-header{
