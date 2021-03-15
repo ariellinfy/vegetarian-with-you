@@ -6,6 +6,7 @@ import SignInAndSignUpPage from './signin-signup-page/signin-signup-page-compone
 import RestaurantPage from './restaurant-page/restaurant-page-component';
 import ExplorePage from './explore-page/explore-page-component';
 import FindRestaurantPage from './find-restaurant-page/find-restaurant-page-component';
+import AdminDashboardPage from './admin-dashboard-page/admin-dashboard-page-component';
 import './App.css';
 
 const App = () => {
@@ -15,12 +16,14 @@ const App = () => {
       <Switch>
           {/* <Route exact path='/' component={HomePage} /> */}
           <Route exact path='/explore' component={ExplorePage} />
+          <Route exact path='/find' component={FindRestaurantPage} />
           <Route exact path='/createrestaurant' component={CreateRestaurantPage} />
           <Route exact path='/createreview' component={CreateReviewPage} />
+          <Route exact path='/restaurant' component={RestaurantPage} />
+          {/* <Route exact path='/updaterestaurant' component={UpdateRestaurantPage} /> */}
           {/* <Route exact path='/updatereview' component={UpdateReviewPage} /> */}
           <Route exact path='/signin' component={SignInAndSignUpPage} />
-          <Route exact path='/restaurant' component={RestaurantPage} />
-          <Route exact path='/find' component={FindRestaurantPage} />
+          <Route exact path='/useraccount' component={AdminDashboardPage} />
       </Switch>
       {/* <Footer /> */}
     </div>

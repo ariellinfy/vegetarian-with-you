@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-import './account-management-page-style.scss';
+import './admin-dashboard-page-style.scss';
 
-const AccountManagementPage = () => {
+const AdminDashboardPage = () => {
 
 
     return (
-        <div className='account-management-page'>
+        <div className='admin-dashboard-page'>
             
         </div>
     )
 }
 
-export default AccountManagementPage;
+export default AdminDashboardPage;

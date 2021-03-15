@@ -22,6 +22,10 @@ const ExplorePage = () => {
             </div>
             <div className='explore-body'>
                 <RestaurantPreviewOne />
+                <RestaurantPreviewOne />
+                <RestaurantPreviewOne />
+                <RestaurantPreviewOne />
+                <RestaurantPreviewOne />
             </div>
         </div>
     )

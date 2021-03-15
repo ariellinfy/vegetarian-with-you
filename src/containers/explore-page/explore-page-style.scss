@@ -20,6 +20,10 @@
         flex-wrap: wrap;
         margin-bottom: 2em;
 
+        @media screen and (max-width: 1600px) {
+            justify-content: center;
+          }
+
         .explore-header-1{
             display: flex;
             flex-wrap: wrap;
@@ -28,6 +32,9 @@
     }
 
     .explore-body{
-
+        display: flex;
+        flex-wrap: wrap;
+        width: 90%;
+        justify-content: center;
     }
 }
