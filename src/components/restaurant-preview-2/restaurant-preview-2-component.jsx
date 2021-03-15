@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core';
-import RatingBox from '../rating-box/rating-box-component';
-import './restaurant-preview-1-style.scss';
+import './restaurant-preview-2-style.scss';
 
-const RestaurantPreviewOne = () => {
-
+const RestaurantPreviewTwo = () => {
 
     return (
-        <div className='restaurant-preview-1-container'>
-            <Card className='preview-1-container'>
+        <div className='restaurant-preview-2-container'>
+            <Card className='preview-2-container'>
                 <CardActionArea className='restaurant-info'>
                     <CardMedia
                         className='restaurant-image'
@@ -18,16 +16,12 @@ const RestaurantPreviewOne = () => {
                         image="/static/images/cards/contemplative-reptile.jpg"
                         title="Contemplative Reptile"
                     />
+                
                     <CardContent className='restaurant-detail'>
                         <Typography gutterBottom variant="h5" component="h2">
                             {/* {restaurantName} */}
                             Teatro Restaurant
                         </Typography>
-                        <RatingBox 
-                            name="overall-rating"
-                            value='2.5'
-                            readOnly
-                        />
                         <Typography variant="body2" color="textSecondary" component="p" gutterBottom className='restaurant-features'>
                             {/* {restaurantCuisine}, {restaurantType}, {restaurantPrice} */}
                             Vegan, Chinese, Mid-range
@@ -36,16 +30,16 @@ const RestaurantPreviewOne = () => {
                             {/* {restaurantCuisineCity}, {restaurantCountry} */}
                             Calgary, Canada
                         </Typography>
+                        <CardActions className='restaurant-action'>
+                            <Button size="small" color="primary">
+                                Write a review
+                            </Button>
+                        </CardActions>
                     </CardContent>
                 </CardActionArea>
-                <CardActions className='restaurant-action'>
-                    <Button size="small" color="primary">
-                        Write a review
-                    </Button>
-                </CardActions>
             </Card>
         </div>
     )
 }
 
-export default RestaurantPreviewOne;
+export default RestaurantPreviewTwo;

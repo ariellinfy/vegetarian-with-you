@@ -1,9 +1,14 @@
 .search-bar-container{
-    width: 30vw;
+    width: 20vw;
     min-width: 18em;
-    margin: 0.5em 0;
+    margin: 0.5em 0.25em;
 
     .search-input {
         width: 100%;
+
+        .fa-map-marker{
+            font-size: 28px;
+            margin-right: 0.15em;
+        }
     }
 }
