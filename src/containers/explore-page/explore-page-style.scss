@@ -1,0 +1,33 @@
+.explore-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0.5em;
+    width: 60%;
+    min-width: 20em;
+    margin: 6vw auto 8vw auto;
+    border-radius: 5px;
+    z-index: 1;
+    box-shadow: 0 1px 5px 5px rgba(0, 0, 0, 0.25);
+    
+
+    .explore-header{
+        display: flex;
+        width: 90%;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 2em;
+
+        .explore-header-1{
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0.5em 0;
+        }
+    }
+
+    .explore-body{
+
+    }
+}

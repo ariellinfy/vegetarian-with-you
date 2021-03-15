@@ -1,0 +1,13 @@
+.rating-container{
+
+    .rating-box{
+        display: flex;
+        padding: 0.35em 0;
+        margin: 0 0 1em 0;
+        border: none;
+
+        .rating-review{
+            margin-left: 0.5em;
+        }
+    }
+}

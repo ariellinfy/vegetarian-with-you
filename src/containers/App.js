@@ -4,6 +4,7 @@ import CreateRestaurantPage from './create-restaurant-page/create-restaurant-pag
 import CreateReviewPage from './create-review-page/create-review-page-component';
 import SignInAndSignUpPage from './signin-signup-page/signin-signup-page-component';
 import RestaurantPage from './restaurant-page/restaurant-page-component';
+import ExplorePage from './explore-page/explore-page-component';
 import './App.css';
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
       {/* <Header /> */}
       <Switch>
           {/* <Route exact path='/' component={HomePage} /> */}
-          {/* <Route exact path='/explore' component={ExplorePage} /> */}
+          <Route exact path='/explore' component={ExplorePage} />
           <Route exact path='/createrestaurant' component={CreateRestaurantPage} />
           <Route exact path='/createreview' component={CreateReviewPage} />
           {/* <Route exact path='/updatereview' component={UpdateReviewPage} /> */}
