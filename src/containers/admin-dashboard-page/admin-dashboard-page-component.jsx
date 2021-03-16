@@ -26,14 +26,10 @@ const AdminDashboardPage = () => {
                     <Tab label="Account Info" className='admin-tab' />
                     <Tab label="My Reviews" className='admin-tab' />
                 </Tabs>
-                {/* <UserProfile /> */}
-                <AccountInfo />
-                {/* <UserReviews /> */}
                 {
-                    // value === 0 ? <SignIn /> : <SignUp />
+                    value === 0 ? <UserProfile /> : (value === 1 ? <AccountInfo /> : <UserReviews />)
                 }
             </div>
-            
         </div>
     )
 }
