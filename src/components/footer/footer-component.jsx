@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         top: 'auto',
         bottom: 0,
         height: '4rem',
-        padding: '1.3em 0'
+        padding: '1.3em 0',
       },
   }));
 

@@ -14,7 +14,7 @@ import './App.css';
 const App = () => {
   return (
     <div className='App'>
-      {/* <Header /> */}
+      <Header />
       <Switch>
           {/* <Route exact path='/' component={HomePage} /> */}
           <Route exact path='/explore' component={ExplorePage} />
