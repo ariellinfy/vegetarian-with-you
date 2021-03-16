@@ -1,0 +1,92 @@
+.user-profile-page {
+    margin: 3vh 4.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .profile-header {
+        display: flex;
+        padding: 1em;
+        align-items: center;
+        margin: 0.5em 0;
+        justify-content: flex-start;
+        
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
+      }
+
+        .profile-header-1 {
+            display: flex;
+            align-items: center;
+
+            @media screen and (max-width: 900px) {
+                width: 100%;
+            }
+
+            .user-avatar {
+                width: 5em;
+                height: 5em;
+                margin: 0.25em 1em 0.25em 0;
+            }
+
+            .user-info {
+                display: flex;
+                flex-direction: column;
+                margin: 0 1em;
+            }
+        }
+        .profile-header-2 {
+            display: flex;
+            justify-content: flex-end;
+            align-self: flex-start;
+            width: 100%;
+
+            .update-button {
+                @media screen and (max-width: 900px) {
+                    margin-top: 1em;
+                    width: 100%;
+                }
+            }
+            
+        }
+    }
+
+    .profile-body {
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        justify-content: flex-start;
+        margin: 0.5em 0;
+        
+        .user-detail {
+            display: flex;
+            align-items: center;
+            margin: 0.25em 0;
+            
+            .fa {
+                margin-right: 0.5em;
+                width: 1.2em;
+                text-align: center;
+            }
+
+            .fa-map-marker {
+                font-size: 22.5px;
+                width: 1em;
+            }
+
+            .info {
+                margin-left: 0.4em;
+            }
+
+            .review-button {
+                text-transform: none;
+                font-weight: bold;
+
+                &:hover {
+                    text-decoration: underline;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
