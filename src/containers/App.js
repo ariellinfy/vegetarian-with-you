@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import Header from '../components/header/header-component';
+import Footer from '../components/footer/footer-component';
 import CreateRestaurantPage from './create-restaurant-page/create-restaurant-page-component';
 import CreateReviewPage from './create-review-page/create-review-page-component';
 import SignInAndSignUpPage from './signin-signup-page/signin-signup-page-component';
@@ -25,7 +27,7 @@ const App = () => {
           <Route exact path='/signin' component={SignInAndSignUpPage} />
           <Route exact path='/useraccount' component={AdminDashboardPage} />
       </Switch>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
