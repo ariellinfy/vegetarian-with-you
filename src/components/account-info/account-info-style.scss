@@ -1,0 +1,53 @@
+.account-info-page {
+    margin: 3vh 4.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .user-credentials {
+        padding: 1em;
+        margin: 0.5em 0;
+
+        .credential-box {
+            display: flex;
+            align-items: center;
+
+            .credential-title {
+                font-weight: bold;
+                margin: 0.4em 1em;
+                width: 5em;
+            }
+
+            .credential {
+                width: 12em;
+            }
+
+            .credential-btn {
+                text-transform: none;
+                
+                &.reset-btn {
+                    padding-left: 0;
+
+                    &:hover {
+                        background-color: transparent;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    .deactivate-account {
+        padding: 2em;
+        margin: 0.5em 0;
+
+        .deactivate-title {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .deactivation {
+            margin: 0.5em 0;
+        }
+    }
+}

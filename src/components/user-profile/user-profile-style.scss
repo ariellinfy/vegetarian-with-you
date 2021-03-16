@@ -11,9 +11,9 @@
         margin: 0.5em 0;
         justify-content: flex-start;
         
-    @media screen and (max-width: 900px) {
-        flex-direction: column;
-      }
+        @media screen and (max-width: 900px) {
+            flex-direction: column;
+        }
 
         .profile-header-1 {
             display: flex;

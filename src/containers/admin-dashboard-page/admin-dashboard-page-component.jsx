@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 import UserProfile from '../../components/user-profile/user-profile-component';
+import AccountInfo from '../../components/account-info/account-info-component';
+import UserReviews from '../../components/user-reviews/user-reviews-component';
 import './admin-dashboard-page-style.scss';
 
 const AdminDashboardPage = () => {
@@ -24,7 +26,9 @@ const AdminDashboardPage = () => {
                     <Tab label="Account Info" className='admin-tab' />
                     <Tab label="My Reviews" className='admin-tab' />
                 </Tabs>
-                <UserProfile />
+                {/* <UserProfile /> */}
+                <AccountInfo />
+                {/* <UserReviews /> */}
                 {
                     // value === 0 ? <SignIn /> : <SignUp />
                 }

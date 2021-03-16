@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import './user-reviews-page-style.scss';
+import './user-reviews-style.scss';
 
-const UserReview = () => {
+const UserReviews = () => {
 
 
     return (
@@ -12,4 +12,4 @@ const UserReview = () => {
     )
 }
 
-export default UserReview;
+export default UserReviews;
