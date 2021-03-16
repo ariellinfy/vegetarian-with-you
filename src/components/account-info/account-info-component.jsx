@@ -14,14 +14,18 @@ const AccountInfo = () => {
         <div className='account-info-page'>
             <Paper className='user-credentials'>
                 <div className='credential-box'>
-                    <Typography className='credential-title' variant='body1'>Email</Typography>
-                    <Typography className='credential' variant='subtitle1' >{email}</Typography>
+                    <div className='user-credential'>
+                        <Typography className='credential-title' variant='body1'>Email</Typography>
+                        <Typography className='credential' variant='subtitle1' >{email}</Typography>
+                    </div>
                     <Button className='credential-btn' size='small' variant="contained" color="secondary">Save</Button>
                 </div>
                 <div className='credential-box'>
-                    <Typography className='credential-title' variant='body1'>Password</Typography>
-                    <Typography className='credential' variant='subtitle1' >{password}</Typography>
-                    <Button className='credential-btn reset-btn' size='small' color="secondary">Reset password</Button>
+                    <div className='user-credential'>
+                        <Typography className='credential-title' variant='body1'>Password</Typography>
+                        <Typography className='credential' variant='subtitle1' >{password}</Typography>
+                    </div>
+                    <Button className='credential-btn reset-btn' size='small' variant="outlined" color="secondary">Reset password</Button>
                 </div>
             </Paper>
             <Paper className='deactivate-account'>

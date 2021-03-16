@@ -7,31 +7,62 @@
     .user-credentials {
         padding: 1em;
         margin: 0.5em 0;
+        
 
         .credential-box {
             display: flex;
             align-items: center;
+            margin: 1em;
 
-            .credential-title {
-                font-weight: bold;
-                margin: 0.4em 1em;
-                width: 5em;
+            @media screen and (max-width: 865px) {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .credential {
-                width: 12em;
-            }
+              .user-credential {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
 
+                .credential-title {
+                    font-weight: bold;
+                    margin-right: 1em;
+                    width: 5em;
+
+                    @media screen and (max-width: 865px) {
+                        width: fit-content;
+                    }
+                }
+    
+                .credential {
+                    width: 12em;
+
+                    @media screen and (max-width: 865px) {
+                        width: fit-content;
+                    }
+                }
+              }
+            
             .credential-btn {
                 text-transform: none;
                 
                 &.reset-btn {
                     padding-left: 0;
+                    border: none;
+
+                    @media screen and (max-width: 865px) {
+                        border: 1px solid rgba(245, 0, 87, 0.5);
+                    }
 
                     &:hover {
                         background-color: transparent;
                         text-decoration: underline;
                     }
+                }
+
+                @media screen and (max-width: 865px) {
+                    margin-top: 0.5em;
+                    width: 100%;
                 }
             }
         }
@@ -47,7 +78,7 @@
         }
 
         .deactivation {
-            margin: 0.5em 0;
+            margin-bottom: 0.5em;
         }
     }
 }
