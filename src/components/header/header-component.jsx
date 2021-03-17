@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import SearchIcon from '@material-ui/icons/Search';
 import './header-style.scss';
 
-const useStyles = makeStyles((theme) => ({
-    
-  }));
-
 const Header = () => {
-    const classes = useStyles();
     const [auth, setAuth] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -23,17 +19,17 @@ const Header = () => {
 
     return (
         <div className='header-container'>
-            <AppBar position="static">
+            <AppBar position="static" color="grey">
                 <Toolbar className='header-toolbar'>
                     <i className="fa fa-user-circle"></i>
                     <div className='header-right'>
                         <Button color="primary" className='header-btn'>
-                            <i className="fa fa-search"></i>
-                            Explore
+                            <SearchIcon />
+                            <span className='header-btn-label'>Explore</span>
                         </Button>
                         <Button color="secondary" className='header-btn'>
-                            <i className="fa fa-plus"></i>
-                            Write review
+                            <AddCircleOutlineIcon />
+                            <span className='header-btn-label'>Write review</span>
                         </Button>
                         {auth && (
                             <div>
@@ -62,6 +58,7 @@ const Header = () => {
                                     }}
                                     open={open}
                                     onClose={handleClose}
+                                    style={{ top: '50px' }}
                                 >
                                     <MenuItem onClick={handleClose}>View Profile</MenuItem>
                                     <MenuItem onClick={handleClose}>Account Info</MenuItem>
@@ -71,7 +68,6 @@ const Header = () => {
                             </div>
                         )}
                     </div>
-                    
                 </Toolbar>
             </AppBar>
         </div>

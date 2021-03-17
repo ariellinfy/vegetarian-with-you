@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgb(192, 192, 192);
+    color:#BDBDBD;
 
     .fa {
         margin: 0 0.5em;
@@ -10,14 +10,12 @@
     }
 
     .footer-link {
-        color: rgb(192, 192, 192);
+        color: #BDBDBD;
         margin: 0 0.5em;
 
         &:hover {
-            color: white;
+            color: #FFA000;
             text-decoration: none;
-            filter: brightness(1.1);
-            text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
         }
     }
 }
