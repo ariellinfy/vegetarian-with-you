@@ -27,7 +27,7 @@ const Header = () => {
                             <SearchIcon />
                             <span className='header-btn-label'>Explore</span>
                         </Button>
-                        <Button color="secondary" className='header-btn'>
+                        <Button color="primary" className='header-btn'>
                             <AddCircleOutlineIcon />
                             <span className='header-btn-label'>Write review</span>
                         </Button>
@@ -39,7 +39,7 @@ const Header = () => {
                                     aria-controls="menu-appbar"
                                     aria-haspopup="true"
                                     onClick={handleMenu}
-                                    color="inherit"
+                                    color="primary"
                                     className='header-setting-btn'
                                 >
                                     <i className="fa fa-user-circle"></i>

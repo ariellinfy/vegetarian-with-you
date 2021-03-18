@@ -1,16 +1,18 @@
 .admin-dashboard-page {
-    position: relative;
-    display: flex;
-    justify-content: center;
-  
-    .admin-dashboard-container {
-      width: 75%;
-      min-width: 20em;
-      margin: 6vw auto 8vw auto;
-      padding-top: 2.5vw;
-      border-radius: 5px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      background-color: #ffffff;
-      z-index: 1;
-    }
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background: url(../../assets/8.jpg) no-repeat right center;
+  background-size: cover;
+
+  .admin-dashboard-container {
+    width: 75%;
+    min-width: 20em;
+    margin: 6vw auto 8vw auto;
+    padding-top: 2.5vw;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
   }
+}
