@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import reviewImage from '../../assets/review.png';
-import discoverImage from '../../assets/discover.png';
-import placeImage from '../../assets/place.png';
+import reviewImage from '../../assets/review.svg';
+import discoverImage from '../../assets/discover.svg';
+import placeImage from '../../assets/place.svg';
 import './home-page-style.scss';
 
 const HomePage = () => {
@@ -11,7 +11,8 @@ const HomePage = () => {
         <div className='home-page'>
             <header className='homepage-header'>
                 <div className='homepage-welcome-container'>
-                    <h1>Vegetarian with me!</h1>
+                    <h1>Taste The Natural</h1>
+                    <h2>Let us find out the romance in the world of vegetables! Come vegetarian with me!</h2>
                 </div>
             </header>
             <div className='homepage-body'>
@@ -21,7 +22,7 @@ const HomePage = () => {
                     </div>
                     <div className='feature-text'>
                         <h3>Write a review</h3>
-                        <p>Share your experience with more people! Click on "Write review" button to start!</p>
+                        <p>Share your experience with more people! Click on "Write review" button to get started!</p>
                     </div>
                 </div>
                 <div className='homepage-feature-container feature-container-2'>
@@ -39,7 +40,7 @@ const HomePage = () => {
                     </div>
                     <div className='feature-text'>
                         <h3>Add a place</h3>
-                        <p>You know an awesome restaurant but it's not here? Add it on! So more people can benefit from the beauty of green diets!</p>
+                        <p>You know an awesome restaurant but it's not here? Add it on! so more people can benefit from the beauty of green diets!</p>
                     </div>
                 </div>
             </div>
