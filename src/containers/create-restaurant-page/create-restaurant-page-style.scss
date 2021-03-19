@@ -1,19 +1,50 @@
 .create-restaurant-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 3em 1em 5em;
+  align-items: center;
+  padding: 3em 2em 5em;
+  background: url(../../assets/create-restaurant-background.jpg) no-repeat
+    center center;
+  background-size: cover;
+
+  .page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 0.5em;
+
+    .page-icon {
+      margin-right: 0.25em;
+    }
+  }
 
   .restaurant-form {
-    padding: 1.25em;
-    border-radius: 1em;
-    box-shadow: 0 2.5px 20px 10px rgba(0, 0, 0, 0.25);
-    width: 35em;
-    min-width: 25em;
+    width: 30%;
+    min-width: 20em;
     display: flex;
     flex-direction: column;
 
-    @media screen and (max-width: 650px) {
-      font-size: smaller;
+    @media screen and (max-width: 2000px) {
+      width: 35%;
+    }
+    @media screen and (max-width: 1800px) {
+      width: 40%;
+    }
+    @media screen and (max-width: 1600px) {
+      width: 45%;
+    }
+    @media screen and (max-width: 1400px) {
+      width: 50%;
+    }
+    @media screen and (max-width: 1200px) {
+      width: 55%;
+    }
+    @media screen and (max-width: 1000px) {
+      width: 65%;
+    }
+    @media screen and (max-width: 800px) {
+      width: 75%;
     }
   }
 
@@ -23,7 +54,7 @@
   }
 
   .selection-group {
-    margin-top: 0.5em;
+    margin-top: 0.8em;
 
     .selection-label {
       margin-bottom: 0.5em;
@@ -43,11 +74,15 @@
   .buttons-group {
     display: flex;
     justify-content: space-around;
-    margin: 1.5em 0;
+    margin: 2.5em 0 1.5em;
 
     .button-input {
       margin: 0 1em;
       width: 100%;
+
+      @media screen and (max-width: 650px) {
+        margin: 0 0.5em;
+      }
 
       &:first-child {
         margin-left: 0;

@@ -1,78 +1,79 @@
 .review-preview {
+  width: 100%;
+
+  .card-container {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1em 0.5em;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.75);
 
-    .card-container{
-        width: 100%;
+    .card-header {
+      width: 15%;
+      text-align: center;
+
+      @media screen and (max-width: 1625px) {
+        width: 20%;
+      }
+
+      .header-avatar {
         display: flex;
-        justify-content: center;
-        padding: 1em 0.5em;
-        box-sizing: border-box;
+        flex-direction: column;
+        padding-bottom: 10px;
 
-        .card-header{
-            width: 15%;
-            text-align: center;
-            
-            @media screen and (max-width: 1625px) {
-                width: 20%;
-            }
-            
-            .header-avatar{
-                display: flex;
-                flex-direction: column;
-                padding-bottom: 10px;
-                
-                .MuiCardHeader-avatar {
-                    margin: 0;
-                }
-                
-                .avatar {
-                    width: 2em;
-                    height: 2em;
-                    margin: 0;
-                    font-size: 3em;
-                    
-                    @media screen and (max-width: 1625px) {
-                        width: 1.85em;
-                        height: 1.85em;
-                        font-size: 2.5em;
-                    }
-                }
-            }
+        .MuiCardHeader-avatar {
+          margin: 0;
         }
 
+        .avatar {
+          width: 2em;
+          height: 2em;
+          margin: 0;
+          font-size: 3em;
 
-        .card-body {
-            width: 85%;
-
-            @media screen and (max-width: 1625px) {
-                width: 80%;
-            }
-
-            .card-content {
-                .content-header{
-                    display: flex;
-                    margin-bottom: 0.5em;
-
-                    h6 {
-                        margin: 0;
-                        padding: 0.2em 1em;
-                        color: grey;
-                        font-size: 16px;
-                    }
-                }
-
-                h3, h5, p {
-                    margin: 0.5em 0;
-                }
-                .review-image{
-                    width: 10em;
-                }
-            }
-
+          @media screen and (max-width: 1625px) {
+            width: 1.85em;
+            height: 1.85em;
+            font-size: 2.5em;
+          }
         }
+      }
     }
+
+    .card-body {
+      width: 85%;
+
+      @media screen and (max-width: 1625px) {
+        width: 80%;
+      }
+
+      .card-content {
+        .content-header {
+          display: flex;
+          margin-bottom: 0.5em;
+
+          h6 {
+            margin: 0;
+            padding: 0.2em 1em;
+            color: grey;
+            font-size: 16px;
+          }
+        }
+
+        h3,
+        h5,
+        p {
+          margin: 0.5em 0;
+        }
+        .review-image {
+          width: 10em;
+        }
+      }
+    }
+  }
 }
 
-.icon{
-    margin-right: 0.5em;
+.icon {
+  margin-right: 0.5em;
 }

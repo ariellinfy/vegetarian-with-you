@@ -1,19 +1,31 @@
 .create-review-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 3em 1em 5em;
+  align-items: center;
+  padding: 3em 2em 5em;
+  background: url(../../assets/create-review-background.jpg) no-repeat right top;
+  background-size: cover;
+
+  @media screen and (max-width: 835px) {
+    padding: 3em 0.25em 5em;
+  }
 
   .review-form {
     padding: 1.25em;
     border-radius: 1em;
-    box-shadow: 0 2.5px 20px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.75);
     width: 35em;
-    min-width: 25em;
     display: flex;
     flex-direction: column;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 835px) {
+      width: 90%;
       font-size: smaller;
+    }
+    @media screen and (max-width: 560px) {
+      width: 97.5%;
     }
 
     .rating-box {
@@ -24,6 +36,14 @@
       .rating-label {
         margin-right: 1.5em;
         width: 6.5em;
+      }
+
+      .rating-description {
+        padding: 0.1em 0;
+
+        @media screen and (max-width: 835px) {
+          padding: 0.25em 0;
+        }
       }
     }
 
@@ -36,6 +56,12 @@
 
       .selection-label {
         margin-bottom: 0.5em;
+
+        &:active,
+        &:focus,
+        &:hover {
+          color: #558b2f !important;
+        }
       }
 
       .radio-group {
@@ -51,6 +77,10 @@
         width: fit-content;
         margin-top: 0.5em;
       }
+    }
+
+    .rating-group {
+      margin-top: 1em;
     }
 
     .submit-review {
@@ -81,6 +111,10 @@
       .button-input {
         margin: 0 1em;
         width: 100%;
+
+        @media screen and (max-width: 650px) {
+          margin: 0 0.5em;
+        }
 
         &:first-child {
           margin-left: 0;

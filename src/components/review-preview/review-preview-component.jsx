@@ -41,7 +41,7 @@ const ReviewPreview = () => {
     const { overallRate, foodRate, serviceRate, valueRate, atomsphereRate } = rate;
 
     const helpfulIcon = <FontAwesomeIcon icon={faThumbsUp} color='white' className='icon' />
-    const reportIcon = <FontAwesomeIcon icon={faFlag} color='#f50057' className='icon' />
+    const reportIcon = <FontAwesomeIcon icon={faFlag} color='#ef6c00' className='icon' />
 
     return (
         <div className='review-preview'>

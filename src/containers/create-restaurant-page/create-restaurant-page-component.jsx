@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button } from '@material-ui/core';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { COUNTRY_REGION } from '../../components/country-region';
 import MuiPhoneNumber  from 'material-ui-phone-number';
 import './create-restaurant-page-style.scss';
@@ -66,13 +67,14 @@ const CreateRestaurantPage = () => {
 
     return (
         <div className='create-restaurant-page'>
+            <div className='page-title'><LocationOnIcon fontSize="large" className='page-icon'/><h1>Add a Place</h1></div>
             <form className='restaurant-form' onSubmit={handleSubmit}>
                 <TextField 
                     className='text-field restaurant-name' 
                     label='Restaurant Name' 
                     name='restaurantName' 
                     value={restaurantName} 
-                    variant="filled" 
+                    variant="standard" 
                     onChange={handleChange}
                     fullWidth required 
                 />
@@ -82,7 +84,7 @@ const CreateRestaurantPage = () => {
                     label='Restaurant Address' 
                     name='restaurantAddress' 
                     value={restaurantAddress} 
-                    variant="filled" 
+                    variant="standard" 
                     onChange={handleChange}
                     fullWidth required 
                 />
@@ -92,7 +94,7 @@ const CreateRestaurantPage = () => {
                     label='City' 
                     name='restaurantCity' 
                     value={restaurantCity} 
-                    variant="filled" 
+                    variant="standard" 
                     onChange={handleChange}
                     fullWidth 
                     required={
@@ -100,7 +102,7 @@ const CreateRestaurantPage = () => {
                     }
                 />
 
-                <FormControl variant="filled" className='select-field restaurant-region' required>
+                <FormControl variant="standard" className='select-field restaurant-region' required>
                     <InputLabel htmlFor="restaurant-region">Region</InputLabel>
                     <Select
                     name='restaurantRegion'
@@ -121,7 +123,7 @@ const CreateRestaurantPage = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl variant="filled" className='select-field restaurant-country' required>
+                <FormControl variant="standard" className='select-field restaurant-country' required>
                     <InputLabel htmlFor="restaurant-country">Country</InputLabel>
                     <Select
                         name='restaurantCountry'
@@ -145,7 +147,7 @@ const CreateRestaurantPage = () => {
                     label={ restaurantCountry === 'United States' ? 'Zip Code' : 'Postal Code' } 
                     name='restaurantPostalCode' 
                     value={restaurantPostalCode} 
-                    variant="filled" 
+                    variant="standard" 
                     onChange={handleChange}
                     fullWidth
                 />
@@ -156,7 +158,7 @@ const CreateRestaurantPage = () => {
                     label="Phone Number"
                     defaultCountry={'ca'}
                     onlyCountries={countryCode}
-                    variant="filled"
+                    variant="standard"
                     onChange={value => setRestaurantPhone(value)}
                     value={restaurantPhone}
                     fullWidth required disableAreaCodes
@@ -169,7 +171,7 @@ const CreateRestaurantPage = () => {
                     label='Website' 
                     name='restaurantWebsite' 
                     value={restaurantWebsite} 
-                    variant="filled" 
+                    variant="standard" 
                     onChange={handleChange}
                     fullWidth
                 />

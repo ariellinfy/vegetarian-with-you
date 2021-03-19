@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox } from '@material-ui/core';
+import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-component';
 import './create-review-page-style.scss';
 
 const labels = {
@@ -64,8 +65,10 @@ const CreateReviewPage = () => {
     return (
         <div className='create-review-page'>
             <form className='review-form' id='review-form' onSubmit={handleSubmit}>
-                <FormControl className='selection-group' component="fieldset" required>
-                    <FormLabel className='selection-label' component="legend">Rate your visit</FormLabel>
+                <RestaurantIntro />
+                <Divider />
+                <FormControl className='selection-group MuiInputLabel-animated rating-group' component="fieldset" required>
+                    <FormLabel className='selection-label' component="div">Rate your visit</FormLabel>
                     <Box className='rating-box' component="fieldset" mb={3} borderColor="transparent">
                         <Typography className='rating-label' component="span">Food</Typography>
                         <Rating 

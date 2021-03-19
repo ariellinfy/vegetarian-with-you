@@ -10,22 +10,24 @@ const ExplorePage = () => {
 
     return (
         <div className='explore-page'>
-            <h1>Explore</h1>
-            <div className='explore-header'>
-                <div className='explore-header-1'>
-                    <SearchBar type='restaurant' placeholder='Search...'/>
-                    <SortByButton />
+            <div className='explore-container'>
+                <h1>Explore</h1>
+                <div className='explore-header'>
+                    <div className='explore-header-1'>
+                        <SearchBar type='restaurant' placeholder='Search...'/>
+                        <SortByButton />
+                    </div>
+                    <div className='explore-header-2'>
+                        <CreateNewButton btnType='restaurant profile' />
+                    </div>
                 </div>
-                <div className='explore-header-2'>
-                    <CreateNewButton btnType='restaurant profile' />
+                <div className='explore-body'>
+                    <RestaurantPreviewOne />
+                    <RestaurantPreviewOne />
+                    <RestaurantPreviewOne />
+                    <RestaurantPreviewOne />
+                    <RestaurantPreviewOne />
                 </div>
-            </div>
-            <div className='explore-body'>
-                <RestaurantPreviewOne />
-                <RestaurantPreviewOne />
-                <RestaurantPreviewOne />
-                <RestaurantPreviewOne />
-                <RestaurantPreviewOne />
             </div>
         </div>
     )
