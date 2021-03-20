@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-in-style.scss';
 
 const SignIn = () => {
@@ -21,7 +21,7 @@ const SignIn = () => {
 
     return (
         <div className='sign-in-container'>
-            <h4>Sign in with your email and password</h4>
+            <Typography variant="h6">Sign in with your email and password</Typography>
             <form className='sign-in-form' onSubmit={handleSubmit}>
                 <TextField 
                     className='text-field email' 

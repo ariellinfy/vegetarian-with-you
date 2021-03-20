@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import './sort-by-btn-style.scss';
 
 const SortByButton = () => {
-
 
     return (
         <div className='sort-by-btn-container'>

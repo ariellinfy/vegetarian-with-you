@@ -13,7 +13,7 @@ const RatingBox = ({ value, ...otherProps}) => {
                     precision={0.5}
                     {...otherProps}
                 />
-                <Typography className='rating-review' component="h6">100 reviews</Typography>
+                <Typography className='rating-review' variant="body1">100 reviews</Typography>
             </Box>           
         </div>
     )

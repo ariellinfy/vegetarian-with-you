@@ -9,22 +9,52 @@
       justify-content: flex-start;
 
       .restaurant-image {
-        width: 10vw;
+        width: 20%;
 
+        @media screen and (max-width: 2000px) {
+          width: 25%;
+        }
         @media screen and (max-width: 1700px) {
           width: 30%;
         }
-        @media screen and (max-width: 750px) {
-          height: 185px;
+        @media screen and (max-width: 1300px) {
           width: 35%;
+        }
+        @media screen and (max-width: 800px) {
+          height: 185px;
+          width: 37%;
+        }
+        @media screen and (max-width: 700px) {
+          height: 152px;
+          width: 42%;
         }
       }
 
       .restaurant-detail {
         width: 75%;
-        @media screen and (max-width: 750px) {
+        padding-top: 0;
+
+        @media screen and (max-width: 700px) {
           width: 65%;
+          padding-top: 0.5em;
           padding-bottom: 0;
+        }
+        @media screen and (max-width: 600px) {
+          padding-top: 0.2em;
+        }
+
+        h5 {
+          margin-bottom: 0.55em;
+
+          @media screen and (max-width: 700px) {
+            margin-bottom: 0.3em;
+          }
+        }
+
+        p {
+          @media screen and (max-width: 600px) {
+            font-size: 0.8rem;
+          }
         }
 
         .restaurant-features {
@@ -44,10 +74,15 @@
       bottom: 0.5em;
       right: 2em;
 
-      @media screen and (max-width: 750px) {
+      @media screen and (max-width: 700px) {
         position: relative;
-        bottom: 0;
+        bottom: 0.3em;
         right: 0;
+        padding-bottom: 0;
+        padding-right: 0;
+      }
+      @media screen and (max-width: 600px) {
+        bottom: 0;
       }
     }
   }

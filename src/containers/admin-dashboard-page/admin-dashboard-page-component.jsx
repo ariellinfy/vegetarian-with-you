@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab } from '@material-ui/core';
 import UserProfile from '../../components/user-profile/user-profile-component';
 import AccountInfo from '../../components/account-info/account-info-component';
 import UserReviews from '../../components/user-reviews/user-reviews-component';

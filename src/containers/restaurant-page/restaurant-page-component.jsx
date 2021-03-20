@@ -127,7 +127,7 @@ const RestaurantPage = () => {
         <div className='restaurant-page'>
             <div className='restaurant-container'>
                 <div className='restaurant-category restaurant-basic'>
-                    <h3 className='restaurant-name'>{restaurantName}</h3>
+                    <Typography className='restaurant-name' variant="h3">{restaurantName}</Typography>
                     <div className='restaurant-basic-detail'>
                         <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
                             <Typography className='display-item overall-rate' component="span">{overallRate}</Typography>
@@ -317,7 +317,7 @@ const RestaurantPage = () => {
                 <div className='restaurant-category customer-reviews'>
                     <div className='review-header'>
                         <div className='header-1'>
-                            <h4>Reviews ({reviewCount})</h4>
+                            <Typography variant="h6">Reviews ({reviewCount})</Typography>
                             <FormControl variant="outlined" className='sort-by-container'>
                                 <Select
                                 id="sortby-filter"

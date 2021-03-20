@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core';
 import RatingBox from '../rating-box/rating-box-component';
-import restaurantImage from "../../assets/temp.jpg";
+import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-1-style.scss';
 
 const RestaurantPreviewOne = () => {
-
 
     return (
         <div className='restaurant-preview-1-container'>
@@ -20,7 +19,7 @@ const RestaurantPreviewOne = () => {
                         title="restaurant-image"
                     />
                     <CardContent className='restaurant-detail'>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography gutterBottom variant="h5">
                             {/* {restaurantName} */}
                             Teatro Restaurant
                         </Typography>
@@ -33,7 +32,7 @@ const RestaurantPreviewOne = () => {
                             {/* {restaurantCuisine}, {restaurantType}, {restaurantPrice} */}
                             Vegan, Chinese, Mid-range
                         </Typography>
-                        <Typography variant="subtitle1" color="textSecondary" component="p" className='restaurant-location'>
+                        <Typography variant="body1" color="textSecondary" component="p" className='restaurant-location'>
                             {/* {restaurantCuisineCity}, {restaurantCountry} */}
                             Calgary, Canada
                         </Typography>

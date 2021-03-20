@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { lightGreen, green, orange, deepOrange, yellow } from '@material-ui/core/colors';
 
 import Header from '../components/header/header-component';
@@ -15,7 +15,7 @@ import FindRestaurantPage from './find-restaurant-page/find-restaurant-page-comp
 import AdminDashboardPage from './admin-dashboard-page/admin-dashboard-page-component';
 import './App.css';
 
-const theme = createMuiTheme({
+let theme = createMuiTheme({
   palette: {
     primary: {
       main: lightGreen[800],
@@ -36,6 +36,7 @@ const theme = createMuiTheme({
   },
 });
 
+theme = responsiveFontSizes(theme);
 
 const App = () => {
   return (

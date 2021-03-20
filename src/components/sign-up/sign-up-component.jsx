@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-up-style.scss';
 
 const SignUp = () => {
@@ -24,7 +24,7 @@ const SignUp = () => {
     return (
         <div className='sign-up-container'>
             <form className='sign-up-form' onSubmit={handleSubmit}>
-                <h4>Don't have an account? Sign up one today!</h4>
+                <Typography variant="h6">Don't have an account? Let's get started now!</Typography>
                 <TextField 
                     className='text-field displayName' 
                     label='Name' 

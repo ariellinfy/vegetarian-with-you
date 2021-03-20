@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Card, CardHeader, CardContent, CardMedia, CardActions, Button, Box } from '@material-ui/core';
+import { Avatar, Card, CardHeader, CardContent, CardActions, Button, Box, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faFlag } from '@fortawesome/free-solid-svg-icons';
@@ -63,10 +63,10 @@ const ReviewPreview = () => {
                                 precision={0.5}
                                 readOnly
                             />
-                            <h6>Reviewed {reviewDate}</h6>
+                            <Typography variant="h6">Reviewed {reviewDate}</Typography>
                         </Box>
-                        <h3>{reviewTitle}</h3>
-                        <p>{reviewBody}</p>
+                        <Typography variant="h5">{reviewTitle}</Typography>
+                        <Typography variant="body1">{reviewBody}</Typography>
 
                         <img className='review-image' src='https://picsum.photos/id/1018/1000/600' alt='image' />
                         {
@@ -74,9 +74,11 @@ const ReviewPreview = () => {
                                 <img className='review-image' src={image.original} alt='image' />
                             })
                         }
-                        <h5>Date of Visit: {visitPeriod}</h5>
-                        <h5>Recommended Dish(es): {recommendDish}</h5>
-                        <h5>Visit Type: {visitType}</h5>
+
+                        <Typography variant="body2">Date of Visit: {visitPeriod}</Typography>
+                        <Typography variant="body2">Recommended Dish(es): {recommendDish}</Typography>
+                        <Typography variant="body2">Visit Type: {visitType}</Typography>
+
                     </CardContent>
                     <CardActions className='card-actions'>
                         <Button variant="contained" color="primary">

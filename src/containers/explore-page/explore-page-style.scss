@@ -4,7 +4,8 @@
   justify-content: center;
   align-items: center;
   padding: 3em 2em 5em;
-  background: url(../../assets/explore-background.jpg) no-repeat center center;
+  background: url(../../assets/background/explore-background.jpg) no-repeat
+    center center;
   background-size: cover;
 
   @media screen and (max-width: 1000px) {
@@ -29,6 +30,14 @@
     }
     @media screen and (max-width: 1680px) {
       width: 100%;
+    }
+
+    h2 {
+      margin-bottom: 0.25em;
+
+      @media screen and (max-width: 960px) {
+        font-weight: 400;
+      }
     }
 
     .explore-header {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button } from '@material-ui/core';
+import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { COUNTRY_REGION } from '../../components/country-region';
 import MuiPhoneNumber  from 'material-ui-phone-number';
@@ -67,7 +67,10 @@ const CreateRestaurantPage = () => {
 
     return (
         <div className='create-restaurant-page'>
-            <div className='page-title'><LocationOnIcon fontSize="large" className='page-icon'/><h1>Add a Place</h1></div>
+            <div className='page-title'>
+                <LocationOnIcon fontSize="large" className='page-icon'/>
+                <Typography variant="h3">Add a Place</Typography>
+            </div>
             <form className='restaurant-form' onSubmit={handleSubmit}>
                 <TextField 
                     className='text-field restaurant-name' 

@@ -8,7 +8,7 @@
     .restaurant-info {
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
 
       .restaurant-image {
         width: 10vw;
@@ -33,7 +33,6 @@
 
       .restaurant-detail {
         width: 75%;
-        align-items: flex-start;
 
         @media screen and (max-width: 750px) {
           width: 65%;
@@ -46,6 +45,14 @@
 
         .restaurant-location {
           color: rgba(0, 0, 0, 0.75);
+
+          @media screen and (max-width: 960px) {
+            font-size: 0.9rem;
+            line-height: 1.5;
+          }
+          @media screen and (max-width: 600px) {
+            font-size: 0.827rem;
+          }
         }
       }
     }

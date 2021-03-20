@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import './header-style.scss';
@@ -25,11 +25,11 @@ const Header = () => {
                     <div className='header-right'>
                         <Button color="primary" className='header-btn'>
                             <SearchIcon />
-                            <span className='header-btn-label'>Explore</span>
+                            <Typography variant="body1" className='header-btn-label' component='span'>Explore</Typography>
                         </Button>
                         <Button color="primary" className='header-btn'>
                             <AddCircleOutlineIcon />
-                            <span className='header-btn-label'>Write review</span>
+                            <Typography variant="body1" className='header-btn-label' component='span'>Write review</Typography>
                         </Button>
                         {auth && (
                             <div>
