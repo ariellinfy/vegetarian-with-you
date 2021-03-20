@@ -1,51 +1,66 @@
 .find-restaurant-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3em 2em 5em;
+  background: url(../../assets/find-background.jpg) no-repeat center center;
+  background-size: cover;
+
+  @media screen and (max-width: 836px) {
+    padding: 3em 1em 5em;
+  }
+
+  .find-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1em 0.5em;
-    width: 60%;
+    width: 75%;
     min-width: 20em;
-    margin: 6vw auto 8vw auto;
-    border-radius: 5px;
-    z-index: 1;
-    box-shadow: 0 1px 5px 5px rgba(0, 0, 0, 0.25);
 
-    @media screen and (max-width: 1280px) {
-        width: 80%;
+    @media screen and (max-width: 1250px) {
+      width: 90%;
     }
 
-    @media screen and (max-width: 1000px) {
-        width: 90%;
+    @media screen and (max-width: 1125px) {
+      width: 100%;
     }
 
     h1 {
-        margin: 0.67em 2em;
-        text-align: center;
+      margin: 0.67em 2em;
+      text-align: center;
 
-        @media screen and (max-width: 800px) {
-            margin: 0.67em 1.5em;
-        }
+      @media screen and (max-width: 800px) {
+        margin: 0.67em 1.5em;
+      }
 
-        @media screen and (max-width: 760px) {
-            margin: 0.67em 1em;
-        }
+      @media screen and (max-width: 760px) {
+        margin: 0.67em 1em;
+      }
     }
 
-    .find-restaurant-header{
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 1em;
+    .find-restaurant-header {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1em;
     }
 
     .find-restaurant-body {
-        width: 80%;
+      width: 80%;
 
-        @media screen and (max-width: 1000px) {
-            width: 90%;
-        }
+      @media screen and (max-width: 1000px) {
+        width: 90%;
+      }
+      @media screen and (max-width: 697px) {
+        width: 95%;
+      }
+      @media screen and (max-width: 556px) {
+        width: 97%;
+      }
     }
+  }
 }

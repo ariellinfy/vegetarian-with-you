@@ -1,29 +1,27 @@
 .restaurant-preview-1-container {
-    margin: 0.5em;
+  margin: 0.5em;
 
-    .preview-1-container {
+  .preview-1-container {
+    width: 15em;
 
+    .restaurant-info {
+      .restaurant-image {
+        width: 100%;
+      }
 
-        .restaurant-info {
-
-
-            .restaurant-image {
-
-            }
-
-            .restaurant-detail {
-                .restaurant-features {
-                    font-style: italic;
-                }
-
-                .restaurant-location {
-                    color: rgba(0, 0, 0, 0.75);
-                }
-            }
+      .restaurant-detail {
+        .restaurant-features {
+          font-style: italic;
         }
 
-        .restaurant-action {
-            margin-left: 0.3em;
+        .restaurant-location {
+          color: rgba(0, 0, 0, 0.75);
         }
+      }
     }
+
+    .restaurant-action {
+      margin-left: 0.3em;
+    }
+  }
 }

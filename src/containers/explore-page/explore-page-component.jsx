@@ -14,7 +14,7 @@ const ExplorePage = () => {
                 <h1>Explore</h1>
                 <div className='explore-header'>
                     <div className='explore-header-1'>
-                        <SearchBar type='restaurant' placeholder='Search...'/>
+                        <SearchBar type='restaurant' placeholder='Search...' />
                         <SortByButton />
                     </div>
                     <div className='explore-header-2'>

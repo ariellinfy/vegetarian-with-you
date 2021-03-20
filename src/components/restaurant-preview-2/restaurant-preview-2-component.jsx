@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core';
+import restaurantImage from "../../assets/temp.jpg";
 import './restaurant-preview-2-style.scss';
 
 const RestaurantPreviewTwo = () => {
@@ -11,10 +12,10 @@ const RestaurantPreviewTwo = () => {
                     <CardMedia
                         className='restaurant-image'
                         component="img"
-                        alt="Contemplative Reptile"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        title="Contemplative Reptile"
+                        alt="restaurant-image"
+                        height="150"
+                        image={restaurantImage}
+                        title="restaurant-image"
                     />
                 
                     <CardContent className='restaurant-detail'>
