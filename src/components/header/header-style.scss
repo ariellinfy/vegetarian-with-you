@@ -15,6 +15,21 @@
       padding: 0.3em 1.5em;
     }
 
+    .header-left {
+      width: 15%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .logo {
+        width: 4em;
+      }
+
+      .logo-title {
+        margin-left: 0.75em;
+      }
+    }
+
     .header-right {
       width: 85%;
       display: flex;

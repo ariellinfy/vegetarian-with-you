@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
+import logo from '../../assets/logo1.png';
 import './header-style.scss';
 
 const Header = () => {
@@ -21,7 +22,10 @@ const Header = () => {
         <div className='header-container'>
             <AppBar position="static" color="grey">
                 <Toolbar className='header-toolbar'>
-                    <i className="fa fa-user-circle"></i>
+                    <div className='header-left'>
+                        <img className='logo' src={logo} alt='logo' />
+                        <Typography variant="body1" color="primary" className='logo-title' component='span'>Vegetarian With You</Typography>
+                    </div>
                     <div className='header-right'>
                         <Button color="primary" className='header-btn'>
                             <SearchIcon />
