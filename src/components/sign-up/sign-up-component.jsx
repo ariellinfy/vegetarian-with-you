@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { signUpStart } from '../../redux/user/user-actions';
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-up-style.scss';
 
-const SignUp = () => {
+const SignUp = ({ signUpStart }) => {
     const [userCredential, setCredential] = useState({
-        displayName: '',
+        publicName: '',
         email: '',
         password: '',
         confirmPassword: ''
     })
-    const { displayName, email, password, confirmPassword } = userCredential;
+    const { publicName, email, password, confirmPassword } = userCredential;
 
     const handleSubmit = event => {
         event.preventDefault();
-
-    }
+        if (password !== confirmPassword) {
+            alert("Passwords don't match");
+            return;
+        };
+        signUpStart({publicName, email, password});
+    };
     
     const handleChange = event => {
-    const { value, name } = event.target;
-    setCredential({ ...userCredential, [name]: value });
-    }
+        const { value, name } = event.target;
+        setCredential({ ...userCredential, [name]: value });
+    };
 
     return (
         <div className='sign-up-container'>
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <Typography variant="h6">Don't have an account? Let's get started now!</Typography>
                 <TextField 
-                    className='text-field displayName' 
+                    className='text-field publicName' 
                     label='Name' 
                     type='text'
-                    name='displayName' 
-                    value={displayName} 
+                    name='publicName' 
+                    value={publicName} 
                     variant="outlined" 
                     onChange={handleChange}
                     fullWidth required 
@@ -59,8 +65,8 @@ const SignUp = () => {
                     className='text-field password' 
                     label='Confirm Password' 
                     type='password' 
-                    name='password' 
-                    value={password} 
+                    name='confirmPassword' 
+                    value={confirmPassword} 
                     variant="outlined" 
                     onChange={handleChange}
                     fullWidth required 
@@ -73,4 +79,8 @@ const SignUp = () => {
     )
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+    signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

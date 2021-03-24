@@ -20,7 +20,7 @@ const Header = () => {
 
     return (
         <div className='header-container'>
-            <AppBar position="static" color="grey">
+            <AppBar position="static" color="inherit">
                 <Toolbar className='header-toolbar'>
                     <div className='header-left'>
                         <img className='logo' src={logo} alt='logo' />

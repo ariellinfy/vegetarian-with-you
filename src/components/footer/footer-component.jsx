@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link, BottomNavigation } from '@material-ui/core';
+import { Link, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import './footer-style.scss';
 
 const useStyles = makeStyles(() => ({
@@ -18,7 +18,8 @@ const Footer = () => {
     const classes = useStyles();
     return (
         <div className='footer-container'>
-            <BottomNavigation position="fixed" className={classes.footer}>
+            <BottomNavigation position="fixed" className={classes.footer} showLabels>
+                <BottomNavigationAction label="Ariel" icon="" />
                 <div className='footer-content'>
                     <i className="fa fa-copyright"></i>
                     2021 <Link href='https://ariellinfy.com/' target="_blank" rel="noopener" className='footer-link'>Ariel Lin</Link>
