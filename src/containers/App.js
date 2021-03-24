@@ -1,7 +1,11 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import { createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { lightGreen, green, orange, deepOrange, yellow } from '@material-ui/core/colors';
+import './App.css';
 
 import Header from '../components/header/header-component';
 import Footer from '../components/footer/footer-component';
@@ -13,7 +17,8 @@ import RestaurantPage from './restaurant-page/restaurant-page-component';
 import ExplorePage from './explore-page/explore-page-component';
 import FindRestaurantPage from './find-restaurant-page/find-restaurant-page-component';
 import AdminDashboardPage from './admin-dashboard-page/admin-dashboard-page-component';
-import './App.css';
+
+import { selectCurrentUser } from '../redux/user/user-selectors';
 
 let theme = createMuiTheme({
   palette: {
@@ -38,7 +43,7 @@ let theme = createMuiTheme({
 
 theme = responsiveFontSizes(theme);
 
-const App = () => {
+const App = ({ currentUser }) => {
   return (
     <ThemeProvider theme={theme}>
         <div className='App'>
@@ -52,7 +57,7 @@ const App = () => {
               <Route exact path='/restaurant' component={RestaurantPage} />
               {/* <Route exact path='/updaterestaurant' component={UpdateRestaurantPage} /> */}
               {/* <Route exact path='/updatereview' component={UpdateReviewPage} /> */}
-              <Route exact path='/signin' component={SignInAndSignUpPage} />
+              <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
               <Route exact path='/useraccount' component={AdminDashboardPage} />
             </Switch>
           <Footer />
@@ -62,4 +67,8 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps, null)(App);

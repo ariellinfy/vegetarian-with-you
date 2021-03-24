@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { signInStart } from '../../redux/user/user-actions';
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-in-style.scss';
 
-const SignIn = () => {
+const SignIn = ({ signInStart }) => {
     const [userCredential, setCredential] = useState({
         email: '',
         password: ''
@@ -11,7 +13,7 @@ const SignIn = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-
+        signInStart({ email, password });
     }
     
     const handleChange = event => {
@@ -51,4 +53,9 @@ const SignIn = () => {
     )
 }
 
-export default SignIn;
+
+const mapDispatchToProps = dispatch => ({
+    signInStart: userCredential => dispatch(signInStart(userCredential))
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);

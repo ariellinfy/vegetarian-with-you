@@ -80,7 +80,7 @@ const SignUp = ({ signUpStart }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+    signUpStart: userCredential => dispatch(signUpStart(userCredential))
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);

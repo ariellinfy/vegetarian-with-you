@@ -16,17 +16,19 @@
     }
 
     .header-left {
-      width: 15%;
+      width: 20%;
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      text-decoration: none;
 
       .logo {
-        width: 4em;
+        width: 3.5em;
       }
 
       .logo-title {
-        margin-left: 0.75em;
+        margin-left: 0.5em;
+        font-weight: 600;
       }
     }
 
@@ -35,6 +37,10 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
+      .redirect-btn {
+        text-decoration: none;
+      }
 
       .header-btn {
         margin: 0.5em;

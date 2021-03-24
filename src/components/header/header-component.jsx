@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { signOutStart } from '../../redux/user/user-actions';
+
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
-import logo from '../../assets/logo1.png';
+import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = () => {
-    const [auth, setAuth] = useState(true);
+const Header = ({ currentUser, signOutStart }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -18,14 +23,18 @@ const Header = () => {
         setAnchorEl(null);
     };
 
+    const handleSignOut = () => {
+        signOutStart({ currentUser });
+    };
+
     return (
         <div className='header-container'>
             <AppBar position="static" color="inherit">
                 <Toolbar className='header-toolbar'>
-                    <div className='header-left'>
-                        <img className='logo' src={logo} alt='logo' />
+                    <Link to='/' className='header-left'>
+                        <img src={logo} alt='logo' className='logo' />
                         <Typography variant="body1" color="primary" className='logo-title' component='span'>Vegetarian With You</Typography>
-                    </div>
+                    </Link>
                     <div className='header-right'>
                         <Button color="primary" className='header-btn'>
                             <SearchIcon />
@@ -35,7 +44,7 @@ const Header = () => {
                             <AddCircleOutlineIcon />
                             <Typography variant="body1" className='header-btn-label' component='span'>Write review</Typography>
                         </Button>
-                        {auth && (
+                        { currentUser ? (
                             <div>
                                 <IconButton
                                     edge="end"
@@ -67,9 +76,15 @@ const Header = () => {
                                     <MenuItem onClick={handleClose}>View Profile</MenuItem>
                                     <MenuItem onClick={handleClose}>Account Info</MenuItem>
                                     <MenuItem onClick={handleClose}>My Reviews</MenuItem>
-                                    <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+                                    <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                                 </Menu>
                             </div>
+                        ) : (
+                            <Link to='/signin' className='redirect-btn'> 
+                                <Button color="primary" variant="contained" className='header-btn'>
+                                    <Typography variant="body1" className='header-btn-label' component='span'>Sign In</Typography>
+                                </Button>
+                            </Link>
                         )}
                     </div>
                 </Toolbar>
@@ -78,4 +93,12 @@ const Header = () => {
     )
 }
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+    signOutStart: user => dispatch(signOutStart(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
