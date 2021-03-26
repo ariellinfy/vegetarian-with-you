@@ -91,7 +91,6 @@ const EditProfile = ({ publicName, location, open, handleClose, editProfileStart
     )
 }
 
-
 const mapStateToProps = createStructuredSelector({
     currentUserToken: selectUserToken
 });

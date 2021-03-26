@@ -58,3 +58,37 @@ export const editProfileFailure = error => ({
     type: UserActionTypes.EDIT_PROFILE_FAILURE,
     payload: error
 });
+
+export const resetPasswordStart = userCredential => ({
+    type: UserActionTypes.RESET_PASSWORD_START,
+    payload: userCredential
+});
+
+export const resetPasswordSuccess = user => ({
+    type: UserActionTypes.RESET_PASSWORD_SUCCESS,
+    payload: user
+});
+
+export const resetPasswordFailure = error => ({
+    type: UserActionTypes.RESET_PASSWORD_FAILURE,
+    payload: error
+});
+
+export const onEditUserEmail  = () => ({
+    type: UserActionTypes.CHANGE_EDIT_EMAIL_STATUS
+});
+
+export const updateEmailStart = userCredential => ({
+    type: UserActionTypes.UPDATE_EMAIL_START,
+    payload: userCredential
+});
+
+export const updateEmailSuccess = user => ({
+    type: UserActionTypes.UPDATE_EMAIL_SUCCESS,
+    payload: user
+});
+
+export const updateEmailFailure = error => ({
+    type: UserActionTypes.UPDATE_EMAIL_FAILURE,
+    payload: error
+});

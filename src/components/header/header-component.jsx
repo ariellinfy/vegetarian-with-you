@@ -64,10 +64,10 @@ const Header = ({ currentUserToken, signOutStart }) => {
                                         horizontal: 'right',
                                     }}
                                     keepMounted
-                                    // transformOrigin={{
-                                    //     vertical: 'top',
-                                    //     horizontal: 'right',
-                                    // }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
                                     open={Boolean(anchorEl)}
                                     onClose={handleClose}
                                     style={{ top: '50px' }}

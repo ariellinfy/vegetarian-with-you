@@ -1,84 +1,136 @@
 .account-info-page {
-    margin: 3vh 4.5vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  margin: 3vh 4.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-    .user-credentials {
-        padding: 1em;
-        margin: 0.5em 0;
-        
+  .user-credentials {
+    padding: 1em;
+    margin: 0.5em 0;
 
-        .credential-box {
+    .credential-box {
+      display: flex;
+      align-items: center;
+      margin: 1em;
+
+      .user-credential {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 2em;
+
+        @media screen and (max-width: 920px) {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          width: 100%;
+          height: auto;
+        }
+
+        .credential-title {
+          font-weight: bold;
+          margin-right: 1em;
+          width: 5em;
+
+          @media screen and (max-width: 920px) {
+            width: fit-content;
+            margin-right: 0;
+          }
+        }
+        .credential-content {
+          display: flex;
+          align-items: flex-end;
+
+          @media screen and (max-width: 920px) {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+          }
+
+          .edit-name-form {
             display: flex;
-            align-items: center;
-            margin: 1em;
+            align-items: flex-start;
+            width: 100%;
 
-            @media screen and (max-width: 865px) {
-                flex-direction: column;
-                align-items: flex-start;
+            @media screen and (max-width: 920px) {
+              flex-direction: column;
+              align-items: flex-start;
             }
+          }
 
-              .user-credential {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+          .credential {
+            width: 12em;
+            margin-right: 1.25em;
 
-                .credential-title {
-                    font-weight: bold;
-                    margin-right: 1em;
-                    width: 5em;
+            @media screen and (max-width: 920px) {
+              width: 100%;
+              margin-right: 0;
 
-                    @media screen and (max-width: 865px) {
-                        width: fit-content;
-                    }
-                }
-    
-                .credential {
-                    width: 12em;
-
-                    @media screen and (max-width: 865px) {
-                        width: fit-content;
-                    }
-                }
+              &:first-child {
+                margin-bottom: 0.5em;
               }
-            
-            .credential-btn {
-                text-transform: none;
-                
-                &.reset-btn {
-                    padding-left: 0;
-                    border: none;
-
-                    @media screen and (max-width: 865px) {
-                        border: 1px solid rgba(245, 0, 87, 0.5);
-                    }
-
-                    &:hover {
-                        background-color: transparent;
-                        text-decoration: underline;
-                    }
-                }
-
-                @media screen and (max-width: 865px) {
-                    margin-top: 0.5em;
-                    width: 100%;
-                }
             }
+          }
         }
-    }
+      }
 
-    .deactivate-account {
-        padding: 2em;
-        margin: 0.5em 0;
+      .btn-group {
+        display: flex;
 
-        .deactivate-title {
-            font-weight: bold;
+        @media screen and (max-width: 920px) {
+          width: 100%;
+        }
+      }
+
+      .credential-btn {
+        text-transform: none;
+        margin-right: 0.5em;
+
+        &.reset-btn {
+          border: none;
+          padding-left: 0.25em;
+
+          @media screen and (max-width: 920px) {
+            border: 1px solid rgba(245, 0, 87, 0.5);
+          }
+
+          &:hover {
+            background-color: transparent;
             text-decoration: underline;
+          }
         }
 
-        .deactivation {
-            margin-bottom: 0.5em;
+        &:last-child {
+          margin-right: 0;
         }
+
+        @media screen and (max-width: 920px) {
+          margin-top: 0.5em;
+          width: 100%;
+        }
+      }
     }
+  }
+
+  .deactivate-account {
+    padding: 2em;
+    margin: 0.5em 0;
+
+    .deactivate-title {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .deactivation {
+      margin-bottom: 0.5em;
+    }
+
+    .deactivate-btn {
+      @media screen and (max-width: 920px) {
+        margin-top: 0.5em;
+        width: 100%;
+      }
+    }
+  }
 }

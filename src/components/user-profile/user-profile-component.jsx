@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Avatar, Button, Paper, Typography } from '@material-ui/core';
 import EditProfile from '../../components/edit-profile/edit-profile-component';
 import './user-profile-style.scss';
 
-const UserProfile = ({ user: { public_name, contributions, location, joined } }) => {
+const UserProfile = ({ user: { user_id, public_name, contributions, location, joined } }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -38,12 +39,23 @@ const UserProfile = ({ user: { public_name, contributions, location, joined } })
                         }
                     </div>
                 </div>
-                <div className='profile-header-2'>
-                    <Button className="update-button" variant="contained" color="primary" onClick={handleClickOpen}>
-                        Update Profile
-                    </Button>
-                    <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
-                </div>
+                {
+                    user_id ? (
+                        <div className='profile-header-2'>
+                            <Button className="update-button" variant="contained" color="primary" onClick={handleClickOpen}>
+                                Update Profile
+                            </Button>
+                            <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
+                        </div>
+                    ) : (
+                        <div className='profile-header-2'>
+                            <Button component={Link} to={'/signin'} className="update-button" variant="contained" color="primary">
+                                Update Profile
+                            </Button>
+                        </div>
+                    )
+                }
+                
             </Paper>
             <Paper className='profile-body'>
                 <div className='user-detail'>
@@ -52,12 +64,20 @@ const UserProfile = ({ user: { public_name, contributions, location, joined } })
                         location ? (
                             <Typography className="info" variant='subtitle1'>{location}</Typography>
                         ) : (
-                            <div>
-                                <Button className="review-button" color="primary" onClick={handleClickOpen}>
-                                    Add your current city
-                                </Button>
-                                <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
-                            </div>
+                            user_id ? (
+                                <div>
+                                    <Button className="review-button" color="primary" onClick={handleClickOpen}>
+                                        Add your current city
+                                    </Button>
+                                    <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
+                                </div>
+                            ) : (
+                                <div>
+                                    <Button component={Link} to={'/signin'} className="review-button" color="primary">
+                                        Add your current city
+                                    </Button>
+                                </div>
+                            )
                         )
                     }
                 </div>
@@ -73,7 +93,13 @@ const UserProfile = ({ user: { public_name, contributions, location, joined } })
                 </div>
                 <div className='user-detail'>
                     <i className="fa fa-pencil"></i>
-                    <Button className="review-button" color="primary">Write review</Button>
+                    {
+                        user_id ? (
+                            <Button className="review-button" color="primary">Write review</Button>
+                        ) : (
+                            <Button component={Link} to={'/signin'} className="review-button" color="primary">Write review</Button>
+                        )
+                    } 
                 </div>
             </Paper>
         </div>

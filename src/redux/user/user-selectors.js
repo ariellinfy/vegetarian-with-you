@@ -19,3 +19,5 @@ export const selectUserToken = createSelector([selectUser], user => {
         return "";
     }
 });
+
+export const selectEditEmailStatus = createSelector([selectUser], user => user.onEditUserEmail);

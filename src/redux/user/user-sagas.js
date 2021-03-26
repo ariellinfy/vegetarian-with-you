@@ -1,6 +1,13 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import UserActionTypes from './user-types';
-import { signUpSuccess, signUpFailure, signInSuccess, signInFailure, signOutSuccess, signOutFailure, editProfileSuccess, editProfileFailure } from './user-actions';
+import { 
+    signUpSuccess, signUpFailure, 
+    signInSuccess, signInFailure, 
+    signOutSuccess, signOutFailure, 
+    editProfileSuccess, editProfileFailure, 
+    resetPasswordSuccess, resetPasswordFailure, 
+    updateEmailSuccess, updateEmailFailure, 
+} from './user-actions';
 
 export function* request(url, method, headers, body, auth = null) {
     const options = { method, headers, body };
@@ -93,7 +100,7 @@ export function* signOut({ payload: { currentUserToken } }) {
 export function* editProfile({ payload: { name, city, currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users/editprofile';
-        const method = 'POST';
+        const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
             public_name: name,
@@ -106,6 +113,44 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
         } 
     } catch (error) {
         yield put(editProfileFailure(error));
+    }
+}
+
+export function* resetPassword({ payload: { email, oldPassword, newPassword, currentUserToken } }) {
+    try {
+        const url = 'http://localhost:5000/users/resetpassword';
+        const method = 'PATCH';
+        const headers = null;
+        const body = JSON.stringify({
+            email: email,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        });
+        const user = yield call(request, url, method, headers, body, currentUserToken);
+        if (user !== undefined) {
+            localStorage.setItem('token', user.token);
+            yield put(resetPasswordSuccess(user));
+        } 
+    } catch (error) {
+        yield put(resetPasswordFailure(error));
+    }
+}
+
+export function* updateEmail({ payload: { email, currentUserToken } }) {
+    try {
+        const url = 'http://localhost:5000/users/updateemail';
+        const method = 'PATCH';
+        const headers = null;
+        const body = JSON.stringify({
+            email: email
+        });
+        const user = yield call(request, url, method, headers, body, currentUserToken);
+        if (user !== undefined) {
+            localStorage.setItem('token', user.token);
+            yield put(updateEmailSuccess(user));
+        } 
+    } catch (error) {
+        yield put(updateEmailFailure(error));
     }
 }
 
@@ -125,11 +170,21 @@ export function* onEditProfileStart() {
     yield takeLatest(UserActionTypes.EDIT_PROFILE_START, editProfile);
 }
 
+export function* onResetPasswordStart() {
+    yield takeLatest(UserActionTypes.RESET_PASSWORD_START, resetPassword);
+}
+
+export function* onUpdateEmailStart() {
+    yield takeLatest(UserActionTypes.UPDATE_EMAIL_START, updateEmail);
+}
+
 export function* userSagas() {
     yield all([
         call(onSignUpStart),
         call(onSignInStart),
         call(onSignOutStart),
         call(onEditProfileStart),
+        call(onResetPasswordStart),
+        call(onUpdateEmailStart),
     ]);
 }
