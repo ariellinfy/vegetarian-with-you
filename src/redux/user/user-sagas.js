@@ -1,6 +1,6 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import UserActionTypes from './user-types';
-import { signUpSuccess, signUpFailure, signInSuccess, signInFailure, signOutSuccess, signOutFailure } from './user-actions';
+import { signUpSuccess, signUpFailure, signInSuccess, signInFailure, signOutSuccess, signOutFailure, editProfileSuccess, editProfileFailure } from './user-actions';
 
 export function* request(url, method, headers, body, auth = null) {
     const options = { method, headers, body };
@@ -8,7 +8,6 @@ export function* request(url, method, headers, body, auth = null) {
     try {
         const response = yield call(fetch, url, addHeader(options, token));
         const checkedResponse = yield checkStatus(response);
-        console.log(checkedResponse);
         return checkedResponse;
     } catch (e) {
        console.log(e, 'something went wrong');
@@ -50,6 +49,7 @@ export function* signUp({ payload: { publicName, email, password } }) {
         });
         const user = yield call(request, url, method, headers, body);
         if (user !== undefined) {
+            localStorage.setItem('token', user.token);
             yield put(signUpSuccess(user));
         } 
     } catch (error) {
@@ -68,6 +68,7 @@ export function* signIn({ payload: { email, password } }) {
         });
         const user = yield call(request, url, method, headers, body);
         if (user !== undefined) {
+            localStorage.setItem('token', user.token);
             yield put(signInSuccess(user));
         } 
     } catch (error) {
@@ -75,20 +76,36 @@ export function* signIn({ payload: { email, password } }) {
     }
 }
 
-export function* signOut({ payload: { currentUser, token } }) {
+export function* signOut({ payload: { currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users/signout';
         const method = 'POST';
-        const headers = {
-            'Authorization': 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        };
+        const headers = null;
         const body = null;
-        yield call(request, url, method, headers, body);
+        yield call(request, url, method, headers, body, currentUserToken);
+        localStorage.removeItem('token');
         yield put(signOutSuccess());
     } catch (error) {
         yield put(signOutFailure(error));
+    }
+}
+
+export function* editProfile({ payload: { name, city } }) {
+    try {
+        const url = 'http://localhost:5000/users/editprofile';
+        const method = 'POST';
+        const headers = null;
+        const body = JSON.stringify({
+            public_name: name,
+            location: city
+        });
+        const user = yield call(request, url, method, headers, body);
+        if (user !== undefined) {
+            localStorage.setItem('token', user.token);
+            yield put(editProfileSuccess(user));
+        } 
+    } catch (error) {
+        yield put(editProfileFailure(error));
     }
 }
 
@@ -104,10 +121,15 @@ export function* onSignOutStart() {
     yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
+export function* onEditProfileStart() {
+    yield takeLatest(UserActionTypes.EDIT_PROFILE_START, editProfile);
+}
+
 export function* userSagas() {
     yield all([
         call(onSignUpStart),
         call(onSignInStart),
-        call(onSignOutStart)
+        call(onSignOutStart),
+        call(onEditProfileStart),
     ]);
 }

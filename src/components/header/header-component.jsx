@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { selectUserToken } from '../../redux/user/user-selectors';
 import { signOutStart } from '../../redux/user/user-actions';
 
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
@@ -11,20 +11,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ currentUser, signOutStart }) => {
+const Header = ({ currentUserToken, signOutStart }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
     
-      const handleClose = () => {
+    const handleClose = () => {
         setAnchorEl(null);
     };
 
     const handleSignOut = () => {
-        signOutStart({ currentUser });
+        signOutStart({ currentUserToken });
     };
 
     return (
@@ -44,7 +43,7 @@ const Header = ({ currentUser, signOutStart }) => {
                             <AddCircleOutlineIcon />
                             <Typography variant="body1" className='header-btn-label' component='span'>Write review</Typography>
                         </Button>
-                        { currentUser ? (
+                        { currentUserToken.length ? (
                             <div>
                                 <IconButton
                                     edge="end"
@@ -65,15 +64,15 @@ const Header = ({ currentUser, signOutStart }) => {
                                         horizontal: 'right',
                                     }}
                                     keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
+                                    // transformOrigin={{
+                                    //     vertical: 'top',
+                                    //     horizontal: 'right',
+                                    // }}
+                                    open={Boolean(anchorEl)}
                                     onClose={handleClose}
                                     style={{ top: '50px' }}
                                 >
-                                    <MenuItem onClick={handleClose}>View Profile</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" onClick={handleClose}>View Profile</MenuItem>
                                     <MenuItem onClick={handleClose}>Account Info</MenuItem>
                                     <MenuItem onClick={handleClose}>My Reviews</MenuItem>
                                     <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
@@ -81,7 +80,7 @@ const Header = ({ currentUser, signOutStart }) => {
                             </div>
                         ) : (
                             <Link to='/signin' className='redirect-btn'> 
-                                <Button color="primary" variant="contained" className='header-btn'>
+                                <Button color="primary" variant="contained" className='header-btn' onClick={handleClose}>
                                     <Typography variant="body1" className='header-btn-label' component='span'>Sign In</Typography>
                                 </Button>
                             </Link>
@@ -94,11 +93,11 @@ const Header = ({ currentUser, signOutStart }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+    currentUserToken: selectUserToken
 });
 
 const mapDispatchToProps = dispatch => ({
-    signOutStart: user => dispatch(signOutStart(user))
+    signOutStart: token => dispatch(signOutStart(token))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

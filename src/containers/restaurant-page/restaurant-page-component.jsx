@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import ReviewPreview from '../../components/review-preview/review-preview-component';
+
 import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Divider, Paper, Link, Button, FormControl, Select, MenuItem, Dialog } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes, faQuestion, faMapMarkedAlt, faPhoneAlt, faExternalLinkAlt, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import RoomIcon from '@material-ui/icons/Room';
+import CallIcon from '@material-ui/icons/Call';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ImageGallery from 'react-image-gallery';
 import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import ReviewPreview from '../../components/review-preview/review-preview-component';
 import './restaurant-page-style.scss';
 
 const list = [
@@ -98,15 +103,6 @@ const RestaurantPage = () => {
     });
     const { overallRate, foodRate, serviceRate, valueRate, atmosphereRate } = rate;
 
-    const checkIcon = <FontAwesomeIcon icon={faCheck} color='green' />
-    const crossIcon = <FontAwesomeIcon icon={faTimes} color='red' />
-    const questionIcon = <FontAwesomeIcon icon={faQuestion} color='grey' />
-    const mapIcon = <FontAwesomeIcon icon={faMapMarkedAlt} color='orange' />
-    const phoneIcon = <FontAwesomeIcon icon={faPhoneAlt} color='blue' />
-    const websiteIcon = <FontAwesomeIcon icon={faExternalLinkAlt} color='black' />
-    const rightIcon = <FontAwesomeIcon icon={faChevronRight} className='arrow-prev' />
-    const leftIcon = <FontAwesomeIcon icon={faChevronLeft} className='arrow-prev' />
-
     const [selected, setSelected] = useState('item1');
 
     const menu = ImageMenu(list, selected);
@@ -162,8 +158,8 @@ const RestaurantPage = () => {
                 <div className='restaurant-category restaurant-photos'>
                     <ScrollMenu
                         data={menu}
-                        arrowLeft={leftIcon}
-                        arrowRight={rightIcon}
+                        arrowLeft={ChevronLeftIcon}
+                        arrowRight={ChevronRightIcon}
                         selected={selected}
                         onSelect={key => setSelected({ selected: key })}
                         onClick={handleClickOpen}
@@ -238,25 +234,25 @@ const RestaurantPage = () => {
                         <div className='paper-container meals'>
                             <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    breakfast === true ? [checkIcon] : [crossIcon] 
+                                    breakfast === true ? [CheckIcon] : [ClearIcon] 
                                 }
                                 <Typography className='item meal' component="span">Breakfast</Typography>
                             </Box>
                             <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    brunch === true ? [checkIcon] : [crossIcon] 
+                                    brunch === true ? [CheckIcon] : [ClearIcon] 
                                 }
                                 <Typography className='item meal' component="span">Brunch</Typography>
                             </Box>
                             <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    lunch === true ? [checkIcon] : [crossIcon]  
+                                    lunch === true ? [CheckIcon] : [ClearIcon]  
                                 }
                                 <Typography className='item meal' component="span">Lunch</Typography>
                             </Box>
                             <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    dinner === true ? [checkIcon] : [crossIcon] 
+                                    dinner === true ? [CheckIcon] : [ClearIcon] 
                                 }
                                 <Typography className='item meal' component="span">Dinner</Typography>
                             </Box>
@@ -266,15 +262,15 @@ const RestaurantPage = () => {
                         <Typography className='paper-title' component="legend">Location and Contact</Typography>
                         <div className='paper-container contacts'>
                             <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                                {mapIcon}
+                                {RoomIcon}
                                 <Typography className='item contact' component="span">{`${restaurantAddress}, ${restaurantCity}, ${restaurantRegion} ${restaurantPostalCode} ${restaurantCountry}`}</Typography>
                             </Box>
                             <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                                {phoneIcon}
+                                {CallIcon}
                                 <Typography className='item contact' component="span">{restaurantPhone}</Typography>
                             </Box>
                             <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                                {websiteIcon}
+                                <i class="fa fa-external-link-alt"></i>
                                 <Typography className='item contact' component="span">
                                     <Link href={`${restaurantWebsite}`} target="_blank" rel="noopener">
                                         {restaurantWebsite}
@@ -288,25 +284,25 @@ const RestaurantPage = () => {
                         <div className='paper-container features'>
                             <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    restaurantWifi === 'yes' ? [checkIcon] : (restaurantWifi === 'no' ? [crossIcon] : [questionIcon]) 
+                                    restaurantWifi === 'yes' ? [CheckIcon] : (restaurantWifi === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
                                 }
                                 <Typography className='item feature' component="span">Free Wifi</Typography>
                             </Box>
                             <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    restaurantTakeaway === 'yes' ? [checkIcon] : (restaurantTakeaway === 'no' ? [crossIcon] : [questionIcon]) 
+                                    restaurantTakeaway === 'yes' ? [CheckIcon] : (restaurantTakeaway === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
                                 }
                                 <Typography className='item feature' component="span">Takeaway</Typography>
                             </Box>
                             <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    restaurantDelivery === 'yes' ? [checkIcon] : (restaurantDelivery === 'no' ? [crossIcon] : [questionIcon]) 
+                                    restaurantDelivery === 'yes' ? [CheckIcon] : (restaurantDelivery === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
                                 }
                                 <Typography className='item feature' component="span">Delivery</Typography>
                             </Box>
                             <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                                 {
-                                    restaurantPungent === 'yes' ? [checkIcon] : (restaurantPungent === 'no' ? [crossIcon] : [questionIcon]) 
+                                    restaurantPungent === 'yes' ? [CheckIcon] : (restaurantPungent === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
                                 }
                                 <Typography className='item feature' component="span">Exclude 5 pungent vegetables</Typography>
                             </Box>

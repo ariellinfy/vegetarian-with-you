@@ -30,9 +30,9 @@ export const signInFailure = error => ({
     payload: error
 });
 
-export const signOutStart = user => ({
+export const signOutStart = token => ({
     type: UserActionTypes.SIGN_OUT_START,
-    payload: user
+    payload: token
 });
 
 export const signOutSuccess = () => ({
@@ -41,5 +41,20 @@ export const signOutSuccess = () => ({
 
 export const signOutFailure = error => ({
     type: UserActionTypes.SIGN_OUT_FAILURE,
+    payload: error
+});
+
+export const editProfileStart = userInfo => ({
+    type: UserActionTypes.EDIT_PROFILE_START,
+    payload: userInfo
+});
+
+export const editProfileSuccess = user => ({
+    type: UserActionTypes.EDIT_PROFILE_SUCCESS,
+    payload: user
+});
+
+export const editProfileFailure = error => ({
+    type: UserActionTypes.EDIT_PROFILE_FAILURE,
     payload: error
 });

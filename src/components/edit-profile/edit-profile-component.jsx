@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { editProfileStart } from '../../redux/user/user-actions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Divider, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
@@ -22,46 +24,74 @@ const useStyles = makeStyles((theme) => ({
 
 const EditProfile = ({ publicName, location, open, handleClose }) => {
     const classes = useStyles();
+    
+    if (!location) {
+        location = "";
+    }
+    const [userInfo, setProfile] = useState({
+        name: publicName,
+        city: location
+    })
+    const { name, city } = userInfo;
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        editProfileStart({ name, city });
+    }
+    
+    const handleChange = event => {
+        const { value, name } = event.target;
+        console.log(name, value);
+        setProfile({ ...userInfo, [name]: value });
+    }
+
     return (
         <div className='edit-profile-page'>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle id="update-password-title">Edit Profile</DialogTitle>
                 <Divider />
-                <DialogContent className={classes.root}>
-                    <Avatar className={classes.large} >H</Avatar>
-                    <div>
-                        <TextField
-                            defaultValue={publicName}
-                            id="name"
-                            label="Name"
-                            type="text"
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                        />
-                        <TextField
-                            defaultValue={location}
-                            id="location"
-                            label="Current City"
-                            type="text"
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                        />
-                    </div>
-                    
-                </DialogContent>
-                <DialogActions className={classes.actions}>
-                    <Button onClick={handleClose} variant="outlined" color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} variant="contained" color="secondary">
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                <form className='edit-profile-form' onSubmit={handleSubmit}>
+                    <DialogContent className={classes.root}>
+                        <Avatar className={classes.large} >H</Avatar>
+                        <div>
+                            <TextField
+                                label="Name"
+                                type="text"
+                                name='publicName' 
+                                value={name} 
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth required
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                label="Current City"
+                                type="text"
+                                name='location' 
+                                value={city} 
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </DialogContent>
+                    <DialogActions className={classes.actions}>
+                        <Button onClick={handleClose} variant="outlined" color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleClose} variant="contained" color="secondary">
+                            Save
+                        </Button>
+                    </DialogActions>
+                </form>
+            </Dialog>    
         </div>
     )
 }
 
-export default EditProfile;
+const mapDispatchToProps = dispatch => ({
+    editProfileStart: userInfo => dispatch(editProfileStart(userInfo))
+});
+
+export default connect(null, mapDispatchToProps)(EditProfile);

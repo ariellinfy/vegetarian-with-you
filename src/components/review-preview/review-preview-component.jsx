@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Card, CardHeader, CardContent, CardActions, Button, Box, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faFlag } from '@fortawesome/free-solid-svg-icons';
 import './review-preview-style.scss';
 
 const ReviewPreview = () => {
@@ -39,9 +37,6 @@ const ReviewPreview = () => {
         atomsphereRate: 2.5
     });
     const { overallRate, foodRate, serviceRate, valueRate, atomsphereRate } = rate;
-
-    const helpfulIcon = <FontAwesomeIcon icon={faThumbsUp} color='white' className='icon' />
-    const reportIcon = <FontAwesomeIcon icon={faFlag} color='#ef6c00' className='icon' />
 
     return (
         <div className='review-preview'>
@@ -82,11 +77,11 @@ const ReviewPreview = () => {
                     </CardContent>
                     <CardActions className='card-actions'>
                         <Button variant="contained" color="primary">
-                            {helpfulIcon}
+                            <i class="fa fa-thumbs-up"></i>
                             Helpful
                         </Button>
                         <Button variant="outlined" color="secondary" className='report'>
-                            {reportIcon}
+                            <i class="fa fa-flag"></i>
                             Report
                         </Button>
                     </CardActions>
