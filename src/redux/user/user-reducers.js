@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     currentUser: { user: {}, token: '' },
     authErr: '',
     editProfileErr: '',
+    deleteErr: '',
     onEditUserEmail: false,
 }
 
@@ -20,7 +21,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: { user: {}, token: '' },
-                authErr: null
+                authErr: ''
             };
         case UserActionTypes.EDIT_PROFILE_SUCCESS:
         case UserActionTypes.RESET_PASSWORD_SUCCESS:
@@ -28,7 +29,13 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: action.payload,
-                editProfileErr: null
+                editProfileErr: ''
+            };
+        case UserActionTypes.CLOSE_ACCOUNT_SUCCESS:
+            return {
+                ...state,
+                currentUser: { user: {}, token: '' },
+                deleteErr: '',
             };
         case UserActionTypes.SIGN_UP_FAILURE:
         case UserActionTypes.SIGN_IN_FAILURE:
@@ -44,11 +51,16 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 editProfileErr: action.payload
             };
+        case UserActionTypes.CLOSE_ACCOUNT_FAILURE:
+            return {
+                ...state,
+                deleteErr: action.payload
+            };
         case UserActionTypes.CHANGE_EDIT_EMAIL_STATUS:
             return {
                 ...state,
                 onEditUserEmail: !state.onEditUserEmail
-            }
+            };
         default:
             return state;
     }

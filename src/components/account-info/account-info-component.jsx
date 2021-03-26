@@ -13,7 +13,8 @@ const AccountInfo = ({ user: { email }, currentUserToken, editEmailStatus, onEdi
 
     const handleSubmit = event => {
         event.preventDefault();
-        updateEmailStart({ userEmail, currentUserToken });
+        updateEmailStart({ email, userEmail, currentUserToken });
+        onEditUserEmail();
     }
 
     const handleEditClick = () => {
@@ -21,9 +22,7 @@ const AccountInfo = ({ user: { email }, currentUserToken, editEmailStatus, onEdi
     }
     
     const handleChange = event => {
-        const { value, name } = event.target;
-        console.log(name, value)
-        setUserEmail(value);
+        setUserEmail(event.target.value);
     }
 
     const [openResetPassword, setPassword] = useState(false);
@@ -59,6 +58,7 @@ const AccountInfo = ({ user: { email }, currentUserToken, editEmailStatus, onEdi
                                         <form className='edit-name-form' onSubmit={handleSubmit}>
                                             <TextField
                                                 className='credential'
+                                                label=""
                                                 type="text"
                                                 name='userEmail' 
                                                 value={userEmail} 
@@ -103,7 +103,7 @@ const AccountInfo = ({ user: { email }, currentUserToken, editEmailStatus, onEdi
                         <Typography className='deactivate-title deactivation' variant='body1'>Close Account</Typography>
                         <Typography className='deactivation' variant='subtitle1' >Once you close your account, all information will be trashed, there is no way to go back. Please be certain.</Typography>
                         <Button name='deactivateAccount' className='deactivate-btn' size='small' variant="contained" color="secondary" onClick={handleClickOpenAccount}>Close your account</Button>
-                        <CloseAccount open={openCloseAccount} handleClose={handleCloseAccount} />
+                        <CloseAccount email={email} open={openCloseAccount} handleClose={handleCloseAccount} />
                     </Paper>
                 ) : (
                     null

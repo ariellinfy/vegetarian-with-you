@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectUserToken } from '../../redux/user/user-selectors';
+import { closeAccountStart } from '../../redux/user/user-actions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Divider, TextField, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
 
@@ -13,37 +17,63 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const CloseAccount = ({ open, handleClose }) => {
+const CloseAccount = ({ email, open, handleClose, currentUserToken, closeAccountStart }) => {
     const classes = useStyles();
+
+    const [confirmPassword, setPassword] = useState("");
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        closeAccountStart({ email, confirmPassword, currentUserToken });
+        setPassword("");
+    };
+    
+    const handleChange = event => {
+        setPassword(event.target.value);
+    };
+
     return (
         <div className='edit-profile-page'>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle id="update-password-title">Close Account</DialogTitle>
                 <Divider />
-                <DialogContent>
-                    <TextField
-                        id="confirm-password"
-                        label="Confirm Password"
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                    />
-                    <DialogContentText className={classes.text}>
-                        The account will be closed once you confirm the password.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions className={classes.actions}>
-                    <Button onClick={handleClose} variant="outlined" color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} variant="contained" color="secondary">
-                        Close account
-                    </Button>
-                </DialogActions>
+                <form className='reset_password-form' onSubmit={handleSubmit}>
+                    <DialogContent>
+                        <TextField
+                            id="confirm-password"
+                            label="Confirm Password"
+                            type="password"
+                            name='confirmPassword' 
+                            value={confirmPassword} 
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            onChange={handleChange}
+                        />
+                        <DialogContentText className={classes.text}>
+                            The account will be closed once you confirm the password.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions className={classes.actions}>
+                        <Button onClick={handleClose} variant="outlined" color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
+                            Close account
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </div>
     )
 }
 
-export default CloseAccount;
+const mapStateToProps = createStructuredSelector({
+    currentUserToken: selectUserToken
+});
+
+const mapDispatchToProps = dispatch => ({
+    closeAccountStart: userCredential => dispatch(closeAccountStart(userCredential))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CloseAccount);

@@ -92,3 +92,18 @@ export const updateEmailFailure = error => ({
     type: UserActionTypes.UPDATE_EMAIL_FAILURE,
     payload: error
 });
+
+export const closeAccountStart = userCredential => ({
+    type: UserActionTypes.CLOSE_ACCOUNT_START,
+    payload: userCredential
+});
+
+export const closeAccountSuccess = user => ({
+    type: UserActionTypes.CLOSE_ACCOUNT_SUCCESS,
+    payload: user
+});
+
+export const closeAccountFailure = error => ({
+    type: UserActionTypes.CLOSE_ACCOUNT_FAILURE,
+    payload: error
+});

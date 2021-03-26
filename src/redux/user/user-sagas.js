@@ -6,7 +6,8 @@ import {
     signOutSuccess, signOutFailure, 
     editProfileSuccess, editProfileFailure, 
     resetPasswordSuccess, resetPasswordFailure, 
-    updateEmailSuccess, updateEmailFailure, 
+    updateEmailSuccess, updateEmailFailure,
+    closeAccountSuccess, closeAccountFailure,
 } from './user-actions';
 
 export function* request(url, method, headers, body, auth = null) {
@@ -136,13 +137,14 @@ export function* resetPassword({ payload: { email, oldPassword, newPassword, cur
     }
 }
 
-export function* updateEmail({ payload: { email, currentUserToken } }) {
+export function* updateEmail({ payload: { email, userEmail, currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users/updateemail';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
-            email: email
+            oldEmail: email,
+            newEmail: userEmail
         });
         const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
@@ -151,6 +153,23 @@ export function* updateEmail({ payload: { email, currentUserToken } }) {
         } 
     } catch (error) {
         yield put(updateEmailFailure(error));
+    }
+}
+
+export function* closeAccount({ payload: { email, confirmPassword, currentUserToken } }) {
+    try {
+        const url = 'http://localhost:5000/users/closeaccount';
+        const method = 'DELETE';
+        const headers = null;
+        const body = JSON.stringify({
+            email: email,
+            password: confirmPassword
+        });
+        yield call(request, url, method, headers, body, currentUserToken);
+        localStorage.removeItem('token');
+        yield put(closeAccountSuccess());
+    } catch (error) {
+        yield put(closeAccountFailure(error));
     }
 }
 
@@ -178,6 +197,10 @@ export function* onUpdateEmailStart() {
     yield takeLatest(UserActionTypes.UPDATE_EMAIL_START, updateEmail);
 }
 
+export function* onCloseAccountStart() {
+    yield takeLatest(UserActionTypes.CLOSE_ACCOUNT_START, closeAccount);
+}
+
 export function* userSagas() {
     yield all([
         call(onSignUpStart),
@@ -186,5 +209,6 @@ export function* userSagas() {
         call(onEditProfileStart),
         call(onResetPasswordStart),
         call(onUpdateEmailStart),
+        call(onCloseAccountStart),
     ]);
 }
