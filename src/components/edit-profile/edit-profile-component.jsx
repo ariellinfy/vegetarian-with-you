@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { editProfileStart } from '../../redux/user/user-actions';
+import { selectUserToken } from '../../redux/user/user-selectors';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Divider, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
@@ -20,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
     actions: {
         padding: '8px 32px 24px 0',
     }
-  }));
+}));
 
-const EditProfile = ({ publicName, location, open, handleClose }) => {
+const EditProfile = ({ publicName, location, open, handleClose, editProfileStart, currentUserToken }) => {
     const classes = useStyles();
     
     if (!location) {
@@ -36,12 +38,11 @@ const EditProfile = ({ publicName, location, open, handleClose }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        editProfileStart({ name, city });
+        editProfileStart({ name, city, currentUserToken });
     }
     
     const handleChange = event => {
         const { value, name } = event.target;
-        console.log(name, value);
         setProfile({ ...userInfo, [name]: value });
     }
 
@@ -57,7 +58,7 @@ const EditProfile = ({ publicName, location, open, handleClose }) => {
                             <TextField
                                 label="Name"
                                 type="text"
-                                name='publicName' 
+                                name='name' 
                                 value={name} 
                                 variant="outlined"
                                 margin="normal"
@@ -67,7 +68,7 @@ const EditProfile = ({ publicName, location, open, handleClose }) => {
                             <TextField
                                 label="Current City"
                                 type="text"
-                                name='location' 
+                                name='city' 
                                 value={city} 
                                 variant="outlined"
                                 margin="normal"
@@ -80,7 +81,7 @@ const EditProfile = ({ publicName, location, open, handleClose }) => {
                         <Button onClick={handleClose} variant="outlined" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleClose} variant="contained" color="secondary">
+                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
                             Save
                         </Button>
                     </DialogActions>
@@ -90,8 +91,13 @@ const EditProfile = ({ publicName, location, open, handleClose }) => {
     )
 }
 
+
+const mapStateToProps = createStructuredSelector({
+    currentUserToken: selectUserToken
+});
+
 const mapDispatchToProps = dispatch => ({
     editProfileStart: userInfo => dispatch(editProfileStart(userInfo))
 });
 
-export default connect(null, mapDispatchToProps)(EditProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);

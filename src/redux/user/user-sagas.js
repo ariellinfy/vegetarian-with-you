@@ -90,7 +90,7 @@ export function* signOut({ payload: { currentUserToken } }) {
     }
 }
 
-export function* editProfile({ payload: { name, city } }) {
+export function* editProfile({ payload: { name, city, currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users/editprofile';
         const method = 'POST';
@@ -99,7 +99,7 @@ export function* editProfile({ payload: { name, city } }) {
             public_name: name,
             location: city
         });
-        const user = yield call(request, url, method, headers, body);
+        const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
             yield put(editProfileSuccess(user));
