@@ -58,7 +58,7 @@ export function* signUp({ payload: { publicName, email, password } }) {
         const user = yield call(request, url, method, headers, body);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
-            yield put(signUpSuccess(user));
+            yield put(signUpSuccess(user.user));
         } 
     } catch (error) {
         yield put(signUpFailure(error));
@@ -77,7 +77,7 @@ export function* signIn({ payload: { email, password } }) {
         const user = yield call(request, url, method, headers, body);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
-            yield put(signInSuccess(user));
+            yield put(signInSuccess(user.user));
         } 
     } catch (error) {
         yield put(signInFailure(error));
@@ -110,7 +110,7 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
         const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
-            yield put(editProfileSuccess(user));
+            yield put(editProfileSuccess(user.user));
         } 
     } catch (error) {
         yield put(editProfileFailure(error));
@@ -130,7 +130,7 @@ export function* resetPassword({ payload: { email, oldPassword, newPassword, cur
         const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
-            yield put(resetPasswordSuccess(user));
+            yield put(resetPasswordSuccess(user.user));
         } 
     } catch (error) {
         yield put(resetPasswordFailure(error));
@@ -149,7 +149,7 @@ export function* updateEmail({ payload: { email, userEmail, currentUserToken } }
         const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
-            yield put(updateEmailSuccess(user));
+            yield put(updateEmailSuccess(user.user));
         } 
     } catch (error) {
         yield put(updateEmailFailure(error));

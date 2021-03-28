@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createRestaurantStart } from '../../redux/restaurant/restaurant-actions';
+
 import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { COUNTRY_REGION } from '../../components/country-region';
 import MuiPhoneNumber  from 'material-ui-phone-number';
 import './create-restaurant-page-style.scss';
 
-const CreateRestaurantPage = () => {
+const CreateRestaurantPage = ({ createRestaurantStart }) => {
+    const currentUserToken = localStorage.getItem('token');
+
     const [restaurant, setRestaurant] = useState({
         restaurantName: '',
         restaurantAddress: '',
@@ -50,20 +55,40 @@ const CreateRestaurantPage = () => {
     
     const handleSubmit = async event => {
         event.preventDefault();
-
-    }
+        createRestaurantStart({
+            restaurantName, 
+            restaurantAddress, 
+            restaurantCity, 
+            restaurantRegion, 
+            restaurantCountry, 
+            restaurantPostalCode, 
+            restaurantPhone,
+            restaurantWebsite,
+            restaurantType,
+            restaurantCuisine,
+            breakfast,
+            brunch,
+            lunch,
+            dinner,
+            restaurantWifi,
+            restaurantTakeaway,
+            restaurantDelivery,
+            restaurantPungent,
+            currentUserToken
+        });
+    };
     
     const handleChange = event => {
         const { name, value, checked } = event.target;
+        console.log(restaurant, restaurantPhone)
         if (name === 'breakfast' || name === 'brunch' || name === 'lunch' || name === 'dinner') {
             setRestaurant({ ...restaurant, [name]: checked });
         } else if (name === 'restaurantCountry') {
             setRestaurant({ ...restaurant, restaurantRegion: '', restaurantCountry: value });
-        }
-        else {
+        } else {
             setRestaurant({ ...restaurant, [name]: value });
         }
-    }
+    };
 
     return (
         <div className='create-restaurant-page'>
@@ -365,4 +390,8 @@ const CreateRestaurantPage = () => {
     )
 }
 
-export default CreateRestaurantPage;
+const mapDispatchToProps = dispatch => ({
+    createRestaurantStart: restaurantInfo => dispatch(createRestaurantStart(restaurantInfo))
+});
+
+export default connect(null, mapDispatchToProps)(CreateRestaurantPage);

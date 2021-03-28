@@ -18,7 +18,7 @@ import ExplorePage from './explore-page/explore-page-component';
 import FindRestaurantPage from './find-restaurant-page/find-restaurant-page-component';
 import AdminDashboardPage from './admin-dashboard-page/admin-dashboard-page-component';
 
-import { selectUserToken } from '../redux/user/user-selectors';
+import { selectCurrentUser } from '../redux/user/user-selectors';
 
 let theme = createMuiTheme({
   palette: {
@@ -43,7 +43,7 @@ let theme = createMuiTheme({
 
 theme = responsiveFontSizes(theme);
 
-const App = ({ currentUserToken }) => {
+const App = ({ currentUser }) => {
   return (
     <ThemeProvider theme={theme}>
         <div className='App'>
@@ -57,7 +57,7 @@ const App = ({ currentUserToken }) => {
               <Route exact path='/restaurant' component={RestaurantPage} />
               {/* <Route exact path='/updaterestaurant' component={UpdateRestaurantPage} /> */}
               {/* <Route exact path='/updatereview' component={UpdateReviewPage} /> */}
-              <Route exact path='/signin' render={() => currentUserToken ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
+              <Route exact path='/signin' render={() => Object.keys(currentUser).length ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
               <Route exact path='/useraccount' component={AdminDashboardPage} />
             </Switch>
           <Footer />
@@ -68,7 +68,7 @@ const App = ({ currentUserToken }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUserToken: selectUserToken
+  currentUser: selectCurrentUser
 });
 
 export default connect(mapStateToProps, null)(App);

@@ -1,7 +1,7 @@
 import UserActionTypes from './user-types';
 
 const INITIAL_STATE = {
-    currentUser: { user: {}, token: '' },
+    currentUser: {},
     authErr: '',
     editProfileErr: '',
     deleteErr: '',

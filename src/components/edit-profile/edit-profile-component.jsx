@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { editProfileStart } from '../../redux/user/user-actions';
-import { selectUserToken } from '../../redux/user/user-selectors';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Divider, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
@@ -24,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const EditProfile = ({ publicName, location, open, handleClose, editProfileStart, currentUserToken }) => {
+const EditProfile = ({ publicName, location, open, handleClose, editProfileStart }) => {
     const classes = useStyles();
-    
+    const currentUserToken = localStorage.getItem('token');
+
     if (!location) {
         location = "";
     }
@@ -91,12 +91,8 @@ const EditProfile = ({ publicName, location, open, handleClose, editProfileStart
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentUserToken: selectUserToken
-});
-
 const mapDispatchToProps = dispatch => ({
     editProfileStart: userInfo => dispatch(editProfileStart(userInfo))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+export default connect(null, mapDispatchToProps)(EditProfile);

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { resetPasswordStart } from '../../redux/user/user-actions';
-import { selectUserToken } from '../../redux/user/user-selectors';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Divider, TextField, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
 
@@ -17,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const UpdatePassword = ({ email, open, handleClose, resetPasswordStart, currentUserToken }) => {
+const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
     const classes = useStyles();
+    const currentUserToken = localStorage.getItem('token');
 
     const [userPassword, setPassword] = useState({
         oldPassword: "",
@@ -104,12 +104,8 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart, currentU
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentUserToken: selectUserToken
-});
-
 const mapDispatchToProps = dispatch => ({
     resetPasswordStart: userCredential => dispatch(resetPasswordStart(userCredential))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdatePassword);
+export default connect(null, mapDispatchToProps)(UpdatePassword);

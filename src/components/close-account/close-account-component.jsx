@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { selectUserToken } from '../../redux/user/user-selectors';
 import { closeAccountStart } from '../../redux/user/user-actions';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Divider, TextField, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
 
@@ -17,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const CloseAccount = ({ email, open, handleClose, currentUserToken, closeAccountStart }) => {
+const CloseAccount = ({ email, open, handleClose, closeAccountStart }) => {
     const classes = useStyles();
+    const currentUserToken = localStorage.getItem('token');
 
     const [confirmPassword, setPassword] = useState("");
 
@@ -68,12 +68,8 @@ const CloseAccount = ({ email, open, handleClose, currentUserToken, closeAccount
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentUserToken: selectUserToken
-});
-
 const mapDispatchToProps = dispatch => ({
     closeAccountStart: userCredential => dispatch(closeAccountStart(userCredential))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CloseAccount);
+export default connect(null, mapDispatchToProps)(CloseAccount);

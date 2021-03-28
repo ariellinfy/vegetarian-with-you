@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectEditEmailStatus, selectUserToken } from '../../redux/user/user-selectors';
+import { selectEditEmailStatus } from '../../redux/user/user-selectors';
 import { onEditUserEmail, updateEmailStart } from '../../redux/user/user-actions';
 import { Button, Paper, Typography, TextField } from '@material-ui/core';
 import UpdatePassword from '../../components/update-password/update-password-component';
 import CloseAccount from '../../components/close-account/close-account-component';
 import './account-info-style.scss';
 
-const AccountInfo = ({ user: { email }, currentUserToken, editEmailStatus, onEditUserEmail, updateEmailStart }) => {
+const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, updateEmailStart }) => {
+    const currentUserToken = localStorage.getItem('token');
+
     const [userEmail, setUserEmail] = useState()
 
     const handleSubmit = event => {
@@ -115,7 +117,6 @@ const AccountInfo = ({ user: { email }, currentUserToken, editEmailStatus, onEdi
 
 const mapStateToProps = createStructuredSelector({
     editEmailStatus: selectEditEmailStatus,
-    currentUserToken: selectUserToken
 });
 
 const mapDispatchToProps = dispatch => ({

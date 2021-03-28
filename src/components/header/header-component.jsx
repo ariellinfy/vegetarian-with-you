@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { selectUserToken } from '../../redux/user/user-selectors';
 import { signOutStart } from '../../redux/user/user-actions';
 
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
@@ -11,7 +9,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ currentUserToken, signOutStart }) => {
+const Header = ({ signOutStart }) => {
+
+    let currentUserToken = ''; 
+    if (localStorage.getItem('token')) {
+        currentUserToken = localStorage.getItem('token');
+    }
+    
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleMenu = (event) => {
@@ -92,12 +96,8 @@ const Header = ({ currentUserToken, signOutStart }) => {
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentUserToken: selectUserToken
-});
-
 const mapDispatchToProps = dispatch => ({
     signOutStart: token => dispatch(signOutStart(token))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);
