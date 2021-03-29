@@ -62,7 +62,7 @@ export function* createRestaurant({ payload:
     currentUserToken } 
 }) {
     try {
-        const url = 'http://localhost:5000/restaurants/createrestaurant';
+        const url = 'http://localhost:5000/onrestaurant/createrestaurant';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -85,10 +85,10 @@ export function* createRestaurant({ payload:
             restaurantDelivery: restaurantDelivery,
             restaurantPungent: restaurantPungent
         });
-        const restaurants = yield call(request, url, method, headers, body, currentUserToken);
-        if (restaurants !== undefined) {
-            localStorage.setItem('token', restaurants.token);
-            yield put(createRestaurantSuccess(restaurants.data));
+        const restaurant = yield call(request, url, method, headers, body, currentUserToken);
+        if (restaurant !== undefined) {
+            localStorage.setItem('token', restaurant.token);
+            yield put(createRestaurantSuccess(restaurant.data));
         } 
     } catch (error) {
         yield put(createRestaurantFailure(error));
@@ -97,16 +97,16 @@ export function* createRestaurant({ payload:
 
 export function* updateRestaurant({ payload: { currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/restaurants/updaterestaurant';
+        const url = 'http://localhost:5000/onrestaurant/updaterestaurant';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
             
         });
-        const restaurants = yield call(request, url, method, headers, body, currentUserToken);
-        if (restaurants !== undefined) {
-            localStorage.setItem('token', restaurants.token);
-            yield put(updateRestaurantSuccess(restaurants.data));
+        const restaurant = yield call(request, url, method, headers, body, currentUserToken);
+        if (restaurant !== undefined) {
+            localStorage.setItem('token', restaurant.token);
+            yield put(updateRestaurantSuccess(restaurant.data));
         } 
     } catch (error) {
         yield put(updateRestaurantFailure(error));

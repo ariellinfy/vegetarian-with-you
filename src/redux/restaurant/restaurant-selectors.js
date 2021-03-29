@@ -1,5 +1,11 @@
 import { createSelector } from 'reselect';
 
-const selectRestaurants = state => state.restaurants;
+const selectRestaurant = state => state.restaurant;
 
-export const selectRestaurantsAll = createSelector([selectRestaurants], restaurants => restaurants.restaurants);
+export const selectRestaurantAll = createSelector([selectRestaurant], restaurant => restaurant.targetRestaurant);
+
+export const selectRestaurantId = createSelector([selectRestaurant], restaurant => restaurant.targetRestaurant.restaurant_id);
+
+export const selectActionStatus = createSelector([selectRestaurant], restaurant => restaurant.actionSuccess);
+
+export const selectCreateRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.createRestaurantErr);

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { signOutStart } from '../../redux/user/user-actions';
 
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
@@ -9,12 +11,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ signOutStart }) => {
+const Header = ({ signOutStart, currentUser }) => {
 
     let currentUserToken = ''; 
     if (localStorage.getItem('token')) {
         currentUserToken = localStorage.getItem('token');
-    }
+    };
     
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -47,7 +49,7 @@ const Header = ({ signOutStart }) => {
                             <AddCircleOutlineIcon />
                             <Typography variant="body1" className='header-btn-label' component='span'>Write review</Typography>
                         </Button>
-                        { currentUserToken.length ? (
+                        { Object.keys(currentUser).length ? (
                             <div>
                                 <IconButton
                                     edge="end"
@@ -83,11 +85,9 @@ const Header = ({ signOutStart }) => {
                                 </Menu>
                             </div>
                         ) : (
-                            <Link to='/signin' className='redirect-btn'> 
-                                <Button color="primary" variant="contained" className='header-btn' onClick={handleClose}>
-                                    <Typography variant="body1" className='header-btn-label' component='span'>Sign In</Typography>
-                                </Button>
-                            </Link>
+                            <Button component={Link} to={'/signin'} color="primary" variant="contained" className='header-btn' onClick={handleClose}>
+                                <Typography variant="body1" className='header-btn-label' component='span'>Sign In</Typography>
+                            </Button>
                         )}
                     </div>
                 </Toolbar>
@@ -96,8 +96,12 @@ const Header = ({ signOutStart }) => {
     )
 }
 
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+});
+
 const mapDispatchToProps = dispatch => ({
     signOutStart: token => dispatch(signOutStart(token))
 });
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

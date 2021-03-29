@@ -1,8 +1,8 @@
 import ReviewActionTypes from './review-types';
 
-export const createReviewStart = reviewInfo => ({
+export const createReviewStart = reviewDetail => ({
     type: ReviewActionTypes.CREATE_REVIEW_START,
-    payload: reviewInfo
+    payload: reviewDetail
 });
 
 export const createReviewSuccess = review => ({
@@ -15,9 +15,9 @@ export const createReviewFailure = error => ({
     payload: error
 });
 
-export const updateReviewStart = reviewInfo => ({
+export const updateReviewStart = reviewDetail => ({
     type: ReviewActionTypes.UPDATE_REVIEW_START,
-    payload: reviewInfo
+    payload: reviewDetail
 });
 
 export const updateReviewSuccess = review => ({

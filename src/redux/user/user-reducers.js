@@ -20,7 +20,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case UserActionTypes.SIGN_OUT_SUCCESS:
             return {
                 ...state,
-                currentUser: { user: {}, token: '' },
+                currentUser: {},
                 authErr: ''
             };
         case UserActionTypes.EDIT_PROFILE_SUCCESS:
@@ -34,7 +34,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case UserActionTypes.CLOSE_ACCOUNT_SUCCESS:
             return {
                 ...state,
-                currentUser: { user: {}, token: '' },
+                currentUser: {},
                 deleteErr: '',
             };
         case UserActionTypes.SIGN_UP_FAILURE:

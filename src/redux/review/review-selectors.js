@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
 
-const selectReviews = state => state.reviews;
+const selectReview = state => state.review;
 
-export const selectReviewsAll = createSelector([selectReviews], reviews => reviews.reviews);
+export const selectReviewAll = createSelector([selectReview], review => review.targetReview);

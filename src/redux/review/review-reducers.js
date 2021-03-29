@@ -1,7 +1,7 @@
 import ReviewActionTypes from './review-types';
 
 const INITIAL_STATE = {
-    reviews: {},
+    targetReview: {},
     createReviewErr: '',
     updateReviewErr: '',
 }
@@ -11,13 +11,13 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
         case ReviewActionTypes.CREATE_REVIEW_SUCCESS:
             return {
                 ...state,
-                reviews: action.payload,
+                targetReview: action.payload,
                 createReviewErr: '',
             };
         case ReviewActionTypes.UPDATE_REVIEW_SUCCESS:
             return {
                 ...state,
-                reviews: action.payload,
+                targetReview: action.payload,
                 updateReviewErr: '',
             };
         case ReviewActionTypes.CREATE_REVIEW_FAILURE:

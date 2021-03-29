@@ -40,18 +40,29 @@ function checkStatus(response) {
     }
 }
 
-export function* createReview({ payload: { currentUserToken } }) {
+export function* createReview({ payload: { restaurantId, foodRate, serviceRate, valueRate, atmosphereRate, reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/reviews/createreview';
+        const url = 'http://localhost:5000/onreview/createreview';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
-
+            restaurantId: restaurantId,
+            foodRate: foodRate,
+            serviceRate: serviceRate,
+            valueRate: valueRate,
+            atmosphereRate: atmosphereRate,
+            reviewTitle: reviewTitle,
+            reviewBody: reviewBody,
+            visitPeriod: visitPeriod,
+            visitType: visitType,
+            price: price,
+            recommendDish: recommendDish,
+            disclosure: disclosure
         });
-        const reviews = yield call(request, url, method, headers, body, currentUserToken);
-        if (reviews !== undefined) {
-            localStorage.setItem('token', reviews.token);
-            yield put(createReviewSuccess(reviews.data));
+        const review = yield call(request, url, method, headers, body, currentUserToken);
+        if (review !== undefined) {
+            localStorage.setItem('token', review.token);
+            yield put(createReviewSuccess(review.data));
         } 
     } catch (error) {
         yield put(createReviewFailure(error));
@@ -60,16 +71,16 @@ export function* createReview({ payload: { currentUserToken } }) {
 
 export function* updateReview({ payload: { currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/reviews/updatereview';
+        const url = 'http://localhost:5000/onreview/updatereview';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
             
         });
-        const reviews = yield call(request, url, method, headers, body, currentUserToken);
-        if (reviews !== undefined) {
-            localStorage.setItem('token', reviews.token);
-            yield put(updateReviewSuccess(reviews.data));
+        const review = yield call(request, url, method, headers, body, currentUserToken);
+        if (review !== undefined) {
+            localStorage.setItem('token', review.token);
+            yield put(updateReviewSuccess(review.data));
         } 
     } catch (error) {
         yield put(updateReviewFailure(error));

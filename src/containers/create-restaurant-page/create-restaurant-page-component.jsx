@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from "react-router-dom";
 import { createRestaurantStart } from '../../redux/restaurant/restaurant-actions';
+import { selectActionStatus, selectCreateRestaurantErr } from '../../redux/restaurant/restaurant-selectors';
 
 import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -8,7 +11,7 @@ import { COUNTRY_REGION } from '../../components/country-region';
 import MuiPhoneNumber  from 'material-ui-phone-number';
 import './create-restaurant-page-style.scss';
 
-const CreateRestaurantPage = ({ createRestaurantStart }) => {
+const CreateRestaurantPage = ({ createRestaurantStart, actionSuccess, createRestaurantErr, history }) => {
     const currentUserToken = localStorage.getItem('token');
 
     const [restaurant, setRestaurant] = useState({
@@ -52,7 +55,7 @@ const CreateRestaurantPage = ({ createRestaurantStart }) => {
 
     const countryCode = COUNTRY_REGION.map((country) => country.countryShortCode.toLowerCase());
     const [restaurantPhone, setRestaurantPhone] = useState('');
-    
+
     const handleSubmit = async event => {
         event.preventDefault();
         createRestaurantStart({
@@ -76,11 +79,12 @@ const CreateRestaurantPage = ({ createRestaurantStart }) => {
             restaurantPungent,
             currentUserToken
         });
+        history.push('/createreview')
+        // actionSuccess ? history.push('/createreview') : null;
     };
     
     const handleChange = event => {
         const { name, value, checked } = event.target;
-        console.log(restaurant, restaurantPhone)
         if (name === 'breakfast' || name === 'brunch' || name === 'lunch' || name === 'dinner') {
             setRestaurant({ ...restaurant, [name]: checked });
         } else if (name === 'restaurantCountry') {
@@ -189,7 +193,7 @@ const CreateRestaurantPage = ({ createRestaurantStart }) => {
                     variant="standard"
                     onChange={value => setRestaurantPhone(value)}
                     value={restaurantPhone}
-                    fullWidth required disableAreaCodes
+                    fullWidth disableAreaCodes
                     // className={touched.contactPhoneNumber && errors.contactPhoneNumber ? "has-error" : null}
                />
 
@@ -381,7 +385,7 @@ const CreateRestaurantPage = ({ createRestaurantStart }) => {
                 </FormControl>
 
                 <div className='buttons-group'>
-                    <Button type='button' className='button-input' variant="contained" color="primary">Back</Button>
+                    <Button type='button' onClick={() => history.goBack()} className='button-input' variant="contained" color="primary">Back</Button>
                     <Button type='submit' className='button-input' variant="contained" color="secondary">Submit</Button>
                 </div>
                 
@@ -390,8 +394,13 @@ const CreateRestaurantPage = ({ createRestaurantStart }) => {
     )
 }
 
+const mapStateToProps = createStructuredSelector({
+    actionSuccess: selectActionStatus,
+    createRestaurantErr: selectCreateRestaurantErr
+});
+
 const mapDispatchToProps = dispatch => ({
     createRestaurantStart: restaurantInfo => dispatch(createRestaurantStart(restaurantInfo))
 });
 
-export default connect(null, mapDispatchToProps)(CreateRestaurantPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateRestaurantPage));

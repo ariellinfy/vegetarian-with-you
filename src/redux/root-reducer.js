@@ -14,8 +14,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     user: userReducer,
-    restaurants: restaurantReducer,
-    reviews: reviewReducer
+    restaurant: restaurantReducer,
+    review: reviewReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);
