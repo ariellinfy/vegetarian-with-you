@@ -29,3 +29,7 @@ export const updateRestaurantFailure = error => ({
     type: RestaurantActionTypes.UPDATE_RESTAURANT_FAILURE,
     payload: error
 });
+
+export const resetRestaurantStatus = () => ({
+    type: RestaurantActionTypes.RESET_RESTAURANT_STATUS
+});

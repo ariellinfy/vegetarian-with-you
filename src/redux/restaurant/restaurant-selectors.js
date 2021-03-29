@@ -6,6 +6,12 @@ export const selectRestaurantAll = createSelector([selectRestaurant], restaurant
 
 export const selectRestaurantId = createSelector([selectRestaurant], restaurant => restaurant.targetRestaurant.restaurant_id);
 
-export const selectActionStatus = createSelector([selectRestaurant], restaurant => restaurant.actionSuccess);
+export const selectRestaurantActionPending = createSelector([selectRestaurant], restaurant => restaurant.restaurantActionPending);
+
+export const selectRestaurantActionSuccess = createSelector([selectRestaurant], restaurant => restaurant.restaurantActionSuccess);
+
+export const selectRestaurantActionFailure = createSelector([selectRestaurant], restaurant => restaurant.restaurantActionFailure);
 
 export const selectCreateRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.createRestaurantErr);
+
+export const selectUpdateRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.updateRestaurantErr);

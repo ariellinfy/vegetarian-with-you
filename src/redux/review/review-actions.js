@@ -29,3 +29,7 @@ export const updateReviewFailure = error => ({
     type: ReviewActionTypes.UPDATE_REVIEW_FAILURE,
     payload: error
 });
+
+export const resetReviewStatus = () => ({
+    type: ReviewActionTypes.RESET_REVIEW_STATUS
+});
