@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { createRestaurantStart } from '../../redux/restaurant/restaurant-actions';
-import { selectActionStatus, selectCreateRestaurantErr } from '../../redux/restaurant/restaurant-selectors';
+import { createRestaurantStart, updateRestaurantStart, resetRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
 
 import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -11,7 +10,7 @@ import { COUNTRY_REGION } from '../../components/country-region';
 import MuiPhoneNumber  from 'material-ui-phone-number';
 import './restaurant-form-style.scss';
 
-const RestaurantForm = ({ createRestaurantStart, actionSuccess, createRestaurantErr, history }) => {
+const RestaurantForm = ({ createRestaurantStart, updateRestaurantStart, resetRestaurantStatus }) => {
     const currentUserToken = localStorage.getItem('token');
 
     const [restaurant, setRestaurant] = useState({
@@ -80,7 +79,6 @@ const RestaurantForm = ({ createRestaurantStart, actionSuccess, createRestaurant
             currentUserToken
         });
         history.push('/createreview')
-        // actionSuccess ? history.push('/createreview') : null;
     };
     
     const handleChange = event => {
@@ -385,22 +383,19 @@ const RestaurantForm = ({ createRestaurantStart, actionSuccess, createRestaurant
                 </FormControl>
 
                 <div className='buttons-group'>
-                    <Button type='button' onClick={() => history.goBack()} className='button-input' variant="contained" color="primary">Back</Button>
+                    {/* <Button type='button' onClick={() => history.goBack()} className='button-input' variant="contained" color="primary">Back</Button> */}
                     <Button type='submit' className='button-input' variant="contained" color="secondary">Submit</Button>
                 </div>
                 
             </form>
         </div>
     )
-}
-
-const mapStateToProps = createStructuredSelector({
-    actionSuccess: selectActionStatus,
-    createRestaurantErr: selectCreateRestaurantErr
-});
+};
 
 const mapDispatchToProps = dispatch => ({
-    createRestaurantStart: restaurantInfo => dispatch(createRestaurantStart(restaurantInfo))
+    createRestaurantStart: restaurantInfo => dispatch(createRestaurantStart(restaurantInfo)),
+    updateRestaurantStart: restaurantInfo => dispatch(updateRestaurantStart(restaurantInfo)),
+    resetRestaurantStatus: restaurantInfo => dispatch(resetRestaurantStatus(restaurantInfo))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantForm));
+export default withRouter(connect(null, mapDispatchToProps)(RestaurantForm));
