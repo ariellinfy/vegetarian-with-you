@@ -30,6 +30,10 @@ export const updateReviewFailure = error => ({
     payload: error
 });
 
-export const resetReviewStatus = () => ({
-    type: ReviewActionTypes.RESET_REVIEW_STATUS
+export const resetCreateReviewStatus = () => ({
+    type: ReviewActionTypes.RESET_CREATE_REVIEW_STATUS
+});
+
+export const resetUpdateReviewStatus = () => ({
+    type: ReviewActionTypes.RESET_UPDATE_REVIEW_STATUS
 });

@@ -12,118 +12,40 @@
     padding: 3em 0.25em 5em;
   }
 
-  .review-form {
-    padding: 1.25em;
-    border-radius: 1em;
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
-    background: rgba(255, 255, 255, 0.75);
-    width: 35em;
-    display: flex;
-    flex-direction: column;
-
-    @media screen and (max-width: 835px) {
-      width: 90%;
-      font-size: smaller;
-    }
-    @media screen and (max-width: 560px) {
-      width: 97.5%;
-    }
-
-    .rating-box {
-      display: flex;
-      margin: 0;
-      padding-bottom: 0.1em;
-
-      .rating-label {
-        margin-right: 1.5em;
-        width: 6.5em;
-      }
-
-      .rating-description {
-        padding: 0.1em 0;
-
-        @media screen and (max-width: 835px) {
-          padding: 0.25em 0;
-        }
-      }
-    }
-
-    .text-field {
-      margin: 0.75em 0;
-    }
-
-    .selection-group {
-      margin: 0.5em 0;
-
-      .selection-label {
-        margin-bottom: 0.5em;
-
-        &:active,
-        &:focus,
-        &:hover {
-          color: #558b2f !important;
-        }
-      }
-
-      .radio-group {
-        display: flex;
-        flex-direction: row !important;
-
-        .select-label {
-          width: fit-content;
-        }
-      }
-
-      .upload-container {
-        width: fit-content;
-        margin-top: 0.5em;
-      }
-    }
-
-    .rating-group {
-      margin-top: 1em;
-    }
-
-    .submit-review {
-      border-top: 2px solid black;
-      margin-top: 1em;
-
-      .disclosure-container {
-        margin-top: 1.5em;
-
-        .disclosure {
-          width: 100%;
-          display: flex;
-          font-size: 16px !important;
-          align-items: flex-start;
-
-          .MuiTypography-body1 {
-            font-size: 0.75rem;
-          }
-        }
-      }
-    }
-
-    .buttons-group {
-      display: flex;
-      justify-content: space-around;
+  .review-success {
+    .review-header {
       margin: 1.5em 0;
 
-      .button-input {
-        margin: 0 1em;
+      .review-name {
+        font-weight: 600;
+        font-size: larger;
+        margin: 0 0.3em;
+        font-style: italic;
+      }
+    }
+
+    .review-body {
+      margin: 1.52em 0;
+      padding: 1.75em 1.5em 1.25em 1.5em;
+      background: rgba(255, 255, 255, 0.5);
+
+      .review-detail {
+        color: rgba(0, 0, 0, 0.75);
+        margin-bottom: 0.5em;
+      }
+    }
+
+    .review-actions {
+      margin: 1.5em 0;
+      width: 100%;
+
+      h5 {
+        margin-bottom: 0.5em;
+      }
+
+      .btn-next {
         width: 100%;
-
-        @media screen and (max-width: 650px) {
-          margin: 0 0.5em;
-        }
-
-        &:first-child {
-          margin-left: 0;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
+        margin: 0.5em 0;
       }
     }
   }

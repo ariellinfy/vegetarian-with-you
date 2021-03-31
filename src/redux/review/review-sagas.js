@@ -40,7 +40,11 @@ function checkStatus(response) {
     }
 }
 
-export function* createReview({ payload: { restaurantId, foodRate, serviceRate, valueRate, atmosphereRate, reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure, currentUserToken } }) {
+export function* createReview({ payload: { restaurantId, 
+    foodRate, serviceRate, valueRate, atmosphereRate, 
+    reviewTitle, reviewBody, visitPeriod, visitType, 
+    price, recommendDish, disclosure, currentUserToken } 
+}) {
     try {
         const url = 'http://localhost:5000/onreview/createreview';
         const method = 'POST';

@@ -1,15 +1,6 @@
-.create-review-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 3em 2em 5em;
-  background: url(../../assets/background/create-review-background.jpg)
-    no-repeat right top;
-  background-size: cover;
-
-  @media screen and (max-width: 835px) {
-    padding: 3em 0.25em 5em;
+.review-form-container {
+  @media screen and (min-width: 960px) {
+    width: 600px;
   }
 
   .review-form {
@@ -22,6 +13,7 @@
     flex-direction: column;
 
     @media screen and (max-width: 835px) {
+      align-self: center;
       width: 90%;
       font-size: smaller;
     }

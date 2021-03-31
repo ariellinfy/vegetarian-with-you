@@ -77,7 +77,7 @@ const ReviewForm = ({ createReviewStart, restaurantDetail, history }) => {
     };
 
     return (
-        <div className='create-review-page'>
+        <div className='review-form-container'>
             <form className='review-form' id='review-form' onSubmit={handleSubmit}>
                 <RestaurantIntro restaurantDetail={restaurantDetail} />
                 <Divider />

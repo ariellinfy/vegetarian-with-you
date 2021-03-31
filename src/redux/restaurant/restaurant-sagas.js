@@ -82,13 +82,36 @@ export function* createRestaurant({ payload:
     }
 }
 
-export function* updateRestaurant({ payload: { currentUserToken } }) {
+export function* updateRestaurant({ payload: { restaurantId, restaurantName, 
+    restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
+    restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
+    breakfast, brunch, lunch, dinner,
+    restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent,
+    currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/onrestaurant/updaterestaurant';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
-            
+            restaurantId: restaurantId,
+            restaurantName: restaurantName, 
+            restaurantAddress: restaurantAddress, 
+            restaurantCity: restaurantCity, 
+            restaurantRegion: restaurantRegion, 
+            restaurantCountry: restaurantCountry, 
+            restaurantPostalCode: restaurantPostalCode, 
+            restaurantPhone: restaurantPhone,
+            restaurantWebsite: restaurantWebsite,
+            restaurantType: restaurantType,
+            restaurantCuisine: restaurantCuisine,
+            breakfast: breakfast,
+            brunch: brunch,
+            lunch: lunch,
+            dinner: dinner,
+            restaurantWifi: restaurantWifi,
+            restaurantTakeaway: restaurantTakeaway,
+            restaurantDelivery: restaurantDelivery,
+            restaurantPungent: restaurantPungent
         });
         const restaurant = yield call(request, url, method, headers, body, currentUserToken);
         if (restaurant !== undefined) {

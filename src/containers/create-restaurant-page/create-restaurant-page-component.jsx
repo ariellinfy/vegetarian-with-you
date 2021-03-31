@@ -32,7 +32,7 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
                                     targetRestaurantToMap ? (
                                         targetRestaurantToMap.filter((item, index) => index > 0 && index < targetRestaurantToMap.length - 5)
                                         .map(item => (
-                                        <Typography id={item[0]} className="restaurant-detail" color="textSecondary" gutterBottom>
+                                        <Typography id={item[0]} className="restaurant-detail" color="textPrimary">
                                             {item[0].toUpperCase()}: {item[1]}
                                         </Typography>
                                     ))) : null
@@ -46,7 +46,6 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
                             <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next" onClick={() => resetCreateRestaurantStatus()}>Explore more restaurants</Button>
                             <Button component={Link} to={'/createreview'} variant="contained" color="primary" className="btn-next" onClick={() => resetCreateRestaurantStatus()}>Continue to write a reivew</Button>
                         </div>
-
                     </div>
                 ) : (
                     <RestaurantForm currentUserToken={currentUserToken} />

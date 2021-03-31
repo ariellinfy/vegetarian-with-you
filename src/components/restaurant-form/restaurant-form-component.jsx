@@ -80,8 +80,9 @@ class RestaurantForm extends Component {
                 currentUserToken
             });
         } else {
+            const restaurantId = restaurantToBeUpdate.restaurant_id;
             updateRestaurantStart({
-                restaurantName, 
+                restaurantId, restaurantName, 
                 restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
                 restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
                 breakfast, brunch, lunch, dinner,
