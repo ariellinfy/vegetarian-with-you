@@ -11,6 +11,7 @@ import Header from '../components/header/header-component';
 import Footer from '../components/footer/footer-component';
 import HomePage from './home-page/home-page-component';
 import CreateRestaurantPage from './create-restaurant-page/create-restaurant-page-component';
+import UpdateRestaurantPage from './update-restaurant-page/update-restaurant-page-component';
 import CreateReviewPage from './create-review-page/create-review-page-component';
 import SignInAndSignUpPage from './signin-signup-page/signin-signup-page-component';
 import RestaurantPage from './restaurant-page/restaurant-page-component';
@@ -55,7 +56,7 @@ const App = ({ currentUser }) => {
               <Route exact path='/createrestaurant' component={CreateRestaurantPage} />
               <Route exact path='/createreview' component={CreateReviewPage} />
               <Route exact path='/restaurant' component={RestaurantPage} />
-              {/* <Route exact path='/updaterestaurant' component={UpdateRestaurantPage} /> */}
+              <Route exact path='/updaterestaurant' component={UpdateRestaurantPage} />
               {/* <Route exact path='/updatereview' component={UpdateReviewPage} /> */}
               <Route exact path='/signin' render={() => Object.keys(currentUser).length ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
               <Route exact path='/useraccount' component={AdminDashboardPage} />

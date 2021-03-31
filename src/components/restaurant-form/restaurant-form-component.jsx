@@ -104,7 +104,7 @@ class RestaurantForm extends Component {
     };
 
     render() {
-        const { restaurantToBeUpdate, history } = this.props;
+        const { restaurantToBeUpdate, actionPending, actionFailure, history } = this.props;
         const { 
             restaurantName, 
             restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
@@ -409,7 +409,14 @@ class RestaurantForm extends Component {
                         <Button type='submit' className='button-input' variant="contained" color="secondary">Submit</Button>
                     </div>
                     
-                    
+                    {
+                        actionPending ? (<div></div>) : null
+                    }
+
+                    {
+                        actionFailure ? (Object.keys(restaurantToBeUpdate).length === 0 ? <Typography variant="body1">createErrMsg</Typography> : <Typography variant="body1">createErrMsg</Typography>) : null
+                    }
+
                 </form>
             </div>
         )
