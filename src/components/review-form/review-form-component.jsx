@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
 import { createReviewStart } from '../../redux/review/review-actions';
-import { selectRestaurantId, selectRestaurantAll } from '../../redux/restaurant/restaurant-selectors';
+import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 
 import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
@@ -23,7 +23,7 @@ const labels = {
     5: 'Excellent+',
   };
 
-const ReviewForm = ({ createReviewStart, restaurantId, restaurantDetail, history }) => {
+const ReviewForm = ({ createReviewStart, restaurantDetail, history }) => {
     const currentUserToken = localStorage.getItem('token');
 
     const today = new Date();
@@ -58,7 +58,8 @@ const ReviewForm = ({ createReviewStart, restaurantId, restaurantDetail, history
     const handleSubmit = async event => {
         event.preventDefault();
         createReviewStart({
-            restaurantId, foodRate, serviceRate, valueRate, atmosphereRate, reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure, currentUserToken
+            // restaurantId, 
+            foodRate, serviceRate, valueRate, atmosphereRate, reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure, currentUserToken
         });
         // history.push('/restaurant');
     };
@@ -273,8 +274,7 @@ const ReviewForm = ({ createReviewStart, restaurantId, restaurantDetail, history
 };
 
 const mapStateToProps = createStructuredSelector({
-    restaurantId: selectRestaurantId,
-    restaurantDetail: selectRestaurantAll
+    restaurantDetail: selectTargetRestaurantInfo
 });
 
 const mapDispatchToProps = dispatch => ({

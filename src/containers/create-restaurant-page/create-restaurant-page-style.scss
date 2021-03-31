@@ -8,93 +8,40 @@
     no-repeat center center;
   background-size: cover;
 
-  .page-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 0.5em;
-    margin-bottom: 1em;
+  .restaurant-success {
+    .restaurant-header {
+      margin: 1.5em 0;
 
-    .page-icon {
-      margin-right: 0.25em;
-
-      @media screen and (max-width: 600px) {
-        font-size: 1.8rem;
+      .restaurant-name {
+        font-weight: 600;
+        font-size: larger;
+        margin: 0 0.3em;
+        font-style: italic;
       }
     }
-  }
 
-  .restaurant-form {
-    width: 30%;
-    min-width: 20em;
-    display: flex;
-    flex-direction: column;
+    .restaurant-body {
+      margin: 1.52em 0;
+      padding: 1.75em 1.5em 1.25em 1.5em;
+      background: rgba(255, 255, 255, 0.5);
 
-    @media screen and (max-width: 2000px) {
-      width: 35%;
-    }
-    @media screen and (max-width: 1800px) {
-      width: 40%;
-    }
-    @media screen and (max-width: 1600px) {
-      width: 45%;
-    }
-    @media screen and (max-width: 1400px) {
-      width: 50%;
-    }
-    @media screen and (max-width: 1200px) {
-      width: 55%;
-    }
-    @media screen and (max-width: 1000px) {
-      width: 65%;
-    }
-    @media screen and (max-width: 800px) {
-      width: 75%;
-    }
-  }
-
-  .text-field,
-  .select-field {
-    margin: 0.75em 0;
-  }
-
-  .selection-group {
-    margin-top: 0.8em;
-
-    .selection-label {
-      margin-bottom: 0.5em;
-    }
-
-    .radio-group {
-      display: flex;
-      flex-direction: row !important;
-
-      .select-label {
-        width: fit-content;
-        text-transform: capitalize;
+      .restaurant-detail {
+        color: rgba(0, 0, 0, 0.75);
+        margin-bottom: 0.5em;
       }
     }
-  }
 
-  .buttons-group {
-    display: flex;
-    justify-content: space-around;
-    margin: 2.5em 0 1.5em;
-
-    .button-input {
-      margin: 0 1em;
+    .restaurant-actions {
+      margin: 1.5em 0;
       width: 100%;
 
-      @media screen and (max-width: 650px) {
-        margin: 0 0.5em;
+      h5 {
+        margin-bottom: 0.5em;
       }
 
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
+      .btn-next {
+        width: 100%;
+        margin: 0.5em 0;
       }
     }
   }

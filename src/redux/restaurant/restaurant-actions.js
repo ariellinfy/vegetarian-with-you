@@ -30,6 +30,10 @@ export const updateRestaurantFailure = error => ({
     payload: error
 });
 
-export const resetRestaurantStatus = () => ({
-    type: RestaurantActionTypes.RESET_RESTAURANT_STATUS
+export const resetCreateRestaurantStatus = () => ({
+    type: RestaurantActionTypes.RESET_CREATE_RESTAURANT_STATUS
+});
+
+export const resetUpdateRestaurantStatus = () => ({
+    type: RestaurantActionTypes.RESET_UPDATE_RESTAURANT_STATUS
 });

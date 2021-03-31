@@ -42,24 +42,11 @@ function checkStatus(response) {
 
 export function* createRestaurant({ payload: 
     { restaurantName, 
-    restaurantAddress, 
-    restaurantCity, 
-    restaurantRegion, 
-    restaurantCountry, 
-    restaurantPostalCode, 
-    restaurantPhone,
-    restaurantWebsite,
-    restaurantType,
-    restaurantCuisine,
-    breakfast,
-    brunch,
-    lunch,
-    dinner,
-    restaurantWifi,
-    restaurantTakeaway,
-    restaurantDelivery,
-    restaurantPungent,
-    currentUserToken } 
+      restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
+      restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
+      breakfast, brunch, lunch, dinner,
+      restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent,
+      currentUserToken } 
 }) {
     try {
         const url = 'http://localhost:5000/onrestaurant/createrestaurant';

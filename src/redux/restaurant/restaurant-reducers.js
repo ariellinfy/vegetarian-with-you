@@ -2,8 +2,10 @@ import RestaurantActionTypes from './restaurant-types';
 
 const INITIAL_STATE = {
     targetRestaurant: {},
+    restaurantToBeUpdate: {},
     restaurantActionPending: false,
-    restaurantActionSuccess: false,
+    restaurantCreateSuccess: false,
+    restaurantUpdateSuccess: false,
     restaurantActionFailure: false,
     createRestaurantErr: '',
     updateRestaurantErr: '',
@@ -16,62 +18,71 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 targetRestaurant: {},
                 restaurantActionPending: true,
-                restaurantActionSuccess: false,
+                restaurantCreateSuccess: false,
                 restaurantActionFailure: false,
-                createRestaurantErr: '',
+                createRestaurantErr: ''
             };
         case RestaurantActionTypes.UPDATE_RESTAURANT_START:
             return {
                 ...state,
-                targetRestaurant: {},
+                restaurantToBeUpdate: action.payload,
                 restaurantActionPending: true,
-                restaurantActionSuccess: false,
+                restaurantUpdateSuccess: false,
                 restaurantActionFailure: false,
-                createRestaurantErr: '',
+                updateRestaurantErr: ''
             };
         case RestaurantActionTypes.CREATE_RESTAURANT_SUCCESS:
             return {
                 ...state,
                 targetRestaurant: action.payload,
                 restaurantActionPending: false,
-                restaurantActionSuccess: true,
+                restaurantCreateSuccess: true,
                 restaurantActionFailure: false,
-                createRestaurantErr: '',
+                createRestaurantErr: ''
             };
         case RestaurantActionTypes.UPDATE_RESTAURANT_SUCCESS:
             return {
                 ...state,
                 targetRestaurant: action.payload,
                 restaurantActionPending: false,
-                restaurantActionSuccess: true,
+                restaurantUpdateSuccess: true,
                 restaurantActionFailure: false,
-                updateRestaurantErr: '',
+                updateRestaurantErr: ''
             };
         case RestaurantActionTypes.CREATE_RESTAURANT_FAILURE:
             return {
                 ...state,
                 createRestaurantErr: action.payload,
                 restaurantActionPending: false,
-                restaurantActionSuccess: false,
-                restaurantActionFailure: true,
+                restaurantCreateSuccess: false,
+                restaurantActionFailure: true
             };
         case RestaurantActionTypes.UPDATE_RESTAURANT_FAILURE:
             return {
                 ...state,
                 updateRestaurantErr: action.payload,
                 restaurantActionPending: false,
-                restaurantActionSuccess: false,
-                restaurantActionFailure: true,
+                restaurantUpdateSuccess: false,
+                restaurantActionFailure: true
             };
-        case RestaurantActionTypes.RESET_RESTAURANT_STATUS:
+        case RestaurantActionTypes.RESET_CREATE_RESTAURANT_STATUS:
             return {
                 ...state,
                 targetRestaurant: {},
                 restaurantActionPending: false,
-                restaurantActionSuccess: false,
+                restaurantCreateSuccess: false,
                 restaurantActionFailure: false,
-                createRestaurantErr: '',
-                updateRestaurantErr: '',
+                createRestaurantErr: ''
+            };
+        case RestaurantActionTypes.RESET_UPDATE_RESTAURANT_STATUS:
+            return {
+                ...state,
+                targetRestaurant: {},
+                restaurantToBeUpdate: {},
+                restaurantActionPending: false,
+                restaurantUpdateSuccess: false,
+                restaurantActionFailure: false,
+                updateRestaurantErr: ''
             };
         default:
             return state;

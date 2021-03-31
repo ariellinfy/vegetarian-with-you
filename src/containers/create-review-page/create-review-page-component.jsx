@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { selectReviewActionPending, selectReviewActionSuccess, selectCreateReviewErr } from '../../redux/restaurant/restaurant-selectors';
+import { selectReviewActionPending, selectReviewActionSuccess, selectCreateReviewErr } from '../../redux/review/review-selectors';
 
-import { ReviewForm } from '../../components/review-form/review-form-component';
+import ReviewForm from '../../components/review-form/review-form-component';
 import './create-review-page-style.scss';
 
 const CreateReviewPage = ({ actionPending, actionSuccess, createReviewErr, history }) => {
