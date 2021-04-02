@@ -1,0 +1,52 @@
+.update-review-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3em 2em 5em;
+  background: url(../../assets/background/create-review-background.jpg)
+    no-repeat right top;
+  background-size: cover;
+
+  @media screen and (max-width: 835px) {
+    padding: 3em 0.25em 5em;
+  }
+
+  .review-success {
+    .review-header {
+      margin: 1.5em 0;
+
+      .review-name {
+        font-weight: 600;
+        font-size: larger;
+        margin: 0 0.3em;
+        font-style: italic;
+      }
+    }
+
+    .review-body {
+      margin: 1.52em 0;
+      padding: 1.75em 1.5em 1.25em 1.5em;
+      background: rgba(255, 255, 255, 0.5);
+
+      .review-detail {
+        color: rgba(0, 0, 0, 0.75);
+        margin-bottom: 0.5em;
+      }
+    }
+
+    .review-actions {
+      margin: 1.5em 0;
+      width: 100%;
+
+      h5 {
+        margin-bottom: 0.5em;
+      }
+
+      .btn-next {
+        width: 100%;
+        margin: 0.5em 0;
+      }
+    }
+  }
+}
