@@ -3,6 +3,7 @@ import RestaurantActionTypes from './restaurant-types';
 import { 
     createRestaurantSuccess, createRestaurantFailure, 
     updateRestaurantSuccess, updateRestaurantFailure, 
+    requestAllRestaurantsSuccess, requestAllRestaurantsFailure
 } from './restaurant-actions';
 
 export function* request(url, method, headers, body, auth = null) {
@@ -123,6 +124,22 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
     }
 }
 
+export function* requestAllRestaurants({ payload: { currentUserToken } }) {
+    try {
+        const url = 'http://localhost:5000/restaurants';
+        const method = 'GET';
+        const headers = null;
+        const body = null;
+        const restaurants = yield call(request, url, method, headers, body, currentUserToken);
+        if (restaurants !== undefined) {
+            localStorage.setItem('token', restaurants.token);
+            yield put(requestAllRestaurantsSuccess(restaurants.data));
+        } 
+    } catch (error) {
+        yield put(requestAllRestaurantsFailure(error));
+    }
+}
+
 export function* oncreateRestaurantStart() {
     yield takeLatest(RestaurantActionTypes.CREATE_RESTAURANT_START, createRestaurant);
 }
@@ -131,9 +148,14 @@ export function* onUpdateRestaurantStart() {
     yield takeLatest(RestaurantActionTypes.UPDATE_RESTAURANT_START, updateRestaurant);
 }
 
+export function* onRequestAllRestaurantsStart() {
+    yield takeLatest(RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START, requestAllRestaurants);
+}
+
 export function* restaurantSagas() {
     yield all([
         call(oncreateRestaurantStart),
         call(onUpdateRestaurantStart),
+        call(onRequestAllRestaurantsStart),
     ]);
 }

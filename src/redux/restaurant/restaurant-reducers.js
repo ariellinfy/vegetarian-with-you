@@ -1,4 +1,5 @@
 import RestaurantActionTypes from './restaurant-types';
+import { filterRestaurants } from './restaurant-utils';
 
 const INITIAL_STATE = {
     targetRestaurant: {},
@@ -9,6 +10,12 @@ const INITIAL_STATE = {
     restaurantActionFailure: false,
     createRestaurantErr: '',
     updateRestaurantErr: '',
+    allRestaurants: [],
+    requestPending: false,
+    requestRestaurantsErr: '',
+    keyword: '',
+    filteredRestaurants: [],
+    sortbyFilter: 'Sort By'
 }
 
 const restaurantReducer = (state=INITIAL_STATE, action) => {
@@ -83,6 +90,50 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantUpdateSuccess: false,
                 restaurantActionFailure: false,
                 updateRestaurantErr: ''
+            };
+        case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START:
+            return {
+                ...state,
+                requestPending: true
+            };
+        case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_SUCCESS:
+            return {
+                ...state,
+                requestPending: false,
+                allRestaurants: action.payload,
+                requestRestaurantsErr: ''
+            };
+        case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_FAILURE:
+            return {
+                ...state,
+                requestPending: true,
+                requestRestaurantsErr: action.payload
+            };
+        case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS:
+            return {
+                ...state,
+                filteredRestaurants: filterRestaurants(action.payload, state.allRestaurants),
+                keyword: action.payload
+            };
+        case RestaurantActionTypes.RESET_FILTERED_RESTAURANTS:
+            return {
+                ...state,
+                filteredRestaurants: [],
+            };
+        case RestaurantActionTypes.RESET_KEYWORD:
+            return {
+                ...state,
+                keyword: action.payload,
+            };
+        case RestaurantActionTypes.SET_SORTBY_FILTER:
+            return {
+                ...state,
+                sortbyFilter: action.payload,
+            };
+        case RestaurantActionTypes.RESET_SORTBY_FILTER:
+            return {
+                ...state,
+                sortbyFilter: 'Sort By',
             };
         default:
             return state;

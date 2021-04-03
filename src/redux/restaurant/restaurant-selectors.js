@@ -21,3 +21,16 @@ export const selectRestaurantActionFailure = createSelector([selectRestaurant], 
 export const selectCreateRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.createRestaurantErr);
 
 export const selectUpdateRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.updateRestaurantErr);
+
+
+export const selectAllRestaurants = createSelector([selectRestaurant], restaurant => restaurant.allRestaurants);
+
+export const selectRequestPending = createSelector([selectRestaurant], restaurant => restaurant.requestPending);
+
+export const selectRequestRestaurantsErr = createSelector([selectRestaurant], restaurant => restaurant.requestRestaurantsErr);
+
+export const selectFilterKeyword = createSelector([selectRestaurant], restaurant => restaurant.keyword);
+
+export const selectFilteredRestaurants = createSelector([selectRestaurant], restaurant => restaurant.filteredRestaurants);
+
+export const selectSortbyFilter = createSelector([selectRestaurant], restaurant => restaurant.sortbyFilter);
