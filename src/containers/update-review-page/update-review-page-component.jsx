@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { resetUpdateReviewStatus } from '../../redux/review/review-actions';
 import { selectReviewUpdateSuccess, selectTargetReviewInfo, selectTargetReviewInfoToMap } from '../../redux/review/review-selectors';
+import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 
 import ReviewForm from '../../components/review-form/review-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './update-review-page-style.scss';
 
-const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, resetUpdateReviewStatus }) => {
+const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, resetUpdateReviewStatus, targetRestaurant }) => {
     const currentUserToken = localStorage.getItem('token');
 
     return (
@@ -49,7 +50,7 @@ const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, rese
 
                     </div>
                 ) : (
-                    <ReviewForm currentUserToken={currentUserToken} />
+                    Object.keys(targetRestaurant).length === 0 ? (<Redirect to='/find' />) : (<ReviewForm currentUserToken={currentUserToken} targetRestaurant={targetRestaurant} />)
                 )
             }
         </div>
@@ -60,6 +61,7 @@ const mapStateToProps = createStructuredSelector({
     updateSuccess: selectReviewUpdateSuccess,
     targetReview: selectTargetReviewInfo,
     targetReviewToMap: selectTargetReviewInfoToMap,
+    targetRestaurant: selectTargetRestaurantInfo
 });
 
 const mapDispatchToProps = dispatch => ({

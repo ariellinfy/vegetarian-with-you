@@ -42,8 +42,8 @@ function checkStatus(response) {
 
 export function* createReview({ payload: { restaurantId, 
     foodRate, serviceRate, valueRate, atmosphereRate, 
-    reviewTitle, reviewBody, visitPeriod, visitType, 
-    price, recommendDish, disclosure, currentUserToken } 
+    reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
+    disclosure, currentUserToken } 
 }) {
     try {
         const url = 'http://localhost:5000/onreview/createreview';
@@ -73,13 +73,29 @@ export function* createReview({ payload: { restaurantId,
     }
 }
 
-export function* updateReview({ payload: { currentUserToken } }) {
+export function* updateReview({ payload: { reviewId, restaurantId,
+    foodRate, serviceRate, valueRate, atmosphereRate, 
+    reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
+    disclosure, currentUserToken } 
+}) {
     try {
         const url = 'http://localhost:5000/onreview/updatereview';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
-            
+            reviewId: reviewId,
+            restaurantId: restaurantId,
+            foodRate: foodRate,
+            serviceRate: serviceRate,
+            valueRate: valueRate,
+            atmosphereRate: atmosphereRate,
+            reviewTitle: reviewTitle,
+            reviewBody: reviewBody,
+            visitPeriod: visitPeriod,
+            visitType: visitType,
+            price: price,
+            recommendDish: recommendDish,
+            disclosure: disclosure
         });
         const review = yield call(request, url, method, headers, body, currentUserToken);
         if (review !== undefined) {

@@ -15,7 +15,6 @@ const RestaurantIntro = ({ restaurantDetail: { restaurant_name, address, city, r
                             {restaurant_name}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary" component="p" className='restaurant-location'>
-                            {/* 200 8 Ave SE | Olympic Plaza, Calgary, Alberta T2G 0K7, Canada */}
                             {
                                 `${address}, ${city ? city : ''}, ${region} ${postal_code}, ${country}`
                             }

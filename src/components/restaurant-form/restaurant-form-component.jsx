@@ -105,7 +105,7 @@ class RestaurantForm extends Component {
     };
 
     render() {
-        const { restaurantToBeUpdate, actionPending, actionFailure, history } = this.props;
+        const { restaurantToBeUpdate, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
         const { 
             restaurantName, 
             restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
@@ -415,7 +415,7 @@ class RestaurantForm extends Component {
                     }
 
                     {
-                        actionFailure ? (Object.keys(restaurantToBeUpdate).length === 0 ? <Typography variant="body1">createErrMsg</Typography> : <Typography variant="body1">createErrMsg</Typography>) : null
+                        actionFailure ? (Object.keys(restaurantToBeUpdate).length === 0 ? <Typography variant="body1">{createErrMsg}</Typography> : <Typography variant="body1">{updateErrMsg}</Typography>) : null
                     }
 
                 </form>

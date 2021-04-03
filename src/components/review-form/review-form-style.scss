@@ -1,24 +1,21 @@
 .review-form-container {
-  @media screen and (min-width: 960px) {
-    width: 600px;
-  }
+  display: flex;
+  justify-content: center;
+  width: 100%;
 
   .review-form {
     padding: 1.25em;
     border-radius: 1em;
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
     background: rgba(255, 255, 255, 0.75);
-    width: 35em;
+    width: 600px;
     display: flex;
     flex-direction: column;
 
-    @media screen and (max-width: 835px) {
+    @media screen and (max-width: 650px) {
       align-self: center;
-      width: 90%;
-      font-size: smaller;
-    }
-    @media screen and (max-width: 560px) {
       width: 97.5%;
+      font-size: smaller;
     }
 
     .rating-box {
@@ -91,6 +88,11 @@
 
           .MuiTypography-body1 {
             font-size: 0.75rem;
+          }
+
+          .disclosure-statement {
+            padding-top: 0;
+            padding-right: 0.55em;
           }
         }
       }
