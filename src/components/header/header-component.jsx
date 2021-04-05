@@ -41,11 +41,11 @@ const Header = ({ signOutStart, currentUser }) => {
                         <Typography variant="body1" color="primary" className='logo-title' component='span'>Vegetarian With You</Typography>
                     </Link>
                     <div className='header-right'>
-                        <Button color="primary" className='header-btn'>
+                        <Button component={Link} to={'/explore'} color="primary" className='header-btn'>
                             <SearchIcon />
                             <Typography variant="body1" className='header-btn-label' component='span'>Explore</Typography>
                         </Button>
-                        <Button color="primary" className='header-btn'>
+                        <Button component={Link} to={'/find'} color="primary" className='header-btn'>
                             <AddCircleOutlineIcon />
                             <Typography variant="body1" className='header-btn-label' component='span'>Write review</Typography>
                         </Button>

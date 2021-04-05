@@ -5,7 +5,7 @@ const selectReview = state => state.review;
 export const selectTargetReviewInfo = createSelector([selectReview], review => review.targetReview);
 
 export const selectTargetReviewInfoToMap = createSelector([selectTargetReviewInfo], targetReview => {
-    return Object.entries(targetReview).filter(([key, value]) => value !== false && value.length > 0)
+    return Object.entries(targetReview).filter(([key, value]) => value !== false && (value.length > 0 || !isNaN(value)))
 });
 
 export const selectReviewToBeUpdate = createSelector([selectReview], review => review.reviewToBeUpdate);

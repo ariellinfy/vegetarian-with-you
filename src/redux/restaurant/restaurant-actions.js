@@ -39,8 +39,9 @@ export const resetUpdateRestaurantStatus = () => ({
 });
 
 
-export const requestAllRestaurantsStart = () => ({
+export const requestAllRestaurantsStart = query => ({
     type: RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START,
+    payload: query
 });
 
 export const requestAllRestaurantsSuccess = restaurants => ({

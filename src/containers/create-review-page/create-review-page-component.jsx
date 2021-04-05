@@ -22,7 +22,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
                             <Typography variant="h5">
                                 You've successfully uploaded your 
                                 <span className="review-name">
-                                    {targetReview.review_name}
+                                    {targetReview.review_title}
                                 </span>
                                  review!
                             </Typography>
@@ -31,9 +31,10 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
 
                                 {
                                     targetReviewToMap ? (
-                                        targetReviewToMap.filter((item, index) => index > 0 && index < targetReviewToMap.length - 4)
+                                        targetReviewToMap
+                                        .filter((item, index) => index > 1 && index < targetReviewToMap.length - 4)
                                         .map(item => (
-                                        <Typography id={item[0]} className="review-detail" color="textPrimary">
+                                        <Typography key={item[0]} className="review-detail" color="textPrimary">
                                             {item[0].toUpperCase()}: {item[1]}
                                         </Typography>
                                     ))) : null
@@ -45,7 +46,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
                                 What's next?
                             </Typography>
                             <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>Explore more restaurants</Button>
-                            <Button component={Link} to={'/userprofile'} variant="contained" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>View my reviews</Button>
+                            <Button component={Link} to={'/useraccount'} variant="contained" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>View my reviews</Button>
                         </div>
 
                     </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, InputAdornment } from '@material-ui/core';
 import './search-bar-style.scss';
 
-const SearchBar = ({ type, ...otherProps }) => {
+const SearchBar = ({ type, children, onChange, value, ...otherProps }) => {
 
     return (
         <div className='search-bar-container'>
@@ -10,8 +10,9 @@ const SearchBar = ({ type, ...otherProps }) => {
                 id="search-input"
                 className='search-input'
                 type='text'
-                value=''
-                onChange=''
+                value={value}
+                onChange={onChange}
+                placeholder={children}
                 variant="outlined"
                 {...otherProps}
                 InputProps={{

@@ -334,7 +334,7 @@ class RestaurantForm extends Component {
                     </FormControl>
                     
                     <FormControl className='selection-group' component="fieldset">
-                        <FormLabel className='selection-label' component="legend">Takeaway?</FormLabel>
+                        <FormLabel className='selection-label' component="legend">Takeout?</FormLabel>
                         <RadioGroup className='radio-group' aria-label="restaurantTakeaway" name="restaurantTakeaway" value={restaurantTakeaway} onChange={this.handleChange}>
                             <FormControlLabel 
                                 className='select-label' 

@@ -124,15 +124,21 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
     }
 }
 
-export function* requestAllRestaurants({ payload: { currentUserToken } }) {
+export function* requestAllRestaurants({ payload: { query } }) {
     try {
-        const url = 'http://localhost:5000/restaurants';
+        console.log(query);
+        let url = '';
+        if (query) {
+            url = `http://localhost:5000/restaurants${query}`;
+        } else {
+            url = `http://localhost:5000/restaurants`;
+        }
+        console.log(url)
         const method = 'GET';
         const headers = null;
         const body = null;
-        const restaurants = yield call(request, url, method, headers, body, currentUserToken);
+        const restaurants = yield call(request, url, method, headers, body);
         if (restaurants !== undefined) {
-            localStorage.setItem('token', restaurants.token);
             yield put(requestAllRestaurantsSuccess(restaurants.data));
         } 
     } catch (error) {
