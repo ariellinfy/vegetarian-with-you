@@ -80,6 +80,18 @@
       @media screen and (max-width: 1000px) {
         width: 100%;
       }
+
+      .find-no-match {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 2em 0 0.5em 0;
+
+        h5 {
+          margin: 0.25em 0;
+          text-align: center;
+        }
+      }
     }
   }
 }

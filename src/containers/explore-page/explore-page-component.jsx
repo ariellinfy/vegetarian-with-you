@@ -48,11 +48,17 @@ const ExplorePage = ({ allRestaurants, requestPending, requestError, keyword, fi
                                 filteredRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
                                     <RestaurantPreviewOne key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
                                 ))
-                            ) : ('no matches found')
-                           ) : (
+                            ) : (
+                                <div className='find-no-match'>
+                                    <Typography variant="h5">Can't find a restaurant?</Typography>
+                                    <Typography variant="h5">Fill up a restaurant form to let more people know about it!</Typography> 
+                                </div>
+                            )
+                        ) : (
                             allRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
                                 <RestaurantPreviewOne key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
-                        )))
+                            )
+                        ))
                     }
                 </div>
             </div>
