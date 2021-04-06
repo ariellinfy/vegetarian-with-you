@@ -66,6 +66,23 @@
       @media screen and (max-width: 556px) {
         width: 97%;
       }
+
+      .find-no-match {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 2em 0;
+        width: 100%;
+
+        h5 {
+          margin: 0.25em 0;
+        }
+
+        button {
+          margin: 1em 0;
+          width: 65%;
+        }
+      }
     }
   }
 }

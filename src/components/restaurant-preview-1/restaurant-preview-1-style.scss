@@ -1,25 +1,38 @@
 .restaurant-preview-1-container {
   margin: 0.5em;
-  width: 15em;
-  background: white;
+  width: 17em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
   border-radius: 5px;
-  padding-bottom: 0.5em;
+  padding-bottom: 0.3em;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.15);
 
-  .restaurant-image {
-    width: 100%;
+  @media screen and (max-width: 1519px) {
+    width: 16em;
   }
 
-  .restaurant-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100% - 175px);
+  .preview-1-container {
+    background-color: white;
+    height: 100%;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(230, 230, 230, 0.35);
+    }
+
+    .restaurant-image {
+      width: 100%;
+      border-radius: 5px 5px 0 0;
+    }
 
     .restaurant-detail {
-      padding: 0.25em 0.75em;
+      padding: 0.25em 0.75em 0.75em 0.75em;
 
       h5 {
-        margin-bottom: 0.25em;
+        margin: 0.25em 0 0.1em 0;
       }
 
       .restaurant-features {
@@ -32,19 +45,19 @@
         color: rgba(0, 0, 0, 0.75);
       }
     }
+  }
 
-    .restaurant-action {
-      padding: 0.25em 0.75em;
-      display: flex;
-      justify-content: flex-end;
+  .restaurant-action {
+    padding: 0.25em 0.75em;
+    display: flex;
+    justify-content: flex-end;
 
-      .review-btn {
-        padding-right: 0.5em;
+    .review-btn {
+      padding-right: 0.5em;
 
-        .review-icon {
-          padding-right: 0.15em;
-          font-size: 28px;
-        }
+      .review-icon {
+        padding-right: 0.15em;
+        font-size: 28px;
       }
     }
   }

@@ -1,46 +1,76 @@
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { requestRestaurantByIdStart, requestRestaurantByIdSuccess } from '../../redux/restaurant/restaurant-actions';
+import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restaurant-selectors';
+
+import { Typography, Button } from '@material-ui/core';
 import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-2-style.scss';
 
-const RestaurantPreviewTwo = () => {
+const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
+    const handleRestaurantClick = async () => {
+        await requestRestaurantByIdStart(restaurantId);
+        if (requestSuccess) {
+            history.push(`/restaurants/${restaurantId}`);
+        }
+    };
 
+    const handleReviewClick = async () => {
+        await requestRestaurantByIdStart(restaurantId);
+        await requestRestaurantByIdSuccess({ restaurantId, restaurant_name, address, city, region, country, postal_code })
+
+        if (Object.keys(currentUser).length) {
+            if (requestSuccess) {
+                history.push('/createreview');
+            }
+        } else {
+            history.push('/signin')
+        }
+   };
     return (
         <div className='restaurant-preview-2-container'>
-            <Card className='preview-2-container'>
-                <CardActionArea className='restaurant-info'>
-                    <CardMedia
-                        className='restaurant-image'
-                        component="img"
-                        alt="restaurant-image"
-                        height="180"
-                        image={restaurantImage}
-                        title="restaurant-image"
-                    />
-                
-                    <CardContent className='restaurant-detail'>
-                        <Typography gutterBottom variant="h5">
-                            {/* {restaurantName} */}
-                            Teatro Restaurant
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p" className='restaurant-features'>
-                            {/* {restaurantCuisine}, {restaurantType}, {restaurantPrice} */}
-                            Vegan, Chinese, Mid-range
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary" component="p" className='restaurant-location'>
-                            {/* {restaurantCuisineCity}, {restaurantCountry} */}
-                            Calgary, Canada
-                        </Typography>
-                        <CardActions className='restaurant-action'>
-                            <Button size="small" color="primary">
-                                Write a review
-                            </Button>
-                        </CardActions>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
+            <img
+                className='restaurant-image'
+                alt="restaurant-image"
+                height="180"
+                src={restaurantImage}
+                onClick={handleRestaurantClick}
+            />
+            <div className='restaurant-detail'>
+                <Typography variant="h5" onClick={handleRestaurantClick}>
+                    {restaurant_name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p" className='restaurant-features'>
+                    {
+                        price_range !== 'unknown' ? (`${cuisine}, ${type}, ${price_range}`) : (`${cuisine}, ${type}`)
+                    }
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary" component="p" className='restaurant-location'>
+                    {
+                        city ? (`${city}, ${country}`) : (`${region}, ${country}`)
+                    }
+                </Typography>
+            </div>
+            <div className='restaurant-action'>
+                <Button size="small" color="primary" className='review-btn' onClick={handleReviewClick}>
+                    Write a review
+                </Button>
+            </div>
         </div>
     )
 }
 
-export default RestaurantPreviewTwo;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    requestSuccess: selectRestaurantRequestSuccess
+});
+
+const mapDispatchToProps = dispatch => ({
+    requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
+    requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo))
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPreviewTwo));

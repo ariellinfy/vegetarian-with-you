@@ -12,7 +12,7 @@ import './create-review-page-style.scss';
 
 const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, resetCreateReviewStatus, targetRestaurant }) => {
     const currentUserToken = localStorage.getItem('token');
-
+    console.log(targetRestaurant);
     return (
         <div className='create-review-page'>
             {

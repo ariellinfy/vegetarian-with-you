@@ -7,7 +7,6 @@ const SearchBar = ({ type, children, onChange, value, ...otherProps }) => {
     return (
         <div className='search-bar-container'>
             <TextField
-                id="search-input"
                 className='search-input'
                 type='text'
                 value={value}

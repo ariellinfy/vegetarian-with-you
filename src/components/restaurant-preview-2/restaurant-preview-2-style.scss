@@ -1,89 +1,97 @@
 .restaurant-preview-2-container {
   margin: 1em 0;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
 
-  .preview-2-container {
-    width: 100%;
+  &:hover {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+  }
 
-    .restaurant-info {
-      display: flex;
-      justify-content: flex-start;
+  .restaurant-image {
+    width: 20%;
+    border-radius: 5px 0 0 5px;
 
-      .restaurant-image {
-        width: 20%;
+    &:hover {
+      cursor: pointer;
+    }
 
-        @media screen and (max-width: 2000px) {
-          width: 25%;
-        }
-        @media screen and (max-width: 1700px) {
-          width: 30%;
-        }
-        @media screen and (max-width: 1300px) {
-          width: 35%;
-        }
-        @media screen and (max-width: 800px) {
-          height: 185px;
-          width: 37%;
-        }
-        @media screen and (max-width: 700px) {
-          height: 152px;
-          width: 42%;
-        }
+    @media screen and (max-width: 2000px) {
+      width: 25%;
+    }
+    @media screen and (max-width: 1700px) {
+      width: 30%;
+    }
+    @media screen and (max-width: 1300px) {
+      width: 35%;
+    }
+    @media screen and (max-width: 800px) {
+      height: 185px;
+      width: 37%;
+    }
+    @media screen and (max-width: 700px) {
+      height: 152px;
+      width: 42%;
+    }
+  }
+
+  .restaurant-detail {
+    width: 59%;
+    padding: 0.75em 1em;
+
+    @media screen and (max-width: 700px) {
+      width: 65%;
+      padding-top: 0.5em;
+      padding-bottom: 0;
+    }
+    @media screen and (max-width: 600px) {
+      padding-top: 0.2em;
+    }
+
+    h5 {
+      margin-bottom: 0.4em;
+
+      @media screen and (max-width: 700px) {
+        margin-bottom: 0.1em;
       }
 
-      .restaurant-detail {
-        width: 75%;
-        padding-top: 0;
-
-        @media screen and (max-width: 700px) {
-          width: 65%;
-          padding-top: 0.5em;
-          padding-bottom: 0;
-        }
-        @media screen and (max-width: 600px) {
-          padding-top: 0.2em;
-        }
-
-        h5 {
-          margin-bottom: 0.55em;
-
-          @media screen and (max-width: 700px) {
-            margin-bottom: 0.3em;
-          }
-        }
-
-        p {
-          @media screen and (max-width: 600px) {
-            font-size: 0.8rem;
-          }
-        }
-
-        .restaurant-features {
-          font-style: italic;
-        }
-
-        .restaurant-location {
-          color: rgba(0, 0, 0, 0.75);
-        }
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        font-weight: 500;
       }
     }
 
-    .restaurant-action {
-      position: absolute;
-      margin-right: 0.3em;
-      justify-content: flex-end;
-      bottom: 0.5em;
-      right: 2em;
-
-      @media screen and (max-width: 700px) {
-        position: relative;
-        bottom: 0.3em;
-        right: 0;
-        padding-bottom: 0;
-        padding-right: 0;
-      }
+    p {
       @media screen and (max-width: 600px) {
-        bottom: 0;
+        font-size: 0.8rem;
       }
+    }
+
+    .restaurant-features {
+      font-style: italic;
+      text-transform: capitalize;
+    }
+
+    .restaurant-location {
+      color: rgba(0, 0, 0, 0.75);
+    }
+  }
+
+  .restaurant-action {
+    position: relative;
+    margin-right: 0.3em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 14em;
+    bottom: 0.5em;
+    padding-right: 0.5em;
+
+    .review-btn {
+      height: fit-content;
     }
   }
 }

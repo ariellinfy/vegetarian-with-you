@@ -1,5 +1,5 @@
 import RestaurantActionTypes from './restaurant-types';
-import { filterRestaurants } from './restaurant-utils';
+import { filterRestaurants, filterRestaurantsByFeature, filterRestaurantsByLocation } from './restaurant-utils';
 
 const INITIAL_STATE = {
     targetRestaurant: {},
@@ -11,9 +11,12 @@ const INITIAL_STATE = {
     createRestaurantErr: '',
     updateRestaurantErr: '',
     allRestaurants: [],
-    requestPending: false,
+    restaurantRequestPending: false,
+    restaurantRequestSuccess: false,
     requestRestaurantsErr: '',
     keyword: '',
+    keywordFeature: '',
+    keywordLocation: '',
     filteredRestaurants: [],
     sortbyFilter: 'Sort By'
 }
@@ -94,19 +97,22 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
         case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START:
             return {
                 ...state,
-                requestPending: true
+                restaurantRequestPending: true,
+                restaurantRequestSuccess: false
             };
         case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_SUCCESS:
             return {
                 ...state,
-                requestPending: false,
+                restaurantRequestPending: false,
+                restaurantRequestSuccess: true,
                 allRestaurants: action.payload,
                 requestRestaurantsErr: ''
             };
         case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_FAILURE:
             return {
                 ...state,
-                requestPending: true,
+                restaurantRequestPending: false,
+                restaurantRequestSuccess: false,
                 requestRestaurantsErr: action.payload
             };
         case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS:
@@ -114,6 +120,18 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 filteredRestaurants: filterRestaurants(action.payload, state.allRestaurants),
                 keyword: action.payload
+            };
+        case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS_BY_FEATURE:
+            return {
+                ...state,
+                filteredRestaurants: filterRestaurantsByFeature(action.payload, state.allRestaurants, state.filteredRestaurants),
+                keywordFeature: action.payload
+            };
+        case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS_BY_LOCATION:
+            return {
+                ...state,
+                filteredRestaurants: filterRestaurantsByLocation(action.payload, state.allRestaurants, state.filteredRestaurants),
+                keywordLocation: action.payload
             };
         case RestaurantActionTypes.RESET_FILTERED_RESTAURANTS:
             return {
@@ -123,7 +141,17 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
         case RestaurantActionTypes.RESET_KEYWORD:
             return {
                 ...state,
-                keyword: action.payload,
+                keyword: '',
+            };
+        case RestaurantActionTypes.RESET_FEATURE_KEYWORD:
+            return {
+                ...state,
+                keywordFeature: '',
+            };
+        case RestaurantActionTypes.RESET_LOCATION_KEYWORD:
+            return {
+                ...state,
+                keywordLocation: '',
             };
         case RestaurantActionTypes.SET_SORTBY_FILTER:
             return {
@@ -134,6 +162,28 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 sortbyFilter: 'Sort By',
+            };
+        case RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_START:
+            return {
+                ...state,
+                targetRestaurant: {},
+                restaurantRequestPending: true,
+                restaurantRequestSuccess: false
+            };
+        case RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_SUCCESS:
+            return {
+                ...state,
+                restaurantRequestPending: false,
+                restaurantRequestSuccess: true,
+                targetRestaurant: action.payload,
+                requestRestaurantsErr: ''
+            };
+        case RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_FAILURE:
+            return {
+                ...state,
+                restaurantRequestPending: false,
+                restaurantRequestSuccess: false,
+                requestRestaurantsErr: action.payload
             };
         default:
             return state;

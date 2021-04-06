@@ -25,11 +25,17 @@ export const selectUpdateRestaurantErr = createSelector([selectRestaurant], rest
 
 export const selectAllRestaurants = createSelector([selectRestaurant], restaurant => restaurant.allRestaurants);
 
-export const selectRequestPending = createSelector([selectRestaurant], restaurant => restaurant.requestPending);
+export const selectRestaurantRequestPending = createSelector([selectRestaurant], restaurant => restaurant.restaurantRequestPending);
+
+export const selectRestaurantRequestSuccess = createSelector([selectRestaurant], restaurant => restaurant.restaurantRequestSuccess);
 
 export const selectRequestRestaurantsErr = createSelector([selectRestaurant], restaurant => restaurant.requestRestaurantsErr);
 
 export const selectFilterKeyword = createSelector([selectRestaurant], restaurant => restaurant.keyword);
+
+export const selectFilterFeatureKeyword = createSelector([selectRestaurant], restaurant => restaurant.keywordFeature);
+
+export const selectFilterLocationKeyword = createSelector([selectRestaurant], restaurant => restaurant.keywordLocation);
 
 export const selectFilteredRestaurants = createSelector([selectRestaurant], restaurant => restaurant.filteredRestaurants);
 

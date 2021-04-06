@@ -59,13 +59,30 @@ export const requestFilteredRestaurants = keyword => ({
     payload: keyword
 });
 
+export const requestFilteredRestaurantsByFeature = keyword => ({
+    type: RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS_BY_FEATURE,
+    payload: keyword
+});
+
+export const requestFilteredRestaurantsByLocation = keyword => ({
+    type: RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS_BY_LOCATION,
+    payload: keyword
+});
+
 export const resetFilteredRestaurants = () => ({
     type: RestaurantActionTypes.RESET_FILTERED_RESTAURANTS,
 });
 
-export const resetKeyword = keyword => ({
+export const resetKeyword = () => ({
     type: RestaurantActionTypes.RESET_KEYWORD,
-    payload: keyword
+});
+
+export const resetFeatureKeyword = () => ({
+    type: RestaurantActionTypes.RESET_FEATURE_KEYWORD,
+});
+
+export const resetLocationKeyword = () => ({
+    type: RestaurantActionTypes.RESET_LOCATION_KEYWORD,
 });
 
 export const setSortbyFilter = filter => ({
@@ -77,4 +94,17 @@ export const resetSortbyFilter = () => ({
     type: RestaurantActionTypes.RESET_SORTBY_FILTER,
 });
 
+export const requestRestaurantByIdStart = restaurantId => ({
+    type: RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_START,
+    payload: restaurantId
+});
 
+export const requestRestaurantByIdSuccess = restaurant => ({
+    type: RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_SUCCESS,
+    payload: restaurant
+});
+
+export const requestRestaurantByIdFailure = error => ({
+    type: RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_FAILURE,
+    payload: error
+});

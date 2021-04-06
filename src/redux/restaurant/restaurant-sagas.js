@@ -3,7 +3,8 @@ import RestaurantActionTypes from './restaurant-types';
 import { 
     createRestaurantSuccess, createRestaurantFailure, 
     updateRestaurantSuccess, updateRestaurantFailure, 
-    requestAllRestaurantsSuccess, requestAllRestaurantsFailure
+    requestAllRestaurantsSuccess, requestAllRestaurantsFailure,
+    requestRestaurantByIdSuccess, requestRestaurantByIdFailure,
 } from './restaurant-actions';
 
 export function* request(url, method, headers, body, auth = null) {
@@ -124,12 +125,12 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
     }
 }
 
-export function* requestAllRestaurants({ payload: { query } }) {
+export function* restaurantsQuerySelector({ payload }) {
     try {
-        console.log(query);
+        console.log(payload);
         let url = '';
-        if (query) {
-            url = `http://localhost:5000/restaurants${query}`;
+        if (payload) {
+            url = `http://localhost:5000/restaurants${payload}`;
         } else {
             url = `http://localhost:5000/restaurants`;
         }
@@ -146,6 +147,21 @@ export function* requestAllRestaurants({ payload: { query } }) {
     }
 }
 
+export function* requestRestaurantById({ payload }) {
+    try {
+        const url = `http://localhost:5000/restaurants/${payload}`;
+        const method = 'GET';
+        const headers = null;
+        const body = null;
+        const restaurant = yield call(request, url, method, headers, body);
+        if (restaurant !== undefined) {
+            yield put(requestRestaurantByIdSuccess(restaurant.data));
+        } 
+    } catch (error) {
+        yield put(requestRestaurantByIdFailure(error));
+    }
+}
+
 export function* oncreateRestaurantStart() {
     yield takeLatest(RestaurantActionTypes.CREATE_RESTAURANT_START, createRestaurant);
 }
@@ -155,7 +171,11 @@ export function* onUpdateRestaurantStart() {
 }
 
 export function* onRequestAllRestaurantsStart() {
-    yield takeLatest(RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START, requestAllRestaurants);
+    yield takeLatest(RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START, restaurantsQuerySelector);
+}
+
+export function* onRequestRestaurantByIdStart() {
+    yield takeLatest(RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_START, requestRestaurantById);
 }
 
 export function* restaurantSagas() {
@@ -163,5 +183,6 @@ export function* restaurantSagas() {
         call(oncreateRestaurantStart),
         call(onUpdateRestaurantStart),
         call(onRequestAllRestaurantsStart),
+        call(onRequestRestaurantByIdStart),
     ]);
 }

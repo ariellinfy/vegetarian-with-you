@@ -1,24 +1,50 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { requestRestaurantByIdStart, requestRestaurantByIdSuccess } from '../../redux/restaurant/restaurant-actions';
+import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restaurant-selectors';
+
 import { Typography, Button } from '@material-ui/core';
 import RatingBox from '../rating-box/rating-box-component';
 import AddIcon from '@material-ui/icons/Add';
 import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-1-style.scss';
 
-const RestaurantPreviewOne = ({ restaurant_name, city, region, country, type, cuisine, price_range, overall_rate }) => {
+const RestaurantPreviewOne = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, overall_rate, requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
     // handleClick: request target restaurant by id
     // redirect to target restaurant page (no auth needed)
-    // write a review: direct only if sign in
+
+    const handleRestaurantClick = async () => {
+        await requestRestaurantByIdStart(restaurantId);
+        if (requestSuccess) {
+            history.push(`/restaurants/${restaurantId}`);
+        }
+    };
+
+    const handleReviewClick = async () => {
+        await requestRestaurantByIdStart(restaurantId);
+        await requestRestaurantByIdSuccess({ restaurantId, restaurant_name, address, city, region, country, postal_code })
+
+        if (Object.keys(currentUser).length) {
+            if (requestSuccess) {
+                history.push('/createreview');
+            }
+        } else {
+            history.push('/signin')
+        }
+   };
 
     return (
         <div className='restaurant-preview-1-container'>
-            <img
-                className='restaurant-image'
-                alt="restaurant-image"
-                height="175"
-                src={restaurantImage}
-            />
-            <div className='restaurant-info'>
+            <div className='preview-1-container' onClick={handleRestaurantClick}>
+                <img
+                    className='restaurant-image'
+                    alt="restaurant-image"
+                    height="175"
+                    src={restaurantImage}
+                />
                 <div className='restaurant-detail'>
                     <Typography variant="h5">
                         {restaurant_name}
@@ -39,15 +65,25 @@ const RestaurantPreviewOne = ({ restaurant_name, city, region, country, type, cu
                         }
                     </Typography>
                 </div>
-                <div className='restaurant-action'>
-                    <Button size="small" color="primary" className='review-btn'>
-                        <AddIcon className='review-icon' />
-                        Write a review
-                    </Button>
-                </div>
+            </div>
+            <div className='restaurant-action'>
+                <Button size="small" color="primary" className='review-btn' onClick={handleReviewClick}>
+                    <AddIcon className='review-icon' />
+                    Write a review
+                </Button>
             </div>
         </div>
     )
 }
 
-export default RestaurantPreviewOne;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    requestSuccess: selectRestaurantRequestSuccess
+});
+
+const mapDispatchToProps = dispatch => ({
+    requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
+    requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo))
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPreviewOne));
