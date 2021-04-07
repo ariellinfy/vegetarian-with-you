@@ -96,7 +96,7 @@ class ReviewForm extends Component {
 
     handleChange = event => {
         const { name, value, checked } = event.target;
-        console.log(name, value, checked)
+
         if (name === 'foodRate' || name === 'serviceRate' || name === 'valueRate' || name === 'atmosphereRate') {
             this.setState({ ...this.state, [name]: Number(value) });
         } else if (name === 'disclosure') {

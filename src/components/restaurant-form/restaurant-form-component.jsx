@@ -94,7 +94,7 @@ class RestaurantForm extends Component {
     
     handleChange = event => {
         const { name, value, checked } = event.target;
-        console.log(name, value, checked)
+
         if (name === 'breakfast' || name === 'brunch' || name === 'lunch' || name === 'dinner') {
             this.setState({ ...this.state, [name]: checked });
         } else if (name === 'restaurantCountry') {

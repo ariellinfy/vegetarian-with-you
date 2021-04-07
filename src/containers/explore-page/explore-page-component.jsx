@@ -55,10 +55,17 @@ const ExplorePage = ({ allRestaurants, requestPending, requestError, keyword, fi
                                 </div>
                             )
                         ) : (
-                            allRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
-                                <RestaurantPreviewOne key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                            allRestaurants.length ? (
+                                allRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
+                                    <RestaurantPreviewOne key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                ))
+                            ) : (
+                                <div className='find-no-match'>
+                                    <Typography variant="h5">Can't find a restaurant?</Typography>
+                                    <Typography variant="h5">Fill up a restaurant form to let more people know about it!</Typography> 
+                                </div>
                             )
-                        ))
+                        )
                     }
                 </div>
             </div>

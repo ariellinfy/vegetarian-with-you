@@ -12,7 +12,7 @@ import './create-review-page-style.scss';
 
 const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, resetCreateReviewStatus, targetRestaurant }) => {
     const currentUserToken = localStorage.getItem('token');
-    console.log(targetRestaurant);
+    console.log(targetReviewToMap)
     return (
         <div className='create-review-page'>
             {
@@ -33,11 +33,24 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
                                     targetReviewToMap ? (
                                         targetReviewToMap
                                         .filter((item, index) => index > 1 && index < targetReviewToMap.length - 4)
-                                        .map(item => (
-                                        <Typography key={item[0]} className="review-detail" color="textPrimary">
-                                            {item[0].toUpperCase()}: {item[1]}
-                                        </Typography>
-                                    ))) : null
+                                        .map(item => {
+                                            if (item[0] === 'price_range') {
+                                                if (item[1] === 1) {
+                                                    item[1] = 'cheap eats';
+                                                } else if (item[1] === 2) {
+                                                    item[1] = 'mid-range';
+                                                } else if (item[1] === 3) {
+                                                    item[1] = 'fine dining';
+                                                } else {
+                                                    item[1] = 'unknown';
+                                                }
+                                            }
+                                            console.log(item[0], item[1]);
+                                            return (
+                                            <Typography key={item[0]} className="review-detail" color="textPrimary">
+                                                {item[0].toUpperCase()}: {item[1]}
+                                            </Typography>
+                                    )})) : null
                                 }
 
                         </Card>
@@ -48,7 +61,6 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
                             <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>Explore more restaurants</Button>
                             <Button component={Link} to={'/useraccount'} variant="contained" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>View my reviews</Button>
                         </div>
-
                     </div>
                 ) : (
                     Object.keys(targetRestaurant).length === 0 ? (<Redirect to='/find' />) : (<ReviewForm currentUserToken={currentUserToken} targetRestaurant={targetRestaurant} />)

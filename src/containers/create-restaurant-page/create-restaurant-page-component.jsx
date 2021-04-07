@@ -30,7 +30,7 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
 
                                 {
                                     targetRestaurantToMap ? (
-                                        targetRestaurantToMap.filter((item, index) => index > 0 && index < targetRestaurantToMap.length - 10)
+                                        targetRestaurantToMap.filter((item, index) => index > 0 && index < targetRestaurantToMap.length - 4)
                                         .map(item => (
                                         <Typography key={item[0]} className="restaurant-detail" color="textPrimary">
                                             {item[0].toUpperCase()}: {item[1]}

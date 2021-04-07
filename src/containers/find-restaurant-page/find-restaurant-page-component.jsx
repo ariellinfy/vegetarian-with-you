@@ -49,11 +49,21 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestError, feat
                                     </Button>
                                 </div>
                                 )
+                        ) : (
+                            allRestaurants.length ? (
+                                allRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
+                                    <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                ))
                             ) : (
-                            allRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
-                                <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                <div className='find-no-match'>
+                                    <Typography variant="h5">Restaurant not found here?</Typography>
+                                    <Typography variant="h5">Let's add a new restaurant profile!</Typography> 
+                                    <Button variant="contained" color="primary" onClick={() => Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}>
+                                        Add a place
+                                    </Button>
+                                </div>
                             )
-                        ))
+                        )
                     }
                 </div>
             </div>
