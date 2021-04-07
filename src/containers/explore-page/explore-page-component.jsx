@@ -18,6 +18,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
     currentUser, history }) => {
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         resetCreateRestaurantStatus();
         resetUpdateRestaurantStatus();
         requestAllRestaurantsStart('');

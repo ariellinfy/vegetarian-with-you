@@ -14,7 +14,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
     const currentUserToken = localStorage.getItem('token');
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
     }, [createSuccess]);
 
     return (

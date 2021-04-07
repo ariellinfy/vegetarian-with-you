@@ -18,6 +18,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
     currentUser, history }) => {
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         resetCreateRestaurantStatus();
         resetUpdateRestaurantStatus();
         requestAllRestaurantsStart('');

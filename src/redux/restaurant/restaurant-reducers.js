@@ -88,7 +88,6 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
         case RestaurantActionTypes.RESET_UPDATE_RESTAURANT_STATUS:
             return {
                 ...state,
-                targetRestaurant: {},
                 restaurantToBeUpdate: {},
                 restaurantActionPending: false,
                 restaurantUpdateSuccess: false,

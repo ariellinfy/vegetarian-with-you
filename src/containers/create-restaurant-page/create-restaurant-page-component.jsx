@@ -13,7 +13,7 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
     const currentUserToken = localStorage.getItem('token');
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
     }, [createSuccess]);
 
     return (
