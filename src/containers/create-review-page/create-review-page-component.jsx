@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link, Redirect } from "react-router-dom";
@@ -12,20 +12,19 @@ import './create-review-page-style.scss';
 
 const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, resetCreateReviewStatus, targetRestaurant }) => {
     const currentUserToken = localStorage.getItem('token');
-    console.log(targetReviewToMap)
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [createSuccess]);
+
     return (
         <div className='create-review-page'>
             {
                 createSuccess ? (
                     <div className="review-success">
                         <div className="review-header">
-                            <Typography variant="h5">
-                                You've successfully uploaded your 
-                                <span className="review-name">
-                                    {targetReview.review_title}
-                                </span>
-                                 review!
-                            </Typography>
+                            <Typography variant="h5">You've successfully uploaded your review!</Typography>
+                            <Typography variant="h5" className="review-name">{`--- ${targetReview.review_title} ---`}</Typography>
                         </div>
                         <Card className="review-body" elevation={0}>
 
@@ -44,11 +43,10 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
                                                 } else {
                                                     item[1] = 'unknown';
                                                 }
-                                            }
-                                            console.log(item[0], item[1]);
+                                            };
                                             return (
                                             <Typography key={item[0]} className="review-detail" color="textPrimary">
-                                                {item[0].toUpperCase()}: {item[1]}
+                                                <span className="data-title">{item[0]}</span>: {item[1]}
                                             </Typography>
                                     )})) : null
                                 }

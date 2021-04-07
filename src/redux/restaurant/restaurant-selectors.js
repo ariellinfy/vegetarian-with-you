@@ -8,6 +8,8 @@ export const selectTargetRestaurantInfoToMap = createSelector([selectTargetResta
     return Object.entries(targetRestaurant).filter(([key, value]) => value !== false && value.length > 0)
 });
 
+// Create / Update restaurant actions
+
 export const selectRestaurantToBeUpdate = createSelector([selectRestaurant], restaurant => restaurant.restaurantToBeUpdate);
 
 export const selectRestaurantActionPending = createSelector([selectRestaurant], restaurant => restaurant.restaurantActionPending);
@@ -22,6 +24,7 @@ export const selectCreateRestaurantErr = createSelector([selectRestaurant], rest
 
 export const selectUpdateRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.updateRestaurantErr);
 
+// Request restaurants
 
 export const selectAllRestaurants = createSelector([selectRestaurant], restaurant => restaurant.allRestaurants);
 
@@ -31,12 +34,14 @@ export const selectRestaurantRequestSuccess = createSelector([selectRestaurant],
 
 export const selectRequestRestaurantsErr = createSelector([selectRestaurant], restaurant => restaurant.requestRestaurantsErr);
 
+export const selectSortbyFilter = createSelector([selectRestaurant], restaurant => restaurant.sortbyFilter);
+
+// Filter restaurants
+
+export const selectFilteredRestaurants = createSelector([selectRestaurant], restaurant => restaurant.filteredRestaurants);
+
 export const selectFilterKeyword = createSelector([selectRestaurant], restaurant => restaurant.keyword);
 
 export const selectFilterFeatureKeyword = createSelector([selectRestaurant], restaurant => restaurant.keywordFeature);
 
 export const selectFilterLocationKeyword = createSelector([selectRestaurant], restaurant => restaurant.keywordLocation);
-
-export const selectFilteredRestaurants = createSelector([selectRestaurant], restaurant => restaurant.filteredRestaurants);
-
-export const selectSortbyFilter = createSelector([selectRestaurant], restaurant => restaurant.sortbyFilter);

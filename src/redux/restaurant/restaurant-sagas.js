@@ -127,14 +127,13 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
 
 export function* restaurantsQuerySelector({ payload }) {
     try {
-        console.log(payload);
         let url = '';
         if (payload) {
             url = `http://localhost:5000/restaurants${payload}`;
         } else {
             url = `http://localhost:5000/restaurants`;
         }
-        console.log(url)
+
         const method = 'GET';
         const headers = null;
         const body = null;

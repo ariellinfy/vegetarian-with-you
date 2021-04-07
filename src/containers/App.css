@@ -1,12 +1,13 @@
 * {
-    box-sizing: border-box;
-    font-family: -apple-system, Quicksand, sans-serif;
+  box-sizing: border-box;
+  font-family: -apple-system, Quicksand, sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: whitesmoke;
+  background-color: whitesmoke;
 }
 
 .App {
-    min-height: 100vh;
+  min-height: 100vh;
 }

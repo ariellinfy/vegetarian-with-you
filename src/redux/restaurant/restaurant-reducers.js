@@ -14,11 +14,11 @@ const INITIAL_STATE = {
     restaurantRequestPending: false,
     restaurantRequestSuccess: false,
     requestRestaurantsErr: '',
+    sortbyFilter: 'Sort By',
+    filteredRestaurants: [],
     keyword: '',
     keywordFeature: '',
     keywordLocation: '',
-    filteredRestaurants: [],
-    sortbyFilter: 'Sort By'
 }
 
 const restaurantReducer = (state=INITIAL_STATE, action) => {
@@ -32,15 +32,6 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantActionFailure: false,
                 createRestaurantErr: ''
             };
-        case RestaurantActionTypes.UPDATE_RESTAURANT_START:
-            return {
-                ...state,
-                restaurantToBeUpdate: action.payload,
-                restaurantActionPending: true,
-                restaurantUpdateSuccess: false,
-                restaurantActionFailure: false,
-                updateRestaurantErr: ''
-            };
         case RestaurantActionTypes.CREATE_RESTAURANT_SUCCESS:
             return {
                 ...state,
@@ -50,29 +41,12 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantActionFailure: false,
                 createRestaurantErr: ''
             };
-        case RestaurantActionTypes.UPDATE_RESTAURANT_SUCCESS:
-            return {
-                ...state,
-                targetRestaurant: action.payload,
-                restaurantActionPending: false,
-                restaurantUpdateSuccess: true,
-                restaurantActionFailure: false,
-                updateRestaurantErr: ''
-            };
         case RestaurantActionTypes.CREATE_RESTAURANT_FAILURE:
             return {
                 ...state,
                 createRestaurantErr: action.payload,
                 restaurantActionPending: false,
                 restaurantCreateSuccess: false,
-                restaurantActionFailure: true
-            };
-        case RestaurantActionTypes.UPDATE_RESTAURANT_FAILURE:
-            return {
-                ...state,
-                updateRestaurantErr: action.payload,
-                restaurantActionPending: false,
-                restaurantUpdateSuccess: false,
                 restaurantActionFailure: true
             };
         case RestaurantActionTypes.RESET_CREATE_RESTAURANT_STATUS:
@@ -84,6 +58,33 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantActionFailure: false,
                 createRestaurantErr: ''
             };
+        
+        case RestaurantActionTypes.UPDATE_RESTAURANT_START:
+            return {
+                ...state,
+                restaurantToBeUpdate: action.payload,
+                restaurantActionPending: true,
+                restaurantUpdateSuccess: false,
+                restaurantActionFailure: false,
+                updateRestaurantErr: ''
+            };
+        case RestaurantActionTypes.UPDATE_RESTAURANT_SUCCESS:
+            return {
+                ...state,
+                targetRestaurant: action.payload,
+                restaurantActionPending: false,
+                restaurantUpdateSuccess: true,
+                restaurantActionFailure: false,
+                updateRestaurantErr: ''
+            };
+        case RestaurantActionTypes.UPDATE_RESTAURANT_FAILURE:
+            return {
+                ...state,
+                updateRestaurantErr: action.payload,
+                restaurantActionPending: false,
+                restaurantUpdateSuccess: false,
+                restaurantActionFailure: true
+            };
         case RestaurantActionTypes.RESET_UPDATE_RESTAURANT_STATUS:
             return {
                 ...state,
@@ -94,6 +95,7 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantActionFailure: false,
                 updateRestaurantErr: ''
             };
+
         case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START:
             return {
                 ...state,
@@ -115,6 +117,21 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantRequestSuccess: false,
                 requestRestaurantsErr: action.payload
             };
+        case RestaurantActionTypes.SET_SORTBY_FILTER:
+            return {
+                ...state,
+                sortbyFilter: action.payload,
+            };
+        case RestaurantActionTypes.RESET_REQUEST_RESTAURANTS_STATUS:
+            return {
+                ...state,
+                allRestaurants: [],
+                restaurantRequestPending: false,
+                restaurantRequestSuccess: false,
+                requestRestaurantsErr: '',
+                sortbyFilter: 'Sort By',
+            };
+
         case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS:
             return {
                 ...state,
@@ -124,45 +141,24 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
         case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS_BY_FEATURE:
             return {
                 ...state,
-                filteredRestaurants: filterRestaurantsByFeature(action.payload, state.allRestaurants, state.filteredRestaurants),
+                filteredRestaurants: filterRestaurantsByFeature(action.payload, state.keywordLocation, state.allRestaurants, state.filteredRestaurants),
                 keywordFeature: action.payload
             };
         case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS_BY_LOCATION:
             return {
                 ...state,
-                filteredRestaurants: filterRestaurantsByLocation(action.payload, state.allRestaurants, state.filteredRestaurants),
+                filteredRestaurants: filterRestaurantsByLocation(action.payload, state.keywordFeature, state.allRestaurants, state.filteredRestaurants),
                 keywordLocation: action.payload
             };
         case RestaurantActionTypes.RESET_FILTERED_RESTAURANTS:
             return {
                 ...state,
                 filteredRestaurants: [],
-            };
-        case RestaurantActionTypes.RESET_KEYWORD:
-            return {
-                ...state,
                 keyword: '',
-            };
-        case RestaurantActionTypes.RESET_FEATURE_KEYWORD:
-            return {
-                ...state,
                 keywordFeature: '',
-            };
-        case RestaurantActionTypes.RESET_LOCATION_KEYWORD:
-            return {
-                ...state,
                 keywordLocation: '',
             };
-        case RestaurantActionTypes.SET_SORTBY_FILTER:
-            return {
-                ...state,
-                sortbyFilter: action.payload,
-            };
-        case RestaurantActionTypes.RESET_SORTBY_FILTER:
-            return {
-                ...state,
-                sortbyFilter: 'Sort By',
-            };
+        
         case RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_START:
             return {
                 ...state,
@@ -185,6 +181,15 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantRequestSuccess: false,
                 requestRestaurantsErr: action.payload
             };
+        case RestaurantActionTypes.RESET_RESTAURANT_BY_ID_STATUS:
+            return {
+                ...state,
+                targetRestaurant: {},
+                restaurantRequestPending: false,
+                restaurantRequestSuccess: false,
+                requestRestaurantsErr: '',
+            };
+
         default:
             return state;
     }

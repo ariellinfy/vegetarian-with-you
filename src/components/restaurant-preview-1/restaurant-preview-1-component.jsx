@@ -12,9 +12,19 @@ import AddIcon from '@material-ui/icons/Add';
 import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-1-style.scss';
 
-const RestaurantPreviewOne = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, overall_rate, requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
+const RestaurantPreviewOne = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, overall_rate, review_count, requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
     // handleClick: request target restaurant by id
     // redirect to target restaurant page (no auth needed)
+
+    if (Math.round(price_range) === 1) {
+        price_range = 'cheap eats';
+    } else if (Math.round(price_range) === 2) {
+        price_range = 'mid-range';
+    } else if (Math.round(price_range) === 3) {
+        price_range = 'fine dining';
+    } else {
+        price_range = 'unknown';
+    };
 
     const handleRestaurantClick = async () => {
         await requestRestaurantByIdStart(restaurantId);
@@ -52,6 +62,7 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, address, city, re
                     <RatingBox 
                         name="overall-rating"
                         value={overall_rate}
+                        count={review_count}
                         readOnly
                     />
                     <Typography variant="body2" color="textSecondary" component="p" gutterBottom className='restaurant-features'>

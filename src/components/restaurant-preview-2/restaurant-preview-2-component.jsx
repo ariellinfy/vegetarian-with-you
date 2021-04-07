@@ -11,6 +11,17 @@ import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-2-style.scss';
 
 const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
+    
+    if (Math.round(price_range) === 1) {
+        price_range = 'cheap eats';
+    } else if (Math.round(price_range) === 2) {
+        price_range = 'mid-range';
+    } else if (Math.round(price_range) === 3) {
+        price_range = 'fine dining';
+    } else {
+        price_range = 'unknown';
+    };
+    
     const handleRestaurantClick = async () => {
         await requestRestaurantByIdStart(restaurantId);
         if (requestSuccess) {

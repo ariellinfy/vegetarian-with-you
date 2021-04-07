@@ -3,7 +3,7 @@ import { Typography, Box } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import './rating-box-style.scss';
 
-const RatingBox = ({ value, ...otherProps}) => {
+const RatingBox = ({ value, count, ...otherProps}) => {
 
     return (
         <div className='rating-container'>
@@ -13,7 +13,7 @@ const RatingBox = ({ value, ...otherProps}) => {
                     precision={0.5}
                     {...otherProps}
                 />
-                <Typography className='rating-review' variant="body1">100 reviews</Typography>
+                <Typography className='rating-review' variant="body1">{`${parseInt(count)} reviews`}</Typography>
             </Box>           
         </div>
     )

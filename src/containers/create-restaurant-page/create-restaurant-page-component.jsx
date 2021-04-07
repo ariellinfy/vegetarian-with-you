@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from "react-router-dom";
@@ -11,6 +11,10 @@ import './create-restaurant-page-style.scss';
 
 const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestaurantToMap, resetCreateRestaurantStatus }) => {
     const currentUserToken = localStorage.getItem('token');
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [createSuccess]);
 
     return (
         <div className='create-restaurant-page'>
@@ -30,10 +34,10 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
 
                                 {
                                     targetRestaurantToMap ? (
-                                        targetRestaurantToMap.filter((item, index) => index > 0 && index < targetRestaurantToMap.length - 4)
+                                        targetRestaurantToMap.filter((item, index) => index > 0 && index < targetRestaurantToMap.length - 5)
                                         .map(item => (
                                         <Typography key={item[0]} className="restaurant-detail" color="textPrimary">
-                                            {item[0].toUpperCase()}: {item[1]}
+                                            <span className="data-title">{item[0]}</span>: {item[1]}
                                         </Typography>
                                     ))) : null
                                 }

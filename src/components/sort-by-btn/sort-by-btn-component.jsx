@@ -1,20 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { requestAllRestaurantsStart, setSortbyFilter, resetFilteredRestaurants, resetKeyword } from '../../redux/restaurant/restaurant-actions';
+import { requestAllRestaurantsStart, setSortbyFilter, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { selectSortbyFilter } from '../../redux/restaurant/restaurant-selectors';
 
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import './sort-by-btn-style.scss';
 
-const SortByButton = ({ sortbyFilter, requestAllRestaurantsStart, setSortbyFilter, resetFilteredRestaurants, resetKeyword }) => {
+const SortByButton = ({ sortbyFilter, requestAllRestaurantsStart, setSortbyFilter, resetFilteredRestaurants }) => {
 
     const handleChange = event => {
-        console.log(event.target.value, event.currentTarget.dataset.query)
         setSortbyFilter(event.target.value);
-        resetKeyword();
         resetFilteredRestaurants();
-        requestAllRestaurantsStart("?" + event.currentTarget.dataset.query)
+        requestAllRestaurantsStart("?" + event.currentTarget.dataset.query);
     };
 
     return (
@@ -26,8 +24,8 @@ const SortByButton = ({ sortbyFilter, requestAllRestaurantsStart, setSortbyFilte
                     onChange={handleChange}
                 >
                     <MenuItem value={"Sort By"} data-query={""}>Sort By</MenuItem>
-                    <MenuItem value={"Most recent"} data-query={"&sortBy=create_at:desc"}>Rating</MenuItem>
-                    <MenuItem value={"Top reviews"} data-query={"&sortBy=overall_rate:desc"}>Number of reviews</MenuItem>
+                    <MenuItem value={"Most recent"} data-query={"&sortBy=overall_rate:desc"}>Rating</MenuItem>
+                    <MenuItem value={"Top reviews"} data-query={"&sortBy=review_count:desc"}>Number of reviews</MenuItem>
                 </Select>
             </FormControl>
         </div>
@@ -42,7 +40,6 @@ const mapDispatchToProps = dispatch => ({
     requestAllRestaurantsStart: query => dispatch(requestAllRestaurantsStart(query)),
     setSortbyFilter: filter => dispatch(setSortbyFilter(filter)),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
-    resetKeyword: () => dispatch(resetKeyword()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortByButton);

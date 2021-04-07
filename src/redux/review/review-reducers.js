@@ -22,15 +22,6 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionFailure: false,
                 createReviewErr: '',
             };
-        case ReviewActionTypes.UPDATE_REVIEW_START:
-            return {
-                ...state,
-                reviewToBeUpdate: action.payload,
-                reviewActionPending: true,
-                reviewUpdateSuccess: false,
-                reviewActionFailure: false,
-                updateReviewErr: '',
-            };
         case ReviewActionTypes.CREATE_REVIEW_SUCCESS:
             return {
                 ...state,
@@ -40,29 +31,12 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionFailure: false,
                 createReviewErr: '',
             };
-        case ReviewActionTypes.UPDATE_REVIEW_SUCCESS:
-            return {
-                ...state,
-                targetReview: action.payload,
-                reviewActionPending: false,
-                reviewUpdateSuccess: true,
-                reviewActionFailure: false,
-                updateReviewErr: '',
-            };
         case ReviewActionTypes.CREATE_REVIEW_FAILURE:
             return {
                 ...state,
                 createReviewErr: action.payload,
                 reviewActionPending: false,
                 reviewCreateSuccess: false,
-                reviewActionFailure: true,
-            };
-        case ReviewActionTypes.UPDATE_REVIEW_FAILURE:
-            return {
-                ...state,
-                updateReviewErr: action.payload,
-                reviewActionPending: false,
-                reviewUpdateSuccess: false,
                 reviewActionFailure: true,
             };
         case ReviewActionTypes.RESET_CREATE_REVIEW_STATUS:
@@ -74,6 +48,33 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionFailure: false,
                 createReviewErr: '',
             };
+
+        case ReviewActionTypes.UPDATE_REVIEW_START:
+            return {
+                ...state,
+                reviewToBeUpdate: action.payload,
+                reviewActionPending: true,
+                reviewUpdateSuccess: false,
+                reviewActionFailure: false,
+                updateReviewErr: '',
+            };
+        case ReviewActionTypes.UPDATE_REVIEW_SUCCESS:
+            return {
+                ...state,
+                targetReview: action.payload,
+                reviewActionPending: false,
+                reviewUpdateSuccess: true,
+                reviewActionFailure: false,
+                updateReviewErr: '',
+            };
+        case ReviewActionTypes.UPDATE_REVIEW_FAILURE:
+            return {
+                ...state,
+                updateReviewErr: action.payload,
+                reviewActionPending: false,
+                reviewUpdateSuccess: false,
+                reviewActionFailure: true,
+            };
         case ReviewActionTypes.RESET_UPDATE_REVIEW_STATUS:
             return {
                 ...state,
@@ -84,6 +85,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionFailure: false,
                 updateReviewErr: '',
             };
+            
         default:
             return state;
     }

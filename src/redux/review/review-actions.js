@@ -1,5 +1,7 @@
 import ReviewActionTypes from './review-types';
 
+// Create review
+
 export const createReviewStart = reviewDetail => ({
     type: ReviewActionTypes.CREATE_REVIEW_START,
     payload: reviewDetail
@@ -15,6 +17,12 @@ export const createReviewFailure = error => ({
     payload: error
 });
 
+export const resetCreateReviewStatus = () => ({
+    type: ReviewActionTypes.RESET_CREATE_REVIEW_STATUS
+});
+
+// Update review
+
 export const updateReviewStart = reviewDetail => ({
     type: ReviewActionTypes.UPDATE_REVIEW_START,
     payload: reviewDetail
@@ -28,10 +36,6 @@ export const updateReviewSuccess = review => ({
 export const updateReviewFailure = error => ({
     type: ReviewActionTypes.UPDATE_REVIEW_FAILURE,
     payload: error
-});
-
-export const resetCreateReviewStatus = () => ({
-    type: ReviewActionTypes.RESET_CREATE_REVIEW_STATUS
 });
 
 export const resetUpdateReviewStatus = () => ({
