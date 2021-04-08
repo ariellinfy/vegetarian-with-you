@@ -32,9 +32,9 @@ export const selectRestaurantRequestPending = createSelector([selectRestaurant],
 
 export const selectRestaurantRequestSuccess = createSelector([selectRestaurant], restaurant => restaurant.restaurantRequestSuccess);
 
-export const selectRequestRestaurantsErr = createSelector([selectRestaurant], restaurant => restaurant.requestRestaurantsErr);
+export const selectRequestRestaurantErr = createSelector([selectRestaurant], restaurant => restaurant.requestRestaurantErr);
 
-export const selectSortbyFilter = createSelector([selectRestaurant], restaurant => restaurant.sortbyFilter);
+export const selectRestaurantSortbyFilter = createSelector([selectRestaurant], restaurant => restaurant.restaurantSortbyFilter);
 
 // Filter restaurants
 

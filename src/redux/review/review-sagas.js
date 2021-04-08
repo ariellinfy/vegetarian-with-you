@@ -3,6 +3,7 @@ import ReviewActionTypes from './review-types';
 import { 
     createReviewSuccess, createReviewFailure, 
     updateReviewSuccess, updateReviewFailure, 
+    requestReviewsSuccess, requestReviewsFailure, 
 } from './review-actions';
 
 export function* request(url, method, headers, body, auth = null) {
@@ -107,6 +108,21 @@ export function* updateReview({ payload: { reviewId, restaurantId,
     }
 }
 
+export function* requestReviews({ payload: { restaurant_id, query } }) {
+    try {
+        const url = `http://localhost:5000/reviews&restaurantId=${restaurant_id}${query}`;
+        const method = 'GET';
+        const headers = null;
+        const body = null;
+        const reviews = yield call(request, url, method, headers, body);
+        if (reviews !== undefined) {
+            yield put(requestReviewsSuccess(reviews.data));
+        } 
+    } catch (error) {
+        yield put(requestReviewsFailure(error));
+    }
+}
+
 export function* oncreateReviewStart() {
     yield takeLatest(ReviewActionTypes.CREATE_REVIEW_START, createReview);
 }
@@ -115,9 +131,14 @@ export function* onUpdateReviewStart() {
     yield takeLatest(ReviewActionTypes.UPDATE_REVIEW_START, updateReview);
 }
 
+export function* onRequestReviewsStart() {
+    yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START, requestReviews);
+}
+
 export function* reviewSagas() {
     yield all([
         call(oncreateReviewStart),
         call(onUpdateReviewStart),
+        call(onRequestReviewsStart),
     ]);
 }

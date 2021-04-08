@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { requestAllRestaurantsStart, setSortbyFilter, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { selectSortbyFilter } from '../../redux/restaurant/restaurant-selectors';
+import { requestAllRestaurantsStart, setRestaurantSortbyFilter, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
+import { selectRestaurantSortbyFilter } from '../../redux/restaurant/restaurant-selectors';
 
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import './sort-by-btn-style.scss';
 
-const SortByButton = ({ sortbyFilter, requestAllRestaurantsStart, setSortbyFilter, resetFilteredRestaurants }) => {
+const SortByButton = ({ restaurantSortbyFilter, requestAllRestaurantsStart, setRestaurantSortbyFilter, resetFilteredRestaurants }) => {
 
     const handleChange = event => {
-        setSortbyFilter(event.target.value);
+        setRestaurantSortbyFilter(event.target.value);
         resetFilteredRestaurants();
         requestAllRestaurantsStart("?" + event.currentTarget.dataset.query);
     };
@@ -19,8 +19,8 @@ const SortByButton = ({ sortbyFilter, requestAllRestaurantsStart, setSortbyFilte
         <div className='sort-by-btn-container'>
             <FormControl variant="outlined" className='sort-by-container'>
                 <Select
-                    id="sortby-filter"
-                    value={sortbyFilter}
+                    id="restaurant-sortby-filter"
+                    value={restaurantSortbyFilter}
                     onChange={handleChange}
                 >
                     <MenuItem value={"Sort By"} data-query={""}>Sort By</MenuItem>
@@ -33,12 +33,12 @@ const SortByButton = ({ sortbyFilter, requestAllRestaurantsStart, setSortbyFilte
 };
 
 const mapStateToProps = createStructuredSelector({
-    sortbyFilter: selectSortbyFilter
+    restaurantSortbyFilter: selectRestaurantSortbyFilter
 });
 
 const mapDispatchToProps = dispatch => ({
     requestAllRestaurantsStart: query => dispatch(requestAllRestaurantsStart(query)),
-    setSortbyFilter: filter => dispatch(setSortbyFilter(filter)),
+    setRestaurantSortbyFilter: filter => dispatch(setRestaurantSortbyFilter(filter)),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
 });
 

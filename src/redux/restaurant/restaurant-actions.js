@@ -59,8 +59,8 @@ export const requestAllRestaurantsFailure = error => ({
     payload: error
 });
 
-export const setSortbyFilter = filter => ({
-    type: RestaurantActionTypes.SET_SORTBY_FILTER,
+export const setRestaurantSortbyFilter = filter => ({
+    type: RestaurantActionTypes.SET_RESTAURANT_SORTBY_FILTER,
     payload: filter
 });
 

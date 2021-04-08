@@ -41,3 +41,29 @@ export const updateReviewFailure = error => ({
 export const resetUpdateReviewStatus = () => ({
     type: ReviewActionTypes.RESET_UPDATE_REVIEW_STATUS
 });
+
+// Request reviews
+
+export const requestReviewsStart = info => ({
+    type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START,
+    payload: info
+});
+
+export const requestReviewsSuccess = reviews => ({
+    type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_SUCCESS,
+    payload: reviews
+});
+
+export const requestReviewsFailure = error => ({
+    type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_FAILURE,
+    payload: error
+});
+
+export const setReviewSortbyFilter = filter => ({
+    type: ReviewActionTypes.SET_REVIEW_SORTBY_FILTER,
+    payload: filter
+});
+
+export const resetRequestReviewsStatus = () => ({
+    type: ReviewActionTypes.RESET_REQUEST_RESTAURANT_REVIEWS_STATUS
+});

@@ -13,8 +13,8 @@ const INITIAL_STATE = {
     allRestaurants: [],
     restaurantRequestPending: false,
     restaurantRequestSuccess: false,
-    requestRestaurantsErr: '',
-    sortbyFilter: 'Sort By',
+    requestRestaurantErr: '',
+    restaurantSortbyFilter: 'Sort By',
     filteredRestaurants: [],
     keyword: '',
     keywordFeature: '',
@@ -107,19 +107,19 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantRequestPending: false,
                 restaurantRequestSuccess: true,
                 allRestaurants: action.payload,
-                requestRestaurantsErr: ''
+                requestRestaurantErr: ''
             };
         case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_FAILURE:
             return {
                 ...state,
                 restaurantRequestPending: false,
                 restaurantRequestSuccess: false,
-                requestRestaurantsErr: action.payload
+                requestRestaurantErr: action.payload
             };
-        case RestaurantActionTypes.SET_SORTBY_FILTER:
+        case RestaurantActionTypes.SET_RESTAURANT_SORTBY_FILTER:
             return {
                 ...state,
-                sortbyFilter: action.payload,
+                restaurantSortbyFilter: action.payload,
             };
         case RestaurantActionTypes.RESET_REQUEST_RESTAURANTS_STATUS:
             return {
@@ -127,8 +127,8 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 allRestaurants: [],
                 restaurantRequestPending: false,
                 restaurantRequestSuccess: false,
-                requestRestaurantsErr: '',
-                sortbyFilter: 'Sort By',
+                requestRestaurantErr: '',
+                restaurantSortbyFilter: 'Sort By',
             };
 
         case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS:
@@ -171,14 +171,14 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantRequestPending: false,
                 restaurantRequestSuccess: true,
                 targetRestaurant: action.payload,
-                requestRestaurantsErr: ''
+                requestRestaurantErr: ''
             };
         case RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_FAILURE:
             return {
                 ...state,
                 restaurantRequestPending: false,
                 restaurantRequestSuccess: false,
-                requestRestaurantsErr: action.payload
+                requestRestaurantErr: action.payload
             };
         case RestaurantActionTypes.RESET_RESTAURANT_BY_ID_STATUS:
             return {
@@ -186,7 +186,7 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 targetRestaurant: {},
                 restaurantRequestPending: false,
                 restaurantRequestSuccess: false,
-                requestRestaurantsErr: '',
+                requestRestaurantErr: '',
             };
 
         default:

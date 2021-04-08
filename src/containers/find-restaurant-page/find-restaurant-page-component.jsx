@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantsErr, selectFilteredRestaurants, selectFilterFeatureKeyword, selectFilterLocationKeyword } from '../../redux/restaurant/restaurant-selectors';
+import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilteredRestaurants, selectFilterFeatureKeyword, selectFilterLocationKeyword } from '../../redux/restaurant/restaurant-selectors';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 
 import { Typography, Button } from '@material-ui/core';
@@ -94,7 +94,7 @@ const mapStateToProps = createStructuredSelector({
     allRestaurants: selectAllRestaurants,
     requestPending: selectRestaurantRequestPending,
     requestSuccess: selectRestaurantRequestSuccess,
-    requestError: selectRequestRestaurantsErr,
+    requestError: selectRequestRestaurantErr,
     filteredRestaurants: selectFilteredRestaurants,
     featureKeyword: selectFilterFeatureKeyword,
     locationKeyword: selectFilterLocationKeyword,

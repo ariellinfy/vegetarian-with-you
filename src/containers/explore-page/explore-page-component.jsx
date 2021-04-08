@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { requestAllRestaurantsStart, requestFilteredRestaurants, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantsErr, selectFilterKeyword, selectFilteredRestaurants } from '../../redux/restaurant/restaurant-selectors';
+import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilterKeyword, selectFilteredRestaurants } from '../../redux/restaurant/restaurant-selectors';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 
 import { Typography, Button } from '@material-ui/core';
@@ -91,7 +91,7 @@ const mapStateToProps = createStructuredSelector({
     allRestaurants: selectAllRestaurants,
     requestPending: selectRestaurantRequestPending,
     requestSuccess: selectRestaurantRequestSuccess,
-    requestError: selectRequestRestaurantsErr,
+    requestError: selectRequestRestaurantErr,
     filteredRestaurants: selectFilteredRestaurants,
     keyword: selectFilterKeyword,
     currentUser: selectCurrentUser

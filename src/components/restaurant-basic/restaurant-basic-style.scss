@@ -1,0 +1,32 @@
+.restaurant-basic {
+  display: flex;
+  flex-direction: column;
+
+  .restaurant-basic-detail {
+    display: flex;
+    flex-wrap: wrap;
+
+    .items-container {
+      display: flex;
+      padding: 0.2em 0.75em;
+      margin: 0;
+
+      .overall-rate:first-child {
+        margin-right: 0.5em;
+        margin-left: 0;
+      }
+      .overall-rate:last-child {
+        margin-left: 0.5em;
+        margin-right: 0;
+      }
+    }
+
+    .items-container:first-child {
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .capitalize-text {
+      text-transform: capitalize;
+    }
+  }
+}

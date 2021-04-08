@@ -132,8 +132,7 @@ export function* restaurantsQuerySelector({ payload }) {
             url = `http://localhost:5000/restaurants${payload}`;
         } else {
             url = `http://localhost:5000/restaurants`;
-        }
-
+        };
         const method = 'GET';
         const headers = null;
         const body = null;
