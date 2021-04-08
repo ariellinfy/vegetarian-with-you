@@ -5,12 +5,15 @@ import { withRouter } from 'react-router-dom';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { requestRestaurantByIdStart, requestRestaurantByIdSuccess } from '../../redux/restaurant/restaurant-actions';
 import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restaurant-selectors';
+import { requestReviewsStart } from '../../redux/review/review-actions';
 
 import { Typography, Button } from '@material-ui/core';
 import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-2-style.scss';
 
-const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
+const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, 
+    requestRestaurantByIdStart, requestRestaurantByIdSuccess, requestReviewsStart,
+    currentUser, requestSuccess, history }) => {
     
     if (Math.round(price_range) === 1) {
         price_range = 'cheap eats';
@@ -23,7 +26,9 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
     };
     
     const handleRestaurantClick = async () => {
+        let query = '';
         await requestRestaurantByIdStart(restaurantId);
+        await requestReviewsStart({ restaurantId, query });
         if (requestSuccess) {
             history.push(`/restaurants/${restaurantId}`);
         }
@@ -31,7 +36,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
 
     const handleReviewClick = async () => {
         await requestRestaurantByIdStart(restaurantId);
-        await requestRestaurantByIdSuccess({ restaurantId, restaurant_name, address, city, region, country, postal_code })
+        await requestRestaurantByIdSuccess({ restaurantId, restaurant_name, address, city, region, country, postal_code });
 
         if (Object.keys(currentUser).length) {
             if (requestSuccess) {
@@ -39,7 +44,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
             }
         } else {
             history.push('/signin')
-        }
+        };
    };
     return (
         <div className='restaurant-preview-2-container'>
@@ -81,7 +86,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
-    requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo))
+    requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo)),
+    requestReviewsStart: info => dispatch(requestReviewsStart(info))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPreviewTwo));

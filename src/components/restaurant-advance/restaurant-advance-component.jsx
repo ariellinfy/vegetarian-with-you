@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Paper, Link } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';

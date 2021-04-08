@@ -108,9 +108,9 @@ export function* updateReview({ payload: { reviewId, restaurantId,
     }
 }
 
-export function* requestReviews({ payload: { restaurant_id, query } }) {
+export function* requestReviews({ payload: { restaurantId, query } }) {
     try {
-        const url = `http://localhost:5000/reviews&restaurantId=${restaurant_id}${query}`;
+        const url = `http://localhost:5000/reviews&restaurantId=${restaurantId}${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;

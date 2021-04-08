@@ -17,6 +17,8 @@ import './restaurant-page-style.scss';
 const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart }) => {
     const { restaurant_id, review_count } = targetRestaurant;
 
+    const restaurantId = restaurant_id;
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [targetRestaurant]);
@@ -24,8 +26,8 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
 
-        let query = `?${event.currentTarget.dataset.query}`
-        requestReviewsStart({ restaurant_id, query });
+        let query = `?${event.currentTarget.dataset.query}`;
+        requestReviewsStart({ restaurantId, query });
     };
 
     return (
