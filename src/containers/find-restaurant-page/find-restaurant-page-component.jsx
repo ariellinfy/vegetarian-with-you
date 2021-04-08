@@ -19,10 +19,15 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
 
     useEffect(() => {
         window.scrollTo(0, 0);
+    }, [currentUser]);
+
+    useEffect(() => {
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
         resetCreateRestaurantStatus();
         resetUpdateRestaurantStatus();
         requestAllRestaurantsStart('');
-    }, [currentUser]);
+    }, []);
 
     return (
         <div className='find-restaurant-page'>

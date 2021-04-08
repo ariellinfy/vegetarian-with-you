@@ -19,10 +19,15 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
 
     useEffect(() => {
         window.scrollTo(0, 0);
+    }, [currentUser]);
+
+    useEffect(() => {
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
         resetCreateRestaurantStatus();
         resetUpdateRestaurantStatus();
         requestAllRestaurantsStart('');
-    }, [currentUser]);
+    }, []);
 
     const handleChange = event => {
         requestFilteredRestaurants(event.target.value);

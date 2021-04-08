@@ -5,7 +5,7 @@ import { Typography, Box, Divider, Link } from '@material-ui/core';
 import './restaurant-basic-style.scss';
 
 const RestaurantBasic = ({ targetRestaurant }) => {
-    const { restaurant_name, address, city, region, country, postal_code, phone, website, 
+    let { restaurant_name, address, city, region, country, postal_code, phone, website, 
         type, cuisine, overall_rate, price_range, review_count } = targetRestaurant;
 
     if (Math.round(price_range) === 1) {
@@ -24,10 +24,10 @@ const RestaurantBasic = ({ targetRestaurant }) => {
 
             <div className='restaurant-basic-detail'>
                 <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='display-item overall-rate' component="span">{overall_rate}</Typography>
+                    <Typography className='display-item overall-rate' component="span">{(overall_rate || 0).toFixed(2)}</Typography>
                     <Rating
                         name="overall-rating"
-                        value={overall_rate}
+                        value={overall_rate || 0}
                         precision={0.5}
                         readOnly 
                     />

@@ -26,9 +26,10 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
     };
     
     const handleRestaurantClick = async () => {
-        let query = '';
+        const query = `?&restaurantId=${restaurantId}`;
         await requestRestaurantByIdStart(restaurantId);
-        await requestReviewsStart({ restaurantId, query });
+        await requestReviewsStart(query);
+        
         if (requestSuccess) {
             history.push(`/restaurants/${restaurantId}`);
         }
@@ -36,7 +37,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
 
     const handleReviewClick = async () => {
         await requestRestaurantByIdStart(restaurantId);
-        await requestRestaurantByIdSuccess({ restaurantId, restaurant_name, address, city, region, country, postal_code });
+        await requestRestaurantByIdSuccess({ restaurantId });
 
         if (Object.keys(currentUser).length) {
             if (requestSuccess) {
@@ -50,7 +51,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
         <div className='restaurant-preview-2-container'>
             <img
                 className='restaurant-image'
-                alt="restaurant-image"
+                alt={restaurant_name}
                 height="180"
                 src={restaurantImage}
                 onClick={handleRestaurantClick}
@@ -87,7 +88,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
     requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo)),
-    requestReviewsStart: info => dispatch(requestReviewsStart(info))
+    requestReviewsStart: query => dispatch(requestReviewsStart(query))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPreviewTwo));

@@ -117,7 +117,7 @@ class ReviewForm extends Component {
         return (
             <div className='review-form-container'>
                 <form className='review-form' id='review-form' onSubmit={this.handleSubmit}>
-                    <RestaurantIntro restaurantDetail={targetRestaurant} />
+                    <RestaurantIntro targetRestaurant={targetRestaurant} />
                     <Divider />
                     <FormControl className='selection-group MuiInputLabel-animated rating-group' component="fieldset" required>
                         <FormLabel className='selection-label' component="div">Rate your visit</FormLabel>

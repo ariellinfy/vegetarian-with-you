@@ -9,7 +9,7 @@ import reviewReducer from './review/review-reducers';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user']
+    whitelist: ['user', 'restaurant', 'review']
 }
 
 const rootReducer = combineReducers({

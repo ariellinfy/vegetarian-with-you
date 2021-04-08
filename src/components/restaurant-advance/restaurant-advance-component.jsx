@@ -21,11 +21,11 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <Typography className='paper-title' component="legend">Ratings</Typography>
 
                 <Box className='rate-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='overall-rate' component="span">{overall_rate}</Typography>
+                    <Typography className='overall-rate' component="span">{(overall_rate || 0).toFixed(2)}</Typography>
                         <Rating
                             className='rate'
                             name="overall-rating"
-                            value={overall_rate}
+                            value={overall_rate || 0}
                             precision={0.5}
                             readOnly 
                         />
@@ -37,7 +37,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                     <Rating
                         className='rate'
                         name="food-rate"
-                        value={food_rate}
+                        value={food_rate || 0}
                         precision={0.5}
                         readOnly 
                     />
@@ -47,7 +47,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                     <Rating
                         className='rate'
                         name="service-rate"
-                        value={service_rate}
+                        value={service_rate || 0}
                         precision={0.5}
                         readOnly 
                     />
@@ -57,7 +57,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                     <Rating
                         className='rate'
                         name="value-rate"
-                        value={value_rate}
+                        value={value_rate || 0}
                         precision={0.5}
                         readOnly 
                     />
@@ -67,7 +67,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                     <Rating
                         className='rate'
                         name="atmosphere-rate"
-                        value={atmosphere_rate}
+                        value={atmosphere_rate || 0}
                         precision={0.5}
                         readOnly 
                     />
@@ -80,25 +80,25 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <div className='paper-container meals'>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            breakfast === true ? [CheckIcon] : [ClearIcon] 
+                            breakfast === 'true' ? <CheckIcon /> : <ClearIcon /> 
                         }
                         <Typography className='item meal' component="span">Breakfast</Typography>
                     </Box>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            brunch === true ? [CheckIcon] : [ClearIcon] 
+                            brunch === 'true' ? <CheckIcon /> : <ClearIcon /> 
                         }
                         <Typography className='item meal' component="span">Brunch</Typography>
                     </Box>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            lunch === true ? [CheckIcon] : [ClearIcon]  
+                            lunch === 'true' ? <CheckIcon /> : <ClearIcon />  
                         }
                         <Typography className='item meal' component="span">Lunch</Typography>
                     </Box>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            dinner === true ? [CheckIcon] : [ClearIcon] 
+                            dinner === 'true' ? <CheckIcon /> : <ClearIcon /> 
                         }
                         <Typography className='item meal' component="span">Dinner</Typography>
                     </Box>
@@ -110,7 +110,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
 
                 <div className='paper-container contacts'>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        {RoomIcon}
+                        <RoomIcon />
                         <Typography className='item contact' component="span">
                             {
                                 city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
@@ -118,11 +118,11 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                         </Typography>
                     </Box>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        {CallIcon}
+                        <CallIcon />
                         <Typography className='item contact' component="span">{phone}</Typography>
                     </Box>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        <i class="fa fa-external-link-alt"></i>
+                        <i className="fa fa-external-link"></i>
                         <Typography className='item contact' component="span">
                             <Link href={website} target="_blank" rel="noopener">
                                 {website}
@@ -137,25 +137,25 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <div className='paper-container features'>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            free_wifi === 'yes' ? [CheckIcon] : (free_wifi === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
+                            free_wifi === 'yes' ? <CheckIcon /> : (free_wifi === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Free Wifi</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            takeout === 'yes' ? [CheckIcon] : (takeout === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
+                            takeout === 'yes' ? <CheckIcon /> : (takeout === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Takeout</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            delivery === 'yes' ? [CheckIcon] : (delivery === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
+                            delivery === 'yes' ? <CheckIcon /> : (delivery === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Delivery</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            exclude_pungent === 'yes' ? [CheckIcon] : (exclude_pungent === 'no' ? [ClearIcon] : <i class="fa fa-question"></i>) 
+                            exclude_pungent === 'yes' ? <CheckIcon /> : (exclude_pungent === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Exclude 5 pungent vegetables</Typography>
                     </Box>

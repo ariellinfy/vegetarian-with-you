@@ -1,48 +1,41 @@
 .review-preview {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1em 0.5em;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid black;
 
-  .card-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 1em 0.5em;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.75);
+  .card-header {
+    width: 20%;
+    text-align: center;
 
-    .card-header {
-      width: 15%;
-      text-align: center;
+    @media screen and (max-width: 1625px) {
+      width: 20%;
+    }
 
-      @media screen and (max-width: 1625px) {
-        width: 20%;
-      }
+    .header-avatar {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 10px;
 
-      .header-avatar {
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 10px;
+      .avatar {
+        width: 2em;
+        height: 2em;
+        margin: 0;
+        font-size: 3em;
 
-        .MuiCardHeader-avatar {
-          margin: 0;
-        }
-
-        .avatar {
-          width: 2em;
-          height: 2em;
-          margin: 0;
-          font-size: 3em;
-
-          @media screen and (max-width: 1625px) {
-            width: 1.85em;
-            height: 1.85em;
-            font-size: 2.5em;
-          }
+        @media screen and (max-width: 1625px) {
+          width: 1.85em;
+          height: 1.85em;
+          font-size: 2.5em;
         }
       }
     }
 
     .card-body {
-      width: 85%;
+      width: 80%;
 
       @media screen and (max-width: 1625px) {
         width: 80%;
@@ -73,6 +66,9 @@
         h5,
         p {
           margin: 0.5em 0;
+        }
+
+        .image-container {
         }
 
         .review-image {

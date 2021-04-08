@@ -42,6 +42,8 @@ const list = [
 // });
 
 const RestaurantImageGallery = () => {
+
+
     // const [selected, setSelected] = useState('item1');
 
     // const menu = ImageMenu(list, selected);
