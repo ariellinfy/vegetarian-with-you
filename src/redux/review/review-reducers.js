@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     updateReviewErr: '',
     deleteReviewErr: '',
     reviewsCollection: [],
+    userReviews: [],
     reviewRequestPending: false,
     reviewRequestSuccess: false,
     requestReviewErr: '',
@@ -101,6 +102,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             };
 
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START:
+        case ReviewActionTypes.REQUEST_USER_REVIEWS_START:
             return {
                 ...state,
                 reviewRequestPending: true,
@@ -115,6 +117,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 requestReviewErr: '',
             };
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_FAILURE:
+        case ReviewActionTypes.REQUEST_USER_REVIEWS_FAILURE:
             return {
                 ...state,
                 reviewRequestPending: false,
@@ -134,6 +137,23 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewRequestSuccess: false,
                 requestReviewErr: '',
                 reviewSortbyFilter: 'Sort By',
+            };
+
+        case ReviewActionTypes.REQUEST_USER_REVIEWS_SUCCESS:
+            return {
+                ...state,
+                userReviews: action.payload,
+                reviewRequestPending: false,
+                reviewRequestSuccess: true,
+                requestReviewErr: '',
+            };
+        case ReviewActionTypes.RESET_USER_REVIEWS_STATUS:
+            return {
+                ...state,
+                userReviews: [],
+                reviewRequestPending: false,
+                reviewRequestSuccess: false,
+                requestReviewErr: '',
             };
 
         case ReviewActionTypes.REVIEW_HELPFUL_START:

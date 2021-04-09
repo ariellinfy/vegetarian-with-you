@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
 
 import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
@@ -25,7 +27,7 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
+const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate, currentUser, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
@@ -44,17 +46,25 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
     const { userHelpful, helpfulCount } = reviewHelpful;
 
     const handleClickHelpful = () => {
-        setReviewHelpful({ 
-            userHelpful: !user_helpful, 
-            helpfulCount: userHelpful ? helpfulCount++ : userHelpful--
-        });
-        reviewHelpfulStart({ reviewId, userHelpful, helpfulCount, currentUserToken });
+        if(Object.keys(currentUser).length !== 0) {
+            setReviewHelpful({ 
+                userHelpful: !user_helpful, 
+                helpfulCount: userHelpful ? helpfulCount++ : userHelpful--
+            });
+            reviewHelpfulStart({ reviewId, userHelpful, helpfulCount, currentUserToken });
+        } else {
+            history.push('./signin');
+        }
     };
 
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        if(Object.keys(currentUser).length !== 0) {
+            setOpen(true);
+        } else {
+            history.push('./signin');
+        }
     };
 
     const handleClose = () => {
@@ -116,7 +126,7 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
                     {
                         userHelpful ? (
                             <Typography variant="body2">Thank you for your feedback.</Typography>
-                    ) : (
+                        ) : (
                             <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful}>
                                 <ThumbUpIcon />
                                 Helpful
@@ -136,9 +146,13 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
     )
 };
 
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+});
+
 const mapDispatchToProps = dispatch => ({
     reviewHelpfulStart: data => dispatch(reviewHelpfulStart(data)),
     setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review))
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(ReviewPreview));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewPreview));

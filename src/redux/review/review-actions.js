@@ -47,7 +47,7 @@ export const resetUpdateReviewStatus = () => ({
     type: ReviewActionTypes.RESET_UPDATE_REVIEW_STATUS
 });
 
-// Request reviews
+// Request restaurant reviews
 
 export const requestReviewsStart = info => ({
     type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START,
@@ -71,6 +71,27 @@ export const setReviewSortbyFilter = filter => ({
 
 export const resetRequestReviewsStatus = () => ({
     type: ReviewActionTypes.RESET_REQUEST_RESTAURANT_REVIEWS_STATUS
+});
+
+// Request user reviews
+
+export const requestUserReviewsStart = currentUserToken => ({
+    type: ReviewActionTypes.REQUEST_USER_REVIEWS_START,
+    payload: currentUserToken
+});
+
+export const requestUserReviewsSuccess = reviews => ({
+    type: ReviewActionTypes.REQUEST_USER_REVIEWS_SUCCESS,
+    payload: reviews
+});
+
+export const requestUserReviewsFailure = error => ({
+    type: ReviewActionTypes.REQUEST_USER_REVIEWS_FAILURE,
+    payload: error
+});
+
+export const resetRequestUserReviewsStatus = () => ({
+    type: ReviewActionTypes.RESET_REQUEST_USER_REVIEWS_STATUS
 });
 
 // Update review helpful record

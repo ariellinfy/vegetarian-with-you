@@ -22,14 +22,14 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
 
     let restaurantId = restaurant_id ? restaurant_id : match.params.id;
     let query = `?&restaurantId=${restaurantId}`;
-    
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [targetRestaurant]);
 
     useEffect(() => {
         requestReviewsStart(query);
-    }, [reviewsCollection]);
+    }, [currentUser]);
 
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
