@@ -23,6 +23,11 @@ export const resetCreateReviewStatus = () => ({
 
 // Update review
 
+export const setReviewToBeUpdate = review => ({
+    type: ReviewActionTypes.REVIEW_TO_BE_UPDATE,
+    payload: review
+});
+
 export const updateReviewStart = reviewDetail => ({
     type: ReviewActionTypes.UPDATE_REVIEW_START,
     payload: reviewDetail
@@ -66,4 +71,52 @@ export const setReviewSortbyFilter = filter => ({
 
 export const resetRequestReviewsStatus = () => ({
     type: ReviewActionTypes.RESET_REQUEST_RESTAURANT_REVIEWS_STATUS
+});
+
+// Update review helpful record
+
+export const reviewHelpfulStart = data => ({
+    type: ReviewActionTypes.REVIEW_HELPFUL_START,
+    payload: data
+});
+
+export const reviewHelpfulSuccess = () => ({
+    type: ReviewActionTypes.REVIEW_HELPFUL_SUCCESS,
+});
+
+export const reviewHelpfulFailure = error => ({
+    type: ReviewActionTypes.REVIEW_HELPFUL_FAILURE,
+    payload: error
+});
+
+// Report review
+
+export const reportReviewStart = data => ({
+    type: ReviewActionTypes.REPORT_REVIEW_START,
+    payload: data
+});
+
+export const reportReviewSuccess = () => ({
+    type: ReviewActionTypes.REPORT_REVIEW_SUCCESS,
+});
+
+export const reportReviewFailure = error => ({
+    type: ReviewActionTypes.REPORT_REVIEW_FAILURE,
+    payload: error
+});
+
+// Delete review
+
+export const deleteReviewStart = data => ({
+    type: ReviewActionTypes.DELETE_REVIEW_START,
+    payload: data
+});
+
+export const deleteReviewSuccess = () => ({
+    type: ReviewActionTypes.DELETE_REVIEW_SUCCESS,
+});
+
+export const deleteReviewFailure = error => ({
+    type: ReviewActionTypes.DELETE_REVIEW_FAILURE,
+    payload: error
 });

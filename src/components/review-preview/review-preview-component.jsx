@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
+
+import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ReportIcon from '@material-ui/icons/Report';
 import './review-preview-style.scss';
 
 const images = [
@@ -18,11 +25,40 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ reviewId, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
-    helpful_user, helpful_record, create_by, create_at }) => {
+const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
 
-    const handleClick = event => {
+    const currentUserToken = localStorage.getItem('token');
 
+    const { reviewId, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
+        user_helpful, helpful_count, user_report, report_count, review_owner, create_at } = review;
+
+    const handleUpdateReview = () => {
+        setReviewToBeUpdate(review);
+        history.push('./updatereview');
+    }
+
+    const [reviewHelpful, setReviewHelpful] = useState({
+        userHelpful: user_helpful,
+        helpfulCount: helpful_count
+    })
+    const { userHelpful, helpfulCount } = reviewHelpful;
+
+    const handleClickHelpful = () => {
+        setReviewHelpful({ 
+            userHelpful: !user_helpful, 
+            helpfulCount: userHelpful ? helpfulCount++ : userHelpful--
+        });
+        reviewHelpfulStart({ reviewId, userHelpful, helpfulCount, currentUserToken });
+    };
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     return (
@@ -45,6 +81,15 @@ const ReviewPreview = ({ reviewId, review_title, review_body, overall_rate, visi
                         />
                         <Typography variant="h6">Reviewed {create_at}</Typography>
                     </Box>
+
+                    {
+                        userId === review_owner ? (
+                            <Button variant="contained" color="primary" className='update-btn' onClick={handleUpdateReview}>
+                                Update Review
+                            </Button>
+                        ) : null
+                    }
+
                     <Typography variant="h5">{review_title}</Typography>
                     <Typography variant="body1">{review_body}</Typography>
 
@@ -57,30 +102,33 @@ const ReviewPreview = ({ reviewId, review_title, review_body, overall_rate, visi
                             ))
                         }
                     </GridList>
-                    
+
                     <Typography variant="body2">Date of Visit: {visit_period}</Typography>
                     <Typography variant="body2">Recommended Dish(es): {recommended_dishes}</Typography>
+
+                    {
+                        helpfulCount ? (<Typography variant="body2">{helpfulCount} people found this helpful</Typography>) : null
+                    }
                 </div>
 
                 <div className='card-actions'>
+
                     {
-                        helpful_record ? (<Typography variant="body2">{helpful_record} people found this helpful</Typography>) : null
-                    }
-                    {
-                        helpful_user ? (
+                        userHelpful ? (
                             <Typography variant="body2">Thank you for your feedback.</Typography>
                     ) : (
-                            <Button variant="contained" color="primary" onClick={handleClick}>
-                                <i className="fa fa-thumbs-up"></i>
+                            <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful}>
+                                <ThumbUpIcon />
                                 Helpful
                             </Button>
                         )
                     }
                     
-                    <Button variant="outlined" color="secondary" className='report'>
-                        <i className="fa fa-flag"></i>
+                    <Button variant="outlined" color="secondary" className='report-btn' onClick={handleClickOpen}>
+                        <ReportIcon />
                         Report
                     </Button>
+                    <ReportForm reviewId={reviewId} user_report={user_report} report_count={report_count} open={open} handleClose={handleClose} />
                 </div>
 
             </div>
@@ -88,4 +136,9 @@ const ReviewPreview = ({ reviewId, review_title, review_body, overall_rate, visi
     )
 };
 
-export default ReviewPreview;
+const mapDispatchToProps = dispatch => ({
+    reviewHelpfulStart: data => dispatch(reviewHelpfulStart(data)),
+    setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review))
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(ReviewPreview));

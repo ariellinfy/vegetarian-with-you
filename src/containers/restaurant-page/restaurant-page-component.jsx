@@ -6,6 +6,7 @@ import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-se
 import { requestRestaurantByIdStart } from '../../redux/restaurant/restaurant-actions';
 import { selectReviewsCollection, selectReviewSortbyFilter } from '../../redux/review/review-selectors';
 import { setReviewSortbyFilter, requestReviewsStart } from '../../redux/review/review-actions';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
 
 import RestaurantBasic from '../../components/restaurant-basic/restaurant-basic-component';
 import RestaurantImageGallery from '../../components/restaurant-images/restaurant-images-component';
@@ -16,19 +17,24 @@ import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/
 import './restaurant-page-style.scss';
 
 
-const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart, requestRestaurantByIdStart, match }) => {
+const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart, requestRestaurantByIdStart, currentUser, match }) => {
     const { restaurant_id, review_count } = targetRestaurant;
 
     let restaurantId = restaurant_id ? restaurant_id : match.params.id;
-
+    let query = `?&restaurantId=${restaurantId}`;
+    
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [targetRestaurant]);
 
+    useEffect(() => {
+        requestReviewsStart(query);
+    }, [reviewsCollection]);
+
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
 
-        let query = event.currentTarget.dataset.query ? `?&restaurantId=${restaurantId}${event.currentTarget.dataset.query}` : `?&restaurantId=${restaurantId}`;
+        query = event.currentTarget.dataset.query ? `?&restaurantId=${restaurantId}${event.currentTarget.dataset.query}` : `?&restaurantId=${restaurantId}`;
         requestReviewsStart(query);
     };
 
@@ -53,8 +59,9 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
                                     onChange={handleChange}
                                 >
                                     <MenuItem value={"Sort By"} data-query={""}>Sort By</MenuItem>
+                                    <MenuItem value={"Top reviews"} data-query={"&sortBy=helpful_record:desc"}>Top reviews</MenuItem>
                                     <MenuItem value={"Most recent"} data-query={"&sortBy=create_at:desc"}>Most recent</MenuItem>
-                                    <MenuItem value={"Top reviews"} data-query={"&sortBy=overall_rate:desc"}>Top reviews</MenuItem>
+                                    <MenuItem value={"Avg rating"} data-query={"&sortBy=overall_rate:desc"}>Avg rating</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
@@ -65,8 +72,8 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
                         </div>
                     </div>
                     {
-                        reviewsCollection.map(({ review_id, ...otherReviewProps }) => (
-                            <ReviewPreview key={review_id} reviewId={review_id} {...otherReviewProps} />
+                        reviewsCollection.map(review => (
+                            <ReviewPreview key={review.review_id} userId={currentUser.user_id} review={review} />
                         ))
                     }
                 </div>
@@ -78,7 +85,8 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
 const mapStateToProps = createStructuredSelector({
     targetRestaurant: selectTargetRestaurantInfo,
     reviewsCollection: selectReviewsCollection,
-    reviewSortbyFilter: selectReviewSortbyFilter
+    reviewSortbyFilter: selectReviewSortbyFilter,
+    currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({

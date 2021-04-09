@@ -6,9 +6,11 @@ const INITIAL_STATE = {
     reviewActionPending: false,
     reviewCreateSuccess: false,
     reviewUpdateSuccess: false,
+    reviewDeleteSuccess: false,
     reviewActionFailure: false,
     createReviewErr: '',
     updateReviewErr: '',
+    deleteReviewErr: '',
     reviewsCollection: [],
     reviewRequestPending: false,
     reviewRequestSuccess: false,
@@ -54,10 +56,17 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 createReviewErr: '',
             };
 
-        case ReviewActionTypes.UPDATE_REVIEW_START:
+        case ReviewActionTypes.REVIEW_TO_BE_UPDATE:
             return {
                 ...state,
                 reviewToBeUpdate: action.payload,
+                reviewActionPending: false,
+                reviewUpdateSuccess: false,
+                reviewActionFailure: false,
+            };
+        case ReviewActionTypes.UPDATE_REVIEW_START:
+            return {
+                ...state,
                 reviewActionPending: true,
                 reviewUpdateSuccess: false,
                 reviewActionFailure: false,
@@ -126,7 +135,60 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 requestReviewErr: '',
                 reviewSortbyFilter: 'Sort By',
             };
-            
+
+        case ReviewActionTypes.REVIEW_HELPFUL_START:
+        case ReviewActionTypes.REPORT_REVIEW_START:
+            return {
+                ...state,
+                reviewActionPending: true,
+                reviewUpdateSuccess: false,
+                reviewActionFailure: false,
+                updateReviewErr: '',
+            };
+        case ReviewActionTypes.REVIEW_HELPFUL_SUCCESS:
+        case ReviewActionTypes.REPORT_REVIEW_SUCCESS:
+            return {
+                ...state,
+                reviewActionPending: false,
+                reviewUpdateSuccess: true,
+                reviewActionFailure: false,
+                updateReviewErr: '',
+            };
+        case ReviewActionTypes.REVIEW_HELPFUL_FAILURE:
+        case ReviewActionTypes.REPORT_REVIEW_FAILURE:
+            return {
+                ...state,
+                updateReviewErr: action.payload,
+                reviewActionPending: false,
+                reviewUpdateSuccess: false,
+                reviewActionFailure: true,
+            };
+
+        case ReviewActionTypes.DELETE_REVIEW_START:
+            return {
+                ...state,
+                reviewActionPending: true,
+                reviewDeleteSuccess: false,
+                reviewActionFailure: false,
+                deleteReviewErr: '',
+            };
+        case ReviewActionTypes.DELETE_REVIEW_SUCCESS:
+            return {
+                ...state,
+                reviewActionPending: false,
+                reviewDeleteSuccess: true,
+                reviewActionFailure: false,
+                deleteReviewErr: '',
+            };
+        case ReviewActionTypes.DELETE_REVIEW_FAILURE:
+            return {
+                ...state,
+                reviewActionPending: false,
+                reviewDeleteSuccess: false,
+                reviewActionFailure: true,
+                deleteReviewErr: action.payload,
+            };
+
         default:
             return state;
     }

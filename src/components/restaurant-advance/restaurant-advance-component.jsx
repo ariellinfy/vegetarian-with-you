@@ -2,6 +2,7 @@ import React from 'react';
 
 import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Paper, Link } from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import RoomIcon from '@material-ui/icons/Room';
@@ -80,25 +81,25 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <div className='paper-container meals'>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            breakfast === 'true' ? <CheckIcon /> : <ClearIcon /> 
+                            breakfast === 'true' ? <CheckIcon style={{ color: green[500] }} /> : <ClearIcon style={{ color: red[600] }} /> 
                         }
                         <Typography className='item meal' component="span">Breakfast</Typography>
                     </Box>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            brunch === 'true' ? <CheckIcon /> : <ClearIcon /> 
+                            brunch === 'true' ? <CheckIcon style={{ color: green[500] }} /> : <ClearIcon style={{ color: red[600] }} /> 
                         }
                         <Typography className='item meal' component="span">Brunch</Typography>
                     </Box>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            lunch === 'true' ? <CheckIcon /> : <ClearIcon />  
+                            lunch === 'true' ? <CheckIcon style={{ color: green[500] }} /> : <ClearIcon style={{ color: red[600] }} />  
                         }
                         <Typography className='item meal' component="span">Lunch</Typography>
                     </Box>
                     <Box className='item-container meal-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            dinner === 'true' ? <CheckIcon /> : <ClearIcon /> 
+                            dinner === 'true' ? <CheckIcon style={{ color: green[500] }} /> : <ClearIcon style={{ color: red[600] }} /> 
                         }
                         <Typography className='item meal' component="span">Dinner</Typography>
                     </Box>
@@ -137,25 +138,25 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <div className='paper-container features'>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            free_wifi === 'yes' ? <CheckIcon /> : (free_wifi === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
+                            free_wifi === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (free_wifi === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Free Wifi</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            takeout === 'yes' ? <CheckIcon /> : (takeout === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
+                            takeout === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (takeout === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Takeout</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            delivery === 'yes' ? <CheckIcon /> : (delivery === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
+                            delivery === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (delivery === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Delivery</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            exclude_pungent === 'yes' ? <CheckIcon /> : (exclude_pungent === 'no' ? <ClearIcon /> : <i className="fa fa-question"></i>) 
+                            exclude_pungent === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (exclude_pungent === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
                         }
                         <Typography className='item feature' component="span">Exclude 5 pungent vegetables</Typography>
                     </Box>

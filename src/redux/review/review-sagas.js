@@ -4,6 +4,9 @@ import {
     createReviewSuccess, createReviewFailure, 
     updateReviewSuccess, updateReviewFailure, 
     requestReviewsSuccess, requestReviewsFailure, 
+    reviewHelpfulSuccess, reviewHelpfulFailure, 
+    reportReviewSuccess, reportReviewFailure,
+    deleteReviewSuccess, deleteReviewFailure
 } from './review-actions';
 
 export function* request(url, method, headers, body, auth = null) {
@@ -124,6 +127,65 @@ export function* requestReviews({ payload }) {
     }
 }
 
+export function* reviewHelpful({ payload: { reviewId, userHelpful, helpfulCount, currentUserToken } }) {
+    try {
+        const url = `http://localhost:5000/onreview/reviewhelpful`;
+        const method = 'PATCH';
+        const headers = null;
+        const body = JSON.stringify({
+            reviewId: reviewId,
+            userHelpful: userHelpful,
+            helpfulCount: helpfulCount
+        });
+        const review = yield call(request, url, method, headers, body, currentUserToken);
+        if (review !== undefined) {
+            localStorage.setItem('token', review.token);
+            yield put(reviewHelpfulSuccess());
+        } 
+    } catch (error) {
+        yield put(reviewHelpfulFailure(error));
+    }
+}
+
+export function* reportReview({ payload: { reviewId, user_report, report_count, reportText, currentUserToken } }) {
+    try {
+        const url = `http://localhost:5000/onreview/reportreview`;
+        const method = 'PATCH';
+        const headers = null;
+        const body = JSON.stringify({
+            reviewId: reviewId,
+            user_report: user_report,
+            report_count: report_count,
+            reportText: reportText
+        });
+        const review = yield call(request, url, method, headers, body, currentUserToken);
+        if (review !== undefined) {
+            localStorage.setItem('token', review.token);
+            yield put(reportReviewSuccess());
+        } 
+    } catch (error) {
+        yield put(reportReviewFailure(error));
+    }
+}
+
+export function* deleteReview({ payload: { reviewId, currentUserToken } }) {
+    try {
+        const url = `http://localhost:5000/onreview/deletereview`;
+        const method = 'DELETE';
+        const headers = null;
+        const body = JSON.stringify({
+            reviewId: reviewId,
+        });
+        const token = yield call(request, url, method, headers, body, currentUserToken);
+        if (token !== undefined) {
+            localStorage.setItem('token', token);
+            yield put(deleteReviewSuccess());
+        } 
+    } catch (error) {
+        yield put(deleteReviewFailure(error));
+    }
+}
+
 export function* oncreateReviewStart() {
     yield takeLatest(ReviewActionTypes.CREATE_REVIEW_START, createReview);
 }
@@ -136,10 +198,25 @@ export function* onRequestReviewsStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START, requestReviews);
 }
 
+export function* onReviewHelpfulStart() {
+    yield takeLatest(ReviewActionTypes.REVIEW_HELPFUL_START, reviewHelpful);
+}
+
+export function* onReportReviewStart() {
+    yield takeLatest(ReviewActionTypes.REPORT_REVIEW_START, reportReview);
+}
+
+export function* onDeleteReviewStart() {
+    yield takeLatest(ReviewActionTypes.DELETE_REVIEW_START, deleteReview);
+}
+
 export function* reviewSagas() {
     yield all([
         call(oncreateReviewStart),
         call(onUpdateReviewStart),
         call(onRequestReviewsStart),
+        call(onReviewHelpfulStart),
+        call(onReportReviewStart),
+        call(onDeleteReviewStart),
     ]);
 }
