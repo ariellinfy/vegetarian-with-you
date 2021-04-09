@@ -11,11 +11,16 @@
       "meals features";
   }
   @media screen and (max-width: 1625px) {
-    width: 90%;
+    grid-template-areas:
+      "ratings meals"
+      "contact"
+      "features";
+  }
+  @media screen and (max-width: 920px) {
     grid-template-areas:
       "ratings"
-      "contact"
       "meals"
+      "contact"
       "features";
   }
 
@@ -107,10 +112,23 @@
       margin: 0;
       padding: 0.35em 0;
       justify-content: space-between;
+      align-items: center;
+
+      .overall-rate-container {
+        display: flex;
+
+        .overall-rate {
+          height: fit-content;
+        }
+      }
 
       .rate-title {
         margin-right: 1em;
-        width: 6.5em;
+        width: 3em;
+      }
+
+      .rate {
+        margin-left: 1em;
       }
     }
 
@@ -133,10 +151,32 @@
 
     .paper-container {
       .item-container {
+        display: flex;
+        align-items: center;
         margin: 0;
         padding: 0.35em 0;
+
         .item {
-          margin: 0 1em;
+          height: fit-content;
+          margin: 0 1.25em 0 0.75em;
+        }
+
+        a {
+          color: black;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+
+        .contact {
+          border-bottom: 1px solid rgba(0, 0, 0, 0);
+          transition: all 0.25s ease;
+
+          &:hover {
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+          }
         }
       }
     }

@@ -1,32 +1,96 @@
-.restaurant-basic {
+.restaurant-header-container {
   display: flex;
   flex-direction: column;
+  background-color: white;
+  width: 100%;
+  padding: 5em 16vw 3em 16vw;
 
-  .restaurant-basic-detail {
+  @media screen and (max-width: 1320px) {
+    padding: 5em 13vw 3em 13vw;
+  }
+  @media screen and (max-width: 1210px) {
+    padding: 5em 10vw 3em 10vw;
+  }
+  @media screen and (max-width: 1120px) {
+    padding: 5em 8vw 3em 8vw;
+  }
+  @media screen and (max-width: 800px) {
+    padding: 4em 2vw 1.5em 2vw;
+  }
+
+  .restaurant-header-action {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2em;
+  }
 
-    .items-container {
+  .restaurant-header-basic-container {
+    display: flex;
+    flex-direction: column;
+
+    .restaurant-basic-header {
       display: flex;
-      padding: 0.2em 0.75em;
-      margin: 0;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
 
-      .overall-rate:first-child {
-        margin-right: 0.5em;
+      .update-btn {
+        height: fit-content;
+      }
+    }
+
+    .restaurant-basic-detail {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 0.25em;
+
+      .items-container {
+        display: flex;
+        align-items: center;
+        padding: 0.2em 0.75em;
+        margin: 0;
+
+        a {
+          color: black;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+
+        .display-item {
+          height: fit-content;
+          margin-left: 0.5em;
+          border-bottom: 1px solid rgba(0, 0, 0, 0);
+          transition: all 0.25s ease;
+
+          &:hover {
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+          }
+        }
+
+        .overall-rate {
+          height: fit-content;
+        }
+
+        .overall-rate:first-child {
+          margin-right: 0.5em;
+          margin-left: 0;
+        }
+        .overall-rate:last-child {
+          margin-left: 0.5em;
+          margin-right: 0;
+        }
+      }
+
+      .items-container:first-child {
         margin-left: 0;
+        padding-left: 0;
       }
-      .overall-rate:last-child {
-        margin-left: 0.5em;
-        margin-right: 0;
+      .capitalize-text {
+        text-transform: capitalize;
       }
-    }
-
-    .items-container:first-child {
-      margin-left: 0;
-      padding-left: 0;
-    }
-    .capitalize-text {
-      text-transform: capitalize;
     }
   }
 }

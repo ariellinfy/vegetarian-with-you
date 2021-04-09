@@ -1,0 +1,37 @@
+.customer-reviews {
+  .review-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 1em;
+
+    .review-header-1 {
+      width: 60%;
+      display: flex;
+      align-items: center;
+
+      .sort-by-container {
+        margin-left: 2em;
+
+        @media screen and (max-width: 600px) {
+          font-size: smaller;
+          margin-left: 1.5em;
+        }
+      }
+    }
+
+    .review-header-2 {
+      width: 40%;
+      display: flex;
+      justify-content: flex-end;
+
+      .review-btn {
+        height: fit-content;
+
+        @media screen and (max-width: 600px) {
+          font-size: smaller;
+        }
+      }
+    }
+  }
+}

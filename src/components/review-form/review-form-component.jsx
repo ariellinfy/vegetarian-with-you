@@ -285,7 +285,7 @@ class ReviewForm extends Component {
                         />
                         <label className='upload-container' htmlFor="upload-button">
                             <Button variant="contained" color="primary" component="span">
-                            Upload
+                                Upload
                             </Button>
                         </label>
                     </FormControl>

@@ -3,39 +3,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3em 2em 5em;
-  background: url(../../assets/background/restaurant-background.jpg) center left;
-  // background-size: cover;
 
   @media screen and (max-width: 700px) {
-    padding: 3em 1em 5em;
     font-size: smaller;
   }
-  @media screen and (max-width: 600px) {
-    padding: 3em 0.5em 5em;
-  }
 
-  .restaurant-container {
-    width: 60%;
-    min-width: 20em;
+  .restaurant-body-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    @media screen and (max-width: 2100px) {
-      width: 80%;
-    }
-    @media screen and (max-width: 1625px) {
-      width: 85%;
-    }
-    @media screen and (max-width: 800px) {
-      width: 95%;
-    }
+    background: url(../../assets/background/restaurant-background.jpg) center
+      left;
+    background-size: cover;
+    padding: 2em 0 5em 0;
 
     .restaurant-category {
       width: 75%;
-      justify-content: center;
-      margin-top: 2em;
+      margin-top: 3em;
 
       @media screen and (max-width: 2100px) {
         width: 80%;
@@ -49,44 +34,10 @@
       @media screen and (max-width: 800px) {
         width: 95%;
       }
-    }
 
-    .customer-reviews {
-      .review-header {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        margin-bottom: 0.5em;
+      .overall-rate {
+        font-weight: bold !important;
       }
     }
   }
-}
-
-.overall-rate {
-  font-weight: bold !important;
-}
-
-.smaller {
-  font-size: smaller !important;
-  padding: 0.2em 0;
-}
-
-.write-review {
-  height: 3em;
-}
-
-.header-1 {
-  width: 60%;
-  display: flex;
-  align-items: center;
-
-  .sort-by-container {
-    margin-left: 2em;
-  }
-}
-
-.header-2 {
-  width: 40%;
-  display: flex;
-  justify-content: flex-end;
 }

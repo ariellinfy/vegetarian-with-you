@@ -1,10 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { setRestaurantToBeUpdate } from '../../redux/restaurant/restaurant-actions';
 
 import Rating from '@material-ui/lab/Rating';
-import { Typography, Box, Divider, Link } from '@material-ui/core';
+import { Typography, Box, Divider, Link, Button } from '@material-ui/core';
+import { orange, green, grey } from '@material-ui/core/colors';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import AddIcon from '@material-ui/icons/Add';
+import UpdateIcon from '@material-ui/icons/Update';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PhoneIcon from '@material-ui/icons/Phone';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import './restaurant-basic-style.scss';
 
-const RestaurantBasic = ({ targetRestaurant }) => {
+const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdate, history }) => {
     let { restaurant_name, address, city, region, country, postal_code, phone, website, 
         type, cuisine, overall_rate, price_range, review_count } = targetRestaurant;
 
@@ -18,61 +28,101 @@ const RestaurantBasic = ({ targetRestaurant }) => {
         price_range = 'unknown';
     };
 
+    const tel = (phone || '').replace(/[\(\)\-]/g, "").replace(/\s/g, "");
+    const target_lat = 0;
+    const target_lng = 0;
+
     return (
-        <div className='restaurant-category restaurant-basic'>
-            <Typography className='restaurant-name' variant="h3">{restaurant_name}</Typography>
-
-            <div className='restaurant-basic-detail'>
-                <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='display-item overall-rate' component="span">{(overall_rate || 0).toFixed(2)}</Typography>
-                    <Rating
-                        name="overall-rating"
-                        value={overall_rate || 0}
-                        precision={0.5}
-                        readOnly 
-                    />
-                    <Typography className='display-item overall-rate smaller' component="span">{review_count} reviews</Typography>
-                </Box>
-
-                <Divider orientation="vertical" flexItem />
-
-                <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='display-item capitalize-text' component="span">
-                        {
-                            price_range !== 'unknown' ? (`${cuisine}, ${type}, ${price_range}`) : (`${cuisine}, ${type}`)
-                        }
-                    </Typography>
-                </Box>
+        <div className='restaurant-header-container'>
+            <div className='restaurant-header-action'>
+                <Button type='button' onClick={() => history.goBack()} className='header-btn' startIcon={<KeyboardBackspaceIcon />}>
+                    Go Back
+                </Button>
+                <Button type='button' className='header-btn' variant="outlined" color='primary' startIcon={<AddIcon />}
+                    onClick={() => {
+                        // resetRequestRestaurantsStatus();
+                        // resetFilteredRestaurants();
+                        Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}}>
+                    Add a Restaurant
+                </Button>
             </div>
 
-            <div className='restaurant-basic-detail'>
-                <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='display-item' component="span">
-                        {
-                            city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
-                        }
-                    </Typography>
-                </Box>
+            <div className='restaurant-header-basic-container'>
+                <div className='restaurant-basic-header'>
+                    <Typography className='restaurant-name' variant="h3">{restaurant_name}</Typography>
+                    <Button type='button' className='update-btn' variant='contained' color='secondary' startIcon={<UpdateIcon />} 
+                        onClick={() => {
+                            setRestaurantToBeUpdate(targetRestaurant);
+                            // resetRequestRestaurantsStatus();
+                            // resetFilteredRestaurants();
+                            Object.keys(currentUser).length ? (history.push('/updaterestaurant')) : (history.push('/signin'))}}>
+                            Update Restaurant
+                    </Button>
+                </div>
+                
+                <div className='restaurant-basic-detail'>
+                    <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
+                        <Typography className='overall-rate' component="span" variant="body1">{(overall_rate || 0).toFixed(2)}</Typography>
+                        <Rating
+                            name="overall-rating"
+                            value={overall_rate || 0}
+                            precision={0.5}
+                            readOnly 
+                        />
+                        <Typography className='overall-rate' component="span" variant="body2">{review_count} reviews</Typography>
+                    </Box>
 
-                <Divider orientation="vertical" flexItem />
+                    <Divider orientation="vertical" flexItem />
 
-                <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='display-item' component="span">{phone}</Typography>
-                </Box>
+                    <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
+                        <Typography className='capitalize-text' component="span" variant="body1">
+                            {
+                                price_range !== 'unknown' ? (`${cuisine}, ${type}, ${price_range}`) : (`${cuisine}, ${type}`)
+                            }
+                        </Typography>
+                    </Box>
+                </div>
 
-                <Divider orientation="vertical" flexItem />
-
-                <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='display-item' component="span">
-                        <Link href={website} target="_blank" rel="noopener">
-                            {website}
+                <div className='restaurant-basic-detail'>
+                    <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
+                        <LocationOnIcon style={{ color: green[500] }} fontSize="small" />
+                        <Link href={"https://maps.google.com?q="+target_lat+","+target_lng} target="_blank" rel="noopener">
+                            <Typography className='display-item' component="span" variant="body1">    
+                                {
+                                    city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
+                                }
+                            </Typography>
                         </Link>
-                    </Typography>
-                </Box>
-            </div>
+                    </Box>
 
+                    <Divider orientation="vertical" flexItem />
+
+                    <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
+                        <PhoneIcon style={{ color: orange[700] }} fontSize="small" />
+                        <Link href={`tel:${tel}`}>
+                            <Typography className='display-item' component="span" variant="body1">{phone}</Typography>
+                        </Link>
+                    </Box>
+
+                    <Divider orientation="vertical" flexItem />
+
+                    <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
+                        <OpenInNewIcon style={{ color: grey[800] }} fontSize="small" />
+                        <Link href={website} target="_blank" rel="noopener">
+                            <Typography className='display-item' component="span" variant="body1">
+                                    website
+                            </Typography>
+                        </Link>
+                    </Box>
+                </div>
+            </div>
+            
         </div>
     )
 };
 
-export default RestaurantBasic;
+const mapDispatchToProps = dispatch => ({
+    setRestaurantToBeUpdate: targetRestaurant => dispatch(setRestaurantToBeUpdate(targetRestaurant)),
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(RestaurantBasic));

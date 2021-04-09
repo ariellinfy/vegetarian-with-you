@@ -2,11 +2,13 @@ import React from 'react';
 
 import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Paper, Link } from '@material-ui/core';
-import { red, green } from '@material-ui/core/colors';
+import { red, pink, amber, blue, green, deepPurple } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import RoomIcon from '@material-ui/icons/Room';
 import CallIcon from '@material-ui/icons/Call';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import './restaurant-advance-style.scss';
 
 const RestaurantAdvance = ({ targetRestaurant }) => {
@@ -15,6 +17,10 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
         breakfast, brunch, lunch, dinner,
         free_wifi, takeout, delivery, exclude_pungent,
         overall_rate, food_rate, service_rate, value_rate, atmosphere_rate } = targetRestaurant;
+        
+    const tel = (phone || '').replace(/[\(\)\-]/g, "").replace(/\s/g, "");
+    const target_lat = 0;
+    const target_lng = 0;
 
     return (
         <div className='restaurant-category restaurant-advance'>
@@ -22,7 +28,8 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <Typography className='paper-title' component="legend">Ratings</Typography>
 
                 <Box className='rate-container' component="fieldset" mb={3} borderColor="transparent">
-                    <Typography className='overall-rate' component="span">{(overall_rate || 0).toFixed(2)}</Typography>
+                    <div className='overall-rate-container'>
+                        <Typography className='overall-rate' component="span" variant='body1'>{(overall_rate || 0).toFixed(2)}</Typography>
                         <Rating
                             className='rate'
                             name="overall-rating"
@@ -30,7 +37,8 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                             precision={0.5}
                             readOnly 
                         />
-                    <Typography className='overall-rate smaller' component="span">{review_count} reviews</Typography>
+                    </div>
+                    <Typography className='overall-rate' component="span" variant='body2'>{review_count} reviews</Typography>
                 </Box>
 
                 <Box className='rate-container' component="fieldset" mb={3} borderColor="transparent">
@@ -111,24 +119,28 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
 
                 <div className='paper-container contacts'>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        <RoomIcon />
-                        <Typography className='item contact' component="span">
-                            {
-                                city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
-                            }
-                        </Typography>
+                        <RoomIcon style={{ color: blue[400] }} fontSize="small" />
+                        <Link href={"https://maps.google.com?q="+target_lat+","+target_lng} target="_blank" rel="noopener">
+                            <Typography className='item contact' component="span" variant="body1">    
+                                {
+                                    city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
+                                }
+                            </Typography>
+                        </Link>
                     </Box>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        <CallIcon />
-                        <Typography className='item contact' component="span">{phone}</Typography>
+                        <CallIcon style={{ color: pink[400] }} fontSize="small" />
+                        <Link href={`tel:${tel}`}>
+                            <Typography className='item contact' component="span" variant="body1">{phone}</Typography>
+                        </Link>
                     </Box>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        <i className="fa fa-external-link"></i>
-                        <Typography className='item contact' component="span">
-                            <Link href={website} target="_blank" rel="noopener">
-                                {website}
-                            </Link>
-                        </Typography>
+                        <OpenInNewIcon style={{ color: deepPurple[500] }} fontSize="small" />
+                        <Link href={website} target="_blank" rel="noopener">
+                            <Typography className='item contact' component="span" variant="body1">
+                                    website
+                            </Typography>
+                        </Link>
                     </Box>
                 </div>
             </Paper>
@@ -138,25 +150,25 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <div className='paper-container features'>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            free_wifi === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (free_wifi === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
+                            free_wifi === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (free_wifi === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <ContactSupportIcon style={{ color: amber[500] }} />) 
                         }
                         <Typography className='item feature' component="span">Free Wifi</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            takeout === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (takeout === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
+                            takeout === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (takeout === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <ContactSupportIcon style={{ color: amber[500] }} />) 
                         }
                         <Typography className='item feature' component="span">Takeout</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            delivery === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (delivery === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
+                            delivery === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (delivery === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <ContactSupportIcon style={{ color: amber[500] }} />) 
                         }
                         <Typography className='item feature' component="span">Delivery</Typography>
                     </Box>
                     <Box className='item-container feature-container' component="fieldset" mb={3} borderColor="transparent">
                         {
-                            exclude_pungent === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (exclude_pungent === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <i className="fa fa-question"></i>) 
+                            exclude_pungent === 'yes' ? <CheckIcon style={{ color: green[500] }} /> : (exclude_pungent === 'no' ? <ClearIcon style={{ color: red[600] }} /> : <ContactSupportIcon style={{ color: amber[500] }} />) 
                         }
                         <Typography className='item feature' component="span">Exclude 5 pungent vegetables</Typography>
                     </Box>

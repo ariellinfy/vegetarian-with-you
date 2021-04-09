@@ -4,23 +4,18 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 import { requestRestaurantByIdStart } from '../../redux/restaurant/restaurant-actions';
-import { selectReviewsCollection, selectReviewSortbyFilter } from '../../redux/review/review-selectors';
-import { setReviewSortbyFilter, requestReviewsStart } from '../../redux/review/review-actions';
+import { requestReviewsStart } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 
 import RestaurantBasic from '../../components/restaurant-basic/restaurant-basic-component';
 import RestaurantImageGallery from '../../components/restaurant-images/restaurant-images-component';
 import RestaurantAdvance from '../../components/restaurant-advance/restaurant-advance-component';
-import ReviewPreview from '../../components/review-preview/review-preview-component';
-
-import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core';
+import RestaurantReview from '../../components/restaurant-review/restaurant-review-component';
 import './restaurant-page-style.scss';
 
+const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaurantByIdStart, currentUser, match }) => {
 
-const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart, requestRestaurantByIdStart, currentUser, match }) => {
-    const { restaurant_id, review_count } = targetRestaurant;
-
-    let restaurantId = restaurant_id ? restaurant_id : match.params.id;
+    let restaurantId = targetRestaurant.restaurant_id ? targetRestaurant.restaurant_id : match.params.id;
     let query = `?&restaurantId=${restaurantId}`;
 
     useEffect(() => {
@@ -31,52 +26,19 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
         requestReviewsStart(query);
     }, [currentUser]);
 
-    const handleChange = event => {
-        setReviewSortbyFilter(event.target.value);
-
-        query = event.currentTarget.dataset.query ? `?&restaurantId=${restaurantId}${event.currentTarget.dataset.query}` : `?&restaurantId=${restaurantId}`;
-        requestReviewsStart(query);
-    };
-
     return (
         <div className='restaurant-page'>
-            <div className='restaurant-container'>
-                
-                <RestaurantBasic targetRestaurant={targetRestaurant} />
 
-                <RestaurantImageGallery />
+            <RestaurantBasic targetRestaurant={targetRestaurant} currentUser={currentUser} />
 
-                <RestaurantAdvance targetRestaurant={targetRestaurant} />
+            <div className='restaurant-body-container'>
+
+                    <RestaurantImageGallery />
+
+                    <RestaurantAdvance targetRestaurant={targetRestaurant} />
+
+                    <RestaurantReview currentUser={currentUser} reviewCount={targetRestaurant.review_count} query={query} />
                 
-                <div className='restaurant-category customer-reviews'>
-                    <div className='review-header'>
-                        <div className='review-header-1'>
-                            <Typography variant="h6">Reviews ({review_count})</Typography>
-                            <FormControl variant="outlined" className='sort-by-container'>
-                                <Select
-                                    id="review-sortby-filter"
-                                    value={reviewSortbyFilter}
-                                    onChange={handleChange}
-                                >
-                                    <MenuItem value={"Sort By"} data-query={""}>Sort By</MenuItem>
-                                    <MenuItem value={"Top reviews"} data-query={"&sortBy=helpful_record:desc"}>Top reviews</MenuItem>
-                                    <MenuItem value={"Most recent"} data-query={"&sortBy=create_at:desc"}>Most recent</MenuItem>
-                                    <MenuItem value={"Avg rating"} data-query={"&sortBy=overall_rate:desc"}>Avg rating</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
-                        <div className='review-header-2'>
-                            <Button variant="contained" color="primary" className='write-review'>
-                                Write a Review
-                            </Button>
-                        </div>
-                    </div>
-                    {
-                        reviewsCollection.map(review => (
-                            <ReviewPreview key={review.review_id} userId={currentUser.user_id} review={review} />
-                        ))
-                    }
-                </div>
             </div>
         </div>
     )
@@ -84,13 +46,10 @@ const RestaurantPage = ({ targetRestaurant, reviewsCollection, reviewSortbyFilte
 
 const mapStateToProps = createStructuredSelector({
     targetRestaurant: selectTargetRestaurantInfo,
-    reviewsCollection: selectReviewsCollection,
-    reviewSortbyFilter: selectReviewSortbyFilter,
     currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({
-    setReviewSortbyFilter: filter => dispatch(setReviewSortbyFilter(filter)),
     requestReviewsStart: query => dispatch(requestReviewsStart(query)),
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
 });

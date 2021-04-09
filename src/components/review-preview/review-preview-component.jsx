@@ -36,7 +36,7 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
 
     const handleUpdateReview = () => {
         setReviewToBeUpdate(review);
-        history.push('./updatereview');
+        history.push('/updatereview');
     }
 
     const [reviewHelpful, setReviewHelpful] = useState({
@@ -53,7 +53,7 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
             });
             reviewHelpfulStart({ reviewId, userHelpful, helpfulCount, currentUserToken });
         } else {
-            history.push('./signin');
+            history.push('/signin');
         }
     };
 
@@ -63,7 +63,7 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
         if(Object.keys(currentUser).length !== 0) {
             setOpen(true);
         } else {
-            history.push('./signin');
+            history.push('/signin');
         }
     };
 
@@ -127,15 +127,13 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
                         userHelpful ? (
                             <Typography variant="body2">Thank you for your feedback.</Typography>
                         ) : (
-                            <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful}>
-                                <ThumbUpIcon />
+                            <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
                                 Helpful
                             </Button>
                         )
                     }
                     
-                    <Button variant="outlined" color="secondary" className='report-btn' onClick={handleClickOpen}>
-                        <ReportIcon />
+                    <Button color="secondary" className='report-btn' onClick={handleClickOpen} startIcon={<ReportIcon />}>
                         Report
                     </Button>
                     <ReportForm reviewId={reviewId} user_report={user_report} report_count={report_count} open={open} handleClose={handleClose} />

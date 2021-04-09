@@ -58,11 +58,18 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantActionFailure: false,
                 createRestaurantErr: ''
             };
-        
-        case RestaurantActionTypes.UPDATE_RESTAURANT_START:
+
+        case RestaurantActionTypes.RESTAURANT_TO_BE_UPDATE:
             return {
                 ...state,
                 restaurantToBeUpdate: action.payload,
+                restaurantActionPending: false,
+                restaurantUpdateSuccess: false,
+                restaurantActionFailure: false,
+            };
+        case RestaurantActionTypes.UPDATE_RESTAURANT_START:
+            return {
+                ...state,
                 restaurantActionPending: true,
                 restaurantUpdateSuccess: false,
                 restaurantActionFailure: false,
