@@ -80,7 +80,7 @@
     .content-body {
       display: flex;
       flex-direction: column;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
 
       .review-title {
         font-weight: 500;
@@ -128,7 +128,15 @@
       }
 
       .review-more {
-        margin-bottom: 0.15em 0;
+        margin-bottom: 0.2em;
+      }
+
+      .text-cap {
+        text-transform: capitalize;
+      }
+
+      .review-helpful {
+        margin-top: 0.75em;
       }
     }
 

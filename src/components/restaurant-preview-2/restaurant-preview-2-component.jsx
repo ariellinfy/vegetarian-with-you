@@ -5,15 +5,13 @@ import { withRouter } from 'react-router-dom';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { requestRestaurantByIdStart, requestRestaurantByIdSuccess } from '../../redux/restaurant/restaurant-actions';
 import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restaurant-selectors';
-import { requestReviewsStart } from '../../redux/review/review-actions';
 
 import { Typography, Button } from '@material-ui/core';
 import restaurantImage from "../../assets/background/temp.jpg";
 import './restaurant-preview-2-style.scss';
 
-const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, 
-    requestRestaurantByIdStart, requestRestaurantByIdSuccess, requestReviewsStart,
-    currentUser, requestSuccess, history }) => {
+const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, country, type, cuisine, price_range, 
+    requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
     
     if (Math.round(price_range) === 1) {
         price_range = 'cheap eats';
@@ -25,14 +23,8 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, address, city, re
         price_range = 'unknown';
     };
     
-    const handleRestaurantClick = async () => {
-        const query = `?&restaurantId=${restaurantId}`;
-        await requestRestaurantByIdStart(restaurantId);
-        await requestReviewsStart(query);
-        
-        if (requestSuccess) {
-            history.push(`/restaurants/${restaurantId}`);
-        }
+    const handleRestaurantClick =  () => {
+        history.push(`/restaurants/${restaurantId}`);
     };
 
     const handleReviewClick = async () => {
@@ -88,7 +80,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
     requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo)),
-    requestReviewsStart: query => dispatch(requestReviewsStart(query))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPreviewTwo));

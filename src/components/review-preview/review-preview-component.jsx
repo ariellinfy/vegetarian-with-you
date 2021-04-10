@@ -31,8 +31,8 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
 
     const currentUserToken = localStorage.getItem('token');
 
-    const { reviewId, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
-        user_helpful, helpful_count, user_report, report_count, review_owner, create_at } = review;
+    const { review_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
+        user_helpful, helpful_count, review_owner, create_at } = review;
 
     const createDate = (create_at || '').split('T')[0];
 
@@ -50,10 +50,10 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
     const handleClickHelpful = () => {
         if(Object.keys(currentUser).length !== 0) {
             setReviewHelpful({ 
-                userHelpful: !user_helpful, 
-                helpfulCount: userHelpful ? helpfulCount++ : userHelpful--
+                userHelpful: true, 
+                helpfulCount: helpfulCount+1
             });
-            reviewHelpfulStart({ reviewId, userHelpful, helpfulCount, currentUserToken });
+            reviewHelpfulStart({ review_id, userHelpful, helpfulCount, currentUserToken });
         } else {
             history.push('/signin');
         }
@@ -116,7 +116,7 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                             {
                                 images.map((image, index) => (
                                 <GridListTile key={image.original}>
-                                    <img className='review-image' src={image.original} alt={`${reviewId}/${index}`} />
+                                    <img className='review-image' src={image.original} alt={`${review_id}/${index}`} />
                                 </GridListTile>
                                 ))
                             }
@@ -124,14 +124,14 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                     </div>
 
                     <Typography className='review-more' variant="body2">Date of Visit: {visit_period}</Typography>
-                    <Typography className='review-more' variant="body2">
+                    <Typography className='review-more text-cap' variant="body2">
                         {
-                            recommended_dishes ? (`Recommended Dish(es): ${recommended_dishes}`) : null
+                            recommended_dishes ? (`Recommended Dishes: ${recommended_dishes}`) : null
                         }
                     </Typography>
 
                     {
-                        helpfulCount ? (<Typography variant="body2">{helpfulCount} people found this helpful</Typography>) : null
+                        helpfulCount ? (<Typography className='review-helpful' variant="subtitle2">{helpfulCount} people found this helpful</Typography>) : null
                     }
                 </div>
 
@@ -143,7 +143,6 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                                 <CheckCircleIcon fontSize="small" style={{ color: green[700] }} />
                                 <Typography className='feedback-body' variant="body2">Thank you for your feedback.</Typography>
                             </div>
-                            
                         ) : (
                             <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
                                 Helpful
@@ -155,7 +154,7 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                         <Button color="secondary" className='report-btn' onClick={handleClickOpen} startIcon={<ReportIcon />}>
                             Report
                         </Button>
-                        <ReportForm reviewId={reviewId} user_report={user_report} report_count={report_count} open={open} handleClose={handleClose} />
+                        <ReportForm reviewId={review_id} open={open} handleClose={handleClose} />
                     </div>
 
                 </div>

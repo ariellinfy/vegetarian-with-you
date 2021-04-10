@@ -6,14 +6,15 @@ import { requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, reques
 import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilteredRestaurants, selectFilterFeatureKeyword, selectFilterLocationKeyword } from '../../redux/restaurant/restaurant-selectors';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { resetEditUserEmail } from '../../redux/user/user-actions';
 
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
 import RestaurantPreviewTwo from '../../components/restaurant-preview-2/restaurant-preview-2-component';
 import './find-restaurant-page-style.scss';
 
-const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, requestError,
-    filteredRestaurants, featureKeyword, locationKeyword,   
+const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, requestError, 
+    filteredRestaurants, featureKeyword, locationKeyword, resetEditUserEmail,
     requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
@@ -32,6 +33,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
         resetUpdateReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
+        resetEditUserEmail();
         requestAllRestaurantsStart('');
     }, []);
 
@@ -124,6 +126,7 @@ const mapDispatchToProps = dispatch => ({
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
+    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FindRestaurantPage));

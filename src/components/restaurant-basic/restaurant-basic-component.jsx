@@ -15,6 +15,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import './restaurant-basic-style.scss';
 
 const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdate, history }) => {
+    
     let { restaurant_name, address, city, region, country, postal_code, phone, website, 
         type, cuisine, overall_rate, price_range, review_count } = targetRestaurant;
 
@@ -39,8 +40,7 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
                     Go Back
                 </Button>
                 <Button type='button' className='header-btn' variant="outlined" color='primary' startIcon={<AddIcon />}
-                    onClick={() => {
-                        Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}}>
+                    onClick={() => history.push('/createrestaurant')}>
                     Add a Restaurant
                 </Button>
             </div>

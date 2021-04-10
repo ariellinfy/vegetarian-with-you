@@ -6,12 +6,13 @@ import { resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilter
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectReviewCreateSuccess, selectTargetReviewInfo, selectTargetReviewInfoToMap } from '../../redux/review/review-selectors';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
+import { resetEditUserEmail, setAdminCurrentPage } from '../../redux/user/user-actions';
 
 import ReviewForm from '../../components/review-form/review-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './create-review-page-style.scss';
 
-const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targetRestaurant,
+const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targetRestaurant, resetEditUserEmail, setAdminCurrentPage,
     resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants, 
     resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
         
@@ -29,6 +30,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
         resetUpdateReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
+        resetEditUserEmail();
     }, []);
 
     return (
@@ -71,7 +73,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
                                 What's next?
                             </Typography>
                             <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next">Explore more restaurants</Button>
-                            <Button component={Link} to={'/useraccount'} variant="contained" color="primary" className="btn-next">View my reviews</Button>
+                            <Button component={Link} to={'/useraccount'} variant="contained" color="primary" className="btn-next" onClick={() => setAdminCurrentPage(2)}>View my reviews</Button>
                         </div>
                     </div>
                 ) : (
@@ -90,6 +92,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
+    setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber)),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
@@ -97,6 +100,7 @@ const mapDispatchToProps = dispatch => ({
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
+    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateReviewPage);

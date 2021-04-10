@@ -6,6 +6,7 @@ import { requestAllRestaurantsStart, requestFilteredRestaurants, resetCreateRest
 import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilterKeyword, selectFilteredRestaurants } from '../../redux/restaurant/restaurant-selectors';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { resetEditUserEmail } from '../../redux/user/user-actions';
 
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
@@ -14,7 +15,7 @@ import RestaurantPreviewOne from '../../components/restaurant-preview-1/restaura
 import './explore-page-style.scss';
 
 const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestError, 
-    keyword, filteredRestaurants, requestAllRestaurantsStart, requestFilteredRestaurants, 
+    keyword, filteredRestaurants, requestAllRestaurantsStart, requestFilteredRestaurants, resetEditUserEmail,
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
     currentUser, history }) => {
@@ -32,6 +33,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
         resetUpdateReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
+        resetEditUserEmail();
         requestAllRestaurantsStart('');
     }, []);
 
@@ -119,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
+    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));

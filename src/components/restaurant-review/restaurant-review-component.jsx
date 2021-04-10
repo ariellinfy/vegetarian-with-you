@@ -39,7 +39,7 @@ const RestaurantReview = ({ currentUser, reviewCount, query, reviewsCollection, 
                 </div>
                 <div className='review-header-2'>
                     <Button variant="contained" color="primary" className='review-btn' startIcon={<CreateIcon />}
-                        onClick={() => Object.keys(currentUser).length ? (history.push('/createreview')) : (history.push('/signin'))}>
+                        onClick={() => history.push('/createreview')}>
                         Write a Review
                     </Button>
                 </div>

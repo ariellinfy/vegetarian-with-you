@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     editProfileErr: '',
     deleteErr: '',
     onEditUserEmail: false,
+    adminCurrentPage: 0
 }
 
 const userReducer = (state=INITIAL_STATE, action) => {
@@ -60,6 +61,21 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 onEditUserEmail: !state.onEditUserEmail
+            };
+        case UserActionTypes.RESET_EDIT_EMAIL_STATUS:
+            return {
+                ...state,
+                onEditUserEmail: false
+            };
+        case UserActionTypes.SET_ADMIN_CURRENT_PAGE:
+            return {
+                ...state,
+                adminCurrentPage: action.payload
+            };
+        case UserActionTypes.RESET_ADMIN_CURRENT_PAGE:
+            return {
+                ...state,
+                adminCurrentPage: 0
             };
         default:
             return state;

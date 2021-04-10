@@ -12,6 +12,7 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import './restaurant-advance-style.scss';
 
 const RestaurantAdvance = ({ targetRestaurant }) => {
+    
     const { address, city, region, country, postal_code, 
         phone, website, review_count,
         breakfast, brunch, lunch, dinner,

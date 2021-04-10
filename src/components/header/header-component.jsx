@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
-import { signOutStart } from '../../redux/user/user-actions';
+import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
+import { resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -11,7 +13,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ signOutStart, currentUser }) => {
+const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail,
+    resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus }) => {
 
     let currentUserToken = ''; 
     if (localStorage.getItem('token')) {
@@ -24,11 +27,24 @@ const Header = ({ signOutStart, currentUser }) => {
         setAnchorEl(event.currentTarget);
     };
     
-    const handleClose = () => {
+    const handleClose = event => {
+        if (event.target.text === 'View Profile') {
+            setAdminCurrentPage(0);
+        } else if (event.target.text === 'Account Info') {
+            setAdminCurrentPage(1);
+        } else if (event.target.text === 'My Reviews') {
+            setAdminCurrentPage(2);
+        }
         setAnchorEl(null);
     };
 
     const handleSignOut = () => {
+        resetUpdateRestaurantStatus();
+        resetCreateReviewStatus();
+        resetUpdateReviewStatus();
+        resetRequestUserReviewsStatus();
+        resetEditUserEmail();
+        resetAdminCurrentPage();
         signOutStart({ currentUserToken });
     };
 
@@ -78,9 +94,9 @@ const Header = ({ signOutStart, currentUser }) => {
                                     onClose={handleClose}
                                     style={{ top: '50px' }}
                                 >
-                                    <MenuItem component={Link} to="/useraccount" onClick={handleClose}>View Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>Account Info</MenuItem>
-                                    <MenuItem onClick={handleClose}>My Reviews</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" page='0' onClick={handleClose}>View Profile</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" page='1' onClick={handleClose}>Account Info</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" page='2' onClick={handleClose}>My Reviews</MenuItem>
                                     <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                                 </Menu>
                             </div>
@@ -101,7 +117,14 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    signOutStart: token => dispatch(signOutStart(token))
+    signOutStart: token => dispatch(signOutStart(token)),
+    setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber)),
+    resetAdminCurrentPage: () => dispatch(resetAdminCurrentPage()),
+    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
+    resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
+    resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

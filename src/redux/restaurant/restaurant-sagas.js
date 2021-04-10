@@ -47,7 +47,7 @@ export function* createRestaurant({ payload:
       restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
       restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
       breakfast, brunch, lunch, dinner,
-      restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent,
+      restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
       currentUserToken } 
 }) {
     try {
@@ -70,7 +70,7 @@ export function* createRestaurant({ payload:
             lunch: lunch,
             dinner: dinner,
             restaurantWifi: restaurantWifi,
-            restaurantTakeaway: restaurantTakeaway,
+            restaurantTakeout: restaurantTakeout,
             restaurantDelivery: restaurantDelivery,
             restaurantPungent: restaurantPungent
         });
@@ -88,7 +88,7 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
     restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
     restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
     breakfast, brunch, lunch, dinner,
-    restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent,
+    restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
     currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/onrestaurant/updaterestaurant';
@@ -111,7 +111,7 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
             lunch: lunch,
             dinner: dinner,
             restaurantWifi: restaurantWifi,
-            restaurantTakeaway: restaurantTakeaway,
+            restaurantTakeout: restaurantTakeout,
             restaurantDelivery: restaurantDelivery,
             restaurantPungent: restaurantPungent
         });

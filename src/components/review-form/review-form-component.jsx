@@ -42,7 +42,7 @@ class ReviewForm extends Component {
                 atmosphereHover: 0,
                 visitPeriod: today.getFullYear() + '-' + ((today.getMonth() + 1).length > 1 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1))),
                 visitType: '',
-                price: '',
+                price: 0,
                 recommendDish: '',
                 disclosure: false
             };
@@ -53,11 +53,11 @@ class ReviewForm extends Component {
                 foodRate: this.props.reviewToBeUpdate.food_rate,
                 serviceRate: this.props.reviewToBeUpdate.service_rate,
                 valueRate: this.props.reviewToBeUpdate.value_rate,
-                atmosphereRate: this.props.reviewToBeUpdate.ambiance_rate,
+                atmosphereRate: this.props.reviewToBeUpdate.atmosphere_rate,
                 foodHover: this.props.reviewToBeUpdate.food_rate,
                 serviceHover: this.props.reviewToBeUpdate.service_rate,
                 valueHover: this.props.reviewToBeUpdate.value_rate,
-                atmosphereHover: this.props.reviewToBeUpdate.ambiance_rate,
+                atmosphereHover: this.props.reviewToBeUpdate.atmosphere_rate,
                 visitPeriod: this.props.reviewToBeUpdate.visit_period,
                 visitType: this.props.reviewToBeUpdate.type_of_visit,
                 price: this.props.reviewToBeUpdate.price_range,
@@ -97,7 +97,7 @@ class ReviewForm extends Component {
 
     handleChange = event => {
         const { name, value, checked } = event.target;
-
+        console.log(name, value, checked)
         if (name === 'foodRate' || name === 'serviceRate' || name === 'valueRate' || name === 'atmosphereRate') {
             this.setState({ ...this.state, [name]: Number(value) });
         } else if (name === 'disclosure') {
@@ -246,19 +246,19 @@ class ReviewForm extends Component {
                         <RadioGroup className='radio-group' aria-label="price" name="price" value={price} onChange={this.handleChange} required>
                             <FormControlLabel 
                                 className='select-label' 
-                                value="cheap eats" 
+                                value='1'
                                 control={<Radio className='select-input' required/>} 
                                 label="Cheap Eats" 
                             />
                             <FormControlLabel  
                                 className='select-label' 
-                                value="mid-range" 
+                                value='2'
                                 control={<Radio className='select-input' required/>} 
                                 label="Mid-range" 
                             />
                             <FormControlLabel 
                                 className='select-label' 
-                                value="fine dining" 
+                                value='3'
                                 control={<Radio className='select-input' required/>} 
                                 label="Fine Dining" 
                             />

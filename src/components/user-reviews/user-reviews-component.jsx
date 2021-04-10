@@ -2,33 +2,18 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectUserReviews } from '../../redux/review/review-selectors';
+import { requestUserReviewsStart } from '../../redux/review/review-actions';
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import './user-reviews-style.scss';
 
-const UserReviews = ({ userReviews }) => {
-    console.log(userReviews);
-    const createData = (title, restaurant, rating, reviewDate, lastUpdate) => {
-        return { title, restaurant, rating, reviewDate, lastUpdate };
-    };
+const UserReviews = ({ userReviewsCollection, requestUserReviewsStart }) => {
 
-    let reviews = [];
+    let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
 
-    useEffect(async () => {
-        try {
-            reviews = await userReviews.map(({ review_title, restaurant_name, overall_rate, create_at, last_modified }) => {
-                let overallRate = (overall_rate || 0).toFixed(2);
-                let reviewDate = (create_at || '').split('T')[0];
-                let lastUpdate = (last_modified || '').split('T')[0];
-                return createData(review_title, restaurant_name, overallRate, reviewDate, lastUpdate);
-            })
-            console.log(reviews);
-        } catch (err) {
-            console.log(err);
-        }
-    });
-
-    console.log(reviews);
+    useEffect(() => {
+        requestUserReviewsStart(currentUserToken);
+    }, []);
 
     return (
         <div className='user-reviews-page'>
@@ -45,15 +30,15 @@ const UserReviews = ({ userReviews }) => {
                     </TableHead>
                     <TableBody className='reviews-table-body'>
                     {
-                        reviews.map((review) => (
-                            <TableRow key={review.title}>
+                        userReviewsCollection.map((review) => (
+                            <TableRow key={review.review_id}>
                                 <TableCell component="th" scope="row">
-                                    {review.title}
+                                    {review.review_title}
                                 </TableCell>
-                                <TableCell align="right">{review.restaurant}</TableCell>
-                                <TableCell align="right">{review.rating}</TableCell>
-                                <TableCell align="right">{review.reviewDate}</TableCell>
-                                <TableCell align="right">{review.lastUpdate}</TableCell>
+                                <TableCell align="right">{review.restaurant_name}</TableCell>
+                                <TableCell align="right">{(review.overall_rate || 0).toFixed(2)}</TableCell>
+                                <TableCell align="right">{(review.create_at || '').split('T')[0]}</TableCell>
+                                <TableCell align="right">{(review.last_modified || '').split('T')[0]}</TableCell>
                             </TableRow>
                         ))
                     }
@@ -65,7 +50,11 @@ const UserReviews = ({ userReviews }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-    userReviews: selectUserReviews,
+    userReviewsCollection: selectUserReviews,
 });
 
-export default connect(mapStateToProps)(UserReviews);
+const mapDispatchToProps = dispatch => ({
+    requestUserReviewsStart: currentUserToken => dispatch(requestUserReviewsStart(currentUserToken)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserReviews);

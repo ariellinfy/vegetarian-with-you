@@ -130,7 +130,6 @@ export function* requestReviews({ payload }) {
 }
 
 export function* requestUserReviews({ payload }) {
-    console.log(payload);
     try {
         if (!payload.length) {
             yield put(requestUserReviewsFailure('please provide user token'));
@@ -149,13 +148,13 @@ export function* requestUserReviews({ payload }) {
     }
 }
 
-export function* reviewHelpful({ payload: { reviewId, userHelpful, helpfulCount, currentUserToken } }) {
+export function* reviewHelpful({ payload: { review_id, userHelpful, helpfulCount, currentUserToken } }) {
     try {
         const url = `http://localhost:5000/onreview/reviewhelpful`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
-            reviewId: reviewId,
+            review_id: review_id,
             userHelpful: userHelpful,
             helpfulCount: helpfulCount
         });
@@ -169,15 +168,14 @@ export function* reviewHelpful({ payload: { reviewId, userHelpful, helpfulCount,
     }
 }
 
-export function* reportReview({ payload: { reviewId, user_report, report_count, reportText, currentUserToken } }) {
+export function* reportReview({ payload: { reviewId, reportText, currentUserToken } }) {
     try {
+        console.log(reviewId, reportText, currentUserToken);
         const url = `http://localhost:5000/onreview/reportreview`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
             reviewId: reviewId,
-            user_report: user_report,
-            report_count: report_count,
             reportText: reportText
         });
         const token = yield call(request, url, method, headers, body, currentUserToken);

@@ -31,7 +31,7 @@ class RestaurantForm extends Component {
                 lunch: false,
                 dinner: false,
                 restaurantWifi: '',
-                restaurantTakeaway: '',
+                restaurantTakeout: '',
                 restaurantDelivery: '',
                 restaurantPungent: ''
             };
@@ -52,7 +52,7 @@ class RestaurantForm extends Component {
                 lunch: this.props.restaurantToBeUpdate.lunch,
                 dinner: this.props.restaurantToBeUpdate.dinner,
                 restaurantWifi: this.props.restaurantToBeUpdate.free_wifi,
-                restaurantTakeaway: this.props.restaurantToBeUpdate.takeaway,
+                restaurantTakeout: this.props.restaurantToBeUpdate.takeout,
                 restaurantDelivery: this.props.restaurantToBeUpdate.delivery,
                 restaurantPungent: this.props.restaurantToBeUpdate.exclude_pungent
             };
@@ -67,7 +67,7 @@ class RestaurantForm extends Component {
             restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
             restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
             breakfast, brunch, lunch, dinner,
-            restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent 
+            restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent 
         } = this.state;
 
         if (Object.keys(restaurantToBeUpdate).length === 0) {
@@ -76,7 +76,7 @@ class RestaurantForm extends Component {
                 restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
                 restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
                 breakfast, brunch, lunch, dinner,
-                restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent,
+                restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
                 currentUserToken
             });
         } else {
@@ -86,7 +86,7 @@ class RestaurantForm extends Component {
                 restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
                 restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
                 breakfast, brunch, lunch, dinner,
-                restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent,
+                restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
                 currentUserToken
             });
         }
@@ -111,7 +111,7 @@ class RestaurantForm extends Component {
             restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
             restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
             breakfast, brunch, lunch, dinner,
-            restaurantWifi, restaurantTakeaway, restaurantDelivery, restaurantPungent 
+            restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent 
         } = this.state;
         const countryCode = COUNTRY_REGION.map((country) => country.countryShortCode.toLowerCase());
 
@@ -335,7 +335,7 @@ class RestaurantForm extends Component {
                     
                     <FormControl className='selection-group' component="fieldset">
                         <FormLabel className='selection-label' component="legend">Takeout?</FormLabel>
-                        <RadioGroup className='radio-group' aria-label="restaurantTakeaway" name="restaurantTakeaway" value={restaurantTakeaway} onChange={this.handleChange}>
+                        <RadioGroup className='radio-group' aria-label="restaurantTakeout" name="restaurantTakeout" value={restaurantTakeout} onChange={this.handleChange}>
                             <FormControlLabel 
                                 className='select-label' 
                                 value="yes" 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { selectCurrentUser, selectAdminCurrentPage } from '../../redux/user/user-selectors';
 import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, requestUserReviewsStart } from '../../redux/review/review-actions';
+import { setAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
 
 import { Tabs, Tab } from '@material-ui/core';
 import UserProfile from '../../components/user-profile/user-profile-component';
@@ -11,7 +12,7 @@ import AccountInfo from '../../components/account-info/account-info-component';
 import UserReviews from '../../components/user-reviews/user-reviews-component';
 import './admin-dashboard-page-style.scss';
 
-const AdminDashboardPage = ({ currentUser, requestUserReviewsStart,
+const AdminDashboardPage = ({ currentUser, adminCurrentPage, requestUserReviewsStart, setAdminCurrentPage, resetEditUserEmail, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
     
@@ -26,11 +27,18 @@ const AdminDashboardPage = ({ currentUser, requestUserReviewsStart,
         resetUpdateReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
+        resetEditUserEmail();
         requestUserReviewsStart(currentUserToken);
     }, []);
 
-    const [ value, setValue ] = useState(0);
+    useEffect(() => {
+        resetEditUserEmail();
+        setValue(adminCurrentPage);
+    }, [adminCurrentPage]);
+
+    const [ value, setValue ] = useState(adminCurrentPage);
     const handleChange = (event, newValue) => {
+        setAdminCurrentPage(newValue);
         setValue(newValue);
     };
 
@@ -58,7 +66,8 @@ const AdminDashboardPage = ({ currentUser, requestUserReviewsStart,
 };
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+    currentUser: selectCurrentUser,
+    adminCurrentPage: selectAdminCurrentPage
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -70,7 +79,9 @@ const mapDispatchToProps = dispatch => ({
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
-    requestUserReviewsStart: currentUserToken => dispatch(requestUserReviewsStart(currentUserToken))
+    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    requestUserReviewsStart: currentUserToken => dispatch(requestUserReviewsStart(currentUserToken)),
+    setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboardPage);

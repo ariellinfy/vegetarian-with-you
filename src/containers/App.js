@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../redux/user/user-selectors';
@@ -44,21 +44,21 @@ let theme = createMuiTheme({
 
 theme = responsiveFontSizes(theme);
 
-const App = ({ currentUser }) => {
+const App = ({ currentUser, history }) => {
   return (
     <ThemeProvider theme={theme}>
         <div className='App'>
           <Header />
             <Switch>
               <Route exact path='/' component={HomePage} />
-              <Route exact path='/signin' render={() => Object.keys(currentUser).length ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
-              <Route exact path='/useraccount' component={AdminDashboardPage} />
+              <Route exact path='/signin' render={() => Object.keys(currentUser).length ? (history.go(-1)) : (<SignInAndSignUpPage />)} />
+              <Route exact path='/useraccount' render={() => Object.keys(currentUser).length ? (<AdminDashboardPage />) : (<SignInAndSignUpPage />)} />
               <Route exact path='/explore' component={ExplorePage} />
               <Route exact path='/find' component={FindRestaurantPage} />
-              <Route exact path='/createrestaurant' component={CreateRestaurantPage} />
-              <Route exact path='/createreview' component={CreateReviewPage} />
-              <Route exact path='/updaterestaurant' component={UpdateRestaurantPage} />
-              <Route exact path='/updatereview' component={UpdateReviewPage} />
+              <Route exact path='/createrestaurant' render={() => Object.keys(currentUser).length ? (<CreateRestaurantPage />) : (<SignInAndSignUpPage />)} />
+              <Route exact path='/createreview' render={() => Object.keys(currentUser).length ? (<CreateReviewPage />) : (<SignInAndSignUpPage />)} />
+              <Route exact path='/updaterestaurant' render={() => Object.keys(currentUser).length ? (<UpdateRestaurantPage />) : (<SignInAndSignUpPage />)} />
+              <Route exact path='/updatereview' render={() => Object.keys(currentUser).length ? (<UpdateReviewPage />) : (<SignInAndSignUpPage />)} />
               <Route path='/restaurants/:id' component={RestaurantPage} />
             </Switch>
           <Footer />
@@ -71,4 +71,4 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-export default connect(mapStateToProps, null)(App);
+export default withRouter(connect(mapStateToProps, null)(App));

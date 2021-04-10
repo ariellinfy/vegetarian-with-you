@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { resetCreateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectRestaurantUpdateSuccess, selectTargetRestaurantInfo, selectTargetRestaurantInfoToMap } from '../../redux/restaurant/restaurant-selectors';
+import { resetEditUserEmail } from '../../redux/user/user-actions';
 
 import RestaurantForm from '../../components/restaurant-form/restaurant-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './update-restaurant-page-style.scss';
 
-const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestaurantToMap, 
+const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestaurantToMap, resetEditUserEmail,
     resetCreateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
@@ -28,6 +29,7 @@ const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestauran
         resetUpdateReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
+        resetEditUserEmail();
     }, []);
 
     return (
@@ -87,6 +89,7 @@ const mapDispatchToProps = dispatch => ({
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
+    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateRestaurantPage);
