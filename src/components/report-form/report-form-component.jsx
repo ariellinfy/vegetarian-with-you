@@ -7,9 +7,8 @@ import { Button, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, 
 
 const useStyles = makeStyles((theme) => ({
     text: {
-        fontSize: '16px',
         marginTop: '0.5em',
-        marginBottom: '0.25em'
+        marginBottom: '0.5em'
     },
     actions: {
         padding: '8px 24px 16px 24px',
@@ -37,10 +36,10 @@ const ReportForm = ({ reviewId, user_report, report_count, open, handleClose, re
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle id="report-title">Report a Problem</DialogTitle>
                 <Divider />
-                <form className='report-form' onSubmit={handleSubmit}>
+                <form className='report-container' onSubmit={handleSubmit}>
                     <DialogContent>
                         <FormControl className='selection-group' component="fieldset" required>
-                            <FormLabel className='selection-label' component="legend">What's wrong with this review?</FormLabel>
+                            <FormLabel className={classes.text} component="legend">What's wrong with this review?</FormLabel>
                             <RadioGroup className='radio-group' aria-label="reportText" name="reportText" value={reportText} onChange={handleChange}>
                                 <FormControlLabel 
                                     className='select-label' 
@@ -91,9 +90,17 @@ const ReportForm = ({ reviewId, user_report, report_count, open, handleClose, re
                         <Button onClick={handleClose} variant="outlined" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
-                            Report
-                        </Button>
+                        {
+                            reportText.length ? (
+                                <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
+                                    Report
+                                </Button>
+                            ) : (
+                                <Button variant="contained" color="secondary" type="submit" disabled>
+                                    Report
+                                </Button>
+                            )
+                        }
                     </DialogActions>
                 </form>
             </Dialog>

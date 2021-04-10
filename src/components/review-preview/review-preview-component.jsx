@@ -8,6 +8,8 @@ import { selectCurrentUser } from '../../redux/user/user-selectors';
 import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import { green } from '@material-ui/core/colors';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ReportIcon from '@material-ui/icons/Report';
 import './review-preview-style.scss';
@@ -34,6 +36,8 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
     const { reviewId, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
         user_helpful, helpful_count, user_report, report_count, review_owner, create_at } = review;
 
+    const createDate = (create_at || '').split('T')[0];
+
     const handleUpdateReview = () => {
         setReviewToBeUpdate(review);
         history.push('/updatereview');
@@ -43,7 +47,7 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
         userHelpful: user_helpful,
         helpfulCount: helpful_count
     })
-    const { userHelpful, helpfulCount } = reviewHelpful;
+    let { userHelpful, helpfulCount } = reviewHelpful;
 
     const handleClickHelpful = () => {
         if(Object.keys(currentUser).length !== 0) {
@@ -81,40 +85,48 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
             </div>
             
             <div className='card-body'>
-                <div className='card-content'>
-                    <Box className='content-header' component="div" mb={3} borderColor="transparent">
+                <Box className='content-header' component="div" mb={3} borderColor="transparent">
+                    <div className='header-info'>
                         <Rating
                             name="overallRate"
                             value={overall_rate || 0}
                             precision={0.5}
                             readOnly
                         />
-                        <Typography variant="h6">Reviewed {create_at}</Typography>
-                    </Box>
-
+                        <Typography className='review-date' variant="subtitle2">Reviewed {createDate}</Typography>
+                    </div>
+                    
                     {
                         userId === review_owner ? (
-                            <Button variant="contained" color="primary" className='update-btn' onClick={handleUpdateReview}>
+                            <Button color="secondary" className='update-btn' onClick={handleUpdateReview}>
                                 Update Review
                             </Button>
                         ) : null
                     }
+                </Box>
 
-                    <Typography variant="h5">{review_title}</Typography>
-                    <Typography variant="body1">{review_body}</Typography>
+                <div className='content-body'>
+                    <Typography className='review-title' variant="h5">{review_title}</Typography>
+                    <Typography className='review-body' variant="body1">{review_body}</Typography>
 
-                    <GridList className='image-container' cols={2.5}>
+                    <div className='image-container'>
+                        <GridList className='image-list' cols={5}>
+                            {
+                                images.map((image, index) => (
+                                <GridListTile key={image.original}>
+                                    <img className='review-image' src={image.original} alt={`${reviewId}/${index}`} />
+                                </GridListTile>
+                                ))
+                            }
+                        </GridList>
+                    </div>
+
+                    <Typography className='review-more' variant="body2">Date of Visit: {visit_period}</Typography>
+                    <Typography className='review-more' variant="body2">
                         {
-                            images.map((image, index) => (
-                              <GridListTile key={image.original}>
-                                <img className='review-image' src={image.original} alt={`${reviewId}/${index}`} />
-                             </GridListTile>
-                            ))
+                            recommended_dishes ? (`Recommended Dish(es): ${recommended_dishes}`) : null
                         }
-                    </GridList>
-
-                    <Typography variant="body2">Date of Visit: {visit_period}</Typography>
-                    <Typography variant="body2">Recommended Dish(es): {recommended_dishes}</Typography>
+                    </Typography>
 
                     {
                         helpfulCount ? (<Typography variant="body2">{helpfulCount} people found this helpful</Typography>) : null
@@ -125,7 +137,11 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
 
                     {
                         userHelpful ? (
-                            <Typography variant="body2">Thank you for your feedback.</Typography>
+                            <div className='feedback'>
+                                <CheckCircleIcon fontSize="small" style={{ color: green[700] }} />
+                                <Typography className='feedback-body' variant="body2">Thank you for your feedback.</Typography>
+                            </div>
+                            
                         ) : (
                             <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
                                 Helpful
@@ -133,10 +149,13 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
                         )
                     }
                     
-                    <Button color="secondary" className='report-btn' onClick={handleClickOpen} startIcon={<ReportIcon />}>
-                        Report
-                    </Button>
-                    <ReportForm reviewId={reviewId} user_report={user_report} report_count={report_count} open={open} handleClose={handleClose} />
+                    <div>
+                        <Button color="secondary" className='report-btn' onClick={handleClickOpen} startIcon={<ReportIcon />}>
+                            Report
+                        </Button>
+                        <ReportForm reviewId={reviewId} user_report={user_report} report_count={report_count} open={open} handleClose={handleClose} />
+                    </div>
+
                 </div>
 
             </div>

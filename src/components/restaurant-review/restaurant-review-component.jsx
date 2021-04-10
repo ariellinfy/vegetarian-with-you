@@ -6,7 +6,7 @@ import { selectReviewsCollection, selectReviewSortbyFilter } from '../../redux/r
 import { setReviewSortbyFilter, requestReviewsStart } from '../../redux/review/review-actions';
 
 import ReviewPreview from '../../components/review-preview/review-preview-component';
-import { Typography, Button, FormControl, Select, MenuItem, Divider } from '@material-ui/core';
+import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import './restaurant-review-style.scss';
 

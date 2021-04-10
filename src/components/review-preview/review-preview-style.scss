@@ -1,84 +1,164 @@
 .review-preview {
   width: 100%;
   display: flex;
-  justify-content: center;
-  padding: 1em 0.5em;
-  box-sizing: border-box;
+  padding: 2em 1em 1.5em 0.5em;
   background: rgba(255, 255, 255, 0.75);
-  border: 1px solid black;
+  margin-bottom: 1em;
 
   .card-header {
-    width: 20%;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    margin: 0 1.5em;
 
-    @media screen and (max-width: 1625px) {
-      width: 20%;
+    @media screen and (max-width: 835px) {
+      margin: 0 0.5em;
     }
 
     .header-avatar {
-      display: flex;
-      flex-direction: column;
       padding-bottom: 10px;
 
       .avatar {
         width: 2em;
         height: 2em;
         margin: 0;
-        font-size: 3em;
+        font-size: 2.5em;
 
-        @media screen and (max-width: 1625px) {
-          width: 1.85em;
-          height: 1.85em;
-          font-size: 2.5em;
-        }
-      }
-    }
-
-    .card-body {
-      width: 80%;
-
-      @media screen and (max-width: 1625px) {
-        width: 80%;
-      }
-
-      .card-content {
-        .content-header {
-          display: flex;
-          margin-bottom: 0.5em;
-
-          h6 {
-            margin: 0;
-            padding: 0.2em 1em;
-            color: grey;
-            font-size: 16px;
-
-            @media screen and (max-width: 600px) {
-              font-size: 15px;
-              padding-right: 0;
-            }
-          }
-        }
-
-        h5 {
-          font-weight: 500;
-        }
-
-        h5,
-        p {
-          margin: 0.5em 0;
-        }
-
-        .image-container {
-        }
-
-        .review-image {
-          width: 10em;
+        @media screen and (max-width: 835px) {
+          font-size: 2em;
         }
       }
     }
   }
-}
 
-.icon {
-  margin-right: 0.5em;
+  .card-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.75em;
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5em;
+
+      .header-info {
+        display: flex;
+        align-items: center;
+
+        @media screen and (max-width: 835px) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .review-date {
+          margin-left: 0.5em;
+          height: fit-content;
+          font-weight: 400;
+          color: rgb(32, 32, 32);
+
+          @media screen and (max-width: 835px) {
+            margin-top: 0.4em;
+            margin-left: 0.15em;
+          }
+        }
+      }
+
+      .update-btn {
+        height: fit-content;
+        text-transform: none;
+
+        @media screen and (max-width: 835px) {
+          font-size: smaller;
+        }
+      }
+    }
+
+    .content-body {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
+
+      .review-title {
+        font-weight: 500;
+        margin: 0.3em 0 0.15em 0;
+      }
+
+      .review-body {
+        margin: 0.3em 0 1em 0;
+      }
+
+      .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        overflow: hidden;
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 1em;
+
+        .image-list {
+          flex-wrap: nowrap;
+          transform: translateZ(0);
+          transition: all 0.4s ease 0s;
+          height: 100%;
+
+          li {
+            height: auto !important;
+
+            img {
+              width: 100%;
+
+              &:hover {
+                opacity: 0.9;
+                cursor: pointer;
+              }
+
+              &:focus {
+                outline: none;
+                border: none;
+              }
+            }
+          }
+        }
+      }
+
+      .review-more {
+        margin-bottom: 0.15em 0;
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      .feedback {
+        display: flex;
+
+        .feedback-body {
+          margin-left: 0.25em;
+          color: #1b5e20;
+        }
+      }
+
+      .helpful-btn {
+        text-transform: none;
+        height: fit-content;
+
+        @media screen and (max-width: 835px) {
+          font-size: smaller;
+        }
+      }
+
+      .report-btn {
+        height: fit-content;
+      }
+    }
+  }
 }
