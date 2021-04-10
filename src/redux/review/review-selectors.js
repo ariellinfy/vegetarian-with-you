@@ -30,6 +30,8 @@ export const selectReviewsCollection = createSelector([selectReview], review => 
 
 export const selectUserReviews = createSelector([selectReview], review => review.userReviews);
 
+export const selectUserCommentsCollection = createSelector([selectReview], review => review.userCommentsCollection);
+
 export const selectReviewRequestPending = createSelector([selectReview], review => review.reviewRequestPending);
 
 export const selectReviewRequestSuccess = createSelector([selectReview], review => review.reviewRequestSuccess);

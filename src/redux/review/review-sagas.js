@@ -7,6 +7,7 @@ import {
     requestUserReviewsSuccess, requestUserReviewsFailure,
     reviewHelpfulSuccess, reviewHelpfulFailure, 
     reportReviewSuccess, reportReviewFailure,
+    requestReviewsUserCommentsSuccess, requestReviewsUserCommentsFailure,
     deleteReviewSuccess, deleteReviewFailure
 } from './review-actions';
 
@@ -188,6 +189,24 @@ export function* reportReview({ payload: { reviewId, reportText, currentUserToke
     }
 }
 
+export function* requestUserComments({ payload: { restaurantId, currentUserToken } }) {
+    try {
+        const url = `http://localhost:5000/reviews/usercomments`;
+        const method = 'GET';
+        const headers = null;
+        const body = JSON.stringify({
+            restaurantId: restaurantId,
+        });
+        const userComments = yield call(request, url, method, headers, body, currentUserToken);
+        if (userComments !== undefined) {
+            localStorage.setItem('token', userComments.token);
+            yield put(requestReviewsUserCommentsSuccess(userComments.data));
+        } 
+    } catch (error) {
+        yield put(requestReviewsUserCommentsFailure(error));
+    }
+}
+
 export function* deleteReview({ payload: { reviewId, email, password, currentUserToken } }) {
     try {
         const url = `http://localhost:5000/onreview/deletereview`;
@@ -230,6 +249,10 @@ export function* onReportReviewStart() {
     yield takeLatest(ReviewActionTypes.REPORT_REVIEW_START, reportReview);
 }
 
+export function* onRequestUserCommentsStart() {
+    yield takeLatest(ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_START, requestUserComments);
+}
+
 export function* onDeleteReviewStart() {
     yield takeLatest(ReviewActionTypes.DELETE_REVIEW_START, deleteReview);
 }
@@ -242,6 +265,7 @@ export function* reviewSagas() {
         call(onRequestUserReviewStart),
         call(onReviewHelpfulStart),
         call(onReportReviewStart),
+        call(onRequestUserCommentsStart),
         call(onDeleteReviewStart),
     ]);
 }

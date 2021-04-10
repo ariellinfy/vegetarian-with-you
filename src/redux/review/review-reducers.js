@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     updateReviewErr: '',
     deleteReviewErr: '',
     reviewsCollection: [],
+    userCommentsCollection: [],
     userReviews: [],
     reviewRequestPending: false,
     reviewRequestSuccess: false,
@@ -103,6 +104,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
 
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_START:
+        case ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_START:
             return {
                 ...state,
                 reviewRequestPending: true,
@@ -118,6 +120,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             };
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_FAILURE:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_FAILURE:
+        case ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_FAILURE:
             return {
                 ...state,
                 reviewRequestPending: false,
@@ -133,6 +136,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 reviewsCollection: [],
+                userCommentsCollection: [],
                 reviewRequestPending: false,
                 reviewRequestSuccess: false,
                 requestReviewErr: '',
@@ -153,6 +157,15 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 userReviews: [],
                 reviewRequestPending: false,
                 reviewRequestSuccess: false,
+                requestReviewErr: '',
+            };
+
+        case ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_SUCCESS:
+            return {
+                ...state,
+                userCommentsCollection: action.payload,
+                reviewRequestPending: false,
+                reviewRequestSuccess: true,
                 requestReviewErr: '',
             };
 

@@ -126,6 +126,23 @@ export const reportReviewFailure = error => ({
     payload: error
 });
 
+// Request reviews user comments
+
+export const requestReviewsUserCommentsStart = data => ({
+    type: ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_START,
+    payload: data
+});
+
+export const requestReviewsUserCommentsSuccess = userComments => ({
+    type: ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_SUCCESS,
+    payload: userComments
+});
+
+export const requestReviewsUserCommentsFailure = error => ({
+    type: ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_FAILURE,
+    payload: error
+});
+
 // Delete review
 
 export const deleteReviewStart = data => ({
