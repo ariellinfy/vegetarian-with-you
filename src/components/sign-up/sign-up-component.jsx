@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signUpStart } from '../../redux/user/user-actions';
+
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-up-style.scss';
 
@@ -77,7 +78,7 @@ const SignUp = ({ signUpStart }) => {
             </form>
         </div>
     )
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     signUpStart: userCredential => dispatch(signUpStart(userCredential))

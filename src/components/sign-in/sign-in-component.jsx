@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signInStart } from '../../redux/user/user-actions';
+
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-in-style.scss';
 
@@ -51,8 +52,7 @@ const SignIn = ({ signInStart }) => {
             </form>
         </div>
     )
-}
-
+};
 
 const mapDispatchToProps = dispatch => ({
     signInStart: userCredential => dispatch(signInStart(userCredential))

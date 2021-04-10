@@ -10,12 +10,11 @@ import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/
 import CreateIcon from '@material-ui/icons/Create';
 import './restaurant-review-style.scss';
 
-const RestaurantReview = ({ currentUser, reviewCount, query, 
-    reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart, history }) => {
+const RestaurantReview = ({ currentUser, reviewCount, query, reviewsCollection, reviewSortbyFilter, 
+    setReviewSortbyFilter, requestReviewsStart, history }) => {
 
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
-
         query = event.currentTarget.dataset.query ? `${query}${event.currentTarget.dataset.query}` : query;
         requestReviewsStart(query);
     };
@@ -40,17 +39,14 @@ const RestaurantReview = ({ currentUser, reviewCount, query,
                 </div>
                 <div className='review-header-2'>
                     <Button variant="contained" color="primary" className='review-btn' startIcon={<CreateIcon />}
-                        onClick={() => {
-                            // resetRequestRestaurantsStatus();
-                            // resetFilteredRestaurants();
-                            Object.keys(currentUser).length ? (history.push('/createreview')) : (history.push('/signin'))}}>
+                        onClick={() => Object.keys(currentUser).length ? (history.push('/createreview')) : (history.push('/signin'))}>
                         Write a Review
                     </Button>
                 </div>
             </div>
             {
                 reviewsCollection.map(review => (
-                    <ReviewPreview key={review.review_id} userId={currentUser.user_id} review={review} />
+                    <ReviewPreview key={review.review_id} currentUser={currentUser} userId={currentUser.user_id} review={review} query={query} />
                 ))
             }
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { Tabs, Tab } from '@material-ui/core';
 import SignIn from '../../components/sign-in/sign-in-component';
 import SignUp from '../../components/sign-up/sign-up-component';
@@ -31,6 +32,6 @@ const SignInAndSignUpPage = () => {
             </div>
         </div>
     )
-}
+};
 
 export default SignInAndSignUpPage;

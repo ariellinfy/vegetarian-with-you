@@ -70,7 +70,7 @@ export const setReviewSortbyFilter = filter => ({
 });
 
 export const resetRequestReviewsStatus = () => ({
-    type: ReviewActionTypes.RESET_REQUEST_RESTAURANT_REVIEWS_STATUS
+    type: ReviewActionTypes.RESET_RESTAURANT_REVIEWS_STATUS
 });
 
 // Request user reviews
@@ -91,7 +91,7 @@ export const requestUserReviewsFailure = error => ({
 });
 
 export const resetRequestUserReviewsStatus = () => ({
-    type: ReviewActionTypes.RESET_REQUEST_USER_REVIEWS_STATUS
+    type: ReviewActionTypes.RESET_USER_REVIEWS_STATUS
 });
 
 // Update review helpful record

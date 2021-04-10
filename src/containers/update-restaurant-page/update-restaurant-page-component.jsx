@@ -2,19 +2,33 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from "react-router-dom";
-import { resetUpdateRestaurantStatus, resetCreateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectRestaurantUpdateSuccess, selectTargetRestaurantInfo, selectTargetRestaurantInfoToMap } from '../../redux/restaurant/restaurant-selectors';
 
 import RestaurantForm from '../../components/restaurant-form/restaurant-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './update-restaurant-page-style.scss';
 
-const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestaurantToMap, resetUpdateRestaurantStatus, resetCreateRestaurantStatus }) => {
+const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestaurantToMap, 
+    resetCreateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
+
     const currentUserToken = localStorage.getItem('token');
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [updateSuccess]);
+
+    useEffect(() => {
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
+        resetCreateRestaurantStatus();
+        resetCreateReviewStatus();
+        resetUpdateReviewStatus();
+        resetRequestReviewsStatus();
+        resetRequestUserReviewsStatus();
+    }, []);
 
     return (
         <div className='update-restaurant-page'>
@@ -47,12 +61,8 @@ const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestauran
                             <Typography variant="h5">
                                 What's next?
                             </Typography>
-                            <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next" onClick={() => {
-                                resetCreateRestaurantStatus();
-                                resetUpdateRestaurantStatus();
-                            }}>
-                                Explore more restaurants</Button>
-                            <Button component={Link} to={'/createreview'} variant="contained" color="primary" className="btn-next" onClick={() => resetUpdateRestaurantStatus()}>Continue to write a new reivew</Button>
+                            <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next">Explore more restaurants</Button>
+                            <Button component={Link} to={'/createreview'} variant="contained" color="primary" className="btn-next">Continue to write a new reivew</Button>
                         </div>
                     </div>
                 ) : (
@@ -70,8 +80,13 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
-    resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus())
+    resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus()),
+    resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
+    resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
+    resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
+    resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
+    resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateRestaurantPage);

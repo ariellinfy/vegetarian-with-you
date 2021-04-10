@@ -16,8 +16,6 @@ import './restaurant-preview-1-style.scss';
 const RestaurantPreviewOne = ({ restaurantId, restaurant_name, address, city, region, country, postal_code, type, cuisine, price_range, overall_rate, review_count, 
     requestRestaurantByIdStart, requestRestaurantByIdSuccess, requestReviewsStart,
     currentUser, requestSuccess, history }) => {
-    // handleClick: request target restaurant by id
-    // redirect to target restaurant page (no auth needed)
 
     if (Math.round(price_range) === 1) {
         price_range = 'cheap eats';

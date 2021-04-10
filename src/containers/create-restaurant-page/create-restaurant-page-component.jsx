@@ -2,19 +2,34 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from "react-router-dom";
-import { resetCreateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectRestaurantCreateSuccess, selectTargetRestaurantInfo, selectTargetRestaurantInfoToMap } from '../../redux/restaurant/restaurant-selectors';
 
 import RestaurantForm from '../../components/restaurant-form/restaurant-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './create-restaurant-page-style.scss';
 
-const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestaurantToMap, resetCreateRestaurantStatus }) => {
+const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestaurantToMap, 
+    resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
+
     const currentUserToken = localStorage.getItem('token');
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [createSuccess]);
+
+    useEffect(() => {
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
+        resetCreateRestaurantStatus();
+        resetUpdateRestaurantStatus();
+        resetCreateReviewStatus();
+        resetUpdateReviewStatus();
+        resetRequestReviewsStatus();
+        resetRequestUserReviewsStatus();
+    }, []);
 
     return (
         <div className='create-restaurant-page'>
@@ -47,7 +62,7 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
                             <Typography variant="h5">
                                 What's next?
                             </Typography>
-                            <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next" onClick={() => resetCreateRestaurantStatus()}>Explore more restaurants</Button>
+                            <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next">Explore more restaurants</Button>
                             <Button component={Link} to={'/createreview'} variant="contained" color="primary" className="btn-next">Continue to write a reivew</Button>
                         </div>
                     </div>
@@ -66,7 +81,14 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus())
+    resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus()),
+    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
+    resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
+    resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
+    resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
+    resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
+    resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateRestaurantPage);

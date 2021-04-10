@@ -45,7 +45,7 @@ function checkStatus(response) {
     }
 }
 
-export function* createReview({ payload: { restaurantId, 
+export function* createReview({ payload: { restaurantId, restaurantName,
     foodRate, serviceRate, valueRate, atmosphereRate, 
     reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
     disclosure, currentUserToken } 
@@ -56,6 +56,7 @@ export function* createReview({ payload: { restaurantId,
         const headers = null;
         const body = JSON.stringify({
             restaurantId: restaurantId,
+            restaurantName: restaurantName,
             foodRate: foodRate,
             serviceRate: serviceRate,
             valueRate: valueRate,
@@ -129,7 +130,11 @@ export function* requestReviews({ payload }) {
 }
 
 export function* requestUserReviews({ payload }) {
+    console.log(payload);
     try {
+        if (!payload.length) {
+            yield put(requestUserReviewsFailure('please provide user token'));
+        };
         const url = `http://localhost:5000/reviews/user`;
         const method = 'GET';
         const headers = null;

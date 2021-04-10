@@ -40,8 +40,6 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
                 </Button>
                 <Button type='button' className='header-btn' variant="outlined" color='primary' startIcon={<AddIcon />}
                     onClick={() => {
-                        // resetRequestRestaurantsStatus();
-                        // resetFilteredRestaurants();
                         Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}}>
                     Add a Restaurant
                 </Button>
@@ -50,14 +48,16 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
             <div className='restaurant-header-basic-container'>
                 <div className='restaurant-basic-header'>
                     <Typography className='restaurant-name' variant="h3">{restaurant_name}</Typography>
-                    <Button type='button' className='update-btn' variant='contained' color='secondary' startIcon={<UpdateIcon />} 
-                        onClick={() => {
-                            setRestaurantToBeUpdate(targetRestaurant);
-                            // resetRequestRestaurantsStatus();
-                            // resetFilteredRestaurants();
-                            Object.keys(currentUser).length ? (history.push('/updaterestaurant')) : (history.push('/signin'))}}>
-                            Update Restaurant
-                    </Button>
+                    {
+                        Object.keys(currentUser).length ? (
+                            <Button type='button' className='update-btn' variant='contained' color='secondary' startIcon={<UpdateIcon />} 
+                                onClick={() => {
+                                    setRestaurantToBeUpdate(targetRestaurant);
+                                    history.push('/updaterestaurant')}}>
+                                Update Restaurant
+                            </Button>
+                        ) : null
+                    } 
                 </div>
                 
                 <div className='restaurant-basic-detail'>

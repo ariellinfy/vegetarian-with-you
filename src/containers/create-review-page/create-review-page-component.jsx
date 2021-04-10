@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link, Redirect } from "react-router-dom";
-import { resetCreateReviewStatus } from '../../redux/review/review-actions';
+import { resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectReviewCreateSuccess, selectTargetReviewInfo, selectTargetReviewInfoToMap } from '../../redux/review/review-selectors';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 
@@ -10,12 +11,25 @@ import ReviewForm from '../../components/review-form/review-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './create-review-page-style.scss';
 
-const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, resetCreateReviewStatus, targetRestaurant }) => {
+const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targetRestaurant,
+    resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants, 
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
+        
     const currentUserToken = localStorage.getItem('token');
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [createSuccess]);
+
+    useEffect(() => {
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
+        resetUpdateRestaurantStatus();
+        resetCreateReviewStatus();
+        resetUpdateReviewStatus();
+        resetRequestReviewsStatus();
+        resetRequestUserReviewsStatus();
+    }, []);
 
     return (
         <div className='create-review-page'>
@@ -56,8 +70,8 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, rese
                             <Typography variant="h5">
                                 What's next?
                             </Typography>
-                            <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>Explore more restaurants</Button>
-                            <Button component={Link} to={'/useraccount'} variant="contained" color="primary" className="btn-next" onClick={() => resetCreateReviewStatus()}>View my reviews</Button>
+                            <Button component={Link} to={'/explore'} variant="outlined" color="primary" className="btn-next">Explore more restaurants</Button>
+                            <Button component={Link} to={'/useraccount'} variant="contained" color="primary" className="btn-next">View my reviews</Button>
                         </div>
                     </div>
                 ) : (
@@ -76,7 +90,13 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus())
+    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
+    resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
+    resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
+    resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
+    resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
+    resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateReviewPage);

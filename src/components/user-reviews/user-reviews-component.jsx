@@ -1,19 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectUserReviews } from '../../redux/review/review-selectors';
+
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import './user-reviews-style.scss';
 
-const UserReviews = () => {
+const UserReviews = ({ userReviews }) => {
+    console.log(userReviews);
     const createData = (title, restaurant, rating, reviewDate, lastUpdate) => {
         return { title, restaurant, rating, reviewDate, lastUpdate };
     };
 
-    const rows = [
-        createData('Frozen yoghurt', 'abc', 5, '2020-01-31', '2020-01-31'),
-        createData('Ice cream sandwich', 'qwerege', 4, '2020-01-31', '2020-01-31'),
-        createData('Eclair', 'rgeerb', 3.5, '2020-01-31', '2020-01-31'),
-        createData('Cupcake', 'hntr', 2.5, '2020-01-31', '2020-01-31'),
-        createData('Gingerbread', 'hgwhruhrueol', 1.5, '2020-01-31', '2020-01-31'),
-    ];
+    let reviews = [];
+
+    useEffect(async () => {
+        try {
+            reviews = await userReviews.map(({ review_title, restaurant_name, overall_rate, create_at, last_modified }) => {
+                let overallRate = (overall_rate || 0).toFixed(2);
+                let reviewDate = (create_at || '').split('T')[0];
+                let lastUpdate = (last_modified || '').split('T')[0];
+                return createData(review_title, restaurant_name, overallRate, reviewDate, lastUpdate);
+            })
+            console.log(reviews);
+        } catch (err) {
+            console.log(err);
+        }
+    });
+
+    console.log(reviews);
+
     return (
         <div className='user-reviews-page'>
             <TableContainer component={Paper}>
@@ -28,22 +44,28 @@ const UserReviews = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody className='reviews-table-body'>
-                    {rows.map((row) => (
-                        <TableRow key={row.title}>
-                            <TableCell component="th" scope="row">
-                                {row.title}
-                            </TableCell>
-                            <TableCell align="right">{row.restaurant}</TableCell>
-                            <TableCell align="right">{row.rating}</TableCell>
-                            <TableCell align="right">{row.reviewDate}</TableCell>
-                            <TableCell align="right">{row.lastUpdate}</TableCell>
-                        </TableRow>
-                    ))}
+                    {
+                        reviews.map((review) => (
+                            <TableRow key={review.title}>
+                                <TableCell component="th" scope="row">
+                                    {review.title}
+                                </TableCell>
+                                <TableCell align="right">{review.restaurant}</TableCell>
+                                <TableCell align="right">{review.rating}</TableCell>
+                                <TableCell align="right">{review.reviewDate}</TableCell>
+                                <TableCell align="right">{review.lastUpdate}</TableCell>
+                            </TableRow>
+                        ))
+                    }
                     </TableBody>
                 </Table>
             </TableContainer>
         </div>
     )
-}
+};
 
-export default UserReviews;
+const mapStateToProps = createStructuredSelector({
+    userReviews: selectUserReviews,
+});
+
+export default connect(mapStateToProps)(UserReviews);

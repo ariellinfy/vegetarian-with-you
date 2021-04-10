@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
-import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart } from '../../redux/review/review-actions';
 
 import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
@@ -29,7 +27,7 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate, currentUser, history }) => {
+const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
@@ -41,12 +39,12 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
     const handleUpdateReview = () => {
         setReviewToBeUpdate(review);
         history.push('/updatereview');
-    }
+    };
 
     const [reviewHelpful, setReviewHelpful] = useState({
         userHelpful: user_helpful,
         helpfulCount: helpful_count
-    })
+    });
     let { userHelpful, helpfulCount } = reviewHelpful;
 
     const handleClickHelpful = () => {
@@ -74,6 +72,10 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        requestReviewsStart(query);
+    }, [userHelpful]);    
 
     return (
         <div className='review-preview'>
@@ -163,13 +165,10 @@ const ReviewPreview = ({ userId, review, reviewHelpfulStart, setReviewToBeUpdate
     )
 };
 
-const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser,
-});
-
 const mapDispatchToProps = dispatch => ({
     reviewHelpfulStart: data => dispatch(reviewHelpfulStart(data)),
-    setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review))
+    setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review)),
+    requestReviewsStart: query => dispatch(requestReviewsStart(query))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewPreview));
+export default withRouter(connect(null, mapDispatchToProps)(ReviewPreview));

@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+
 import Typography from '@material-ui/core/Typography';
 import reviewImage from '../../assets/review.svg';
 import discoverImage from '../../assets/discover.svg';
 import placeImage from '../../assets/place.svg';
 import './home-page-style.scss';
 
-const HomePage = () => {
+const HomePage = ({ resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
+        resetCreateRestaurantStatus();
+        resetUpdateRestaurantStatus();
+        resetCreateReviewStatus();
+        resetUpdateReviewStatus();
+        resetRequestReviewsStatus();
+        resetRequestUserReviewsStatus();
+    }, []);
 
     return (
         <div className='home-page'>
@@ -47,6 +63,17 @@ const HomePage = () => {
             </div>
         </div>
     )
-}
+};
 
-export default HomePage;
+const mapDispatchToProps = dispatch => ({
+    resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus()),
+    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
+    resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
+    resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
+    resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
+    resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
+    resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
+});
+
+export default connect(null, mapDispatchToProps)(HomePage);
