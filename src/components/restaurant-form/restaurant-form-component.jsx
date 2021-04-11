@@ -106,7 +106,7 @@ class RestaurantForm extends Component {
 
     render() {
         const { restaurantToBeUpdate, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
-        const { 
+        let { 
             restaurantName, 
             restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
             restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
@@ -114,6 +114,13 @@ class RestaurantForm extends Component {
             restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent 
         } = this.state;
         const countryCode = COUNTRY_REGION.map((country) => country.countryShortCode.toLowerCase());
+
+        if (typeof breakfast === 'string' || typeof brunch === 'string' || typeof lunch === 'string' || typeof dinner === 'string') {
+            breakfast = breakfast === 'true' ? true : false;
+            brunch = brunch === 'true' ? true : false;
+            lunch = lunch === 'true' ? true : false;
+            dinner = dinner === 'true' ? true : false;
+        }
 
         return (
             <div className='restaurant-form-container'>
@@ -270,9 +277,27 @@ class RestaurantForm extends Component {
                             />
                             <FormControlLabel  
                                 className='select-label' 
-                                value="western" 
+                                value="italian" 
                                 control={<Radio className='select-input' />} 
-                                label="western" 
+                                label="italian" 
+                            />
+                            <FormControlLabel 
+                                className='select-label' 
+                                value="ethiopian" 
+                                control={<Radio className='select-input' />} 
+                                label="ethiopian" 
+                            />
+                            <FormControlLabel 
+                                className='select-label' 
+                                value="mediterranean" 
+                                control={<Radio className='select-input' />} 
+                                label="mediterranean" 
+                            />
+                            <FormControlLabel  
+                                className='select-label' 
+                                value="indian" 
+                                control={<Radio className='select-input' />} 
+                                label="indian" 
                             />
                             <FormControlLabel 
                                 className='select-label' 

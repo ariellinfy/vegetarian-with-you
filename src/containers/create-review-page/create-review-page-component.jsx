@@ -47,7 +47,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
                                 {
                                     targetReviewToMap ? (
                                         targetReviewToMap
-                                        .filter((item, index) => index > 1 && index < targetReviewToMap.length - 8)
+                                        .filter((item, index) => index > 1 && index < targetReviewToMap.length - 6)
                                         .map(item => {
                                             if (item[0] === 'price_range') {
                                                 if (item[1] === 1) {

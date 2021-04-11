@@ -191,12 +191,10 @@ export function* reportReview({ payload: { reviewId, reportText, currentUserToke
 
 export function* requestUserComments({ payload: { restaurantId, currentUserToken } }) {
     try {
-        const url = `http://localhost:5000/reviews/usercomments`;
+        const url = `http://localhost:5000/reviews/usercomments?&restaurantId=${restaurantId}`;
         const method = 'GET';
         const headers = null;
-        const body = JSON.stringify({
-            restaurantId: restaurantId,
-        });
+        const body = null;
         const userComments = yield call(request, url, method, headers, body, currentUserToken);
         if (userComments !== undefined) {
             localStorage.setItem('token', userComments.token);

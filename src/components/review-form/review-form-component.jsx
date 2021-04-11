@@ -62,7 +62,7 @@ class ReviewForm extends Component {
                 visitType: this.props.reviewToBeUpdate.type_of_visit,
                 price: this.props.reviewToBeUpdate.price_range,
                 recommendDish: this.props.reviewToBeUpdate.recommended_dishes,
-                disclosure: this.props.reviewToBeUpdate.disclosure
+                disclosure: false
             };
         };
     };
@@ -97,7 +97,7 @@ class ReviewForm extends Component {
 
     handleChange = event => {
         const { name, value, checked } = event.target;
-        console.log(name, value, checked)
+
         if (name === 'foodRate' || name === 'serviceRate' || name === 'valueRate' || name === 'atmosphereRate') {
             this.setState({ ...this.state, [name]: Number(value) });
         } else if (name === 'disclosure') {
@@ -243,7 +243,7 @@ class ReviewForm extends Component {
     
                     <FormControl className='selection-group' component="fieldset" required>
                         <FormLabel className='selection-label' component="legend">How expensive is this restaurant?</FormLabel>
-                        <RadioGroup className='radio-group' aria-label="price" name="price" value={price} onChange={this.handleChange} required>
+                        <RadioGroup className='radio-group' aria-label="price" name="price" value={`${price}`} onChange={this.handleChange} required>
                             <FormControlLabel 
                                 className='select-label' 
                                 value='1'

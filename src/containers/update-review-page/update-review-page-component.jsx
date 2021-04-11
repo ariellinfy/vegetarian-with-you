@@ -46,7 +46,7 @@ const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targ
                                 {
                                     targetReviewToMap ? (
                                         targetReviewToMap
-                                        .filter((item, index) => index > 0 && index < targetReviewToMap.length - 4)
+                                        .filter((item, index) => index > 1 && index < targetReviewToMap.length - 6)
                                         .map(item => {
                                             if (item[0] === 'price_range') {
                                                 if (item[1] === 1) {

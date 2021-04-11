@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 import { requestRestaurantByIdStart, resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
-import { requestReviewsStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { requestReviewsStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestReviewsUserCommentsStart } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
@@ -16,9 +16,10 @@ import './restaurant-page-style.scss';
 
 const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaurantByIdStart, resetEditUserEmail, 
     resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus, 
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestReviewsUserCommentsStart,
     currentUser, match }) => {
 
+    const currentUserToken = localStorage.getItem('token');
     let restaurantId = targetRestaurant.restaurant_id ? targetRestaurant.restaurant_id : match.params.id;
     let query = `?&restaurantId=${restaurantId}`;
 
@@ -36,6 +37,7 @@ const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaura
         resetEditUserEmail();
         requestRestaurantByIdStart(restaurantId);
         requestReviewsStart(query);
+        requestReviewsUserCommentsStart({ restaurantId, currentUserToken });
     }, []);
 
     return (
@@ -64,6 +66,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     requestReviewsStart: query => dispatch(requestReviewsStart(query)),
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
+    requestReviewsUserCommentsStart: data => dispatch(requestReviewsUserCommentsStart(data)),
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
