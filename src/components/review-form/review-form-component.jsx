@@ -189,7 +189,7 @@ class ReviewForm extends Component {
                         value={reviewBody} 
                         placeholder='Share your experience with other people.'
                         onChange={this.handleChange}
-                        rows={5} 
+                        rows={6} 
                         variant="outlined" 
                         multiline fullWidth required 
                         />
@@ -307,7 +307,7 @@ class ReviewForm extends Component {
                         </div>
 
                         {
-                            actionPending ? (<div></div>) : null
+                            actionPending ? (<div>Pending</div>) : null
                         }
 
                         {

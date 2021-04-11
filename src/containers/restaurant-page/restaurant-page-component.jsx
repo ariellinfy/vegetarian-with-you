@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 import { requestRestaurantByIdStart, resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
-import { requestReviewsStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestReviewsUserCommentsStart } from '../../redux/review/review-actions';
+import { requestReviewsStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
@@ -16,7 +16,7 @@ import './restaurant-page-style.scss';
 
 const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaurantByIdStart, resetEditUserEmail, 
     resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus, 
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestReviewsUserCommentsStart,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks,
     currentUser, match }) => {
 
     const currentUserToken = localStorage.getItem('token');
@@ -37,7 +37,8 @@ const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaura
         resetEditUserEmail();
         requestRestaurantByIdStart(restaurantId);
         requestReviewsStart(query);
-        requestReviewsUserCommentsStart({ restaurantId, currentUserToken });
+        requestUserFeedbacksStart({ restaurantId, currentUserToken });
+        matchReviewsWithUserFeedbacks();
     }, []);
 
     return (
@@ -51,7 +52,7 @@ const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaura
 
                     <RestaurantAdvance targetRestaurant={targetRestaurant} />
 
-                    <RestaurantReview currentUser={currentUser} reviewCount={targetRestaurant.review_count} query={query} />
+                    <RestaurantReview currentUser={currentUser} reviewCount={targetRestaurant.review_count} restaurantId={restaurantId} query={query} />
                 
             </div>
         </div>
@@ -66,7 +67,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     requestReviewsStart: query => dispatch(requestReviewsStart(query)),
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
-    requestReviewsUserCommentsStart: data => dispatch(requestReviewsUserCommentsStart(data)),
+    requestUserFeedbacksStart: data => dispatch(requestUserFeedbacksStart(data)),
+    matchReviewsWithUserFeedbacks: () => dispatch(matchReviewsWithUserFeedbacks()),
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),

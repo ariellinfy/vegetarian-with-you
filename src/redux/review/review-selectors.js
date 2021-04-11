@@ -28,9 +28,11 @@ export const selectUpdateReviewErr = createSelector([selectReview], review => re
 
 export const selectReviewsCollection = createSelector([selectReview], review => review.reviewsCollection);
 
+export const selectReviewsWithUserFeedbacks = createSelector([selectReview], review => review.reviewsWithUserFeedbacks);
+
 export const selectUserReviews = createSelector([selectReview], review => review.userReviews);
 
-export const selectUserCommentsCollection = createSelector([selectReview], review => review.userCommentsCollection);
+export const selectUserFeedbacksCollection = createSelector([selectReview], review => review.userFeedbacksCollection);
 
 export const selectReviewRequestPending = createSelector([selectReview], review => review.reviewRequestPending);
 

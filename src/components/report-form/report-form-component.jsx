@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const ReportForm = ({ reviewId, open, handleClose, reportReviewStart }) => {
+const ReportForm = ({ restaurantId, reviewId, open, handleClose, reportReviewStart }) => {
 
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
@@ -24,7 +24,7 @@ const ReportForm = ({ reviewId, open, handleClose, reportReviewStart }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        reportReviewStart({ reviewId, reportText, currentUserToken });
+        reportReviewStart({ restaurantId, reviewId, reportText, currentUserToken });
         setReportText('');
     };
     

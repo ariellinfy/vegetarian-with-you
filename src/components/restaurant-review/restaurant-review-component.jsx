@@ -2,21 +2,26 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectReviewsCollection, selectReviewSortbyFilter } from '../../redux/review/review-selectors';
-import { setReviewSortbyFilter, requestReviewsStart } from '../../redux/review/review-actions';
+import { selectReviewsWithUserFeedbacks, selectReviewSortbyFilter } from '../../redux/review/review-selectors';
+import { setReviewSortbyFilter, requestReviewsStart, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks } from '../../redux/review/review-actions';
 
 import ReviewPreview from '../../components/review-preview/review-preview-component';
 import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import './restaurant-review-style.scss';
 
-const RestaurantReview = ({ currentUser, reviewCount, query, reviewsCollection, reviewSortbyFilter, 
-    setReviewSortbyFilter, requestReviewsStart, history }) => {
+const RestaurantReview = ({ currentUser, reviewCount, query, restaurantId,
+    reviewsWithUserFeedback, reviewSortbyFilter, matchReviewsWithUserFeedbacks,
+    setReviewSortbyFilter, requestReviewsStart, requestUserFeedbacksStart, history }) => {
+
+    const currentUserToken = localStorage.getItem('token');
 
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
         query = event.currentTarget.dataset.query ? `${query}${event.currentTarget.dataset.query}` : query;
         requestReviewsStart(query);
+        requestUserFeedbacksStart({ restaurantId, currentUserToken });
+        matchReviewsWithUserFeedbacks();
     };
 
     return (
@@ -45,8 +50,8 @@ const RestaurantReview = ({ currentUser, reviewCount, query, reviewsCollection, 
                 </div>
             </div>
             {
-                reviewsCollection.map(review => (
-                    <ReviewPreview key={review.review_id} currentUser={currentUser} userId={currentUser.user_id} review={review} query={query} />
+                reviewsWithUserFeedback.map(review => (
+                    <ReviewPreview key={review.review_id} currentUser={currentUser} userId={currentUser.user_id} review={review} restaurantId={restaurantId} query={query} />
                 ))
             }
         </div>
@@ -54,13 +59,15 @@ const RestaurantReview = ({ currentUser, reviewCount, query, reviewsCollection, 
 };
 
 const mapStateToProps = createStructuredSelector({
-    reviewsCollection: selectReviewsCollection,
+    reviewsWithUserFeedback: selectReviewsWithUserFeedbacks,
     reviewSortbyFilter: selectReviewSortbyFilter,
 });
 
 const mapDispatchToProps = dispatch => ({
     setReviewSortbyFilter: filter => dispatch(setReviewSortbyFilter(filter)),
     requestReviewsStart: query => dispatch(requestReviewsStart(query)),
+    requestUserFeedbacksStart: data => dispatch(requestUserFeedbacksStart(data)),
+    matchReviewsWithUserFeedbacks: () => dispatch(matchReviewsWithUserFeedbacks()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantReview));

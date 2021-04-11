@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart } from '../../redux/review/review-actions';
+import { reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks } from '../../redux/review/review-actions';
 
 import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
@@ -27,7 +27,8 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, history }) => {
+const ReviewPreview = ({ currentUser, userId, review, restaurantId, query, matchReviewsWithUserFeedbacks,
+    reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, requestUserFeedbacksStart, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
@@ -53,7 +54,7 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                 userHelpful: true, 
                 helpfulCount: helpfulCount+1
             });
-            reviewHelpfulStart({ review_id, userHelpful, helpfulCount, currentUserToken });
+            reviewHelpfulStart({ restaurantId, review_id, userHelpful, currentUserToken });
         } else {
             history.push('/signin');
         }
@@ -75,6 +76,8 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
 
     useEffect(() => {
         requestReviewsStart(query);
+        requestUserFeedbacksStart({ restaurantId, currentUserToken });
+        matchReviewsWithUserFeedbacks();
     }, [userHelpful]);    
 
     return (
@@ -144,7 +147,7 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                                 <Typography className='feedback-body' variant="body2">Thank you for your feedback.</Typography>
                             </div>
                         ) : (
-                            <Button variant="contained" color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
+                            <Button color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
                                 Helpful
                             </Button>
                         )
@@ -154,7 +157,7 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
                         <Button color="secondary" className='report-btn' onClick={handleClickOpen} startIcon={<ReportIcon />}>
                             Report
                         </Button>
-                        <ReportForm reviewId={review_id} open={open} handleClose={handleClose} />
+                        <ReportForm restaurantId={restaurantId} reviewId={review_id} open={open} handleClose={handleClose} />
                     </div>
 
                 </div>
@@ -167,7 +170,9 @@ const ReviewPreview = ({ currentUser, userId, review, query, reviewHelpfulStart,
 const mapDispatchToProps = dispatch => ({
     reviewHelpfulStart: data => dispatch(reviewHelpfulStart(data)),
     setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review)),
-    requestReviewsStart: query => dispatch(requestReviewsStart(query))
+    requestReviewsStart: query => dispatch(requestReviewsStart(query)),
+    requestUserFeedbacksStart: data => dispatch(requestUserFeedbacksStart(data)),
+    matchReviewsWithUserFeedbacks: () => dispatch(matchReviewsWithUserFeedbacks()),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(ReviewPreview));

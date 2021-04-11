@@ -126,21 +126,27 @@ export const reportReviewFailure = error => ({
     payload: error
 });
 
-// Request reviews user comments
+// Request reviews user feedbacks
 
-export const requestReviewsUserCommentsStart = data => ({
-    type: ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_START,
+export const requestUserFeedbacksStart = data => ({
+    type: ReviewActionTypes.REQUEST_USER_FEEDBACKS_START,
     payload: data
 });
 
-export const requestReviewsUserCommentsSuccess = userComments => ({
-    type: ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_SUCCESS,
-    payload: userComments
+export const requestUserFeedbacksSuccess = userFeedbacks => ({
+    type: ReviewActionTypes.REQUEST_USER_FEEDBACKS_SUCCESS,
+    payload: userFeedbacks
 });
 
-export const requestReviewsUserCommentsFailure = error => ({
-    type: ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_FAILURE,
+export const requestUserFeedbacksFailure = error => ({
+    type: ReviewActionTypes.REQUEST_USER_FEEDBACKS_FAILURE,
     payload: error
+});
+
+// Match reviews with user feedbacks
+
+export const matchReviewsWithUserFeedbacks = () => ({
+    type: ReviewActionTypes.MATCH_REVIEWS_WITH_USER_FEEDBACKS,
 });
 
 // Delete review

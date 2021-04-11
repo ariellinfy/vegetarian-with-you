@@ -155,16 +155,9 @@
         }
       }
 
-      .helpful-btn {
-        text-transform: none;
-        height: fit-content;
-
-        @media screen and (max-width: 835px) {
-          font-size: smaller;
-        }
-      }
-
+      .helpful-btn,
       .report-btn {
+        text-transform: none;
         height: fit-content;
       }
     }

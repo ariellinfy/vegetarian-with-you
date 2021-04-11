@@ -1,4 +1,5 @@
 import ReviewActionTypes from './review-types';
+import { matchReviewsAndFeedbacks } from './review-utils';
 
 const INITIAL_STATE = {
     targetReview: {},
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
     updateReviewErr: '',
     deleteReviewErr: '',
     reviewsCollection: [],
-    userCommentsCollection: [],
+    userFeedbacksCollection: [],
+    reviewsWithUserFeedbacks: [],
     userReviews: [],
     reviewRequestPending: false,
     reviewRequestSuccess: false,
@@ -104,7 +106,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
 
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_START:
-        case ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_START:
+        case ReviewActionTypes.REQUEST_USER_FEEDBACKS_START:
             return {
                 ...state,
                 reviewRequestPending: true,
@@ -120,7 +122,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             };
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_FAILURE:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_FAILURE:
-        case ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_FAILURE:
+        case ReviewActionTypes.REQUEST_USER_FEEDBACKS_FAILURE:
             return {
                 ...state,
                 reviewRequestPending: false,
@@ -136,7 +138,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 reviewsCollection: [],
-                userCommentsCollection: [],
+                userFeedbacksCollection: [],
                 reviewRequestPending: false,
                 reviewRequestSuccess: false,
                 requestReviewErr: '',
@@ -160,13 +162,19 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 requestReviewErr: '',
             };
 
-        case ReviewActionTypes.REQUEST_REVIEWS_USER_COMMENTS_SUCCESS:
+        case ReviewActionTypes.REQUEST_USER_FEEDBACKS_SUCCESS:
             return {
                 ...state,
-                userCommentsCollection: action.payload,
+                userFeedbacksCollection: action.payload,
                 reviewRequestPending: false,
                 reviewRequestSuccess: true,
                 requestReviewErr: '',
+            };
+
+        case ReviewActionTypes.MATCH_REVIEWS_WITH_USER_FEEDBACKS:
+            return {
+                ...state,
+                reviewsWithUserFeedbacks: matchReviewsAndFeedbacks(state.userReviews, state.userFeedbacksCollection),
             };
 
         case ReviewActionTypes.REVIEW_HELPFUL_START:

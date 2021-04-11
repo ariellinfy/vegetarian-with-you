@@ -436,7 +436,7 @@ class RestaurantForm extends Component {
                     </div>
                     
                     {
-                        actionPending ? (<div></div>) : null
+                        actionPending ? (<div>Pending</div>) : null
                     }
 
                     {
