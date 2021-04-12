@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
 
 import ReportForm from '../../components/report-form/report-form-component';
-import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
+import { Avatar, Button, Box, Typography, GridList, GridListTile, Menu, MenuItem, IconButton } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import { green } from '@material-ui/core/colors';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ReportIcon from '@material-ui/icons/Report';
@@ -34,15 +35,11 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
     const { review_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
         user_helpful, helpful_count, review_owner, create_at } = review;
 
-
-    const onHelpful = user_helpful === null || user_helpful === undefined ? false : user_helpful;
-
     const createDate = (create_at || '').split('T')[0];
 
-    const handleUpdateReview = () => {
-        setReviewToBeUpdate(review);
-        history.push('/updatereview');
-    };
+    // handle helpful votes
+
+    const onHelpful = user_helpful === null || user_helpful === undefined ? false : user_helpful;
 
     const [reviewHelpful, setReviewHelpful] = useState({
         userHelpful: onHelpful,
@@ -62,9 +59,11 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
         }
     };
 
+    // handle review report
+
     const [open, setOpen] = useState(false);
 
-    const handleClickOpen = () => {
+    const handleReportClick = () => {
         if(Object.keys(currentUser).length !== 0) {
             setOpen(true);
         } else {
@@ -72,9 +71,33 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
         }
     };
 
-    const handleClose = () => {
+    const handleReportClose = () => {
         setOpen(false);
     };
+
+    // handle update review
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleReviewClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleReviewClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleUpdateReview = () => {
+        setReviewToBeUpdate(review);
+        history.push('/updatereview');
+        setAnchorEl(null);
+    };
+
+    const handleDeleteReview = () => {
+        setAnchorEl(null);
+    };
+
+
 
     return (
         <div className='review-preview'>
@@ -99,9 +122,29 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                     
                     {
                         currentUser.user_id === review_owner ? (
-                            <Button color="secondary" className='update-btn' onClick={handleUpdateReview}>
-                                Update Review
-                            </Button>
+                            <div className='review-btn'>
+                                <IconButton onClick={handleReviewClick}>
+                                    <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                    id="review-menu"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleReviewClose}
+                                >
+                                    <MenuItem onClick={handleUpdateReview} >Update Review</MenuItem>
+                                    <MenuItem onClick={handleDeleteReview} >Delete Review</MenuItem>
+                                </Menu>
+                            </div>
                         ) : null
                     }
                 </Box>
@@ -143,17 +186,17 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                                 <Typography className='feedback-body' variant="body2">Thank you for your feedback.</Typography>
                             </div>
                         ) : (
-                            <Button color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
+                            <Button variant='outlined' color="primary" className='helpful-btn' onClick={handleClickHelpful} startIcon={<ThumbUpIcon />}>
                                 Helpful
                             </Button>
                         )
                     }
                     
                     <div>
-                        <Button color="secondary" className='report-btn' onClick={handleClickOpen} startIcon={<ReportIcon />}>
+                        <Button color="secondary" className='report-btn' onClick={handleReportClick} startIcon={<ReportIcon />}>
                             Report
                         </Button>
-                        <ReportForm restaurantId={restaurantId} reviewId={review_id} open={open} handleClose={handleClose} />
+                        <ReportForm restaurantId={restaurantId} reviewId={review_id} open={open} handleClose={handleReportClose} />
                     </div>
 
                 </div>

@@ -11,3 +11,15 @@ body {
 .App {
   min-height: 100vh;
 }
+
+@media screen and (min-width: 0px) and (max-width: 960px) {
+  #header-full-screen {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 961px) {
+  #header-small-screen {
+    display: none;
+  }
+}

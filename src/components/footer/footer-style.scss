@@ -1,22 +1,22 @@
 .footer-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color:#BDBDBD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bdbdbd;
+  text-align: center;
 
-    .fa {
-        margin: 0 0.5em;
-        padding-top: 0.1em;
+  .fa {
+    margin: 0 0.5em;
+    padding-top: 0.1em;
+  }
+
+  .footer-link {
+    color: #bdbdbd;
+    margin: 0 0.5em;
+
+    &:hover {
+      color: #ffa000;
+      text-decoration: none;
     }
-
-    .footer-link {
-        color: #BDBDBD;
-        margin: 0 0.5em;
-
-        &:hover {
-            color: #FFA000;
-            text-decoration: none;
-        }
-    }
+  }
 }
-

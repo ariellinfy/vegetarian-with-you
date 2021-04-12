@@ -1,9 +1,14 @@
 .review-preview {
   width: 100%;
   display: flex;
-  padding: 2em 1em 1.5em 0.5em;
+  padding: 1.5em 1.25em 1.75em 0.5em;
   background: rgba(255, 255, 255, 0.75);
   margin-bottom: 1em;
+  border-radius: 5px;
+
+  @media screen and (max-width: 835px) {
+    padding: 1.75em 0.75em 1.75em 0.5em;
+  }
 
   .card-header {
     width: fit-content;
@@ -43,7 +48,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5em;
+      margin-bottom: -0.3em;
+
+      @media screen and (max-width: 835px) {
+        margin-bottom: 0.25em;
+      }
 
       .header-info {
         display: flex;
@@ -67,12 +76,12 @@
         }
       }
 
-      .update-btn {
+      .review-btn {
         height: fit-content;
-        text-transform: none;
 
         @media screen and (max-width: 835px) {
-          font-size: smaller;
+          margin-right: -0.5em;
+          margin-top: -1.5em;
         }
       }
     }
@@ -80,7 +89,7 @@
     .content-body {
       display: flex;
       flex-direction: column;
-      margin-bottom: 0.5em;
+      margin-bottom: 1em;
 
       .review-title {
         font-weight: 500;

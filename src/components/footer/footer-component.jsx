@@ -18,13 +18,12 @@ const Footer = () => {
     const classes = useStyles();
     return (
         <div className='footer-container'>
-            <BottomNavigation position="fixed" className={classes.footer} showLabels>
-                <BottomNavigationAction label="Ariel" icon="" />
-                <div className='footer-content'>
+            <BottomNavigation position="fixed" className={classes.footer}>
+                <p className='footer-content'>
                     <i className="fa fa-copyright"></i>
                     2021 <Link href='https://ariellinfy.com/' target="_blank" rel="noopener" className='footer-link'>Ariel Lin</Link>
                     Made with Love <i className="fa fa-heart"></i>    
-                </div>
+                </p>
             </BottomNavigation>
         </div>
     )
