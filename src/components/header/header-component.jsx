@@ -17,7 +17,7 @@ import './header-style.scss';
 const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail,
     resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus }) => {
 
-    const currentUserToken =localStorage.getItem('token') ? localStorage.getItem('token') : ''
+    const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
     
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -30,8 +30,8 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
     const handleMenuSmall = (event) => {
         setAnchorElSmall(event.currentTarget);
     };
-    
-    const handleClose = event => {
+
+    const setCurrentPage = event => {
         if (event.target.text === 'View Profile') {
             setAdminCurrentPage(0);
         } else if (event.target.text === 'Account Info') {
@@ -39,7 +39,15 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         } else if (event.target.text === 'My Reviews') {
             setAdminCurrentPage(2);
         }
+    };
+    
+    const handleClose = event => {
+        setCurrentPage(event);
         setAnchorEl(null);
+    };
+
+    const handleCloseSmall = event => {
+        setCurrentPage(event);
         setAnchorElSmall(null);
     };
 
@@ -51,7 +59,6 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         resetEditUserEmail();
         resetAdminCurrentPage();
         signOutStart({ currentUserToken });
-
         setAnchorEl(null);
         setAnchorElSmall(null);
     };
@@ -141,14 +148,14 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                         horizontal: 'right',
                                     }}
                                     open={Boolean(anchorElSmall)}
-                                    onClose={handleClose}
+                                    onClose={handleCloseSmall}
                                     style={{ top: '50px' }}
                                 >
-                                    <MenuItem component={Link} to="/explore" onClick={handleClose}>Explore</MenuItem>
-                                    <MenuItem component={Link} to="/find" onClick={handleClose}>Write review</MenuItem>
-                                    <MenuItem component={Link} to="/useraccount" page='0' onClick={handleClose}>View Profile</MenuItem>
-                                    <MenuItem component={Link} to="/useraccount" page='1' onClick={handleClose}>Account Info</MenuItem>
-                                    <MenuItem component={Link} to="/useraccount" page='2' onClick={handleClose}>My Reviews</MenuItem>
+                                    <MenuItem component={Link} to="/explore" onClick={handleCloseSmall}>Explore</MenuItem>
+                                    <MenuItem component={Link} to="/find" onClick={handleCloseSmall}>Write review</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" page='0' onClick={handleCloseSmall}>View Profile</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" page='1' onClick={handleCloseSmall}>Account Info</MenuItem>
+                                    <MenuItem component={Link} to="/useraccount" page='2' onClick={handleCloseSmall}>My Reviews</MenuItem>
                                     <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                                 </Menu>
                             </div>
@@ -159,7 +166,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                     aria-label="account of current user"
                                     aria-controls="menu-appbar"
                                     aria-haspopup="true"
-                                    onClick={handleMenu}
+                                    onClick={handleMenuSmall}
                                     color="primary"
                                     className='header-setting-btn'
                                 >
@@ -167,7 +174,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
-                                    anchorEl={anchorEl}
+                                    anchorEl={anchorElSmall}
                                     anchorOrigin={{
                                         vertical: 'top',
                                         horizontal: 'right',
@@ -177,12 +184,12 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                         vertical: 'top',
                                         horizontal: 'right',
                                     }}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
+                                    open={Boolean(anchorElSmall)}
+                                    onClose={handleCloseSmall}
                                     style={{ top: '50px' }}
                                 >
-                                    <MenuItem component={Link} to="/explore" onClick={handleClose}>Explore</MenuItem>
-                                    <MenuItem component={Link} to="/signin" onClick={handleClose}>Sign In</MenuItem>
+                                    <MenuItem component={Link} to="/explore" onClick={handleCloseSmall}>Explore</MenuItem>
+                                    <MenuItem component={Link} to="/signin" onClick={handleCloseSmall}>Sign In</MenuItem>
                                 </Menu>
                             </div>
                         )}
@@ -191,10 +198,10 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
             </AppBar>
         </div>
     )
-}
+};
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser,
+    currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({

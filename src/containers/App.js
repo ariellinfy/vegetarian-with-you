@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../redux/user/user-selectors';
 
-import { createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
-import { lightGreen, green, orange, deepOrange, yellow } from '@material-ui/core/colors';
+import theme from './material-ui-theme';
+import { ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
 
 import Header from '../components/header/header-component';
@@ -20,29 +20,6 @@ import UpdateRestaurantPage from './update-restaurant-page/update-restaurant-pag
 import CreateReviewPage from './create-review-page/create-review-page-component';
 import UpdateReviewPage from './update-review-page/update-review-page-component';
 import RestaurantPage from './restaurant-page/restaurant-page-component';
-
-let theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: lightGreen[800],
-    },
-    secondary: {
-      main: orange[800],
-    },
-    tertiary: {
-      main: yellow[500],
-    },
-    warning: {
-      main: deepOrange[600],
-    },
-    
-  },
-  typography: {
-    fontFamily: '-apple-system, Quicksand, sans-serif'
-  },
-});
-
-theme = responsiveFontSizes(theme);
 
 const App = ({ currentUser, history }) => {
   return (
