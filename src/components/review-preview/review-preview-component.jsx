@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks } from '../../redux/review/review-actions';
+import { reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart } from '../../redux/review/review-actions';
 
 import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
@@ -27,13 +27,16 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ currentUser, userId, review, restaurantId, query, matchReviewsWithUserFeedbacks,
-    reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, requestUserFeedbacksStart, history }) => {
+const ReviewPreview = ({ currentUser, review, restaurantId, query,
+    reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
     const { review_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
         user_helpful, helpful_count, review_owner, create_at } = review;
+
+
+    const onHelpful = user_helpful === null || user_helpful === undefined ? false : user_helpful;
 
     const createDate = (create_at || '').split('T')[0];
 
@@ -43,7 +46,7 @@ const ReviewPreview = ({ currentUser, userId, review, restaurantId, query, match
     };
 
     const [reviewHelpful, setReviewHelpful] = useState({
-        userHelpful: user_helpful,
+        userHelpful: onHelpful,
         helpfulCount: helpful_count
     });
     let { userHelpful, helpfulCount } = reviewHelpful;
@@ -74,11 +77,9 @@ const ReviewPreview = ({ currentUser, userId, review, restaurantId, query, match
         setOpen(false);
     };
 
-    useEffect(() => {
-        requestReviewsStart(query);
-        requestUserFeedbacksStart({ restaurantId, currentUserToken });
-        matchReviewsWithUserFeedbacks();
-    }, [userHelpful]);    
+    // useEffect(() => {
+    //     requestReviewsStart({ query, currentUserToken });
+    // }, [userHelpful]);    
 
     return (
         <div className='review-preview'>
@@ -102,7 +103,7 @@ const ReviewPreview = ({ currentUser, userId, review, restaurantId, query, match
                     </div>
                     
                     {
-                        userId === review_owner ? (
+                        currentUser.user_id === review_owner ? (
                             <Button color="secondary" className='update-btn' onClick={handleUpdateReview}>
                                 Update Review
                             </Button>
@@ -170,9 +171,7 @@ const ReviewPreview = ({ currentUser, userId, review, restaurantId, query, match
 const mapDispatchToProps = dispatch => ({
     reviewHelpfulStart: data => dispatch(reviewHelpfulStart(data)),
     setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review)),
-    requestReviewsStart: query => dispatch(requestReviewsStart(query)),
-    requestUserFeedbacksStart: data => dispatch(requestUserFeedbacksStart(data)),
-    matchReviewsWithUserFeedbacks: () => dispatch(matchReviewsWithUserFeedbacks()),
+    requestReviewsStart: data => dispatch(requestReviewsStart(data)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(ReviewPreview));

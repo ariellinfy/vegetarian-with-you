@@ -1,5 +1,4 @@
 import ReviewActionTypes from './review-types';
-import { matchReviewsAndFeedbacks } from './review-utils';
 
 const INITIAL_STATE = {
     targetReview: {},
@@ -13,8 +12,6 @@ const INITIAL_STATE = {
     updateReviewErr: '',
     deleteReviewErr: '',
     reviewsCollection: [],
-    userFeedbacksCollection: [],
-    reviewsWithUserFeedbacks: [],
     userReviews: [],
     reviewRequestPending: false,
     reviewRequestSuccess: false,
@@ -105,14 +102,15 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             };
 
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START:
+        case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_START:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_START:
-        case ReviewActionTypes.REQUEST_USER_FEEDBACKS_START:
             return {
                 ...state,
                 reviewRequestPending: true,
                 reviewRequestSuccess: false,
             };
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_SUCCESS:
+        case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_SUCCESS:
             return {
                 ...state,
                 reviewsCollection: action.payload,
@@ -121,8 +119,8 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 requestReviewErr: '',
             };
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_FAILURE:
+        case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_FAILURE:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_FAILURE:
-        case ReviewActionTypes.REQUEST_USER_FEEDBACKS_FAILURE:
             return {
                 ...state,
                 reviewRequestPending: false,
@@ -138,7 +136,6 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 reviewsCollection: [],
-                userFeedbacksCollection: [],
                 reviewRequestPending: false,
                 reviewRequestSuccess: false,
                 requestReviewErr: '',
@@ -160,21 +157,6 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewRequestPending: false,
                 reviewRequestSuccess: false,
                 requestReviewErr: '',
-            };
-
-        case ReviewActionTypes.REQUEST_USER_FEEDBACKS_SUCCESS:
-            return {
-                ...state,
-                userFeedbacksCollection: action.payload,
-                reviewRequestPending: false,
-                reviewRequestSuccess: true,
-                requestReviewErr: '',
-            };
-
-        case ReviewActionTypes.MATCH_REVIEWS_WITH_USER_FEEDBACKS:
-            return {
-                ...state,
-                reviewsWithUserFeedbacks: matchReviewsAndFeedbacks(state.userReviews, state.userFeedbacksCollection),
             };
 
         case ReviewActionTypes.REVIEW_HELPFUL_START:

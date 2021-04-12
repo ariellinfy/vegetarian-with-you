@@ -4,10 +4,10 @@ import {
     createReviewSuccess, createReviewFailure, 
     updateReviewSuccess, updateReviewFailure, 
     requestReviewsSuccess, requestReviewsFailure, 
+    requestReviewsAuthSuccess, requestReviewsAuthFailure,
     requestUserReviewsSuccess, requestUserReviewsFailure,
     reviewHelpfulSuccess, reviewHelpfulFailure, 
     reportReviewSuccess, reportReviewFailure,
-    requestUserFeedbacksSuccess, requestUserFeedbacksFailure,
     deleteReviewSuccess, deleteReviewFailure
 } from './review-actions';
 
@@ -114,10 +114,9 @@ export function* updateReview({ payload: { reviewId, restaurantId,
     }
 }
 
-export function* requestReviews({ payload }) {
+export function* requestReviews({ payload: { query } }) {
     try {
-        const url = `http://localhost:5000/reviews${payload}`;
-        console.log(url);
+        const url = `http://localhost:5000/reviews${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -127,6 +126,22 @@ export function* requestReviews({ payload }) {
         } 
     } catch (error) {
         yield put(requestReviewsFailure(error));
+    }
+}
+
+export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }) {
+    try {
+        const url = `http://localhost:5000/reviews/auth${query}`;
+        const method = 'GET';
+        const headers = null;
+        const body = null;
+        const reviews = yield call(request, url, method, headers, body, currentUserToken);
+        if (reviews !== undefined) {
+            localStorage.setItem('token', reviews.token);
+            yield put(requestReviewsAuthSuccess(reviews.data));
+        } 
+    } catch (error) {
+        yield put(requestReviewsAuthFailure(error));
     }
 }
 
@@ -156,7 +171,7 @@ export function* reviewHelpful({ payload: { restaurantId, review_id, userHelpful
         const headers = null;
         const body = JSON.stringify({
             restaurantId: restaurantId,
-            review_id: review_id,
+            reviewId: review_id,
             userHelpful: userHelpful
         });
         const token = yield call(request, url, method, headers, body, currentUserToken);
@@ -186,22 +201,6 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
         } 
     } catch (error) {
         yield put(reportReviewFailure(error));
-    }
-}
-
-export function* requestUserFeedbacks({ payload: { restaurantId, currentUserToken } }) {
-    try {
-        const url = `http://localhost:5000/reviews/userfeedbacks?&restaurantId=${restaurantId}`;
-        const method = 'GET';
-        const headers = null;
-        const body = null;
-        const userFeedbacks = yield call(request, url, method, headers, body, currentUserToken);
-        if (userFeedbacks !== undefined) {
-            localStorage.setItem('token', userFeedbacks.token);
-            yield put(requestUserFeedbacksSuccess(userFeedbacks.data));
-        } 
-    } catch (error) {
-        yield put(requestUserFeedbacksFailure(error));
     }
 }
 
@@ -235,6 +234,10 @@ export function* onRequestReviewsStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START, requestReviews);
 }
 
+export function* onRequestReviewsAuthStart() {
+    yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_START, requestReviewsWithAuth);
+}
+
 export function* onRequestUserReviewStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_USER_REVIEWS_START, requestUserReviews);
 }
@@ -247,10 +250,6 @@ export function* onReportReviewStart() {
     yield takeLatest(ReviewActionTypes.REPORT_REVIEW_START, reportReview);
 }
 
-export function* onRequestUserFeedbacksStart() {
-    yield takeLatest(ReviewActionTypes.REQUEST_USER_FEEDBACKS_START, requestUserFeedbacks);
-}
-
 export function* onDeleteReviewStart() {
     yield takeLatest(ReviewActionTypes.DELETE_REVIEW_START, deleteReview);
 }
@@ -260,10 +259,10 @@ export function* reviewSagas() {
         call(oncreateReviewStart),
         call(onUpdateReviewStart),
         call(onRequestReviewsStart),
+        call(onRequestReviewsAuthStart),
         call(onRequestUserReviewStart),
         call(onReviewHelpfulStart),
         call(onReportReviewStart),
-        call(onRequestUserFeedbacksStart),
         call(onDeleteReviewStart),
     ]);
 }

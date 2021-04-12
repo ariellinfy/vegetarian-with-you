@@ -23,7 +23,6 @@ export const resetCreateRestaurantStatus = () => ({
 
 // Update restaurant
 
-
 export const setRestaurantToBeUpdate = targetRestaurant => ({
     type: RestaurantActionTypes.RESTAURANT_TO_BE_UPDATE,
     payload: targetRestaurant

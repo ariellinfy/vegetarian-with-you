@@ -49,9 +49,9 @@ export const resetUpdateReviewStatus = () => ({
 
 // Request restaurant reviews
 
-export const requestReviewsStart = info => ({
+export const requestReviewsStart = data => ({
     type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START,
-    payload: info
+    payload: data
 });
 
 export const requestReviewsSuccess = reviews => ({
@@ -71,6 +71,23 @@ export const setReviewSortbyFilter = filter => ({
 
 export const resetRequestReviewsStatus = () => ({
     type: ReviewActionTypes.RESET_RESTAURANT_REVIEWS_STATUS
+});
+
+// Request restaurant reviews (with auth)
+
+export const requestReviewsAuthStart = data => ({
+    type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_START,
+    payload: data
+});
+
+export const requestReviewsAuthSuccess = reviews => ({
+    type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_SUCCESS,
+    payload: reviews
+});
+
+export const requestReviewsAuthFailure = error => ({
+    type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_FAILURE,
+    payload: error
 });
 
 // Request user reviews
@@ -124,29 +141,6 @@ export const reportReviewSuccess = () => ({
 export const reportReviewFailure = error => ({
     type: ReviewActionTypes.REPORT_REVIEW_FAILURE,
     payload: error
-});
-
-// Request reviews user feedbacks
-
-export const requestUserFeedbacksStart = data => ({
-    type: ReviewActionTypes.REQUEST_USER_FEEDBACKS_START,
-    payload: data
-});
-
-export const requestUserFeedbacksSuccess = userFeedbacks => ({
-    type: ReviewActionTypes.REQUEST_USER_FEEDBACKS_SUCCESS,
-    payload: userFeedbacks
-});
-
-export const requestUserFeedbacksFailure = error => ({
-    type: ReviewActionTypes.REQUEST_USER_FEEDBACKS_FAILURE,
-    payload: error
-});
-
-// Match reviews with user feedbacks
-
-export const matchReviewsWithUserFeedbacks = () => ({
-    type: ReviewActionTypes.MATCH_REVIEWS_WITH_USER_FEEDBACKS,
 });
 
 // Delete review

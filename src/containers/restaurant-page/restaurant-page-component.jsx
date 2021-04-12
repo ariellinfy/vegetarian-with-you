@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
-import { requestRestaurantByIdStart, resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
-import { requestReviewsStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks } from '../../redux/review/review-actions';
+import { requestRestaurantByIdStart, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
+import { requestReviewsStart, requestReviewsAuthStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
@@ -14,31 +14,31 @@ import RestaurantAdvance from '../../components/restaurant-advance/restaurant-ad
 import RestaurantReview from '../../components/restaurant-review/restaurant-review-component';
 import './restaurant-page-style.scss';
 
-const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestRestaurantByIdStart, resetEditUserEmail, 
-    resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus, 
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus, requestUserFeedbacksStart, matchReviewsWithUserFeedbacks,
+const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestReviewsAuthStart, requestRestaurantByIdStart, resetEditUserEmail, 
+    resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
     currentUser, match }) => {
 
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
     let restaurantId = targetRestaurant.restaurant_id ? targetRestaurant.restaurant_id : match.params.id;
-    let query = `?&restaurantId=${restaurantId}`;
+    let query = `?&restaurantId=${restaurantId}&sortBy=last_modified:desc`;
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [targetRestaurant]);
 
     useEffect(() => {
+        resetCreateRestaurantStatus();
+        resetUpdateRestaurantStatus();
         resetRequestRestaurantsStatus();
         resetFilteredRestaurants();
-        resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
         requestRestaurantByIdStart(restaurantId);
-        requestReviewsStart(query);
-        requestUserFeedbacksStart({ restaurantId, currentUserToken });
-        matchReviewsWithUserFeedbacks();
+        Object.keys(currentUser).length ? requestReviewsAuthStart({ query, currentUserToken }) : requestReviewsStart({ query });
     }, []);
 
     return (
@@ -65,17 +65,19 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    requestReviewsStart: query => dispatch(requestReviewsStart(query)),
+    requestReviewsStart: data => dispatch(requestReviewsStart(data)),
+    requestReviewsAuthStart: data => dispatch(requestReviewsAuthStart(data)),
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
-    requestUserFeedbacksStart: data => dispatch(requestUserFeedbacksStart(data)),
-    matchReviewsWithUserFeedbacks: () => dispatch(matchReviewsWithUserFeedbacks()),
+    resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus()),
+    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
-    resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPage));
