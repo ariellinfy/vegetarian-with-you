@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart } from '../../redux/review/review-actions';
+import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
 
 import ReportForm from '../../components/report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile } from '@material-ui/core';
@@ -27,8 +27,7 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ currentUser, review, restaurantId, query,
-    reviewHelpfulStart, setReviewToBeUpdate, requestReviewsStart, history }) => {
+const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
@@ -76,10 +75,6 @@ const ReviewPreview = ({ currentUser, review, restaurantId, query,
     const handleClose = () => {
         setOpen(false);
     };
-
-    // useEffect(() => {
-    //     requestReviewsStart({ query, currentUserToken });
-    // }, [userHelpful]);    
 
     return (
         <div className='review-preview'>
@@ -171,7 +166,6 @@ const ReviewPreview = ({ currentUser, review, restaurantId, query,
 const mapDispatchToProps = dispatch => ({
     reviewHelpfulStart: data => dispatch(reviewHelpfulStart(data)),
     setReviewToBeUpdate: review => dispatch(setReviewToBeUpdate(review)),
-    requestReviewsStart: data => dispatch(requestReviewsStart(data)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(ReviewPreview));

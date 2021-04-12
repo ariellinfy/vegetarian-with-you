@@ -94,7 +94,6 @@ class RestaurantForm extends Component {
     
     handleChange = event => {
         const { name, value, checked } = event.target;
-
         if (name === 'breakfast' || name === 'brunch' || name === 'lunch' || name === 'dinner') {
             this.setState({ ...this.state, [name]: checked });
         } else if (name === 'restaurantCountry') {
@@ -115,12 +114,21 @@ class RestaurantForm extends Component {
         } = this.state;
         const countryCode = COUNTRY_REGION.map((country) => country.countryShortCode.toLowerCase());
 
-        if (typeof breakfast === 'string' || typeof brunch === 'string' || typeof lunch === 'string' || typeof dinner === 'string') {
+        if (typeof breakfast === 'string') {
             breakfast = breakfast === 'true' ? true : false;
+        };
+
+        if (typeof brunch === 'string') {
             brunch = brunch === 'true' ? true : false;
+        };
+
+        if (typeof lunch === 'string') {
             lunch = lunch === 'true' ? true : false;
+        };
+
+        if (typeof dinner === 'string') {
             dinner = dinner === 'true' ? true : false;
-        }
+        };
 
         return (
             <div className='restaurant-form-container'>
