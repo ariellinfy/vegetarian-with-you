@@ -52,7 +52,7 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
                             email ? (
                                 !editEmailStatus ? (
                                     <div className='credential-content'>
-                                        <Typography className='credential' variant='subtitle1' >{email}</Typography>
+                                        <Typography className='credential' variant='body1' >{email}</Typography>
                                         <Button className='credential-btn' size='small' variant="contained" color="secondary" onClick={handleEditClick}>Edit</Button>
                                     </div>
                                 ) : (
@@ -77,7 +77,7 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
                                     </div>
                                 )
                             ) : (
-                                <Typography className='credential' variant='subtitle1' >N/A</Typography>
+                                <Typography className='credential' variant='body1' >N/A</Typography>
                             )
                         }
                     </div>
@@ -88,12 +88,12 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
                         {
                             email ? (
                                 <div className='credential-content'>
-                                    <Typography className='credential' variant='subtitle1'>********</Typography>
+                                    <Typography className='credential' variant='body1'>********</Typography>
                                     <Button className='credential-btn reset-btn' size='small' variant="outlined" color="secondary" onClick={handleClickOpenPassword}>Reset password</Button>
                                     <UpdatePassword email={email} open={openResetPassword} handleClose={handleClosePassword} />
                                 </div>
                             ) : (
-                                <Typography className='credential' variant='subtitle1'>N/A</Typography>
+                                <Typography className='credential' variant='body1'>N/A</Typography>
                             )
                         }
                     </div>
@@ -102,8 +102,8 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
             {
                 email ? (
                     <Paper className='deactivate-account'>
-                        <Typography className='deactivate-title deactivation' variant='body1'>Close Account</Typography>
-                        <Typography className='deactivation' variant='subtitle1' >Once you close your account, all information will be trashed, there is no way to go back. Please be certain.</Typography>
+                        <Typography className='deactivate-title' variant='body1'>Close Account</Typography>
+                        <Typography className='deactivation' variant='body1' >Once you close your account, all information will be trashed, there is no way to go back. Please be certain.</Typography>
                         <Button name='deactivateAccount' className='deactivate-btn' size='small' variant="contained" color="secondary" onClick={handleClickOpenAccount}>Close your account</Button>
                         <CloseAccount email={email} open={openCloseAccount} handleClose={handleCloseAccount} />
                     </Paper>

@@ -27,10 +27,6 @@
 
       .review-btn {
         height: fit-content;
-
-        @media screen and (max-width: 835px) {
-          font-size: smaller;
-        }
       }
     }
   }

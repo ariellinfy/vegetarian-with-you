@@ -122,7 +122,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
                         <RoomIcon style={{ color: blue[400] }} fontSize="small" />
                         <Link href={"https://maps.google.com?q="+target_lat+","+target_lng} target="_blank" rel="noopener">
-                            <Typography className='item contact' component="span" variant="body1">    
+                            <Typography className='item contact' component="p" variant="body1">    
                                 {
                                     city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
                                 }

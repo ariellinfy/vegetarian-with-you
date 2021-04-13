@@ -25,34 +25,58 @@ let theme = createMuiTheme({
     },
     overrides: {
         MuiTypography: {
-            body1: {
-                fontSize: '1rem',
+            h6: {
+                fontSize: '1.125rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '1.2rem'
+                },
                 [defaultTheme.breakpoints.up("md")]: {
-                    fontSize: '0.85rem'
+                    fontSize: '1.35rem'
+                }
+            },
+            body1: {
+                fontSize: '0.85rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.92rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '0.95rem'
                 }
             },
             body2: {
-                fontSize: '0.875rem',
+                fontSize: '0.78rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.875rem'
+                },
                 [defaultTheme.breakpoints.up("md")]: {
-                    fontSize: '0.7rem'
+                    fontSize: '0.875rem'
                 }
             },
             subtitle1: {
-                fontSize: '1.15rem',
-                [defaultTheme.breakpoints.up("md")]: {
+                fontSize: '0.875rem',
+                [defaultTheme.breakpoints.up("sm")]: {
                     fontSize: '1rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '1.1rem'
                 }
             },
             subtitle2: {
-                fontSize: '0.95rem',
+                fontSize: '0.8rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.85rem'
+                },
                 [defaultTheme.breakpoints.up("md")]: {
-                    fontSize: '0.8rem'
+                    fontSize: '0.95rem'
                 }
             },
             button: {
-                fontSize: '1rem',
+                fontSize: '0.75rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.875rem'
+                },
                 [defaultTheme.breakpoints.up("md")]: {
-                    fontSize: '0.75rem'
+                    fontSize: '1rem'
                 }
             },
         }

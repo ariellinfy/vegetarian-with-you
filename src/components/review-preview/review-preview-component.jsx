@@ -150,7 +150,7 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                 </Box>
 
                 <div className='content-body'>
-                    <Typography className='review-title' variant="h5">{review_title}</Typography>
+                    <Typography className='review-title' variant="h6">{review_title}</Typography>
                     <Typography className='review-body' variant="body1">{review_body}</Typography>
 
                     <div className='image-container'>
