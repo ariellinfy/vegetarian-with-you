@@ -22,12 +22,6 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 2em;
-
-    .header-btn {
-      @media screen and (max-width: 835px) {
-        font-size: smaller;
-      }
-    }
   }
 
   .restaurant-header-basic-container {
@@ -42,10 +36,6 @@
 
       .update-btn {
         height: fit-content;
-
-        @media screen and (max-width: 835px) {
-          font-size: smaller;
-        }
       }
     }
 

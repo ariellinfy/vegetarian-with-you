@@ -1,5 +1,5 @@
-import { createMuiTheme, makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
-import { lightGreen, green, orange, deepOrange, yellow } from '@material-ui/core/colors';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { lightGreen, orange, deepOrange, yellow } from '@material-ui/core/colors';
 
 const defaultTheme = createMuiTheme();
 
@@ -18,7 +18,6 @@ let theme = createMuiTheme({
       warning: {
         main: deepOrange[600],
       },
-      
     },
     typography: {
       fontFamily: '-apple-system, Quicksand, sans-serif'
@@ -69,14 +68,108 @@ let theme = createMuiTheme({
                 [defaultTheme.breakpoints.up("md")]: {
                     fontSize: '0.95rem'
                 }
-            },
-            button: {
+            }
+        },
+        MuiButton: {
+            root: {
                 fontSize: '0.75rem',
                 [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.8rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
                     fontSize: '0.875rem'
+                }
+            },
+            textSizeSmall: {
+                fontSize: '0.725rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.765rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '0.8125rem'
+                }
+            },
+            outlinedSizeSmall: {
+                fontSize: '0.725rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.765rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '0.8125rem'
+                }
+            },
+            containedSizeSmall: {
+                fontSize: '0.725rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.765rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '0.8125rem'
+                }
+            }
+        },
+        MuiInputBase: {
+            root: {
+                fontSize: '0.85rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.9rem'
                 },
                 [defaultTheme.breakpoints.up("md")]: {
                     fontSize: '1rem'
+                }
+            },
+        },
+        MuiTab: {
+            root: {
+                fontSize: '0.745rem',
+                padding: '5px 8px',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    minWidth: '137.5px'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '0.875rem',
+                    padding: '6px 12px'
+                }
+            },
+        },
+        MuiTableCell: {
+            root: {
+                fontSize: '0.775rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.8rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '0.875rem'
+                }
+            },
+        },
+        MuiFormLabel: {
+            root: {
+                fontSize: '0.9rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.95rem'
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '1rem'
+                }
+            },
+        },
+        MuiMenu: {
+            paper: {
+                maxHeight: '80%'
+            },
+        },
+        MuiMenuItem: {
+            root: {
+                fontSize: '0.9rem',
+                minHeight: '35px',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '0.95rem',
+                    minHeight: '40px',
+                },
+                [defaultTheme.breakpoints.up("md")]: {
+                    fontSize: '1rem',
+                    minHeight: '48px',
                 }
             },
         }
