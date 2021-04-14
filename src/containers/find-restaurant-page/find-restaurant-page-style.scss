@@ -55,17 +55,17 @@
     }
 
     .find-restaurant-body {
-      width: 80%;
+      width: auto;
 
-      @media screen and (max-width: 1000px) {
-        width: 90%;
-      }
-      @media screen and (max-width: 697px) {
+      @media screen and (max-width: 836px) {
         width: 95%;
       }
-      @media screen and (max-width: 556px) {
-        width: 97%;
-      }
+      // @media screen and (max-width: 697px) {
+      //   width: 95%;
+      // }
+      // @media screen and (max-width: 556px) {
+      //   width: 97%;
+      // }
 
       .find-no-match {
         display: flex;
