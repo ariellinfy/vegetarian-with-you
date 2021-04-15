@@ -41,13 +41,13 @@ const HomePage = ({ resetCreateRestaurantStatus, resetUpdateRestaurantStatus, re
                     </div>
                     <div className='feature-text'>
                         <Typography variant="h4">Write a review</Typography>
-                        <Typography variant="body1">Share your experience with more people! Click on "Write review" button to get started!</Typography>
+                        <Typography variant="subtitle1">Share your experience with more people! Click on "Write review" button to get started!</Typography>
                     </div>
                 </div>
                 <div className='homepage-feature-container feature-container-2'>
                     <div className='feature-text'>
                         <Typography variant="h4">Discover restaurants</Typography>
-                        <Typography variant="body1">Wondering where to eat? Discover more fabulous and delicious restaurants in Explore!</Typography>
+                        <Typography variant="subtitle1">Wondering where to eat? Discover more fabulous and delicious restaurants in Explore!</Typography>
                     </div>
                     <div className='feature-image image-2'>
                         <img className='image-2' alt='homepage-img-2' src={discoverImage} />
@@ -59,7 +59,7 @@ const HomePage = ({ resetCreateRestaurantStatus, resetUpdateRestaurantStatus, re
                     </div>
                     <div className='feature-text'>
                         <Typography variant="h4">Add a place</Typography>
-                        <Typography variant="body1">You know an awesome restaurant but it's not here? Add it on! so more people can benefit from the beauty of green diets!</Typography>
+                        <Typography variant="subtitle1">You know an awesome restaurant but it's not here? Add it on! so more people can benefit from the beauty of green diets!</Typography>
                     </div>
                 </div>
             </div>

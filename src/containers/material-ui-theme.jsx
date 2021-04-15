@@ -118,15 +118,6 @@ let theme = createMuiTheme({
                     fontSize: '1rem'
                 }
             },
-            input: {
-                padding: '17px 14px',
-                [defaultTheme.breakpoints.up("sm")]: {
-                    padding: '18px 14px'
-                },
-                [defaultTheme.breakpoints.up("md")]: {
-                    padding: '18.5px 14px'
-                }
-            },
         },
         MuiOutlinedInput: {
             input: {

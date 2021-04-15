@@ -8,14 +8,13 @@
     border-radius: 1em;
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
     background: rgba(255, 255, 255, 0.75);
-    width: 600px;
+    width: 700px;
     display: flex;
     flex-direction: column;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 750px) {
       align-self: center;
       width: 97.5%;
-      font-size: smaller;
     }
 
     .rating-box {

@@ -97,8 +97,6 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
         setAnchorEl(null);
     };
 
-
-
     return (
         <div className='review-preview'>
             <div className='card-header'>

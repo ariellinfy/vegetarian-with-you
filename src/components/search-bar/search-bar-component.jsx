@@ -1,5 +1,7 @@
 import React from 'react';
 import { TextField, InputAdornment } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import './search-bar-style.scss';
 
 const SearchBar = ({ type, children, onChange, value, ...otherProps }) => {
@@ -15,7 +17,7 @@ const SearchBar = ({ type, children, onChange, value, ...otherProps }) => {
                 variant="outlined"
                 {...otherProps}
                 InputProps={{
-                    startAdornment: <InputAdornment position="start">{type === 'restaurant' ? <i className="fa fa-search"></i> : <i className="fa fa-map-marker"></i>}</InputAdornment>
+                    startAdornment: <InputAdornment position="start">{type === 'restaurant' ? <SearchIcon fontSize="small" /> : <LocationOnIcon fontSize="small" />}</InputAdornment>
                 }}
             />
         </div>

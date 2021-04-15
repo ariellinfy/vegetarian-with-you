@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setRestaurantToBeUpdate } from '../../redux/restaurant/restaurant-actions';
 
 import Rating from '@material-ui/lab/Rating';
-import { Typography, Box, Divider, Link, Button } from '@material-ui/core';
+import { Typography, Box, Divider, Link, Button, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { orange, green, grey } from '@material-ui/core/colors';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import AddIcon from '@material-ui/icons/Add';
-import UpdateIcon from '@material-ui/icons/Update';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PhoneIcon from '@material-ui/icons/Phone';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -33,6 +33,22 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
     const target_lat = 0;
     const target_lng = 0;
 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleRestaurantClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleRestaurantClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleUpdateRestaurant = () => {
+        setRestaurantToBeUpdate(targetRestaurant);
+        history.push('/updaterestaurant')
+        setAnchorEl(null);
+    };
+
     return (
         <div className='restaurant-header-container'>
             <div className='restaurant-header-action'>
@@ -50,14 +66,30 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
                     <Typography className='restaurant-name' variant="h3">{restaurant_name}</Typography>
                     {
                         Object.keys(currentUser).length ? (
-                            <Button type='button' className='update-btn' variant='contained' color='secondary' startIcon={<UpdateIcon />} 
-                                onClick={() => {
-                                    setRestaurantToBeUpdate(targetRestaurant);
-                                    history.push('/updaterestaurant')}}>
-                                Update Restaurant
-                            </Button>
+                            <div className='update-btn'>
+                                <IconButton onClick={handleRestaurantClick}>
+                                    <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                    id="update-menu"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleRestaurantClose}
+                                >
+                                    <MenuItem onClick={handleUpdateRestaurant} >Update Restaurant</MenuItem>
+                                </Menu>
+                            </div>
                         ) : null
-                    } 
+                    }
                 </div>
                 
                 <div className='restaurant-basic-detail'>

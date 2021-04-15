@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Button, Paper, Typography } from '@material-ui/core';
 import EditProfile from '../../components/edit-profile/edit-profile-component';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import EventIcon from '@material-ui/icons/Event';
+import CreateIcon from '@material-ui/icons/Create';
 import './user-profile-style.scss';
 
 const UserProfile = ({ user: { user_id, public_name, contributions, location, joined } }) => {
@@ -59,7 +62,7 @@ const UserProfile = ({ user: { user_id, public_name, contributions, location, jo
             </Paper>
             <Paper className='profile-body'>
                 <div className='user-detail'>
-                    <i className="fa fa-map-marker"></i>
+                    <LocationOnIcon fontSize="small" />
                     {
                         location ? (
                             <Typography className="info" variant='subtitle1'>{location}</Typography>
@@ -82,7 +85,7 @@ const UserProfile = ({ user: { user_id, public_name, contributions, location, jo
                     }
                 </div>
                 <div className='user-detail'>
-                    <i className="fa fa-calendar"></i>
+                    <EventIcon fontSize="small" />
                         {
                             joined ? (
                                 <Typography className="info" variant='subtitle1'>{joined.split('T')[0]}</Typography>
@@ -92,10 +95,10 @@ const UserProfile = ({ user: { user_id, public_name, contributions, location, jo
                         }
                 </div>
                 <div className='user-detail'>
-                    <i className="fa fa-pencil"></i>
+                    <CreateIcon fontSize="small" />
                     {
                         user_id ? (
-                            <Button className="review-button" color="primary">Write review</Button>
+                            <Button component={Link} to={'/find'} className="review-button" color="primary">Write review</Button>
                         ) : (
                             <Button component={Link} to={'/signin'} className="review-button" color="primary">Write review</Button>
                         )

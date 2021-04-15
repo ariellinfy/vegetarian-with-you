@@ -16,7 +16,7 @@ const RestaurantIntro = ({ targetRestaurant }) => {
                         <Typography gutterBottom variant="h4">
                             {restaurant_name}
                         </Typography>
-                        <Typography variant="subtitle1" color="textSecondary" component="p" className='restaurant-location'>
+                        <Typography variant="subtitle2" color="textSecondary" component="p" className='restaurant-location'>
                             {
                             city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
                             }

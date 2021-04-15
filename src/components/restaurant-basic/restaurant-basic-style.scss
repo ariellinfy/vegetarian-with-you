@@ -31,11 +31,22 @@
     .restaurant-basic-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       margin-bottom: 1em;
+
+      @media screen and (max-width: 600px) {
+        margin-bottom: 0.5em;
+      }
+
+      .restaurant-name {
+        margin-right: 1em;
+      }
 
       .update-btn {
         height: fit-content;
+
+        @media screen and (max-width: 600px) {
+          margin-top: -0.2em;
+        }
       }
     }
 
