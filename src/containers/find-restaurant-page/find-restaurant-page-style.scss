@@ -28,7 +28,7 @@
       width: 100%;
     }
 
-    h2 {
+    h3 {
       margin: 0.67em 2em;
       text-align: center;
 
@@ -56,16 +56,6 @@
 
     .find-restaurant-body {
       width: auto;
-
-      @media screen and (max-width: 836px) {
-        width: 95%;
-      }
-      // @media screen and (max-width: 697px) {
-      //   width: 95%;
-      // }
-      // @media screen and (max-width: 556px) {
-      //   width: 97%;
-      // }
 
       .find-no-match {
         display: flex;

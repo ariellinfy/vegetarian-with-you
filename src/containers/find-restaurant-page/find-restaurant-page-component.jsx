@@ -40,7 +40,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
     return (
         <div className='find-restaurant-page'>
             <div className='find-container'>
-                <Typography variant="h2">Review a place you've visited</Typography>
+                <Typography variant="h3">Review a place you've visited</Typography>
                 <div className='find-restaurant-header'>
                     <SearchBar id='search-restaurant' type='restaurant' onChange={event => requestFilteredRestaurantsByFeature(event.target.value)} value={featureKeyword}>
                             {
