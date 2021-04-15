@@ -11,6 +11,7 @@
   @media screen and (max-width: 1000px) {
     padding: 3em 1em 5em;
   }
+
   .explore-container {
     display: flex;
     flex-direction: column;
@@ -56,8 +57,8 @@
         width: 40em;
         justify-content: center;
       }
-      @media screen and (max-width: 570px) {
-        width: 30em;
+      @media screen and (max-width: 835px) {
+        width: auto;
       }
 
       .explore-header-1 {
