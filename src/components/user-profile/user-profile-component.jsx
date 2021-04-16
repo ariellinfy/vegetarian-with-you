@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Button, Paper, Typography } from '@material-ui/core';
+
 import EditProfile from '../../components/edit-profile/edit-profile-component';
+import { Avatar, Button, Paper, Typography, Menu, MenuItem } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EventIcon from '@material-ui/icons/Event';
 import CreateIcon from '@material-ui/icons/Create';
@@ -18,12 +19,84 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
     const handleClose = () => {
         setOpen(false);
     };
+    const [userAvatar, setAvatar] = useState(avatar);
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleAvatarClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleAvatarClose = () => {
+      setAnchorEl(null);
+    };
+
+    const onChangeFile = event => {
+        const imageFile = event.target.files[0];
+        console.log(imageFile);
+
+        // if (!imageFile) {
+        // //   uploadProfileImageTypeError('Please select an image.')
+        //   return false;
+        // }
+        // if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|HEIC)$/)) {
+        // //   uploadProfileImageTypeError('File type must be .jpg/jpeg, .png, .HEIC')
+        //   return false;
+        // } else {
+            setAvatar(URL.createObjectURL(imageFile));
+        // //   uploadProfileImage(currentUserToken, imageFile);
+        // }
+    };
+
+    const handleRemoveAvatar = () => {
+        setAvatar(null);
+        setAnchorEl(null);
+    };
 
     return (
         <div className='user-profile-page'>
             <Paper className='profile-header'>
                 <div className='profile-header-1'>
-                    <Avatar className='user-avatar'>N</Avatar>
+                    <div className='user-avatar'>
+                        {
+                            userAvatar ? <img className='img-avatar' alt={public_name} src={userAvatar} /> : <Avatar className='font-avatar'>{public_name[0].toUpperCase()}</Avatar>
+                        }
+                        <div className='avatar-edit-container'>
+                            <Button
+                                aria-controls="edit-avatar"
+                                aria-haspopup="true"
+                                variant="outlined"
+                                onClick={handleAvatarClick}
+                                size="small"
+                                className='avatar-edit-btn'
+                            >
+                                Edit
+                            </Button>
+                            <Menu
+                                id="edit-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleAvatarClose}
+                                >
+                                <MenuItem onClick={handleAvatarClose} className='avatar-edit-option'>
+                                    <input 
+                                        accept="image/*" 
+                                        id="upload-avatar"
+                                        type="file" 
+                                        name='avatar'
+                                        style={{display:"none"}}
+                                        onChange={onChangeFile}
+                                    />
+                                    <label htmlFor="upload-avatar">
+                                        Upload a photo
+                                    </label>  
+                                </MenuItem>
+                                <MenuItem onClick={handleRemoveAvatar} className='avatar-edit-option'>Remove photo</MenuItem>
+                            </Menu>
+                        </div>
+                    </div>
+                
                     <div className='user-info'>
                         {
                             public_name ? (
@@ -48,7 +121,7 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                             <Button className="update-button" variant="contained" color="primary" onClick={handleClickOpen}>
                                 Update Profile
                             </Button>
-                            <EditProfile publicName={public_name} location={location} avatar={avatar} open={open} handleClose={handleClose} />
+                            <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
                         </div>
                     ) : (
                         <div className='profile-header-2'>
@@ -58,7 +131,6 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                         </div>
                     )
                 }
-                
             </Paper>
             <Paper className='profile-body'>
                 <div className='user-detail'>

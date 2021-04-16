@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const EditProfile = ({ publicName, location, avatar, open, handleClose, editProfileStart }) => {
+const EditProfile = ({ publicName, location, open, handleClose, editProfileStart }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
 
@@ -52,7 +52,6 @@ const EditProfile = ({ publicName, location, avatar, open, handleClose, editProf
     });
     const { name, city } = userInfo;
 
-    const [userAvatar, setAvatar] = useState(avatar);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -64,35 +63,6 @@ const EditProfile = ({ publicName, location, avatar, open, handleClose, editProf
         setProfile({ ...userInfo, [name]: value });
     };
 
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleAvatarClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleAvatarClose = () => {
-      setAnchorEl(null);
-    };
-
-    const onChangeFile = event => {
-        const imageFile = event.target.files[0];
-        console.log(imageFile);
-        setAvatar(URL.createObjectURL(imageFile));
-        // if (!imageFile) {
-        // //   uploadProfileImageTypeError('Please select an image.')
-        //   return false;
-        // }
-        // if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|HEIC)$/)) {
-        // //   uploadProfileImageTypeError('File type must be .jpg/jpeg, .png, .HEIC')
-        //   return false;
-        // } else {
-           
-        // //   uploadProfileImage(currentUserToken, imageFile);
-        // }
-    };
-      console.log(userAvatar)
-
-
     return (
         <div className='edit-profile-page'>
             <Dialog open={open} onClose={handleClose}>
@@ -100,45 +70,6 @@ const EditProfile = ({ publicName, location, avatar, open, handleClose, editProf
                 <Divider />
                 <form className='edit-profile-form' onSubmit={handleSubmit}>
                     <DialogContent className={classes.root}>
-                        <div className={classes.avatar}>
-                            {
-                                userAvatar ? <Avatar alt={name} src={userAvatar} /> : <Avatar className={classes.large}>{name[0].toUpperCase()}</Avatar>
-                            }
-                            <div className={classes.update}>
-                                <Button
-                                    aria-controls="edit-avatar"
-                                    aria-haspopup="true"
-                                    variant="outlined"
-                                    onClick={handleAvatarClick}
-                                    size="small"
-                                    className={classes.editBtn}
-                                >
-                                    Edit
-                                </Button>
-                                <Menu
-                                    id="edit-menu"
-                                    anchorEl={anchorEl}
-                                    keepMounted
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleAvatarClose}
-                                    >
-                                    <MenuItem onClick={handleAvatarClose} className={classes.selectBtn}>
-                                        <input 
-                                            accept="image/*" 
-                                            id="upload-avatar"
-                                            type="file" 
-                                            name='avatar'
-                                            style={{display:"none"}}
-                                            onChange={onChangeFile}
-                                        />
-                                        <label htmlFor="upload-avatar">
-                                            Upload a photo
-                                        </label>  
-                                    </MenuItem>
-                                    <MenuItem onClick={handleAvatarClose} className={classes.selectBtn}>Remove photo</MenuItem>
-                                </Menu>
-                            </div>
-                        </div>
                         <div>
                             <TextField
                                 label="Name"

@@ -18,15 +18,49 @@
     .profile-header-1 {
       display: flex;
       align-items: center;
+      width: fit-content;
+      height: 100%;
 
       @media screen and (max-width: 900px) {
         width: 100%;
       }
 
       .user-avatar {
-        width: 5em;
-        height: 5em;
+        width: auto;
         margin: 0.25em 1em 0.25em 0;
+
+        .img-avatar {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+        }
+
+        .font-avatar {
+          width: 140px;
+          height: 140px;
+          font-size: 50px;
+          padding: 0.75em;
+        }
+
+        .avatar-edit-container {
+          margin-top: -1.85em;
+
+          .avatar-edit-btn {
+            text-transform: none;
+            background: white;
+            font-size: 14px;
+            padding: 2px 0;
+
+            &:hover {
+              background: white;
+            }
+          }
+
+          .avatar-edit-option {
+            font-size: 16px;
+            min-height: 30px;
+          }
+        }
       }
 
       .user-info {
