@@ -73,6 +73,7 @@ let theme = createMuiTheme({
         MuiButton: {
             root: {
                 fontSize: '0.75rem',
+                minWidth: '50px',
                 [defaultTheme.breakpoints.up("sm")]: {
                     fontSize: '0.8rem'
                 },
@@ -106,7 +107,7 @@ let theme = createMuiTheme({
                 [defaultTheme.breakpoints.up("md")]: {
                     fontSize: '0.8125rem'
                 }
-            }
+            },
         },
         MuiInputBase: {
             root: {
@@ -183,7 +184,7 @@ let theme = createMuiTheme({
                     minHeight: '48px',
                 }
             },
-        }
+        },
     }
   });
   

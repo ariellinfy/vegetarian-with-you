@@ -7,7 +7,7 @@ import EventIcon from '@material-ui/icons/Event';
 import CreateIcon from '@material-ui/icons/Create';
 import './user-profile-style.scss';
 
-const UserProfile = ({ user: { user_id, public_name, contributions, location, joined } }) => {
+const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined } }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -48,7 +48,7 @@ const UserProfile = ({ user: { user_id, public_name, contributions, location, jo
                             <Button className="update-button" variant="contained" color="primary" onClick={handleClickOpen}>
                                 Update Profile
                             </Button>
-                            <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
+                            <EditProfile publicName={public_name} location={location} avatar={avatar} open={open} handleClose={handleClose} />
                         </div>
                     ) : (
                         <div className='profile-header-2'>
