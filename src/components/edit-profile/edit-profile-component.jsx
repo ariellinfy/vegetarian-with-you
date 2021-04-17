@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { editProfileStart } from '../../redux/user/user-actions';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Divider, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Divider, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -11,29 +11,6 @@ const useStyles = makeStyles((theme) => ({
       '& > *': {
         margin: theme.spacing(1),
       },
-    },
-    large: {
-      width: theme.spacing(19),
-      height: theme.spacing(19),
-      marginRight: '20px',
-      marginTop: '15px',
-      fontSize: '45px'
-    },
-    update: {
-        marginTop: '-1.85em',
-    },
-    editBtn: {
-        textTransform: 'none',
-        background: 'white',
-        fontSize: '14px',
-        padding: '2px 0',
-        '&:hover': {
-            background: 'white',
-        }
-    },
-    selectBtn: {
-        fontSize: '16px',
-        minHeight: '30px'
     },
     actions: {
         padding: '8px 32px 24px 0',
@@ -51,7 +28,6 @@ const EditProfile = ({ publicName, location, open, handleClose, editProfileStart
         city: location,
     });
     const { name, city } = userInfo;
-
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -105,10 +81,10 @@ const EditProfile = ({ publicName, location, open, handleClose, editProfileStart
             </Dialog>    
         </div>
     )
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     editProfileStart: userInfo => dispatch(editProfileStart(userInfo))
 });
 
-export default React.memo(connect(null, mapDispatchToProps)(EditProfile));
+export default connect(null, mapDispatchToProps)(EditProfile);

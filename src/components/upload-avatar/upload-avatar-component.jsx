@@ -9,21 +9,12 @@ import { Divider, Button, Dialog, DialogActions, DialogContent, DialogTitle, Sli
 import './upload-avatar-style.scss';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    content: {
       display: 'flex',
-    //   flexDirection: 'column',
+      flexDirection: 'column',
       '& > *': {
         margin: theme.spacing(1),
       },
-    },
-    cropContainer: {
-        width: 'fit-content'
-    },
-    cropImage: {
-        position: 'relative'
-    },
-    controls: {
-
     },
     actions: {
         padding: '8px 32px 24px 0',
@@ -50,7 +41,7 @@ const UploadAvatar = ({ avatar, open, handleClose, uploadAvatarStart }) => {
     };
 
     return (
-        <div className={classes.root}>
+        <div className='upload-avatar-form'>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle className={classes.title}>Crop your new profile picture</DialogTitle>
                 <Divider />
@@ -58,8 +49,7 @@ const UploadAvatar = ({ avatar, open, handleClose, uploadAvatarStart }) => {
                     <DialogContent className={classes.content}>
                         <div className={classes.cropContainer}>
                             <Cropper
-                                className={classes.cropImage}
-                                image={restaurantImage}
+                                image={userAvatar}
                                 crop={crop}
                                 zoom={zoom}
                                 aspect={1}
