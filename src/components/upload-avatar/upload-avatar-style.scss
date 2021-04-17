@@ -11,3 +11,38 @@
   height: 243px;
   width: auto;
 }
+
+.upload-avatar-container {
+  .img-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+  }
+
+  .font-avatar {
+    width: 140px;
+    height: 140px;
+    font-size: 50px;
+    padding: 0.75em;
+  }
+
+  .avatar-edit-container {
+    margin-top: -1.85em;
+
+    .avatar-edit-btn {
+      text-transform: none;
+      background: white;
+      font-size: 14px;
+      padding: 2px 0;
+
+      &:hover {
+        background: white;
+      }
+    }
+
+    .avatar-edit-option {
+      font-size: 16px;
+      min-height: 30px;
+    }
+  }
+}

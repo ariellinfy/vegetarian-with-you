@@ -119,18 +119,22 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
     }
 }
 
-export function* uploadAvatar({ payload: { userAvatar, currentUserToken } }) {
+export function* uploadAvatar({ payload: { restaurantImage, currentUserToken } }) {
     try {
         const formData = new FormData();
-        formData.append("avatar", userAvatar);
+        formData.append("avatar", restaurantImage);
         const url = 'http://localhost:5000/users/uploadavatar';
-        const method = 'PATCH';
-        const headers = null;
-        const body = formData;
-        const user = yield call(request, url, method, headers, body, currentUserToken);
+        const response = yield call(fetch, url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${currentUserToken}`
+            },
+            body: formData
+        });
+        const user = yield response.json();
         if (user !== undefined) {
-            localStorage.setItem('token', user.token);
-            yield put(uploadAvatarSuccess(user.user));
+            // localStorage.setItem('token', user.token);
+            // yield put(uploadAvatarSuccess(user.user));
         } 
     } catch (error) {
         yield put(uploadAvatarFailure(error));
