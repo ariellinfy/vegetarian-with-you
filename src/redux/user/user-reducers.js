@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     currentUser: {},
     authErr: '',
     editProfileErr: '',
+    uploadAvatarErr: '',
     deleteErr: '',
     onEditUserEmail: false,
     adminCurrentPage: 0

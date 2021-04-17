@@ -1,5 +1,7 @@
 import UserActionTypes from './user-types';
 
+// Sign up
+
 export const signUpStart = userCredential => ({
     type: UserActionTypes.SIGN_UP_START,
     payload: userCredential
@@ -15,6 +17,7 @@ export const signUpFailure = error => ({
     payload: error
 });
 
+// Sign in
 
 export const signInStart = userCredential => ({
     type: UserActionTypes.SIGN_IN_START,
@@ -31,6 +34,7 @@ export const signInFailure = error => ({
     payload: error
 });
 
+// Sign out
 
 export const signOutStart = token => ({
     type: UserActionTypes.SIGN_OUT_START,
@@ -46,6 +50,7 @@ export const signOutFailure = error => ({
     payload: error
 });
 
+// Edit profile
 
 export const editProfileStart = userInfo => ({
     type: UserActionTypes.EDIT_PROFILE_START,
@@ -62,22 +67,40 @@ export const editProfileFailure = error => ({
     payload: error
 });
 
+// Upload avatar
 
-export const resetPasswordStart = userCredential => ({
-    type: UserActionTypes.RESET_PASSWORD_START,
-    payload: userCredential
+export const uploadAvatarStart = userInfo => ({
+    type: UserActionTypes.UPLOAD_AVATAR_START,
+    payload: userInfo
 });
 
-export const resetPasswordSuccess = user => ({
-    type: UserActionTypes.RESET_PASSWORD_SUCCESS,
-    payload: user
+export const uploadAvatarSuccess = avatar => ({
+    type: UserActionTypes.UPLOAD_AVATAR_SUCCESS,
+    payload: avatar
 });
 
-export const resetPasswordFailure = error => ({
-    type: UserActionTypes.RESET_PASSWORD_FAILURE,
+export const uploadAvatarFailure = error => ({
+    type: UserActionTypes.UPLOAD_AVATAR_FAILURE,
     payload: error
 });
 
+// Delete avatar
+
+export const deleteAvatarStart = userInfo => ({
+    type: UserActionTypes.DELETE_AVATAR_START,
+    payload: userInfo
+});
+
+export const deleteAvatarSuccess = () => ({
+    type: UserActionTypes.DELETE_AVATAR_SUCCESS,
+});
+
+export const deleteAvatarFailure = error => ({
+    type: UserActionTypes.DELETE_AVATAR_FAILURE,
+    payload: error
+});
+
+// Set email field status
 
 export const onEditUserEmail  = () => ({
     type: UserActionTypes.CHANGE_EDIT_EMAIL_STATUS
@@ -86,6 +109,8 @@ export const onEditUserEmail  = () => ({
 export const resetEditUserEmail  = () => ({
     type: UserActionTypes.RESET_EDIT_EMAIL_STATUS
 });
+
+// Update email
 
 export const updateEmailStart = userCredential => ({
     type: UserActionTypes.UPDATE_EMAIL_START,
@@ -102,16 +127,24 @@ export const updateEmailFailure = error => ({
     payload: error
 });
 
+// Reset password
 
-export const setAdminCurrentPage  = pageNumber => ({
-    type: UserActionTypes.SET_ADMIN_CURRENT_PAGE,
-    payload: pageNumber
+export const resetPasswordStart = userCredential => ({
+    type: UserActionTypes.RESET_PASSWORD_START,
+    payload: userCredential
 });
 
-export const resetAdminCurrentPage  = () => ({
-    type: UserActionTypes.RESET_ADMIN_CURRENT_PAGE,
+export const resetPasswordSuccess = user => ({
+    type: UserActionTypes.RESET_PASSWORD_SUCCESS,
+    payload: user
 });
 
+export const resetPasswordFailure = error => ({
+    type: UserActionTypes.RESET_PASSWORD_FAILURE,
+    payload: error
+});
+
+// Close account
 
 export const closeAccountStart = userCredential => ({
     type: UserActionTypes.CLOSE_ACCOUNT_START,
@@ -126,4 +159,15 @@ export const closeAccountSuccess = user => ({
 export const closeAccountFailure = error => ({
     type: UserActionTypes.CLOSE_ACCOUNT_FAILURE,
     payload: error
+});
+
+// Set admin page tabs
+
+export const setAdminCurrentPage  = pageNumber => ({
+    type: UserActionTypes.SET_ADMIN_CURRENT_PAGE,
+    payload: pageNumber
+});
+
+export const resetAdminCurrentPage  = () => ({
+    type: UserActionTypes.RESET_ADMIN_CURRENT_PAGE,
 });

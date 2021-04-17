@@ -1,51 +1,38 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { uploadAvatarFailure } from '../../redux/user/user-actions';
 
 import EditProfile from '../../components/edit-profile/edit-profile-component';
+import UploadAvatar from '../../components/upload-avatar/upload-avatar-component';
 import { Avatar, Button, Paper, Typography, Menu, MenuItem } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EventIcon from '@material-ui/icons/Event';
 import CreateIcon from '@material-ui/icons/Create';
 import './user-profile-style.scss';
 
-const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined } }) => {
+const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined, uploadAvatarFailure } }) => {
 
-    const [open, setOpen] = useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const [userAvatar, setAvatar] = useState(avatar);
-
+    const [openEditProfile, setEditProfileOpen] = useState(false);
+    const [openUploadAvatar, setUploadAvatarOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleAvatarClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleAvatarClose = () => {
-      setAnchorEl(null);
-    };
+    const [userAvatar, setAvatar] = useState(avatar);
 
     const onChangeFile = event => {
         const imageFile = event.target.files[0];
         console.log(imageFile);
 
-        // if (!imageFile) {
-        // //   uploadProfileImageTypeError('Please select an image.')
-        //   return false;
-        // }
-        // if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|HEIC)$/)) {
-        // //   uploadProfileImageTypeError('File type must be .jpg/jpeg, .png, .HEIC')
-        //   return false;
-        // } else {
+        if (!imageFile) {
+            uploadAvatarFailure('Please select an image.')
+          return false;
+        }
+        if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
+            uploadAvatarFailure('File type must be .jpg/jpeg or .png')
+          return false;
+        } else {
             setAvatar(URL.createObjectURL(imageFile));
-        // //   uploadProfileImage(currentUserToken, imageFile);
-        // }
+            setUploadAvatarOpen(true);
+        }
     };
 
     const handleRemoveAvatar = () => {
@@ -66,7 +53,7 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                                 aria-controls="edit-avatar"
                                 aria-haspopup="true"
                                 variant="outlined"
-                                onClick={handleAvatarClick}
+                                onClick={(event) => setAnchorEl(event.currentTarget)}
                                 size="small"
                                 className='avatar-edit-btn'
                             >
@@ -77,9 +64,9 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                                 anchorEl={anchorEl}
                                 keepMounted
                                 open={Boolean(anchorEl)}
-                                onClose={handleAvatarClose}
+                                onClose={() => setAnchorEl(null)}
                                 >
-                                <MenuItem onClick={handleAvatarClose} className='avatar-edit-option'>
+                                <MenuItem onClick={() => setAnchorEl(null)} className='avatar-edit-option'>
                                     <input 
                                         accept="image/*" 
                                         id="upload-avatar"
@@ -95,6 +82,7 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                                 <MenuItem onClick={handleRemoveAvatar} className='avatar-edit-option'>Remove photo</MenuItem>
                             </Menu>
                         </div>
+                        <UploadAvatar avatar={userAvatar} open={openUploadAvatar} handleClose={() => setUploadAvatarOpen(false)} />
                     </div>
                 
                     <div className='user-info'>
@@ -118,10 +106,10 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                 {
                     user_id ? (
                         <div className='profile-header-2'>
-                            <Button className="update-button" variant="contained" color="primary" onClick={handleClickOpen}>
+                            <Button className="update-button" variant="contained" color="primary" onClick={() => setEditProfileOpen(true)}>
                                 Update Profile
                             </Button>
-                            <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
+                            <EditProfile publicName={public_name} location={location} open={openEditProfile} handleClose={() => setEditProfileOpen(false)} />
                         </div>
                     ) : (
                         <div className='profile-header-2'>
@@ -141,10 +129,10 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                         ) : (
                             user_id ? (
                                 <div>
-                                    <Button className="review-button" color="primary" onClick={handleClickOpen}>
+                                    <Button className="review-button" color="primary" onClick={() => setEditProfileOpen(true)}>
                                         Add your current city
                                     </Button>
-                                    <EditProfile publicName={public_name} location={location} open={open} handleClose={handleClose} />
+                                    <EditProfile publicName={public_name} location={location} open={openEditProfile} handleClose={() => setEditProfileOpen(false)} />
                                 </div>
                             ) : (
                                 <div>
@@ -179,6 +167,10 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
             </Paper>
         </div>
     )
-}
+};
 
-export default UserProfile;
+const mapDispatchToProps = dispatch => ({
+    uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error))
+});
+
+export default React.memo(connect(null, mapDispatchToProps)(UserProfile));
