@@ -11,6 +11,21 @@ function getRadianAngle(degreeValue) {
   return (degreeValue * Math.PI) / 180;
 };
 
+function dataURLtoFile(dataurl, filename) {
+  console.log(dataurl);
+  let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), 
+      n = bstr.length, 
+      u8arr = new Uint8Array(n);
+          
+  while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+  }
+  let croppedImage = new File([u8arr], filename, {type:mime});
+  return croppedImage;
+};
+
 /**
  * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
  * @param {File} image - Image File url
@@ -55,12 +70,26 @@ export default async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
   );
 
   // As Base64 string
-  return canvas.toDataURL('image/jpeg');
+  // return canvas.toDataURL('image/jpeg');
 
   // As a blob
-//   return new Promise(resolve => {
-//     canvas.toBlob(file => {
-//       resolve(URL.createObjectURL(file))
-//     }, 'image/jpeg')
-//   });
+  // return new Promise(resolve => {
+  //   canvas.toBlob(file => {
+  //     resolve(URL.createObjectURL(file));
+  //   }, 'image/jpeg')
+  // });
+
+  // As image
+  return new Promise(resolve => {
+    canvas.toBlob(async (file) => {
+      console.log(file);
+        const reader = new FileReader();
+        await reader.readAsDataURL(file);
+        reader.onloadend = async () => {
+          console.log(reader.result);
+          await dataURLtoFile(reader.result, 'cropped.jpg')
+        };
+      resolve(reader.onloadend);
+    }, 'image/jpeg')
+  });
 };

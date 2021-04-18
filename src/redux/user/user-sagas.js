@@ -119,10 +119,10 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
     }
 }
 
-export function* uploadAvatar({ payload: { restaurantImage, currentUserToken } }) {
+export function* uploadAvatar({ payload: { uploadAvatar, currentUserToken } }) {
     try {
         const formData = new FormData();
-        formData.append("avatar", restaurantImage);
+        formData.append('avatar', uploadAvatar);
         const url = 'http://localhost:5000/users/uploadavatar';
         const response = yield call(fetch, url, {
             method: 'POST',

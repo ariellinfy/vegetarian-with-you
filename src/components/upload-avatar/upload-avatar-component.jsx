@@ -69,7 +69,8 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
     const handleSubmit = async (event) => {
         event.preventDefault();
         await getCroppedImage();
-        await uploadAvatarStart({ restaurantImage, currentUserToken });
+        console.log(uploadAvatar);
+        await uploadAvatarStart({ uploadAvatar, currentUserToken });
     };
 
     const handleRemoveAvatar = () => {
@@ -119,7 +120,7 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
             <Dialog open={openUploadAvatar} onClose={() => setUploadAvatarOpen(false)}>
                 <DialogTitle>Crop your new profile picture</DialogTitle>
                 <Divider />
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <DialogContent className={classes.content}>
                         <div className='crop-container'>
                             <Cropper
