@@ -26,7 +26,7 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
             <Paper className='profile-header'>
                 <div className='profile-header-1'>
                     <div className='user-avatar'>
-                        <UploadAvatar avatar={avatar} publicName={public_name} />
+                        <UploadAvatar avatar={avatar} userId={user_id} publicName={public_name} />
                     </div>
                 
                     <div className='user-info'>

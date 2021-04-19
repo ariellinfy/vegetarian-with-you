@@ -12,7 +12,6 @@ function getRadianAngle(degreeValue) {
 };
 
 function dataURLtoFile(dataurl, filename) {
-  console.log(dataurl);
   let arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]), 
@@ -31,8 +30,9 @@ function dataURLtoFile(dataurl, filename) {
  * @param {File} image - Image File url
  * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
  * @param {number} rotation - optional rotation parameter
+ * @param {string} filename - origin file name
  */
-export default async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
+export default async function getCroppedImg(imageSrc, pixelCrop, rotation = 0, filename) {
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
@@ -81,15 +81,8 @@ export default async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
 
   // As image
   return new Promise(resolve => {
-    canvas.toBlob(async (file) => {
-      console.log(file);
-        const reader = new FileReader();
-        await reader.readAsDataURL(file);
-        reader.onloadend = async () => {
-          console.log(reader.result);
-          await dataURLtoFile(reader.result, 'cropped.jpg')
-        };
-      resolve(reader.onloadend);
-    }, 'image/jpeg')
+    const dataUrl = canvas.toDataURL('image/jpeg');
+    const cropped = dataURLtoFile(dataUrl, filename);
+    resolve(cropped);
   });
 };

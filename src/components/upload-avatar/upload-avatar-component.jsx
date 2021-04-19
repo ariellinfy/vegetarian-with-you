@@ -2,11 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart } from '../../redux/user/user-actions';
 
-import restaurantImage from "../../assets/background/temp.jpg";
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './crop-image';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider } from '@material-ui/core';
+import { Avatar, Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography } from '@material-ui/core';
 import './upload-avatar-style.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,22 +21,23 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
+const UploadAvatar = ({ avatar, userId, publicName, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
 
-    console.log(avatar)
+    console.log(avatar);
 
-    const [uploadAvatar, setAvatar] = useState(null);
+    const [uploadAvatar, setUploadAvatar] = useState(null);
+    let croppedAvatar = null;
     const [openUploadAvatar, setUploadAvatarOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [rotation, setRotation] = useState(0);
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
     const onChangeFile = event => {
         const imageFile = event.target.files[0];
-        console.log(imageFile);
 
         if (!imageFile) {
             uploadAvatarFailure('Please select an image.')
@@ -47,7 +47,7 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
             uploadAvatarFailure('File type must be .jpg/jpeg or .png')
           return false;
         } else {
-            setAvatar(URL.createObjectURL(imageFile));
+            setUploadAvatar(URL.createObjectURL(imageFile));
             setUploadAvatarOpen(true);
         }
     };
@@ -58,9 +58,8 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
 
     const getCroppedImage = useCallback(async () => {
         try {
-          const croppedImage = await getCroppedImg(uploadAvatar, croppedAreaPixels);
-          console.log('donee', { croppedImage });
-          setAvatar(croppedImage);
+            croppedAvatar = await getCroppedImg(uploadAvatar, croppedAreaPixels, rotation, `${userId}.jpg`);
+            return croppedAvatar;
         } catch (e) {
           console.error(e);
         }
@@ -68,9 +67,8 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await getCroppedImage();
-        console.log(uploadAvatar);
-        await uploadAvatarStart({ uploadAvatar, currentUserToken });
+        croppedAvatar = await getCroppedImage();
+        await uploadAvatarStart({ croppedAvatar, currentUserToken });
     };
 
     const handleRemoveAvatar = () => {
@@ -126,16 +124,17 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
                             <Cropper
                                 image={uploadAvatar}
                                 crop={crop}
+                                rotation={rotation}
                                 zoom={zoom}
                                 aspect={1}
                                 cropShape="round"
-                                // showGrid={false}
                                 onCropChange={setCrop}
                                 onCropComplete={onCropComplete}
                                 onZoomChange={setZoom}
                             />
                         </div>
-                        <div>
+                        <div className='slider-container'>
+                            <Typography variant="overline" className='slider-label'>Zoom</Typography>
                             <Slider
                                 value={zoom}
                                 min={1}
@@ -143,6 +142,17 @@ const UploadAvatar = ({ avatar, publicName, uploadAvatarStart, uploadAvatarFailu
                                 step={0.1}
                                 aria-labelledby="Zoom"
                                 onChange={(e, zoom) => setZoom(zoom)}
+                            />
+                        </div>
+                        <div className='slider-container'>
+                            <Typography variant="overline" className='slider-label'>Rotation</Typography>
+                            <Slider
+                                value={rotation}
+                                min={0}
+                                max={360}
+                                step={36}
+                                aria-labelledby="Rotation"
+                                onChange={(e, rotation) => setRotation(rotation)}
                             />
                         </div>
                     </DialogContent>

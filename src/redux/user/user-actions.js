@@ -74,9 +74,9 @@ export const uploadAvatarStart = userInfo => ({
     payload: userInfo
 });
 
-export const uploadAvatarSuccess = avatar => ({
+export const uploadAvatarSuccess = user => ({
     type: UserActionTypes.UPLOAD_AVATAR_SUCCESS,
-    payload: avatar
+    payload: user
 });
 
 export const uploadAvatarFailure = error => ({

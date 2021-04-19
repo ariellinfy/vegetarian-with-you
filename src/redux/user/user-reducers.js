@@ -39,6 +39,12 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 currentUser: {},
                 deleteErr: '',
             };
+        case UserActionTypes.UPLOAD_AVATAR_SUCCESS:
+            return {
+                ...state,
+                currentUser: action.payload,
+                uploadAvatarErr: ''
+            };
         case UserActionTypes.SIGN_UP_FAILURE:
         case UserActionTypes.SIGN_IN_FAILURE:
         case UserActionTypes.SIGN_OUT_FAILURE:
@@ -57,6 +63,11 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 deleteErr: action.payload
+            };
+        case UserActionTypes.UPLOAD_AVATAR_FAILURE:
+            return {
+                ...state,
+                uploadAvatarErr: action.payload
             };
         case UserActionTypes.CHANGE_EDIT_EMAIL_STATUS:
             return {
