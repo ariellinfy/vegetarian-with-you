@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ userId, uploadAvatarStart, uploadAvatarFailure, setAvatarUrl, deleteAvatarStart, resetAvatarUrl }) => {
+const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, setAvatarUrl, deleteAvatarStart, resetAvatarUrl }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
 
@@ -72,7 +72,7 @@ const UploadAvatar = ({ userId, uploadAvatarStart, uploadAvatarFailure, setAvata
     };
 
     const handleRemoveAvatar = () => {
-        deleteAvatarStart({ currentUserToken });
+        deleteAvatarStart({ avatar, currentUserToken });
         resetAvatarUrl();
         setAnchorEl(null);
     };

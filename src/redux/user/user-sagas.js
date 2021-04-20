@@ -141,12 +141,14 @@ export function* uploadAvatar({ payload: { croppedAvatar, currentUserToken } }) 
     }
 }
 
-export function* deleteAvatar({ payload: { currentUserToken } }) {
+export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users/deleteavatar';
         const method = 'DELETE';
         const headers = null;
-        const body = null;
+        const body = JSON.stringify({
+            avatar: avatar
+        });
         const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
