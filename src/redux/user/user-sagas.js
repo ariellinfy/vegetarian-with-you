@@ -150,7 +150,7 @@ export function* deleteAvatar({ payload: { currentUserToken } }) {
         const user = yield call(request, url, method, headers, body, currentUserToken);
         if (user !== undefined) {
             localStorage.setItem('token', user.token);
-            yield put(deleteAvatarSuccess());
+            yield put(deleteAvatarSuccess(user.data));
         } 
     } catch (error) {
         yield put(deleteAvatarFailure(error));

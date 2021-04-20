@@ -13,17 +13,12 @@
 }
 
 .upload-avatar-container {
-  .img-avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-  }
+  width: 140px;
+  height: 140px;
 
-  .font-avatar {
-    width: 140px;
-    height: 140px;
-    font-size: 50px;
-    padding: 0.75em;
+  @media screen and (max-width: 600px) {
+    width: 130px;
+    height: 130px;
   }
 
   .avatar-edit-container {

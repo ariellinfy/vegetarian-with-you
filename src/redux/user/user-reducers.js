@@ -2,6 +2,7 @@ import UserActionTypes from './user-types';
 
 const INITIAL_STATE = {
     currentUser: {},
+    avatarUrl: '',
     authErr: '',
     editProfileErr: '',
     uploadAvatarErr: '',
@@ -40,11 +41,13 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 deleteErr: '',
             };
         case UserActionTypes.UPLOAD_AVATAR_SUCCESS:
+        case UserActionTypes.DELETE_AVATAR_SUCCESS:
             return {
                 ...state,
                 currentUser: action.payload,
                 uploadAvatarErr: ''
             };
+            
         case UserActionTypes.SIGN_UP_FAILURE:
         case UserActionTypes.SIGN_IN_FAILURE:
         case UserActionTypes.SIGN_OUT_FAILURE:
@@ -65,10 +68,23 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 deleteErr: action.payload
             };
         case UserActionTypes.UPLOAD_AVATAR_FAILURE:
+        case UserActionTypes.DELETE_AVATAR_FAILURE:
             return {
                 ...state,
                 uploadAvatarErr: action.payload
             };
+
+        case UserActionTypes.SET_AVATAR_URL:
+            return {
+                ...state,
+                avatarUrl: `http://localhost:5000/users/${action.payload}.jpg`
+            };
+        case UserActionTypes.RESET_AVATAR_URL:
+            return {
+                ...state,
+                avatarUrl: ''
+            };
+
         case UserActionTypes.CHANGE_EDIT_EMAIL_STATUS:
             return {
                 ...state,
@@ -79,6 +95,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 onEditUserEmail: false
             };
+            
         case UserActionTypes.SET_ADMIN_CURRENT_PAGE:
             return {
                 ...state,

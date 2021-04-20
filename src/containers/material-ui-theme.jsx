@@ -109,6 +109,11 @@ let theme = createMuiTheme({
                 }
             },
         },
+        MuiIconButton: {
+            label: {
+                height: '100%'
+            }
+        },
         MuiInputBase: {
             root: {
                 fontSize: '0.85rem',
@@ -185,6 +190,14 @@ let theme = createMuiTheme({
                 }
             },
         },
+        MuiAvatar: {
+            root: {
+                fontSize: '2.5rem',
+                [defaultTheme.breakpoints.up("sm")]: {
+                    fontSize: '3rem'
+                },
+            }
+        }
     }
   });
   

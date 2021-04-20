@@ -84,6 +84,17 @@ export const uploadAvatarFailure = error => ({
     payload: error
 });
 
+// Set user avatar url
+
+export const setAvatarUrl  = userId => ({
+    type: UserActionTypes.SET_AVATAR_URL,
+    payload: userId
+});
+
+export const resetAvatarUrl  = () => ({
+    type: UserActionTypes.RESET_AVATAR_URL,
+});
+
 // Delete avatar
 
 export const deleteAvatarStart = userInfo => ({
@@ -91,8 +102,9 @@ export const deleteAvatarStart = userInfo => ({
     payload: userInfo
 });
 
-export const deleteAvatarSuccess = () => ({
+export const deleteAvatarSuccess = user => ({
     type: UserActionTypes.DELETE_AVATAR_SUCCESS,
+    payload: user
 });
 
 export const deleteAvatarFailure = error => ({

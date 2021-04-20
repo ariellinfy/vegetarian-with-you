@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
-import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
+import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, resetAvatarUrl } from '../../redux/user/user-actions';
 import { resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 
+import UserAvatar from '../user-avatar/user-avatar-component';
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -14,7 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail,
+const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, resetAvatarUrl, 
     resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus }) => {
 
     const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
@@ -57,6 +58,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         resetUpdateReviewStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
+        resetAvatarUrl();
         resetAdminCurrentPage();
         signOutStart({ currentUserToken });
         setAnchorEl(null);
@@ -91,7 +93,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                     color="primary"
                                     className='header-setting-btn'
                                 >
-                                    <i className="fa fa-user-circle"></i>
+                                    <UserAvatar />
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -133,7 +135,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                     color="primary"
                                     className='header-setting-btn'
                                 >
-                                    <i className="fa fa-user-circle"></i>
+                                    <MoreVertIcon />
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -201,7 +203,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
 };
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+    currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -209,6 +211,7 @@ const mapDispatchToProps = dispatch => ({
     setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber)),
     resetAdminCurrentPage: () => dispatch(resetAdminCurrentPage()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetAvatarUrl: () => dispatch(resetAvatarUrl()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),

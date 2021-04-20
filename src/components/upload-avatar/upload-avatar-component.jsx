@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart } from '../../redux/user/user-actions';
+import { uploadAvatarStart, uploadAvatarFailure, setAvatarUrl, deleteAvatarStart, resetAvatarUrl } from '../../redux/user/user-actions';
 
+import UserAvatar from '../user-avatar/user-avatar-component';
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './crop-image';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography } from '@material-ui/core';
+import { Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography } from '@material-ui/core';
 import './upload-avatar-style.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,11 +22,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ avatar, userId, publicName, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
+const UploadAvatar = ({ userId, uploadAvatarStart, uploadAvatarFailure, setAvatarUrl, deleteAvatarStart, resetAvatarUrl }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
-
-    console.log(avatar);
 
     const [uploadAvatar, setUploadAvatar] = useState(null);
     let croppedAvatar = null;
@@ -69,17 +68,19 @@ const UploadAvatar = ({ avatar, userId, publicName, uploadAvatarStart, uploadAva
         event.preventDefault();
         croppedAvatar = await getCroppedImage();
         await uploadAvatarStart({ croppedAvatar, currentUserToken });
+        await setAvatarUrl(userId);
     };
 
     const handleRemoveAvatar = () => {
-        deleteAvatarStart();
+        deleteAvatarStart({ currentUserToken });
+        resetAvatarUrl();
         setAnchorEl(null);
     };
 
     return (
         <div className='upload-avatar-container'>
             {
-                avatar ? <img className='img-avatar' alt={publicName} src={avatar} /> : <Avatar className='font-avatar'>{publicName[0].toUpperCase()}</Avatar>
+                <UserAvatar />
             }
             <div className='avatar-edit-container'>
                 <Button
@@ -173,7 +174,9 @@ const UploadAvatar = ({ avatar, userId, publicName, uploadAvatarStart, uploadAva
 const mapDispatchToProps = dispatch => ({
     uploadAvatarStart: userInfo => dispatch(uploadAvatarStart(userInfo)),
     uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error)),
-    deleteAvatarStart: () => dispatch(deleteAvatarStart())
+    setAvatarUrl: userId => dispatch(setAvatarUrl(userId)),
+    deleteAvatarStart: userInfo => dispatch(deleteAvatarStart(userInfo)),
+    resetAvatarUrl: () => dispatch(resetAvatarUrl())
 });
 
 export default connect(null, mapDispatchToProps)(UploadAvatar);

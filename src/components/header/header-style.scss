@@ -61,6 +61,17 @@
 
       .header-setting-btn {
         margin-left: 0;
+        width: 75px;
+        height: 75px;
+
+        .font-avatar {
+          font-size: 1.5rem;
+        }
+
+        &:hover {
+          background-color: transparent;
+          opacity: 0.85;
+        }
       }
     }
   }

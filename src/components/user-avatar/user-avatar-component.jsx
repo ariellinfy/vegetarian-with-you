@@ -1,24 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../../redux/user/user-selectors';
+import { selectCurrentUser, selectAvatarUrl } from '../../redux/user/user-selectors';
 
-import { Avatar, Typography } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import './user-avatar-style.scss';
 
-const UserAvatar = ({ currentUser }) => {
-    const avatar_image = true;
-    const user_first = (currentUser.public_name).split(' ')[0];
-    const user_last = (currentUser.public_name).split(' ')[1];
-    const user_initial = user_last.length ? (user_first[0] + user_last[0]) : user_first[0];
-
+const UserAvatar = ({ currentUser, avatarUrl }) => {
     return (
-
         <div className='avatar-container'>
             {
                 Object.keys(currentUser).length ? (
-                    avatar_image ? (<div className='user-photo-avatar'></div>) : (<Avatar className='user-initial-avatar'>{user_initial}</Avatar>)
-                ) : (<div className='user-default-avatar'></div>)
+                    currentUser.avatar ? (<img className='img-avatar' alt={currentUser.public_name} src={avatarUrl} />) : (<Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>)
+                ) : (<Avatar className='user-default-avatar' />)
                 
             }
         </div>
@@ -27,6 +21,7 @@ const UserAvatar = ({ currentUser }) => {
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
+    avatarUrl: selectAvatarUrl,
 });
 
 export default connect(mapStateToProps)(UserAvatar);

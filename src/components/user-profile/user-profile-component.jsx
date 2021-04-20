@@ -9,7 +9,7 @@ import EventIcon from '@material-ui/icons/Event';
 import CreateIcon from '@material-ui/icons/Create';
 import './user-profile-style.scss';
 
-const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined } }) => {
+const UserProfile = ({ user: { user_id, public_name, contributions, location, joined } }) => {
 
     const [openEditProfile, setEditProfileOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
             <Paper className='profile-header'>
                 <div className='profile-header-1'>
                     <div className='user-avatar'>
-                        <UploadAvatar avatar={avatar} userId={user_id} publicName={public_name} />
+                        <UploadAvatar userId={user_id} />
                     </div>
                 
                     <div className='user-info'>
