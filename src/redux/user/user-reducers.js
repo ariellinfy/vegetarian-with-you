@@ -2,7 +2,7 @@ import UserActionTypes from './user-types';
 
 const INITIAL_STATE = {
     currentUser: {},
-    avatarUrl: '',
+    requestPending: false,
     authErr: '',
     editProfileErr: '',
     uploadAvatarErr: '',
@@ -15,6 +15,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
         case UserActionTypes.SIGN_UP_SUCCESS:
         case UserActionTypes.SIGN_IN_SUCCESS:
+        case UserActionTypes.REQUEST_USER_SUCCESS:
             return {
                 ...state,
                 currentUser: action.payload,
@@ -51,6 +52,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case UserActionTypes.SIGN_UP_FAILURE:
         case UserActionTypes.SIGN_IN_FAILURE:
         case UserActionTypes.SIGN_OUT_FAILURE:
+        case UserActionTypes.REQUEST_USER_FAILURE:
             return {
                 ...state,
                 authErr: action.payload
@@ -72,17 +74,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 uploadAvatarErr: action.payload
-            };
-
-        case UserActionTypes.SET_AVATAR_URL:
-            return {
-                ...state,
-                avatarUrl: `http://localhost:5000/users/${action.payload}.jpg`
-            };
-        case UserActionTypes.RESET_AVATAR_URL:
-            return {
-                ...state,
-                avatarUrl: ''
             };
 
         case UserActionTypes.CHANGE_EDIT_EMAIL_STATUS:

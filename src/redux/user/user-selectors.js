@@ -7,5 +7,3 @@ export const selectCurrentUser = createSelector([selectUser], user => user.curre
 export const selectEditEmailStatus = createSelector([selectUser], user => user.onEditUserEmail);
 
 export const selectAdminCurrentPage = createSelector([selectUser], user => user.adminCurrentPage);
-
-export const selectAvatarUrl = createSelector([selectUser], user => user.avatarUrl);

@@ -48,7 +48,7 @@ const RestaurantReview = ({ currentUser, reviewCount, restaurantId, query,
             </div>
             {
                 reviewsCollection.map(review => (
-                    <ReviewPreview key={review.review_id} currentUser={currentUser} review={review} restaurantId={restaurantId} />
+                    <ReviewPreview key={review.review_id} currentUser={currentUser} review={review} query={query} />
                 ))
             }
         </div>

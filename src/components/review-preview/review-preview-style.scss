@@ -62,6 +62,36 @@
     .header-user {
       color: rgb(75, 75, 75);
     }
+
+    .header-user-data-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      color: #388e3c;
+
+      @media screen and (max-width: 600px) {
+        justify-content: space-around;
+      }
+
+      .user-data {
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-right: 0.25em;
+          font-size: 1rem;
+
+          @media screen and (max-width: 600px) {
+            font-size: 0.8rem;
+            margin-right: 0.2em;
+          }
+        }
+      }
+
+      .header-user {
+        color: #388e3c;
+      }
+    }
   }
 
   .card-body {
@@ -190,6 +220,12 @@
 
       .feedback {
         display: flex;
+        align-items: center;
+
+        .feedback-icon {
+          font-size: 20px;
+          margin-right: 0.2em;
+        }
 
         .feedback-body {
           margin-left: 0.25em;

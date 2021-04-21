@@ -58,7 +58,7 @@ const CloseAccount = ({ email, open, handleClose, closeAccountStart }) => {
                         <Button onClick={handleClose} variant="outlined" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
+                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit" disabled = {confirmPassword.length ? false : true}>
                             Close account
                         </Button>
                     </DialogActions>

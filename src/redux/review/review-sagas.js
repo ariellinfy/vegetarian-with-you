@@ -163,13 +163,13 @@ export function* requestUserReviews({ payload }) {
     }
 }
 
-export function* reviewHelpful({ payload: { restaurantId, review_id, userHelpful, currentUserToken } }) {
+export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpful, currentUserToken } }) {
     try {
         const url = `http://localhost:5000/onreview/reviewhelpful`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
-            restaurantId: restaurantId,
+            restaurantId: restaurant_id,
             reviewId: review_id,
             userHelpful: userHelpful
         });
@@ -203,13 +203,15 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
     }
 }
 
-export function* deleteReview({ payload: { reviewId, email, password, currentUserToken } }) {
+export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete, currentUserToken } }) {
     try {
         const url = `http://localhost:5000/onreview/deletereview`;
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
             reviewId: reviewId,
+            restaurantId: restaurantId,
+            confirmDelete: confirmDelete
         });
         const token = yield call(request, url, method, headers, body, currentUserToken);
         if (token !== undefined) {

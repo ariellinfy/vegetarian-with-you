@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
 
-import ReportForm from '../../components/report-form/report-form-component';
+import DeleteReview from '../delete-review/delete-review-component';
+import ReportForm from '../report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile, Menu, MenuItem, IconButton } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import { green } from '@material-ui/core/colors';
@@ -11,6 +12,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ReportIcon from '@material-ui/icons/Report';
+import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import './review-preview-style.scss';
 
 const images = [
@@ -28,12 +31,12 @@ const images = [
     },
 ];
 
-const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
+const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
-    const { review_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
-        user_helpful, helpful_count, review_owner, create_at, public_name, avatar, contributions } = review;
+    const { review_id, restaurant_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
+        user_helpful, helpful_count, review_owner, create_at, public_name, avatar, contributions, helpful_votes } = review;
 
     const createDate = (create_at || '').split('T')[0];
 
@@ -53,7 +56,7 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                 userHelpful: true, 
                 helpfulCount: helpfulCount+1
             });
-            reviewHelpfulStart({ restaurantId, review_id, userHelpful, currentUserToken });
+            reviewHelpfulStart({ restaurant_id, review_id, userHelpful, currentUserToken });
         } else {
             history.push('/signin');
         }
@@ -61,18 +64,18 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
 
     // handle review report
 
-    const [open, setOpen] = useState(false);
+    const [openReport, setOpenReport] = useState(false);
 
     const handleReportClick = () => {
         if(Object.keys(currentUser).length !== 0) {
-            setOpen(true);
+            setOpenReport(true);
         } else {
             history.push('/signin');
         }
     };
 
     const handleReportClose = () => {
-        setOpen(false);
+        setOpenReport(false);
     };
 
     // handle update review
@@ -92,9 +95,18 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
         history.push('/updatereview');
         setAnchorEl(null);
     };
+    
+    // handle delete review
 
-    const handleDeleteReview = () => {
+    const [openDeleteReview, setOpenDeleteReview] = useState(false);
+
+    const handleClickOpenDeleteReview = () => {
         setAnchorEl(null);
+        setOpenDeleteReview(true);
+    };
+
+    const handleCloseDeleteReview = () => {
+        setOpenDeleteReview(false);
     };
 
     return (
@@ -102,11 +114,28 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
             <div className='card-header'>
                 <div className='header-avatar'>
                     {
-                        avatar ? (<img className='img-avatar' alt={public_name} src={`http://localhost:5000/users/${review_owner}.jpg`} />) : (<Avatar className='font-avatar'>{public_name[0]}</Avatar>)
+                        avatar ? (<img className='img-avatar' alt={public_name} src={`http://localhost:5000/public/uploads/users/${review_owner}.jpg`} />) : (<Avatar className='font-avatar'>{public_name[0]}</Avatar>)
                     }
                 </div>
                 <Typography className='header-user' variant="subtitle1">{public_name}</Typography>
-                <Typography className='header-user' variant="body">{contributions}</Typography>
+                <div className='header-user-data-container'>
+                    {
+                        contributions ? (
+                            <div className='user-data'>
+                                <RateReviewOutlinedIcon fontSize="small" />
+                                <Typography className='header-user' variant="subtitle2">{contributions}</Typography>
+                            </div>
+                        ) : null
+                    }
+                    {
+                        helpful_votes ? (
+                            <div className='user-data'>
+                                <ThumbUpOutlinedIcon fontSize="small" />
+                                <Typography className='header-user' variant="subtitle2">{helpful_votes}</Typography>
+                            </div>
+                        ) : null
+                    }
+                </div>
             </div>
             
             <div className='card-body'>
@@ -143,7 +172,8 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                                     onClose={handleReviewClose}
                                 >
                                     <MenuItem onClick={handleUpdateReview} >Update Review</MenuItem>
-                                    <MenuItem onClick={handleDeleteReview} >Delete Review</MenuItem>
+                                    <MenuItem onClick={handleClickOpenDeleteReview} >Delete Review</MenuItem>
+                                    <DeleteReview restaurantId={restaurant_id} reviewId={review_id} query={query} open={openDeleteReview} handleClose={handleCloseDeleteReview}/>
                                 </Menu>
                             </div>
                         ) : null
@@ -183,7 +213,7 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                     {
                         userHelpful ? (
                             <div className='feedback'>
-                                <CheckCircleIcon fontSize="small" style={{ color: green[700] }} />
+                                <CheckCircleIcon className='feedback-icon' fontSize="small" style={{ color: green[700] }} />
                                 <Typography className='feedback-body' variant="body2">Thank you for your feedback.</Typography>
                             </div>
                         ) : (
@@ -197,7 +227,7 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
                         <Button color="secondary" className='report-btn' onClick={handleReportClick} startIcon={<ReportIcon />}>
                             Report
                         </Button>
-                        <ReportForm restaurantId={restaurantId} reviewId={review_id} open={open} handleClose={handleReportClose} />
+                        <ReportForm restaurantId={restaurant_id} reviewId={review_id} open={openReport} handleClose={handleReportClose} />
                     </div>
 
                 </div>

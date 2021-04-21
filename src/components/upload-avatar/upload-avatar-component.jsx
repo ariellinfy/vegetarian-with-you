@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { uploadAvatarStart, uploadAvatarFailure, setAvatarUrl, deleteAvatarStart, resetAvatarUrl } from '../../redux/user/user-actions';
+import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart } from '../../redux/user/user-actions';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
 import Cropper from 'react-easy-crop';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, setAvatarUrl, deleteAvatarStart, resetAvatarUrl }) => {
+const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
 
@@ -68,19 +68,17 @@ const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, 
         event.preventDefault();
         croppedAvatar = await getCroppedImage();
         await uploadAvatarStart({ croppedAvatar, currentUserToken });
-        await setAvatarUrl(userId);
     };
 
     const handleRemoveAvatar = () => {
         deleteAvatarStart({ avatar, currentUserToken });
-        resetAvatarUrl();
         setAnchorEl(null);
     };
 
     return (
         <div className='upload-avatar-container'>
             {
-                <UserAvatar />
+                <UserAvatar avatar={avatar} />
             }
             <div className='avatar-edit-container'>
                 <Button
@@ -174,9 +172,7 @@ const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, 
 const mapDispatchToProps = dispatch => ({
     uploadAvatarStart: userInfo => dispatch(uploadAvatarStart(userInfo)),
     uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error)),
-    setAvatarUrl: userId => dispatch(setAvatarUrl(userId)),
     deleteAvatarStart: userInfo => dispatch(deleteAvatarStart(userInfo)),
-    resetAvatarUrl: () => dispatch(resetAvatarUrl())
 });
 
 export default connect(null, mapDispatchToProps)(UploadAvatar);

@@ -91,17 +91,9 @@ const ReportForm = ({ restaurantId, reviewId, open, handleClose, reportReviewSta
                         <Button onClick={handleClose} variant="outlined" color="primary">
                             Cancel
                         </Button>
-                        {
-                            reportText.length ? (
-                                <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
-                                    Report
-                                </Button>
-                            ) : (
-                                <Button variant="contained" color="secondary" type="submit" disabled>
-                                    Report
-                                </Button>
-                            )
-                        }
+                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit" disabled = {reportText.length ? false : true}>
+                            Report
+                        </Button>
                     </DialogActions>
                 </form>
             </Dialog>

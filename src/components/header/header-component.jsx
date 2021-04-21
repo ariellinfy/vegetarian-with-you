@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
-import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, resetAvatarUrl } from '../../redux/user/user-actions';
+import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
 import { resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 
@@ -15,7 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, resetAvatarUrl, 
+const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, 
     resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus }) => {
 
     const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
@@ -58,7 +58,6 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         resetUpdateReviewStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
-        resetAvatarUrl();
         resetAdminCurrentPage();
         signOutStart({ currentUserToken });
         setAnchorEl(null);
@@ -93,7 +92,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
                                     color="primary"
                                     className='header-setting-btn'
                                 >
-                                    <UserAvatar />
+                                    <UserAvatar avatar={currentUser.avatar} />
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -211,7 +210,6 @@ const mapDispatchToProps = dispatch => ({
     setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber)),
     resetAdminCurrentPage: () => dispatch(resetAdminCurrentPage()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),
-    resetAvatarUrl: () => dispatch(resetAvatarUrl()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),

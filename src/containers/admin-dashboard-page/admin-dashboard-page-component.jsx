@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser, selectAdminCurrentPage } from '../../redux/user/user-selectors';
 import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, requestUserReviewsStart } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { setAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
 
 import { Tabs, Tab } from '@material-ui/core';
@@ -12,11 +12,9 @@ import AccountInfo from '../../components/account-info/account-info-component';
 import UserReviews from '../../components/user-reviews/user-reviews-component';
 import './admin-dashboard-page-style.scss';
 
-const AdminDashboardPage = ({ currentUser, adminCurrentPage, requestUserReviewsStart, setAdminCurrentPage, resetEditUserEmail, 
+const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage, resetEditUserEmail, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
-    
-    let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
 
     useEffect(() => {
         resetRequestRestaurantsStatus();
@@ -28,7 +26,6 @@ const AdminDashboardPage = ({ currentUser, adminCurrentPage, requestUserReviewsS
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
-        requestUserReviewsStart(currentUserToken);
     }, []);
 
     useEffect(() => {
@@ -80,7 +77,6 @@ const mapDispatchToProps = dispatch => ({
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),
-    requestUserReviewsStart: currentUserToken => dispatch(requestUserReviewsStart(currentUserToken)),
     setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber))
 });
 

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { requestUserStart } from '../../redux/user/user-actions';
 
 import EditProfile from '../../components/edit-profile/edit-profile-component';
 import UploadAvatar from '../../components/upload-avatar/upload-avatar-component';
@@ -9,7 +11,13 @@ import EventIcon from '@material-ui/icons/Event';
 import CreateIcon from '@material-ui/icons/Create';
 import './user-profile-style.scss';
 
-const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined } }) => {
+const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined }, requestUserStart }) => {
+
+    let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
+
+    useEffect(() => {
+        requestUserStart({ currentUserToken });
+    }, []);
 
     const [openEditProfile, setEditProfileOpen] = useState(false);
 
@@ -113,4 +121,8 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
     )
 };
 
-export default UserProfile;
+const mapDispatchToProps = dispatch => ({
+    requestUserStart: currentUserToken => dispatch(requestUserStart(currentUserToken)),
+});
+
+export default connect(null, mapDispatchToProps)(UserProfile);

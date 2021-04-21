@@ -1,5 +1,22 @@
 import UserActionTypes from './user-types';
 
+// Request user info
+
+export const requestUserStart = currentUserToken => ({
+    type: UserActionTypes.REQUEST_USER_START,
+    payload: currentUserToken
+});
+
+export const requestUserSuccess = user => ({
+    type: UserActionTypes.REQUEST_USER_SUCCESS,
+    payload: user
+});
+
+export const requestUserFailure = error => ({
+    type: UserActionTypes.REQUEST_USER_FAILURE,
+    payload: error
+});
+
 // Sign up
 
 export const signUpStart = userCredential => ({
@@ -82,17 +99,6 @@ export const uploadAvatarSuccess = user => ({
 export const uploadAvatarFailure = error => ({
     type: UserActionTypes.UPLOAD_AVATAR_FAILURE,
     payload: error
-});
-
-// Set user avatar url
-
-export const setAvatarUrl  = userId => ({
-    type: UserActionTypes.SET_AVATAR_URL,
-    payload: userId
-});
-
-export const resetAvatarUrl  = () => ({
-    type: UserActionTypes.RESET_AVATAR_URL,
 });
 
 // Delete avatar

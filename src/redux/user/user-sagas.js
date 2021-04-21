@@ -4,6 +4,7 @@ import {
     signUpSuccess, signUpFailure, 
     signInSuccess, signInFailure, 
     signOutSuccess, signOutFailure, 
+    requestUserSuccess, requestUserFailure,
     editProfileSuccess, editProfileFailure, 
     uploadAvatarSuccess, uploadAvatarFailure, 
     deleteAvatarSuccess, deleteAvatarFailure, 
@@ -97,6 +98,22 @@ export function* signOut({ payload: { currentUserToken } }) {
         yield put(signOutSuccess());
     } catch (error) {
         yield put(signOutFailure(error));
+    }
+}
+
+export function* requestUser({ payload: { currentUserToken } }) {
+    try {
+        const url = 'http://localhost:5000/users';
+        const method = 'GET';
+        const headers = null;
+        const body = null;
+        const user = yield call(request, url, method, headers, body, currentUserToken);
+        if (user !== undefined) {
+            localStorage.setItem('token', user.token);
+            yield put(requestUserSuccess(user.data));
+        }
+    } catch (error) {
+        yield put(requestUserFailure(error));
     }
 }
 
@@ -227,6 +244,10 @@ export function* onSignOutStart() {
     yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
+export function* onRequestUserStart() {
+    yield takeLatest(UserActionTypes.REQUEST_USER_START, requestUser);
+}
+
 export function* onEditProfileStart() {
     yield takeLatest(UserActionTypes.EDIT_PROFILE_START, editProfile);
 }
@@ -256,6 +277,7 @@ export function* userSagas() {
         call(onSignUpStart),
         call(onSignInStart),
         call(onSignOutStart),
+        call(onRequestUserStart),
         call(onEditProfileStart),
         call(onUploadAvatarStart),
         call(onDeleteAvatarStart),
