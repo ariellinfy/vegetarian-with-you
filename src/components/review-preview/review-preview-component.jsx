@@ -33,7 +33,7 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
     const currentUserToken = localStorage.getItem('token');
 
     const { review_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
-        user_helpful, helpful_count, review_owner, create_at } = review;
+        user_helpful, helpful_count, review_owner, create_at, public_name, avatar, contributions } = review;
 
     const createDate = (create_at || '').split('T')[0];
 
@@ -101,9 +101,12 @@ const ReviewPreview = ({ currentUser, review, restaurantId, reviewHelpfulStart, 
         <div className='review-preview'>
             <div className='card-header'>
                 <div className='header-avatar'>
-                    <Avatar className='avatar'>A</Avatar>
+                    {
+                        avatar ? (<img className='img-avatar' alt={public_name} src={`http://localhost:5000/users/${review_owner}.jpg`} />) : (<Avatar className='font-avatar'>{public_name[0]}</Avatar>)
+                    }
                 </div>
-                <div className='header-user'>username</div>
+                <Typography className='header-user' variant="subtitle1">{public_name}</Typography>
+                <Typography className='header-user' variant="body">{contributions}</Typography>
             </div>
             
             <div className='card-body'>

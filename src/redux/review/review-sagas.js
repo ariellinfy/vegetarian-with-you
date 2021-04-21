@@ -46,7 +46,7 @@ function checkStatus(response) {
     }
 }
 
-export function* createReview({ payload: { restaurantId, restaurantName,
+export function* createReview({ payload: { restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
     reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
     disclosure, currentUserToken } 
@@ -57,7 +57,6 @@ export function* createReview({ payload: { restaurantId, restaurantName,
         const headers = null;
         const body = JSON.stringify({
             restaurantId: restaurantId,
-            restaurantName: restaurantName,
             foodRate: foodRate,
             serviceRate: serviceRate,
             valueRate: valueRate,

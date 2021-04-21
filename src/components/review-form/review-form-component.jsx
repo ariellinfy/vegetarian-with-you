@@ -75,11 +75,10 @@ class ReviewForm extends Component {
             reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure
         } = this.state;
         const restaurantId = targetRestaurant.restaurant_id;
-        const restaurantName = targetRestaurant.restaurant_name;
 
         if (Object.keys(reviewToBeUpdate).length === 0) {
             createReviewStart({
-                restaurantId, restaurantName,
+                restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
                 reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
                 disclosure, currentUserToken
