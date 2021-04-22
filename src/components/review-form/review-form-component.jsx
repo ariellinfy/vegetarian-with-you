@@ -44,6 +44,7 @@ class ReviewForm extends Component {
                 visitType: '',
                 price: 0,
                 recommendDish: '',
+                photos: [],
                 disclosure: false
             };
         } else {
@@ -62,6 +63,7 @@ class ReviewForm extends Component {
                 visitType: this.props.reviewToBeUpdate.type_of_visit,
                 price: this.props.reviewToBeUpdate.price_range,
                 recommendDish: this.props.reviewToBeUpdate.recommended_dishes,
+                photos: this.props.reviewToBeUpdate.photos,
                 disclosure: false
             };
         };
@@ -72,7 +74,7 @@ class ReviewForm extends Component {
         const { currentUserToken, reviewToBeUpdate, createReviewStart, updateReviewStart, targetRestaurant } = this.props;
         const { 
             foodRate, serviceRate, valueRate, atmosphereRate, 
-            reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure
+            reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
         } = this.state;
         const restaurantId = targetRestaurant.restaurant_id;
 
@@ -80,7 +82,7 @@ class ReviewForm extends Component {
             createReviewStart({
                 restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
-                reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
+                reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
                 disclosure, currentUserToken
             });
         } else {
@@ -88,7 +90,7 @@ class ReviewForm extends Component {
             updateReviewStart({
                 reviewId, restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
-                reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
+                reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
                 disclosure, currentUserToken
             });
         }
@@ -106,14 +108,20 @@ class ReviewForm extends Component {
         }
     };
 
+    handleUploadPhotos = event => {
+        console.log(event.target.files);
+        this.setState({ ...this.state, photos: Object.values(event.target.files) });
+    };
+
     render() {
         const { reviewToBeUpdate, targetRestaurant, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
         const { 
             foodRate, serviceRate, valueRate, atmosphereRate, 
             foodHover, serviceHover, valueHover, atmosphereHover, 
-            reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, disclosure
+            reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
         } = this.state;
 
+        console.log(photos);
         return (
             <div className='review-form-container'>
                 <form className='review-form' id='review-form' onSubmit={this.handleSubmit}>
@@ -279,15 +287,28 @@ class ReviewForm extends Component {
                         <input
                             accept="image/*"
                             id="upload-button"
-                            multiple
+                            name='photos'
                             type="file"
-                            hidden
+                            style={{display:"none"}}
+                            multiple
+                            onChange={this.handleUploadPhotos}
                         />
                         <label className='upload-container' htmlFor="upload-button">
                             <Button variant="contained" color="primary" component="span">
                                 Upload
                             </Button>
                         </label>
+                        {
+                            photos.length ? (
+                                <div>
+                                    {
+                                        photos.map((img, i) => {
+                                            <img key={URL.createObjectURL(img)} className='preview' src={URL.createObjectURL(img)} alt={img.name} />
+                                        })
+                                    }
+                                </div>
+                            ) : null
+                        }
                     </FormControl>
     
                     <div className='submit-review'>
