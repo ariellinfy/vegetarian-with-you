@@ -5,8 +5,9 @@ import { withRouter } from "react-router-dom";
 import { createReviewStart, updateReviewStart } from '../../redux/review/review-actions';
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
 
-import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider } from '@material-ui/core';
+import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, GridList, GridListTile, IconButton } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-component';
 import './review-form-style.scss';
 
@@ -109,9 +110,13 @@ class ReviewForm extends Component {
     };
 
     handleUploadPhotos = event => {
-        console.log(event.target.files);
-        this.setState({ ...this.state, photos: Object.values(event.target.files) });
+        this.setState({ ...this.state, photos: this.state.photos.concat(Object.values(event.target.files)) });
     };
+
+    handleClearImg = i => {
+        this.state.photos.splice(i, 1);
+        this.setState({ ...this.state, photos: this.state.photos });
+    }
 
     render() {
         const { reviewToBeUpdate, targetRestaurant, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
@@ -120,11 +125,11 @@ class ReviewForm extends Component {
             foodHover, serviceHover, valueHover, atmosphereHover, 
             reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
         } = this.state;
-
         console.log(photos);
+
         return (
             <div className='review-form-container'>
-                <form className='review-form' id='review-form' onSubmit={this.handleSubmit}>
+                <form className='review-form' id='review-form' onSubmit={this.handleSubmit} encType="multipart/form-data">
                     <RestaurantIntro targetRestaurant={targetRestaurant} />
                     <Divider />
                     <FormControl className='selection-group MuiInputLabel-animated rating-group' component="fieldset" required>
@@ -282,7 +287,7 @@ class ReviewForm extends Component {
                         fullWidth  
                     />
     
-                    <FormControl className='selection-group' component="fieldset">
+                    <FormControl className='selection-group upload-photo-container' component="fieldset">
                         <FormLabel className='selection-label' component="legend">Do you have photo(s) to share?</FormLabel>
                         <input
                             accept="image/*"
@@ -300,11 +305,18 @@ class ReviewForm extends Component {
                         </label>
                         {
                             photos.length ? (
-                                <div>
+                                <div className='photo-preview-container'>
                                     {
-                                        photos.map((img, i) => {
-                                            <img key={URL.createObjectURL(img)} className='preview' src={URL.createObjectURL(img)} alt={img.name} />
-                                        })
+                                        <GridList className='image-list' cols={4} cellHeight='auto'>
+                                            {photos.map((img, i) => (
+                                                <GridListTile className='image-box' key={img.filename || URL.createObjectURL(img)}>
+                                                    <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
+                                                        <ClearRoundedIcon fontSize="small" />
+                                                    </IconButton>
+                                                    <img className='preview' src={`http://localhost:5000/${img.path}` || URL.createObjectURL(img)} alt={img.name} />
+                                                </GridListTile>
+                                            ))}
+                                        </GridList>
                                     }
                                 </div>
                             ) : null

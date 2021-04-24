@@ -16,26 +16,11 @@ import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import './review-preview-style.scss';
 
-const images = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-];
-
 const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
-    const { review_id, restaurant_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, 
+    const { review_id, restaurant_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, photos,
         user_helpful, helpful_count, review_owner, create_at, public_name, avatar, contributions, helpful_votes } = review;
 
     const createDate = (create_at || '').split('T')[0];
@@ -187,9 +172,9 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                     <div className='image-container'>
                         <GridList className='image-list' cols={5}>
                             {
-                                images.map((image, index) => (
-                                <GridListTile key={image.original}>
-                                    <img className='review-image' src={image.original} alt={`${review_id}/${index}`} />
+                                photos.map((photo, index) => (
+                                <GridListTile key={photo.filename}>
+                                    <img className='review-image' src={`http://localhost:5000/${photo.path}`} alt={`${review_id}/${index}`} />
                                 </GridListTile>
                                 ))
                             }

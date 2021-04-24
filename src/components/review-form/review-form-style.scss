@@ -61,10 +61,67 @@
           width: fit-content;
         }
       }
+    }
 
+    .upload-photo-container {
       .upload-container {
         width: fit-content;
         margin-top: 0.5em;
+      }
+
+      .photo-preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        overflow: hidden;
+        width: 100%;
+        height: fit-content;
+        margin-top: 1em;
+
+        .image-list {
+          flex-wrap: wrap;
+          transform: translateZ(0);
+          transition: all 0.4s ease 0s;
+          height: fit-content;
+          width: 100%;
+
+          .image-box {
+            height: fit-content;
+
+            div {
+              display: flex;
+              flex-direction: column;
+              margin: 0 0.25em;
+              height: 100px;
+              width: auto;
+
+              .clear-btn {
+                align-self: flex-end;
+                width: fit-content;
+                padding: 1px;
+                z-index: 100;
+                background-color: grey;
+                color: white;
+
+                svg {
+                  font-size: 1rem;
+                }
+              }
+
+              img {
+                justify-self: flex-end;
+                align-self: flex-start;
+                width: 92%;
+                height: 92.5%;
+                top: 6.5px;
+                bottom: 0;
+                left: 0;
+                position: absolute;
+                transform: none;
+              }
+            }
+          }
+        }
       }
     }
 

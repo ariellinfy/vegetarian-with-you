@@ -60,6 +60,9 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
                                                     item[1] = 'unknown';
                                                 }
                                             };
+                                            if (item[0] === 'photos') {
+                                                item[1] = `${item[1].map(item => item.originalname)}`
+                                            };
                                             return (
                                             <Typography key={item[0]} className="review-detail" color="textPrimary">
                                                 <span className="data-title">{item[0]}</span>: {item[1]}

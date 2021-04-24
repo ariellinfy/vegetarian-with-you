@@ -48,28 +48,33 @@ function checkStatus(response) {
 
 export function* createReview({ payload: { restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
-    reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
+    reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
     disclosure, currentUserToken } 
 }) {
     try {
+        const formData = new FormData();
+        formData.append('restaurantId', restaurantId);
+        formData.append('foodRate', foodRate);
+        formData.append('serviceRate', serviceRate);
+        formData.append('valueRate', valueRate);
+        formData.append('atmosphereRate', atmosphereRate);
+        formData.append('reviewTitle', reviewTitle);
+        formData.append('reviewBody', reviewBody);
+        formData.append('visitPeriod', visitPeriod);
+        formData.append('visitType', visitType);
+        formData.append('price', price);
+        formData.append('recommendDish', recommendDish);
+        photos.forEach(photo => formData.append('photos', photo));
+        formData.append('disclosure', disclosure);
         const url = 'http://localhost:5000/onreview/createreview';
-        const method = 'POST';
-        const headers = null;
-        const body = JSON.stringify({
-            restaurantId: restaurantId,
-            foodRate: foodRate,
-            serviceRate: serviceRate,
-            valueRate: valueRate,
-            atmosphereRate: atmosphereRate,
-            reviewTitle: reviewTitle,
-            reviewBody: reviewBody,
-            visitPeriod: visitPeriod,
-            visitType: visitType,
-            price: price,
-            recommendDish: recommendDish,
-            disclosure: disclosure
+        const response = yield call(fetch, url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${currentUserToken}`
+            },
+            body: formData
         });
-        const review = yield call(request, url, method, headers, body, currentUserToken);
+        const review = yield response.json();
         if (review !== undefined) {
             localStorage.setItem('token', review.token);
             yield put(createReviewSuccess(review.data));
@@ -81,32 +86,37 @@ export function* createReview({ payload: { restaurantId,
 
 export function* updateReview({ payload: { reviewId, restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
-    reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, 
+    reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
     disclosure, currentUserToken } 
 }) {
     try {
+        const formData = new FormData();
+        formData.append('reviewId', reviewId);
+        formData.append('restaurantId', restaurantId);
+        formData.append('foodRate', foodRate);
+        formData.append('serviceRate', serviceRate);
+        formData.append('valueRate', valueRate);
+        formData.append('atmosphereRate', atmosphereRate);
+        formData.append('reviewTitle', reviewTitle);
+        formData.append('reviewBody', reviewBody);
+        formData.append('visitPeriod', visitPeriod);
+        formData.append('visitType', visitType);
+        formData.append('price', price);
+        formData.append('recommendDish', recommendDish);
+        photos.forEach(photo => formData.append('photos', photo));
+        formData.append('disclosure', disclosure);
         const url = 'http://localhost:5000/onreview/updatereview';
-        const method = 'PATCH';
-        const headers = null;
-        const body = JSON.stringify({
-            reviewId: reviewId,
-            restaurantId: restaurantId,
-            foodRate: foodRate,
-            serviceRate: serviceRate,
-            valueRate: valueRate,
-            atmosphereRate: atmosphereRate,
-            reviewTitle: reviewTitle,
-            reviewBody: reviewBody,
-            visitPeriod: visitPeriod,
-            visitType: visitType,
-            price: price,
-            recommendDish: recommendDish,
-            disclosure: disclosure
+        const response = yield call(fetch, url, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${currentUserToken}`
+            },
+            body: formData
         });
-        const review = yield call(request, url, method, headers, body, currentUserToken);
+        const review = yield response.json();
         if (review !== undefined) {
             localStorage.setItem('token', review.token);
-            yield put(updateReviewSuccess(review.data));
+            yield put(createReviewSuccess(review.data));
         } 
     } catch (error) {
         yield put(updateReviewFailure(error));
