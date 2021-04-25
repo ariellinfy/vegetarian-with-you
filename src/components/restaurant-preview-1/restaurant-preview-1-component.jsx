@@ -9,7 +9,7 @@ import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restauran
 import { Typography, Button } from '@material-ui/core';
 import RatingBox from '../rating-box/rating-box-component';
 import AddIcon from '@material-ui/icons/Add';
-import restaurantImage from "../../assets/background/temp.jpg";
+import restaurantImage from "../../assets/default2.jpg";
 import './restaurant-preview-1-style.scss';
 
 const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, country, type, cuisine, price_range, overall_rate, review_count, 
@@ -48,7 +48,7 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, cou
                 <img
                     className='restaurant-image'
                     alt={restaurant_name}
-                    height="175"
+                    height="200"
                     src={restaurantImage}
                 />
                 <div className='restaurant-detail'>

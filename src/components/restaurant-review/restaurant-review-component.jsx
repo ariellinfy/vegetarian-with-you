@@ -10,14 +10,16 @@ import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/
 import CreateIcon from '@material-ui/icons/Create';
 import './restaurant-review-style.scss';
 
-const RestaurantReview = ({ currentUser, reviewCount, restaurantId, query, 
+const RestaurantReview = ({ currentUser, targetRestaurant, query, 
     reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart, requestReviewsAuthStart, history }) => {
+
+    const { restaurant_id, review_count, restaurant_name, country } = targetRestaurant;
 
     const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
 
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
-        query = event.currentTarget.dataset.query ? `?&restaurantId=${restaurantId}${event.currentTarget.dataset.query}` : query;
+        query = event.currentTarget.dataset.query ? `?&restaurantId=${restaurant_id}${event.currentTarget.dataset.query}` : query;
         Object.keys(currentUser).length ? requestReviewsAuthStart({ query, currentUserToken }) : requestReviewsStart({ query });
     };
 
@@ -25,7 +27,7 @@ const RestaurantReview = ({ currentUser, reviewCount, restaurantId, query,
         <div className='restaurant-category customer-reviews'>
             <div className='review-header'>
                 <div className='review-header-1'>
-                    <Typography variant="h6">Reviews ({reviewCount})</Typography>
+                    <Typography variant="h6">Reviews ({review_count})</Typography>
                     <FormControl variant="outlined" className='sort-by-container'>
                         <Select
                             id="review-sortby-filter"
@@ -47,9 +49,14 @@ const RestaurantReview = ({ currentUser, reviewCount, restaurantId, query,
                 </div>
             </div>
             {
-                reviewsCollection.map(review => (
+                reviewsCollection.length ? reviewsCollection.map(review => (
                     <ReviewPreview key={review.review_id} currentUser={currentUser} review={review} query={query} />
-                ))
+                )) : (
+                    <div className='no-review'>
+                        <Typography variant="subtitle1">There are no reviews for {restaurant_name}, {country} yet.</Typography>
+                        <Typography variant="subtitle1">Be the first to write a review!</Typography> 
+                    </div>
+                )
             }
         </div>
     )

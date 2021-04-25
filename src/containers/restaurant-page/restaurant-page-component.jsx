@@ -48,11 +48,11 @@ const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestReviewsA
 
             <div className='restaurant-body-container'>
 
-                    <RestaurantImageGallery />
+                    <RestaurantImageGallery restaurantId={restaurantId} photos={targetRestaurant.photos} />
 
                     <RestaurantAdvance targetRestaurant={targetRestaurant} />
 
-                    <RestaurantReview currentUser={currentUser} reviewCount={targetRestaurant.review_count} restaurantId={restaurantId} query={query} />
+                    <RestaurantReview currentUser={currentUser} targetRestaurant={targetRestaurant} query={query} />
                 
             </div>
         </div>

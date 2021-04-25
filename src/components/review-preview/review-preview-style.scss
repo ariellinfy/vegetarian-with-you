@@ -182,17 +182,23 @@
           li {
             height: auto !important;
 
-            img {
-              width: 100%;
+            div {
+              display: flex;
+              align-items: center;
 
-              &:hover {
-                opacity: 0.9;
-                cursor: pointer;
-              }
+              img {
+                height: auto;
+                width: 100%;
 
-              &:focus {
-                outline: none;
-                border: none;
+                &:hover {
+                  opacity: 0.9;
+                  cursor: pointer;
+                }
+
+                &:focus {
+                  outline: none;
+                  border: none;
+                }
               }
             }
           }

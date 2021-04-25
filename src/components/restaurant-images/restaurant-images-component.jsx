@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import { GridList, GridListTile, Dialog } from '@material-ui/core';
+import { GridList, GridListTile, Dialog, Typography, Button } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import ImageGallery from 'react-image-gallery';
 import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 import './restaurant-images-style.scss';
 
-const list = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-];
-
-const RestaurantImageGallery = () => {
+const RestaurantImageGallery = ({ restaurantId, photos, history }) => {
+    photos = (photos || []).map(photo => {
+        return {
+          ...photo,
+          original: `http://localhost:5000/${photo.path}`,
+          thumbnail: `http://localhost:5000/${photo.path}`
+        }
+    });
 
     const [open, setOpen] = useState(false);
     const theme = useTheme();
@@ -30,33 +23,40 @@ const RestaurantImageGallery = () => {
 
     const handleClickOpen = () => {
         setOpen(true);
-      };
+    };
     
       const handleClose = () => {
         setOpen(false);
-      };
+    };
 
     return (
         <div className='restaurant-category restaurant-images'>
-
-            <GridList className='image-list' cols={2.5} cellHeight='auto'>
-              {list.map((tile) => (
-                <GridListTile key={tile.original}>
-                  <img src={tile.original} alt={tile.original} onClick={handleClickOpen} />
-                </GridListTile>
-              ))}
+            <GridList className='image-list' cols={3.5} cellHeight='auto'>
+              {
+                (photos.length || [].length) ? (photos || []).map((photo, index) => (
+                  <GridListTile key={photo.filename}>
+                    <img src={photo.original} alt={`${restaurantId}/${index}`} onClick={handleClickOpen} />
+                  </GridListTile>
+                )) : (
+                  <div className='no-review'>
+                      <Typography variant="subtitle1">Enhance this page - Write reviews!</Typography>
+                      <Button variant="contained" color="primary" className='review-btn'
+                        onClick={() => history.push('/createreview')}>
+                        Add a Review
+                      </Button>
+                  </div>
+                )
+              }
             </GridList>
-
             <Dialog
                 fullScreen={fullScreen}
                 open={open}
                 onClose={handleClose}
             >
-                <ImageGallery items={list} />
+                <ImageGallery items={photos} />
             </Dialog>
-
         </div>
     )
 };
 
-export default RestaurantImageGallery;
+export default withRouter(RestaurantImageGallery);
