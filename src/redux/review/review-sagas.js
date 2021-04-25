@@ -64,7 +64,7 @@ export function* createReview({ payload: { restaurantId,
         formData.append('visitType', visitType);
         formData.append('price', price);
         formData.append('recommendDish', recommendDish);
-        photos.forEach(photo => formData.append('photos', photo));
+        photos.forEach(photo => formData.append('photoNew', photo));
         formData.append('disclosure', disclosure);
         const url = 'http://localhost:5000/onreview/createreview';
         const response = yield call(fetch, url, {
@@ -103,7 +103,13 @@ export function* updateReview({ payload: { reviewId, restaurantId,
         formData.append('visitType', visitType);
         formData.append('price', price);
         formData.append('recommendDish', recommendDish);
-        photos.forEach(photo => formData.append('photos', photo));
+        photos.forEach(photo => {
+            if (!photo.path) {
+                return formData.append('photoNew', photo);
+            }
+        }); 
+        const photoOld = photos.filter(photo => photo.path);
+        formData.append('photoOld', JSON.stringify(photoOld));
         formData.append('disclosure', disclosure);
         const url = 'http://localhost:5000/onreview/updatereview';
         const response = yield call(fetch, url, {
@@ -116,7 +122,7 @@ export function* updateReview({ payload: { reviewId, restaurantId,
         const review = yield response.json();
         if (review !== undefined) {
             localStorage.setItem('token', review.token);
-            yield put(createReviewSuccess(review.data));
+            yield put(updateReviewSuccess(review.data));
         } 
     } catch (error) {
         yield put(updateReviewFailure(error));

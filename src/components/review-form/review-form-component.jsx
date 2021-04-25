@@ -80,7 +80,7 @@ class ReviewForm extends Component {
         const restaurantId = targetRestaurant.restaurant_id;
 
         if (Object.keys(reviewToBeUpdate).length === 0) {
-            createReviewStart({
+            await createReviewStart({
                 restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
                 reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
@@ -88,7 +88,7 @@ class ReviewForm extends Component {
             });
         } else {
             const reviewId = reviewToBeUpdate.review_id;
-            updateReviewStart({
+            await updateReviewStart({
                 reviewId, restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
                 reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
@@ -116,7 +116,7 @@ class ReviewForm extends Component {
     handleClearImg = i => {
         this.state.photos.splice(i, 1);
         this.setState({ ...this.state, photos: this.state.photos });
-    }
+    };
 
     render() {
         const { reviewToBeUpdate, targetRestaurant, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
@@ -125,7 +125,6 @@ class ReviewForm extends Component {
             foodHover, serviceHover, valueHover, atmosphereHover, 
             reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
         } = this.state;
-        console.log(photos);
 
         return (
             <div className='review-form-container'>
@@ -308,14 +307,15 @@ class ReviewForm extends Component {
                                 <div className='photo-preview-container'>
                                     {
                                         <GridList className='image-list' cols={4} cellHeight='auto'>
-                                            {photos.map((img, i) => (
-                                                <GridListTile className='image-box' key={img.filename || URL.createObjectURL(img)}>
+                                            {photos.map((photo, i) => {
+                                                return (
+                                                <GridListTile className='image-box' key={photo.path ? photo.filename : photo.lastModified + '-' + photo.name}>
                                                     <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
                                                         <ClearRoundedIcon fontSize="small" />
                                                     </IconButton>
-                                                    <img className='preview' src={`http://localhost:5000/${img.path}` || URL.createObjectURL(img)} alt={img.name} />
+                                                    <img className='preview' src={photo.path ? `http://localhost:5000/${photo.path}` : URL.createObjectURL(photo)} alt={photo.name} />
                                                 </GridListTile>
-                                            ))}
+                                            )})}
                                         </GridList>
                                     }
                                 </div>
@@ -363,8 +363,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    createReviewStart: reviewInfo => dispatch(createReviewStart(reviewInfo)),
-    updateReviewStart: reviewInfo => dispatch(updateReviewStart(reviewInfo)),
+    createReviewStart: reviewDetail => dispatch(createReviewStart(reviewDetail)),
+    updateReviewStart: reviewDetail => dispatch(updateReviewStart(reviewDetail)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewForm));
