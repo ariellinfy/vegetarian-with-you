@@ -7,10 +7,10 @@ import { requestRestaurantByIdStart, requestRestaurantByIdSuccess } from '../../
 import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restaurant-selectors';
 
 import { Typography, Button } from '@material-ui/core';
-import restaurantImage from "../../assets/background/temp.jpg";
+import restaurantDefault from "../../assets/restaurant-default.svg";
 import './restaurant-preview-2-style.scss';
 
-const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, country, type, cuisine, price_range, 
+const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, country, type, cuisine, price_range, photos,
     requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
     
     if (Math.round(price_range) === 1) {
@@ -45,7 +45,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
                 className='restaurant-image'
                 alt={restaurant_name}
                 height="180"
-                src={restaurantImage}
+                src={photos ? `http://localhost:5000/${photos[0].path}` : restaurantDefault}
                 onClick={handleRestaurantClick}
             />
             <div className='restaurant-detail'>

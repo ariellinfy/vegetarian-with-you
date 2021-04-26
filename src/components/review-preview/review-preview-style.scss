@@ -178,6 +178,7 @@
           transform: translateZ(0);
           transition: all 0.4s ease 0s;
           height: 100%;
+          width: 100%;
 
           li {
             height: auto !important;
@@ -187,8 +188,33 @@
               align-items: center;
 
               img {
-                height: auto;
+                height: 50px;
                 width: 100%;
+                object-fit: cover;
+
+                @media screen and (min-width: 600px) {
+                  height: 75px;
+                }
+
+                @media screen and (min-width: 960px) {
+                  height: 100px;
+                }
+
+                @media screen and (min-width: 1200px) {
+                  height: 125px;
+                }
+
+                @media screen and (min-width: 1500px) {
+                  height: 150px;
+                }
+
+                @media screen and (min-width: 2000px) {
+                  height: 175px;
+                }
+
+                @media screen and (min-width: 2400px) {
+                  height: 220px;
+                }
 
                 &:hover {
                   opacity: 0.9;

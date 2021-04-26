@@ -9,10 +9,10 @@ import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restauran
 import { Typography, Button } from '@material-ui/core';
 import RatingBox from '../rating-box/rating-box-component';
 import AddIcon from '@material-ui/icons/Add';
-import restaurantImage from "../../assets/default2.jpg";
+import restaurantDefault from "../../assets/restaurant-default.svg";
 import './restaurant-preview-1-style.scss';
 
-const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, country, type, cuisine, price_range, overall_rate, review_count, 
+const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, country, type, cuisine, price_range, overall_rate, review_count, photos,
     requestRestaurantByIdStart, requestRestaurantByIdSuccess, currentUser, requestSuccess, history }) => {
 
     if (Math.round(price_range) === 1) {
@@ -49,7 +49,7 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, cou
                     className='restaurant-image'
                     alt={restaurant_name}
                     height="200"
-                    src={restaurantImage}
+                    src={photos ? `http://localhost:5000/${photos[0].path}` : restaurantDefault}
                 />
                 <div className='restaurant-detail'>
                     <Typography variant="h5">
