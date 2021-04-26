@@ -41,8 +41,9 @@
 
       h1 {
         font-family: Allura, sans-serif;
-        color: #00b8d4;
-        text-shadow: 0px 2px 3px #0046497e;
+        background: linear-gradient(155deg, #30cfd0 0%, #330867 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 0.3em;
         font-weight: 600;
         letter-spacing: 10px;
