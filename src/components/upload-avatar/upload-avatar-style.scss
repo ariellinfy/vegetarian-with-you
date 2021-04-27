@@ -22,6 +22,7 @@
   }
 
   .avatar-edit-container {
+    width: fit-content;
     margin-top: -1.85em;
 
     .avatar-edit-btn {
@@ -29,6 +30,7 @@
       background: white;
       font-size: 14px;
       padding: 2px 0;
+      min-height: 30px;
 
       &:hover {
         background: white;

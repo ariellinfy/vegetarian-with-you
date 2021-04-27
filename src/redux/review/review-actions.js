@@ -158,3 +158,7 @@ export const deleteReviewFailure = error => ({
     type: ReviewActionTypes.DELETE_REVIEW_FAILURE,
     payload: error
 });
+
+export const resetDeleteReviewStatus = () => ({
+    type: ReviewActionTypes.RESET_DELETE_REVIEW_STATUS
+});

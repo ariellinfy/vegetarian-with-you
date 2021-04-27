@@ -2,78 +2,110 @@ import UserActionTypes from './user-types';
 
 const INITIAL_STATE = {
     currentUser: {},
-    requestPending: false,
+    authPending: false,
+    updatePending: false,
+    authSuccess: false,
+    updateSuccess: false,
+    authFailure: false,
+    updateFailure: false,
     authErr: '',
-    editProfileErr: '',
-    uploadAvatarErr: '',
-    deleteErr: '',
+    updateErr: '',
     onEditUserEmail: false,
     adminCurrentPage: 0
-}
+};
 
 const userReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
+        case UserActionTypes.REQUEST_USER_START:
+        case UserActionTypes.SIGN_UP_START:
+        case UserActionTypes.SIGN_IN_START:
+        case UserActionTypes.SIGN_OUT_START:
+            return {
+                ...state,
+                authPending: true,
+                authSuccess: false,
+                authFailure: false,
+                authErr: '',
+            };
+        case UserActionTypes.REQUEST_USER_SUCCESS:
         case UserActionTypes.SIGN_UP_SUCCESS:
         case UserActionTypes.SIGN_IN_SUCCESS:
-        case UserActionTypes.REQUEST_USER_SUCCESS:
             return {
                 ...state,
                 currentUser: action.payload,
+                authPending: false,
+                authSuccess: true,
+                authFailure: false,
                 authErr: ''
             };
         case UserActionTypes.SIGN_OUT_SUCCESS:
             return {
                 ...state,
                 currentUser: {},
+                authPending: false,
+                authSuccess: true,
+                authFailure: false,
                 authErr: ''
             };
+        case UserActionTypes.REQUEST_USER_FAILURE:
+        case UserActionTypes.SIGN_UP_FAILURE:
+        case UserActionTypes.SIGN_IN_FAILURE:
+        case UserActionTypes.SIGN_OUT_FAILURE:
+            return {
+                ...state,
+                authPending: false,
+                authSuccess: false,
+                authFailure: true,
+                authErr: action.payload
+            };
+
+        case UserActionTypes.EDIT_PROFILE_START:
+        case UserActionTypes.UPDATE_EMAIL_START:
+        case UserActionTypes.RESET_PASSWORD_START:
+        case UserActionTypes.UPLOAD_AVATAR_START:
+        case UserActionTypes.DELETE_AVATAR_START:
+        case UserActionTypes.CLOSE_ACCOUNT_START:
+            return {
+                ...state,
+                updatePending: true,
+                updateSuccess: false,
+                updateFailure: false,
+                updateErr: '',
+            };
         case UserActionTypes.EDIT_PROFILE_SUCCESS:
-        case UserActionTypes.RESET_PASSWORD_SUCCESS:
         case UserActionTypes.UPDATE_EMAIL_SUCCESS:
-            return {
-                ...state,
-                currentUser: action.payload,
-                editProfileErr: ''
-            };
-        case UserActionTypes.CLOSE_ACCOUNT_SUCCESS:
-            return {
-                ...state,
-                currentUser: {},
-                deleteErr: '',
-            };
+        case UserActionTypes.RESET_PASSWORD_SUCCESS:
         case UserActionTypes.UPLOAD_AVATAR_SUCCESS:
         case UserActionTypes.DELETE_AVATAR_SUCCESS:
             return {
                 ...state,
                 currentUser: action.payload,
-                uploadAvatarErr: ''
+                updatePending: false,
+                updateSuccess: true,
+                updateFailure: false,
+                updateErr: '',
             };
-            
-        case UserActionTypes.SIGN_UP_FAILURE:
-        case UserActionTypes.SIGN_IN_FAILURE:
-        case UserActionTypes.SIGN_OUT_FAILURE:
-        case UserActionTypes.REQUEST_USER_FAILURE:
+        case UserActionTypes.CLOSE_ACCOUNT_SUCCESS:
             return {
                 ...state,
-                authErr: action.payload
+                currentUser: {},
+                updatePending: false,
+                updateSuccess: true,
+                updateFailure: false,
+                updateErr: '',
             };
         case UserActionTypes.EDIT_PROFILE_FAILURE:
-        case UserActionTypes.RESET_PASSWORD_FAILURE:
         case UserActionTypes.UPDATE_EMAIL_FAILURE:
-            return {
-                ...state,
-                editProfileErr: action.payload
-            };
+        case UserActionTypes.RESET_PASSWORD_FAILURE:
+        case UserActionTypes.UPLOAD_AVATAR_FAILURE:
+        case UserActionTypes.DELETE_AVATAR_FAILURE:
         case UserActionTypes.CLOSE_ACCOUNT_FAILURE:
             return {
                 ...state,
-                deleteErr: action.payload
-            };
-        case UserActionTypes.UPLOAD_AVATAR_FAILURE:
-        case UserActionTypes.DELETE_AVATAR_FAILURE:
-            return {
-                ...state,
-                uploadAvatarErr: action.payload
+                updatePending: false,
+                updateSuccess: false,
+                updateFailure: true,
+                updateErr: action.payload
             };
 
         case UserActionTypes.CHANGE_EDIT_EMAIL_STATUS:
@@ -100,6 +132,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
         default:
             return state;
     }
-}
+};
 
 export default userReducer;

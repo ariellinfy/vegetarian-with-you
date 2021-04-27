@@ -4,10 +4,11 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { requestAllRestaurantsStart, requestFilteredRestaurants, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilterKeyword, selectFilteredRestaurants } from '../../redux/restaurant/restaurant-selectors';
-import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
+import Downloader from '../../components/downloading/downloading-componet';
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
 import SortByButton from '../../components/sort-by-btn/sort-by-btn-component';
@@ -17,7 +18,7 @@ import './explore-page-style.scss';
 const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestError, 
     keyword, filteredRestaurants, requestAllRestaurantsStart, requestFilteredRestaurants, resetEditUserEmail,
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
     currentUser, history }) => {
 
     useEffect(() => {
@@ -31,6 +32,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
@@ -54,11 +56,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
                         </SearchBar>
                         <SortByButton />
                     </div>
-                    <div className='explore-header-2' onClick={() => {
-                            resetRequestRestaurantsStatus();
-                            resetFilteredRestaurants();
-                            Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))
-                        }}>
+                    <div className='explore-header-2' onClick={() => Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}>
                         <Button variant="contained" color="primary">
                             Create a restaurant profile
                         </Button>
@@ -66,7 +64,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
                 </div>
                 <div className='explore-body'>
                     {
-                        requestPending ? (<div></div>) : (
+                        requestPending ? (<Downloader />) : (
                             requestSuccess ? (
                                 filteredRestaurants.length ? (
                                     typeof filteredRestaurants  !== 'string' ? (
@@ -119,6 +117,7 @@ const mapDispatchToProps = dispatch => ({
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),

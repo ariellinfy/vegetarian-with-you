@@ -211,6 +211,14 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionFailure: true,
                 deleteReviewErr: action.payload,
             };
+        case ReviewActionTypes.RESET_DELETE_REVIEW_STATUS:
+            return {
+                ...state,
+                reviewActionPending: false,
+                reviewDeleteSuccess: false,
+                reviewActionFailure: false,
+                deleteReviewErr: '',
+            };
 
         default:
             return state;

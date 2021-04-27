@@ -4,10 +4,11 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilteredRestaurants, selectFilterFeatureKeyword, selectFilterLocationKeyword } from '../../redux/restaurant/restaurant-selectors';
-import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
+import Downloader from '../../components/downloading/downloading-componet';
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
 import RestaurantPreviewTwo from '../../components/restaurant-preview-2/restaurant-preview-2-component';
@@ -17,7 +18,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
     filteredRestaurants, featureKeyword, locationKeyword, resetEditUserEmail,
     requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
     currentUser, history }) => {
 
     useEffect(() => {
@@ -31,6 +32,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
@@ -55,7 +57,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                 </div>
                 <div className='find-restaurant-body'>
                     {
-                        requestPending ? (<div></div>) : (
+                        requestPending ? (<Downloader />) : (
                             requestSuccess ? (
                                 filteredRestaurants.length ? (
                                     typeof filteredRestaurants  !== 'string' ? (
@@ -66,11 +68,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                                         <div className='find-no-match'>
                                             <Typography variant="h5">Restaurant not found here?</Typography>
                                             <Typography variant="h5">Let's add a new restaurant profile!</Typography> 
-                                            <Button variant="contained" color="primary" onClick={() => {
-                                                    resetRequestRestaurantsStatus();
-                                                    resetFilteredRestaurants();
-                                                    Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))
-                                                }}>
+                                            <Button variant="contained" color="primary" onClick={() => Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}>
                                                 Add a place
                                             </Button>
                                         </div>
@@ -84,11 +82,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                                         <div className='find-no-match'>
                                             <Typography variant="h5">Restaurant not found here?</Typography>
                                             <Typography variant="h5">Let's add a new restaurant profile!</Typography> 
-                                            <Button variant="contained" color="primary" onClick={() => {
-                                                    resetRequestRestaurantsStatus();
-                                                    resetFilteredRestaurants();
-                                                    Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))
-                                                }}>
+                                            <Button variant="contained" color="primary" onClick={() => Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}>
                                                 Add a place
                                             </Button>
                                         </div>
@@ -124,6 +118,7 @@ const mapDispatchToProps = dispatch => ({
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),

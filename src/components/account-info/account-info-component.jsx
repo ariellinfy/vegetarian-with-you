@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectEditEmailStatus } from '../../redux/user/user-selectors';
+import { selectEditEmailStatus, selectUpdatePending } from '../../redux/user/user-selectors';
 import { onEditUserEmail, updateEmailStart } from '../../redux/user/user-actions';
-import { Button, Paper, Typography, TextField } from '@material-ui/core';
+
+import { Button, Paper, Typography, TextField, CircularProgress } from '@material-ui/core';
 import UpdatePassword from '../../components/update-password/update-password-component';
 import CloseAccount from '../../components/close-account/close-account-component';
 import './account-info-style.scss';
 
-const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, updateEmailStart }) => {
+const AccountInfo = ({ user: { email }, editEmailStatus, updatePending, onEditUserEmail, updateEmailStart }) => {
     const currentUserToken = localStorage.getItem('token');
 
-    const [userEmail, setUserEmail] = useState()
+    const [userEmail, setUserEmail] = useState('');
 
     const handleSubmit = event => {
         event.preventDefault();
         updateEmailStart({ email, userEmail, currentUserToken });
         onEditUserEmail();
-    }
+    };
 
     const handleEditClick = () => {
         onEditUserEmail();
-    }
+    };
     
     const handleChange = event => {
         setUserEmail(event.target.value);
-    }
+    };
 
     const [openResetPassword, setPassword] = useState(false);
     const handleClickOpenPassword = () => {
@@ -42,6 +43,7 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
     const handleCloseAccount = () => {
         setOpenAccount(false);
     };
+
     return (
         <div className='account-info-page'>
             <Paper className='user-credentials'>
@@ -53,7 +55,11 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
                                 !editEmailStatus ? (
                                     <div className='credential-content'>
                                         <Typography className='credential' variant='body1' >{email}</Typography>
-                                        <Button className='credential-btn' size='small' variant="contained" color="secondary" onClick={handleEditClick}>Edit</Button>
+                                        <Button className='credential-btn' size='small' variant="contained" color="secondary" onClick={handleEditClick}>
+                                            {
+                                                updatePending ? <CircularProgress size={15} /> : 'Edit'
+                                            }
+                                            </Button>
                                     </div>
                                 ) : (
                                     <div className='credential-content'>
@@ -113,10 +119,11 @@ const AccountInfo = ({ user: { email }, editEmailStatus, onEditUserEmail, update
             }
         </div>
     )
-}
+};
 
 const mapStateToProps = createStructuredSelector({
     editEmailStatus: selectEditEmailStatus,
+    updatePending: selectUpdatePending
 });
 
 const mapDispatchToProps = dispatch => ({

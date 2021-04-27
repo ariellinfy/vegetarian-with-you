@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser, selectAdminCurrentPage } from '../../redux/user/user-selectors';
 import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { setAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
 
 import { Tabs, Tab } from '@material-ui/core';
@@ -14,7 +14,7 @@ import './admin-dashboard-page-style.scss';
 
 const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage, resetEditUserEmail, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
     useEffect(() => {
         resetRequestRestaurantsStatus();
@@ -23,6 +23,7 @@ const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
@@ -74,6 +75,7 @@ const mapDispatchToProps = dispatch => ({
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),

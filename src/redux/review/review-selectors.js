@@ -18,11 +18,15 @@ export const selectReviewCreateSuccess = createSelector([selectReview], review =
 
 export const selectReviewUpdateSuccess = createSelector([selectReview], review => review.reviewUpdateSuccess);
 
+export const selectReviewDeleteSuccess = createSelector([selectReview], review => review.reviewDeleteSuccess);
+
 export const selectReviewActionFailure = createSelector([selectReview], review => review.reviewActionFailure);
 
 export const selectCreateReviewErr = createSelector([selectReview], review => review.createReviewErr);
 
 export const selectUpdateReviewErr = createSelector([selectReview], review => review.updateReviewErr);
+
+export const selectDeleteReviewErr = createSelector([selectReview], review => review.deleteReviewErr);
 
 // Request reviews
 

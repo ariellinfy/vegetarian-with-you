@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart } from '../../redux/user/user-actions';
+import { selectUpdatePending } from '../../redux/user/user-selectors';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './crop-image';
 import { makeStyles } from '@material-ui/core/styles';
-import { Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography } from '@material-ui/core';
+import { Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography, CircularProgress } from '@material-ui/core';
 import './upload-avatar-style.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
+const UploadAvatar = ({ userId, avatar, updatePending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
 
@@ -77,9 +79,7 @@ const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, 
 
     return (
         <div className='upload-avatar-container'>
-            {
-                <UserAvatar avatar={avatar} />
-            }
+            <UserAvatar avatar={avatar} />
             <div className='avatar-edit-container'>
                 <Button
                     aria-controls="edit-avatar"
@@ -89,7 +89,9 @@ const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, 
                     size="small"
                     className='avatar-edit-btn'
                 >
-                    Edit
+                    {
+                        updatePending ? <CircularProgress size={15} /> : 'Edit'
+                    }
                 </Button>
                 <Menu
                     id="edit-menu"
@@ -169,10 +171,14 @@ const UploadAvatar = ({ userId, avatar, uploadAvatarStart, uploadAvatarFailure, 
     )
 };
 
+const mapStateToProps = createStructuredSelector({
+    updatePending: selectUpdatePending
+});
+
 const mapDispatchToProps = dispatch => ({
     uploadAvatarStart: userInfo => dispatch(uploadAvatarStart(userInfo)),
     uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error)),
     deleteAvatarStart: userInfo => dispatch(deleteAvatarStart(userInfo)),
 });
 
-export default connect(null, mapDispatchToProps)(UploadAvatar);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadAvatar);

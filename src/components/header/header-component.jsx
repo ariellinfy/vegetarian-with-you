@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
 import { resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
-import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
 import { AppBar, Button, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
@@ -16,7 +16,7 @@ import logo from '../../assets/logo.png';
 import './header-style.scss';
 
 const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, 
-    resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestUserReviewsStatus }) => {
+    resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus }) => {
 
     const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
     
@@ -56,6 +56,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
         resetAdminCurrentPage();
@@ -213,6 +214,7 @@ const mapDispatchToProps = dispatch => ({
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
 });
 

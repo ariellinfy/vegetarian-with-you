@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,7 @@ import placeImage from '../../assets/place.svg';
 import './home-page-style.scss';
 
 const HomePage = ({ resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetEditUserEmail }) => {
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetEditUserEmail }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -21,6 +21,7 @@ const HomePage = ({ resetCreateRestaurantStatus, resetUpdateRestaurantStatus, re
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
@@ -74,6 +75,7 @@ const mapDispatchToProps = dispatch => ({
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),

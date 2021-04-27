@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 import { requestRestaurantByIdStart, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { requestReviewsStart, requestReviewsAuthStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { requestReviewsStart, requestReviewsAuthStart, resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
@@ -16,7 +16,7 @@ import './restaurant-page-style.scss';
 
 const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestReviewsAuthStart, requestRestaurantByIdStart, resetEditUserEmail, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
-    resetCreateReviewStatus, resetUpdateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
+    resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
     currentUser, match }) => {
 
     const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
@@ -34,6 +34,7 @@ const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestReviewsA
         resetFilteredRestaurants();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
@@ -65,9 +66,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
+    requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
     requestReviewsStart: data => dispatch(requestReviewsStart(data)),
     requestReviewsAuthStart: data => dispatch(requestReviewsAuthStart(data)),
-    requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
     resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
@@ -75,9 +76,9 @@ const mapDispatchToProps = dispatch => ({
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),
-
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPage));

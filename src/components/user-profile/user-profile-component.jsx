@@ -39,18 +39,14 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                 
                     <div className='user-info'>
                         {
-                            public_name ? (
-                                <Typography variant='h6' gutterBottom >{public_name}</Typography>
-                            ) : (
-                                <Typography variant='h6' gutterBottom>N/A</Typography>
-                            )
+                            <Typography variant='h6' gutterBottom >{public_name ? public_name : `N/A`}</Typography>
                         }
                         <Typography variant='subtitle1' >Contributions</Typography>
                         {
                             contributions >= 0 ? (
-                                <Typography variant='subtitle1' color='textSecondary' gutterBottom >{contributions}</Typography>
+                                <Typography variant='subtitle1' color='textSecondary'>{contributions}</Typography>
                             ) : (
-                                <Typography className="info" variant='body2'>N/A</Typography>
+                                <Typography className="info" variant='subtitle1'>N/A</Typography>
                             )
                         }
                     </div>
@@ -99,21 +95,13 @@ const UserProfile = ({ user: { user_id, public_name, avatar, contributions, loca
                 <div className='user-detail'>
                     <EventIcon fontSize="small" />
                         {
-                            joined ? (
-                                <Typography className="info" variant='subtitle1'>{joined.split('T')[0]}</Typography>
-                            ) : (
-                                <Typography className="info" variant='subtitle1'>N/A</Typography>
-                            )
+                            <Typography className="info" variant='subtitle1'>{joined ? joined.split('T')[0] : `N/A`}</Typography>
                         }
                 </div>
                 <div className='user-detail'>
                     <CreateIcon fontSize="small" />
                     {
-                        user_id ? (
-                            <Button component={Link} to={'/find'} className="review-button" color="primary">Write review</Button>
-                        ) : (
-                            <Button component={Link} to={'/signin'} className="review-button" color="primary">Write review</Button>
-                        )
+                        <Button component={Link} to={user_id ? '/find' : '/signin'} className="review-button" color="primary">Write review</Button>
                     } 
                 </div>
             </Paper>

@@ -94,7 +94,7 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
                         <Button onClick={handleClose} variant="outlined" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
+                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit" disabled = {oldPassword.length && newPassword.length && confirmNewPassword.length ? false : true}>
                             Update password
                         </Button>
                     </DialogActions>
@@ -102,7 +102,7 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
             </Dialog>
         </div>
     )
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     resetPasswordStart: userCredential => dispatch(resetPasswordStart(userCredential))

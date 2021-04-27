@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link, Redirect } from "react-router-dom";
 import { resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { resetCreateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
+import { resetCreateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectReviewUpdateSuccess, selectTargetReviewInfo, selectTargetReviewInfoToMap } from '../../redux/review/review-selectors';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
 import { resetEditUserEmail, setAdminCurrentPage } from '../../redux/user/user-actions';
@@ -14,7 +14,7 @@ import './update-review-page-style.scss';
 
 const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targetRestaurant, resetEditUserEmail, setAdminCurrentPage,
     resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
-    resetCreateReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
+    resetCreateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
     const currentUserToken = localStorage.getItem('token');
 
@@ -27,6 +27,7 @@ const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targ
         resetFilteredRestaurants();
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
+        resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetEditUserEmail();
@@ -99,6 +100,7 @@ const mapDispatchToProps = dispatch => ({
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),
     resetFilteredRestaurants: () => dispatch(resetFilteredRestaurants()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
+    resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
     resetEditUserEmail: () => dispatch(resetEditUserEmail()),
