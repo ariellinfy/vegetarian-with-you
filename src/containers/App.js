@@ -11,6 +11,7 @@ import './App.css';
 import Loader from '../components/loading/loading-component';
 import Header from '../components/header/header-component';
 import Footer from '../components/footer/footer-component';
+import ErrorBoundary from '../components/error-boundary/error-boundary-component';
 const HomePage = lazy(() => import('./home-page/home-page-component'));
 const SignInAndSignUpPage = lazy(() => import('./signin-signup-page/signin-signup-page-component'));
 const AdminDashboardPage = lazy(() => import('./admin-dashboard-page/admin-dashboard-page-component')); 
@@ -28,18 +29,20 @@ const App = ({ currentUser, history }) => {
         <div className='App'>
           <Header />
             <Switch>
-              <Suspense fallback={<Loader />}>
-                <Route exact path='/' component={HomePage} />
-                <Route exact path='/signin' render={() => Object.keys(currentUser).length ? (history.go(-1)) : (<SignInAndSignUpPage />)} />
-                <Route exact path='/useraccount' render={() => Object.keys(currentUser).length ? (<AdminDashboardPage />) : (<SignInAndSignUpPage />)} />
-                <Route exact path='/explore' component={ExplorePage} />
-                <Route exact path='/find' component={FindRestaurantPage} />
-                <Route exact path='/createrestaurant' render={() => Object.keys(currentUser).length ? (<CreateRestaurantPage />) : (<SignInAndSignUpPage />)} />
-                <Route exact path='/createreview' render={() => Object.keys(currentUser).length ? (<CreateReviewPage />) : (<SignInAndSignUpPage />)} />
-                <Route exact path='/updaterestaurant' render={() => Object.keys(currentUser).length ? (<UpdateRestaurantPage />) : (<SignInAndSignUpPage />)} />
-                <Route exact path='/updatereview' render={() => Object.keys(currentUser).length ? (<UpdateReviewPage />) : (<SignInAndSignUpPage />)} />
-                <Route path='/restaurants/:id' component={RestaurantPage} />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<Loader />}>
+                  <Route exact path='/' component={HomePage} />
+                  <Route exact path='/signin' render={() => Object.keys(currentUser).length ? (history.go(-1)) : (<SignInAndSignUpPage />)} />
+                  <Route exact path='/useraccount' render={() => Object.keys(currentUser).length ? (<AdminDashboardPage />) : (<SignInAndSignUpPage />)} />
+                  <Route exact path='/explore' component={ExplorePage} />
+                  <Route exact path='/find' component={FindRestaurantPage} />
+                  <Route exact path='/createrestaurant' render={() => Object.keys(currentUser).length ? (<CreateRestaurantPage />) : (<SignInAndSignUpPage />)} />
+                  <Route exact path='/createreview' render={() => Object.keys(currentUser).length ? (<CreateReviewPage />) : (<SignInAndSignUpPage />)} />
+                  <Route exact path='/updaterestaurant' render={() => Object.keys(currentUser).length ? (<UpdateRestaurantPage />) : (<SignInAndSignUpPage />)} />
+                  <Route exact path='/updatereview' render={() => Object.keys(currentUser).length ? (<UpdateReviewPage />) : (<SignInAndSignUpPage />)} />
+                  <Route path='/restaurants/:id' component={RestaurantPage} />
+                </Suspense>
+              </ErrorBoundary>
             </Switch>
           <Footer />
       </div>

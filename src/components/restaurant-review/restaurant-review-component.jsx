@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectReviewsCollection, selectReviewSortbyFilter } from '../../redux/review/review-selectors';
 import { setReviewSortbyFilter, requestReviewsStart, requestReviewsAuthStart } from '../../redux/review/review-actions';
 
+import createImage from '../../assets/dog.svg';
 import ReviewPreview from '../../components/review-preview/review-preview-component';
 import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
@@ -53,6 +54,7 @@ const RestaurantReview = ({ currentUser, targetRestaurant, query,
                     <ReviewPreview key={review.review_id} currentUser={currentUser} review={review} query={query} />
                 )) : (
                     <div className='no-review'>
+                        <img alt='create' src={createImage} />
                         <Typography variant="subtitle1">There are no reviews for {restaurant_name}, {country} yet.</Typography>
                         <Typography variant="subtitle1">Be the first to write a review!</Typography> 
                     </div>

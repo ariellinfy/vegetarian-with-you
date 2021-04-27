@@ -8,6 +8,7 @@ import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStat
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
+import createImage from '../../assets/new.svg';
 import Downloader from '../../components/downloading/downloading-componet';
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
@@ -73,6 +74,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
                                         ))
                                     ) : (
                                         <div className='find-no-match'>
+                                            <img alt='create' src={createImage} />
                                             <Typography variant="h5">Can't find a restaurant?</Typography>
                                             <Typography variant="h5">Fill up a restaurant form to let more people know about it!</Typography> 
                                         </div>
@@ -84,6 +86,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
                                         ))
                                     ) : (
                                         <div className='find-no-match'>
+                                            <img alt='create' src={createImage} />
                                             <Typography variant="h5">Can't find a restaurant?</Typography>
                                             <Typography variant="h5">Fill up a restaurant form to let more people know about it!</Typography> 
                                         </div>

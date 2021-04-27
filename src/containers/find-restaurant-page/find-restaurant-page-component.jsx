@@ -8,6 +8,7 @@ import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStat
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetEditUserEmail } from '../../redux/user/user-actions';
 
+import createImage from '../../assets/new.svg';
 import Downloader from '../../components/downloading/downloading-componet';
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
@@ -66,6 +67,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                                         ))
                                     ) : (           
                                         <div className='find-no-match'>
+                                            <img alt='create' src={createImage} />
                                             <Typography variant="h5">Restaurant not found here?</Typography>
                                             <Typography variant="h5">Let's add a new restaurant profile!</Typography> 
                                             <Button variant="contained" color="primary" onClick={() => Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}>
@@ -80,6 +82,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                                         ))
                                     ) : (
                                         <div className='find-no-match'>
+                                            <img alt='create' src={createImage} />
                                             <Typography variant="h5">Restaurant not found here?</Typography>
                                             <Typography variant="h5">Let's add a new restaurant profile!</Typography> 
                                             <Button variant="contained" color="primary" onClick={() => Object.keys(currentUser).length ? (history.push('/createrestaurant')) : (history.push('/signin'))}>
