@@ -1,6 +1,7 @@
 .review-form-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 
   .review-form {
@@ -64,7 +65,7 @@
     }
 
     .upload-photo-container {
-      .upload-container {
+      .upload-photos {
         width: fit-content;
         margin-top: 0.5em;
       }

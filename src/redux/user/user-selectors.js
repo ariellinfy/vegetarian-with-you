@@ -10,7 +10,15 @@ export const selectAdminCurrentPage = createSelector([selectUser], user => user.
 
 export const selectAuthPending = createSelector([selectUser], user => user.authPending);
 
-export const selectUpdatePending = createSelector([selectUser], user => user.updatePending);
+export const selectEditProfilePending = createSelector([selectUser], user => user.editProfilePending);
+
+export const selectUpdateAvatarPending = createSelector([selectUser], user => user.updateAvatarPending);
+
+export const selectUpdateEmailPending = createSelector([selectUser], user => user.updateEmailPending);
+
+export const selectResetPasswordPending = createSelector([selectUser], user => user.resetPasswordPending);
+
+export const selectCloseAccountPending = createSelector([selectUser], user => user.closeAccountPending);
 
 export const selectAuthSuccess = createSelector([selectUser], user => user.authSuccess);
 

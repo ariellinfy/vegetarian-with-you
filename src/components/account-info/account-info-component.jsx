@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectEditEmailStatus, selectUpdatePending } from '../../redux/user/user-selectors';
+import { selectEditEmailStatus, selectUpdateEmailPending, selectResetPasswordPending, selectCloseAccountPending } from '../../redux/user/user-selectors';
 import { onEditUserEmail, updateEmailStart } from '../../redux/user/user-actions';
 
+import Uploader from '../uploading/uploading-component';
 import { Button, Paper, Typography, TextField, CircularProgress } from '@material-ui/core';
-import UpdatePassword from '../../components/update-password/update-password-component';
-import CloseAccount from '../../components/close-account/close-account-component';
+import UpdatePassword from '../update-password/update-password-component';
+import CloseAccount from '../close-account/close-account-component';
 import './account-info-style.scss';
 
-const AccountInfo = ({ user: { email }, editEmailStatus, updatePending, onEditUserEmail, updateEmailStart }) => {
+const AccountInfo = ({ user: { email }, editEmailStatus, updateEmailPending, resetPasswordPending, closeAccountPending, onEditUserEmail, updateEmailStart }) => {
     const currentUserToken = localStorage.getItem('token');
 
     const [userEmail, setUserEmail] = useState('');
@@ -57,9 +58,9 @@ const AccountInfo = ({ user: { email }, editEmailStatus, updatePending, onEditUs
                                         <Typography className='credential' variant='body1' >{email}</Typography>
                                         <Button className='credential-btn' size='small' variant="contained" color="secondary" onClick={handleEditClick}>
                                             {
-                                                updatePending ? <CircularProgress size={15} /> : 'Edit'
+                                                updateEmailPending ? <CircularProgress size={15} /> : 'Edit'
                                             }
-                                            </Button>
+                                        </Button>
                                     </div>
                                 ) : (
                                     <div className='credential-content'>
@@ -95,7 +96,11 @@ const AccountInfo = ({ user: { email }, editEmailStatus, updatePending, onEditUs
                             email ? (
                                 <div className='credential-content'>
                                     <Typography className='credential' variant='body1'>********</Typography>
-                                    <Button className='credential-btn reset-btn' size='small' variant="outlined" color="secondary" onClick={handleClickOpenPassword}>Reset password</Button>
+                                    <Button className='credential-btn reset-btn' size='small' variant="outlined" color="secondary" onClick={handleClickOpenPassword}>
+                                        {
+                                            resetPasswordPending ? <CircularProgress size={15} /> : 'Reset'
+                                        }
+                                    </Button>
                                     <UpdatePassword email={email} open={openResetPassword} handleClose={handleClosePassword} />
                                 </div>
                             ) : (
@@ -110,12 +115,15 @@ const AccountInfo = ({ user: { email }, editEmailStatus, updatePending, onEditUs
                     <Paper className='deactivate-account'>
                         <Typography className='deactivate-title' variant='body1'>Close Account</Typography>
                         <Typography className='deactivation' variant='body1' >Once you close your account, all information will be trashed, there is no way to go back. Please be certain.</Typography>
-                        <Button name='deactivateAccount' className='deactivate-btn' size='small' variant="contained" color="secondary" onClick={handleClickOpenAccount}>Close your account</Button>
+                        <Button name='deactivateAccount' className='deactivate-btn' size='small' variant="contained" color="secondary" onClick={handleClickOpenAccount} disabled = {closeAccountPending ? true : false}>Close your account</Button>
                         <CloseAccount email={email} open={openCloseAccount} handleClose={handleCloseAccount} />
                     </Paper>
                 ) : (
                     null
                 )
+            }
+            {
+                closeAccountPending ? <Uploader /> : null
             }
         </div>
     )
@@ -123,7 +131,9 @@ const AccountInfo = ({ user: { email }, editEmailStatus, updatePending, onEditUs
 
 const mapStateToProps = createStructuredSelector({
     editEmailStatus: selectEditEmailStatus,
-    updatePending: selectUpdatePending
+    updateEmailPending: selectUpdateEmailPending,
+    resetPasswordPending: selectResetPasswordPending,
+    closeAccountPending: selectCloseAccountPending
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,7 +3,11 @@ import UserActionTypes from './user-types';
 const INITIAL_STATE = {
     currentUser: {},
     authPending: false,
-    updatePending: false,
+    editProfilePending: false,
+    updateAvatarPending: false,
+    updateEmailPending: false,
+    resetPasswordPending: false,
+    closeAccountPending: false,
     authSuccess: false,
     updateSuccess: false,
     authFailure: false,
@@ -60,14 +64,42 @@ const userReducer = (state=INITIAL_STATE, action) => {
             };
 
         case UserActionTypes.EDIT_PROFILE_START:
+            return {
+                ...state,
+                editProfilePending: true,
+                updateSuccess: false,
+                updateFailure: false,
+                updateErr: '',
+            };
         case UserActionTypes.UPDATE_EMAIL_START:
+            return {
+                ...state,
+                updateEmailPending: true,
+                updateSuccess: false,
+                updateFailure: false,
+                updateErr: '',
+            };
         case UserActionTypes.RESET_PASSWORD_START:
+            return {
+                ...state,
+                resetPasswordPending: true,
+                updateSuccess: false,
+                updateFailure: false,
+                updateErr: '',
+            };
         case UserActionTypes.UPLOAD_AVATAR_START:
         case UserActionTypes.DELETE_AVATAR_START:
+            return {
+                ...state,
+                updateAvatarPending: true,
+                updateSuccess: false,
+                updateFailure: false,
+                updateErr: '',
+            };
         case UserActionTypes.CLOSE_ACCOUNT_START:
             return {
                 ...state,
-                updatePending: true,
+                closeAccountPending: true,
                 updateSuccess: false,
                 updateFailure: false,
                 updateErr: '',
@@ -80,7 +112,10 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: action.payload,
-                updatePending: false,
+                editProfilePending: false,
+                updateAvatarPending: false,
+                updateEmailPending: false,
+                resetPasswordPending: false,
                 updateSuccess: true,
                 updateFailure: false,
                 updateErr: '',
@@ -89,7 +124,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: {},
-                updatePending: false,
+                closeAccountPending: false,
                 updateSuccess: true,
                 updateFailure: false,
                 updateErr: '',
@@ -102,7 +137,11 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case UserActionTypes.CLOSE_ACCOUNT_FAILURE:
             return {
                 ...state,
-                updatePending: false,
+                editProfilePending: false,
+                updateAvatarPending: false,
+                updateEmailPending: false,
+                resetPasswordPending: false,
+                closeAccountPending: false,
                 updateSuccess: false,
                 updateFailure: true,
                 updateErr: action.payload

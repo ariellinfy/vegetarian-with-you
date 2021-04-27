@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { createRestaurantStart, updateRestaurantStart } from '../../redux/restaurant/restaurant-actions';
 import { selectRestaurantToBeUpdate, selectRestaurantActionPending, selectRestaurantActionFailure, selectCreateRestaurantErr, selectUpdateRestaurantErr } from '../../redux/restaurant/restaurant-selectors';
 
+import Uploader from '../uploading/uploading-component';
 import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { COUNTRY_REGION } from '../../components/country-region';
@@ -444,7 +445,7 @@ class RestaurantForm extends Component {
                     </div>
                     
                     {
-                        actionPending ? (<div>Pending</div>) : null
+                        actionPending ? (<Uploader />) : null
                     }
 
                     {

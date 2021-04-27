@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { createReviewStart, updateReviewStart } from '../../redux/review/review-actions';
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
 
+import Uploader from '../uploading/uploading-component';
 import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, GridList, GridListTile, IconButton } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
@@ -297,7 +298,7 @@ class ReviewForm extends Component {
                             multiple
                             onChange={this.handleUploadPhotos}
                         />
-                        <label className='upload-container' htmlFor="upload-button">
+                        <label className='upload-photos' htmlFor="upload-button">
                             <Button variant="contained" color="primary" component="span">
                                 Upload
                             </Button>
@@ -337,18 +338,16 @@ class ReviewForm extends Component {
                             <Button type='button' onClick={() => history.goBack()} className='button-input' variant="contained" color="primary">Back</Button>
                             <Button type='submit' className='button-input' variant="contained" color="secondary">Submit</Button>
                         </div>
-
-                        {
-                            actionPending ? (<div>Pending</div>) : null
-                        }
-
-                        {
-                            actionFailure ? (Object.keys(reviewToBeUpdate).length === 0 ? <Typography variant="body1">{createErrMsg}</Typography> : <Typography variant="body1">{updateErrMsg}</Typography>) : null
-                        }
-
                     </div>
-    
+                    {
+                        actionPending ? (<Uploader />) : null
+                    }
+
+                    {
+                        actionFailure ? (Object.keys(reviewToBeUpdate).length === 0 ? <Typography variant="body1">{createErrMsg}</Typography> : <Typography variant="body1">{updateErrMsg}</Typography>) : null
+                    }
                 </form>
+                
             </div>
         )
     }

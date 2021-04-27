@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { signUpStart } from '../../redux/user/user-actions';
+import { selectAuthPending } from '../../redux/user/user-selectors';
 
+import Uploader from '../uploading/uploading-component';
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-up-style.scss';
 
-const SignUp = ({ signUpStart }) => {
+const SignUp = ({ signUpStart, authPending }) => {
     const [userCredential, setCredential] = useState({
         publicName: '',
         email: '',
@@ -75,13 +78,20 @@ const SignUp = ({ signUpStart }) => {
                 <div className='buttons-group'>
                     <Button type='submit' className='button-input' variant="contained" color="secondary">Sign Up</Button>
                 </div>
+                {
+                    authPending ? <Uploader /> : null
+                }
             </form>
         </div>
     )
 };
 
+const mapStateToProps = createStructuredSelector({
+    authPending: selectAuthPending
+});
+
 const mapDispatchToProps = dispatch => ({
     signUpStart: userCredential => dispatch(signUpStart(userCredential))
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

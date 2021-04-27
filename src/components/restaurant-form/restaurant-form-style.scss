@@ -24,6 +24,11 @@
     min-width: 20em;
     display: flex;
     flex-direction: column;
+
+    .upload-container {
+      margin: 0 0 -1em;
+      justify-content: center;
+    }
   }
 
   .text-field,

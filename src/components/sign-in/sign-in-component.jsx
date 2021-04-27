@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { signInStart } from '../../redux/user/user-actions';
+import { selectAuthPending } from '../../redux/user/user-selectors';
 
+import Uploader from '../uploading/uploading-component';
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-in-style.scss';
 
-const SignIn = ({ signInStart }) => {
+const SignIn = ({ signInStart, authPending }) => {
     const [userCredential, setCredential] = useState({
         email: '',
         password: ''
@@ -46,16 +49,25 @@ const SignIn = ({ signInStart }) => {
                     onChange={handleChange}
                     fullWidth required 
                 />
+                
                 <div className='buttons-group'>
                     <Button type='submit' className='button-input' variant="contained" color="secondary">Sign In</Button>
+                    
                 </div>
+                {
+                    authPending ? <Uploader /> : null
+                }
             </form>
         </div>
     )
 };
 
+const mapStateToProps = createStructuredSelector({
+    authPending: selectAuthPending
+});
+
 const mapDispatchToProps = dispatch => ({
     signInStart: userCredential => dispatch(signInStart(userCredential))
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart } from '../../redux/user/user-actions';
-import { selectUpdatePending } from '../../redux/user/user-selectors';
+import { selectUpdateAvatarPending } from '../../redux/user/user-selectors';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
 import Cropper from 'react-easy-crop';
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ userId, avatar, updatePending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
+const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
     const classes = useStyles();
     const currentUserToken = localStorage.getItem('token');
 
@@ -90,7 +90,7 @@ const UploadAvatar = ({ userId, avatar, updatePending, uploadAvatarStart, upload
                     className='avatar-edit-btn'
                 >
                     {
-                        updatePending ? <CircularProgress size={15} /> : 'Edit'
+                        updateAvatarPending ? <CircularProgress size={15} /> : 'Edit'
                     }
                 </Button>
                 <Menu
@@ -172,7 +172,7 @@ const UploadAvatar = ({ userId, avatar, updatePending, uploadAvatarStart, upload
 };
 
 const mapStateToProps = createStructuredSelector({
-    updatePending: selectUpdatePending
+    updateAvatarPending: selectUpdateAvatarPending
 });
 
 const mapDispatchToProps = dispatch => ({
