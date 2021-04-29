@@ -9,6 +9,7 @@ import Cropper from 'react-easy-crop';
 import getCroppedImg from './crop-image';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography, CircularProgress } from '@material-ui/core';
+import imageCompression from 'browser-image-compression';
 import './upload-avatar-style.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,10 +37,11 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
     const [rotation, setRotation] = useState(0);
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [avatarOnChange, setAvatarOnChange] = useState(false);
 
     const onChangeFile = event => {
         const imageFile = event.target.files[0];
-
+        setAvatarOnChange(true);
         if (!imageFile) {
             uploadAvatarFailure('Please select an image.')
           return false;
@@ -59,7 +61,9 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
 
     const getCroppedImage = useCallback(async () => {
         try {
+            console.log(avatarOnChange, 'start crop')
             croppedAvatar = await getCroppedImg(uploadAvatar, croppedAreaPixels, rotation, `${userId}.jpg`);
+            console.log(avatarOnChange, 'cropping')
             return croppedAvatar;
         } catch (e) {
           console.error(e);
@@ -69,14 +73,35 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
     const handleSubmit = async (event) => {
         event.preventDefault();
         croppedAvatar = await getCroppedImage();
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 250,
+            useWebWorker: true
+        };
+        try {
+            console.log(avatarOnChange, 'start resizing')
+            await imageCompression(croppedAvatar, options).then(compressedImg => {
+                const file = new File([compressedImg], compressedImg.name, {
+                    type: compressedImg.type
+                });
+                console.log(avatarOnChange, 'resizing')
+                croppedAvatar = file;
+                console.log(avatarOnChange, 'done')
+            });
+        } catch (err) {
+            console.log(err);
+        }
         await uploadAvatarStart({ croppedAvatar, currentUserToken });
+        updateAvatarPending ? setAvatarOnChange(true) : setAvatarOnChange(false);
     };
 
     const handleRemoveAvatar = () => {
+        setAvatarOnChange(true);
         deleteAvatarStart({ avatar, currentUserToken });
         setAnchorEl(null);
+        updateAvatarPending ? setAvatarOnChange(true) : setAvatarOnChange(false);
     };
-
+    console.log(avatarOnChange, updateAvatarPending)
     return (
         <div className='upload-avatar-container'>
             <UserAvatar avatar={avatar} />
@@ -90,7 +115,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
                     className='avatar-edit-btn'
                 >
                     {
-                        updateAvatarPending ? <CircularProgress size={15} /> : 'Edit'
+                        avatarOnChange || updateAvatarPending ? <CircularProgress size={15} /> : 'Edit'
                     }
                 </Button>
                 <Menu

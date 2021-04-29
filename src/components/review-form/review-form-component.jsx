@@ -6,10 +6,11 @@ import { createReviewStart, updateReviewStart } from '../../redux/review/review-
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
 
 import Uploader from '../uploading/uploading-component';
+import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-component';
 import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, GridList, GridListTile, IconButton } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-component';
+import imageCompression from 'browser-image-compression';
 import './review-form-style.scss';
 
 const labels = {
@@ -100,7 +101,6 @@ class ReviewForm extends Component {
 
     handleChange = event => {
         const { name, value, checked } = event.target;
-
         if (name === 'foodRate' || name === 'serviceRate' || name === 'valueRate' || name === 'atmosphereRate') {
             this.setState({ ...this.state, [name]: Number(value) });
         } else if (name === 'disclosure') {
@@ -110,8 +110,26 @@ class ReviewForm extends Component {
         }
     };
 
-    handleUploadPhotos = event => {
-        this.setState({ ...this.state, photos: this.state.photos.concat(Object.values(event.target.files)) });
+    handleUploadPhotos = async event => {
+        let imageFiles = Object.values(event.target.files);
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1024,
+            useWebWorker: true
+        };
+        try {
+            await imageFiles.forEach(img => {
+                imageCompression(img, options).then(compressedImg => {
+                    const file = new File([compressedImg], compressedImg.name, {
+                        lastModified: compressedImg.lastModified,
+                        type: compressedImg.type
+                    });
+                    this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
+                });
+            });
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     handleClearImg = i => {
