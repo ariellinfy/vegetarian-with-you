@@ -2,18 +2,18 @@ import UserActionTypes from './user-types';
 
 // Request user info
 
-export const requestUserStart = currentUserToken => ({
-    type: UserActionTypes.REQUEST_USER_START,
+export const checkUserSessionStart = currentUserToken => ({
+    type: UserActionTypes.CHECK_USER_SESSION_START,
     payload: currentUserToken
 });
 
-export const requestUserSuccess = user => ({
-    type: UserActionTypes.REQUEST_USER_SUCCESS,
+export const checkUserSessionSuccess = user => ({
+    type: UserActionTypes.CHECK_USER_SESSION_SUCCESS,
     payload: user
 });
 
-export const requestUserFailure = error => ({
-    type: UserActionTypes.REQUEST_USER_FAILURE,
+export const checkUserSessionFailure = error => ({
+    type: UserActionTypes.CHECK_USER_SESSION_FAILURE,
     payload: error
 });
 
@@ -67,6 +67,12 @@ export const signOutFailure = error => ({
     payload: error
 });
 
+// Reset auth status
+
+export const resetAuthStatus = () => ({
+    type: UserActionTypes.RESET_AUTH_STATUS,
+});
+
 // Edit profile
 
 export const editProfileStart = userInfo => ({
@@ -118,16 +124,6 @@ export const deleteAvatarFailure = error => ({
     payload: error
 });
 
-// Set email field status
-
-export const onEditUserEmail  = () => ({
-    type: UserActionTypes.CHANGE_EDIT_EMAIL_STATUS
-});
-
-export const resetEditUserEmail  = () => ({
-    type: UserActionTypes.RESET_EDIT_EMAIL_STATUS
-});
-
 // Update email
 
 export const updateEmailStart = userCredential => ({
@@ -177,6 +173,18 @@ export const closeAccountSuccess = user => ({
 export const closeAccountFailure = error => ({
     type: UserActionTypes.CLOSE_ACCOUNT_FAILURE,
     payload: error
+});
+
+// Reset update status
+
+export const resetUserUpdateStatus = () => ({
+    type: UserActionTypes.RESET_USER_UPDATE_STATUS,
+});
+
+// Set email field status
+
+export const onEditUserEmail  = () => ({
+    type: UserActionTypes.CHANGE_EDIT_EMAIL_STATUS
 });
 
 // Set admin page tabs

@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { resetCreateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectRestaurantUpdateSuccess, selectTargetRestaurantInfo, selectTargetRestaurantInfoToMap } from '../../redux/restaurant/restaurant-selectors';
-import { resetEditUserEmail } from '../../redux/user/user-actions';
+import { resetUserUpdateStatus } from '../../redux/user/user-actions';
 
 import RestaurantForm from '../../components/restaurant-form/restaurant-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './update-restaurant-page-style.scss';
 
-const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestaurantToMap, resetEditUserEmail,
+const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestaurantToMap, resetUserUpdateStatus,
     resetCreateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
@@ -30,7 +30,7 @@ const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestauran
         resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
-        resetEditUserEmail();
+        resetUserUpdateStatus();
     }, []);
 
     return (
@@ -91,7 +91,7 @@ const mapDispatchToProps = dispatch => ({
     resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
-    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateRestaurantPage);

@@ -1,8 +1,9 @@
-import React, { lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../redux/user/user-selectors';
+import { checkUserSessionStart } from '../redux/user/user-actions';
 
 import theme from './material-ui-theme';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -23,7 +24,15 @@ const CreateReviewPage = lazy(() => import('./create-review-page/create-review-p
 const UpdateReviewPage = lazy(() => import('./update-review-page/update-review-page-component')); 
 const RestaurantPage = lazy(() => import('./restaurant-page/restaurant-page-component')); 
 
-const App = ({ currentUser, history }) => {
+const App = ({ currentUser, checkUserSessionStart, history }) => {
+  let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
+
+  useEffect(() => {
+    if (Object.keys(currentUser).length) {
+      checkUserSessionStart({ currentUserToken })
+    };
+  }, [checkUserSessionStart]);
+
   return (
     <ThemeProvider theme={theme}>
         <div className='App'>
@@ -54,4 +63,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-export default withRouter(connect(mapStateToProps)(App));
+const mapDispatchToProps = dispatch => ({
+  checkUserSessionStart: currentUserToken => dispatch(checkUserSessionStart(currentUserToken)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

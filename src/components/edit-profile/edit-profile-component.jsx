@@ -73,7 +73,7 @@ const EditProfile = ({ publicName, location, open, handleClose, editProfileStart
                         <Button onClick={handleClose} variant="outlined" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit">
+                        <Button onClick={handleClose} variant="contained" color="secondary" type="submit" disabled = {name.length ? false : true}>
                             Save
                         </Button>
                     </DialogActions>

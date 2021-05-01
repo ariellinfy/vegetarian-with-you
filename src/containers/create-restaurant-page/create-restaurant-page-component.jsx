@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectRestaurantCreateSuccess, selectTargetRestaurantInfo, selectTargetRestaurantInfoToMap } from '../../redux/restaurant/restaurant-selectors';
-import { resetEditUserEmail } from '../../redux/user/user-actions';
+import { resetUserUpdateStatus } from '../../redux/user/user-actions';
 
 import RestaurantForm from '../../components/restaurant-form/restaurant-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './create-restaurant-page-style.scss';
 
-const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestaurantToMap, resetEditUserEmail,
+const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestaurantToMap, resetUserUpdateStatus,
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
@@ -31,7 +31,7 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
         resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
-        resetEditUserEmail();
+        resetUserUpdateStatus();
     }, []);
 
     return (
@@ -93,7 +93,7 @@ const mapDispatchToProps = dispatch => ({
     resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
-    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateRestaurantPage);

@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser, selectAdminCurrentPage } from '../../redux/user/user-selectors';
 import { resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
-import { setAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
+import { setAdminCurrentPage, resetUserUpdateStatus } from '../../redux/user/user-actions';
 
 import { Tabs, Tab } from '@material-ui/core';
 import UserProfile from '../../components/user-profile/user-profile-component';
@@ -12,7 +12,7 @@ import AccountInfo from '../../components/account-info/account-info-component';
 import UserReviews from '../../components/user-reviews/user-reviews-component';
 import './admin-dashboard-page-style.scss';
 
-const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage, resetEditUserEmail, 
+const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage, resetUserUpdateStatus, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
@@ -26,11 +26,11 @@ const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage
         resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
-        resetEditUserEmail();
+        resetUserUpdateStatus();
     }, []);
 
     useEffect(() => {
-        resetEditUserEmail();
+        resetUserUpdateStatus();
         setValue(adminCurrentPage);
     }, [adminCurrentPage]);
 
@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => ({
     resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
-    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
     setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber))
 });
 

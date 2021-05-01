@@ -6,13 +6,13 @@ import { resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilter
 import { resetCreateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectReviewUpdateSuccess, selectTargetReviewInfo, selectTargetReviewInfoToMap } from '../../redux/review/review-selectors';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
-import { resetEditUserEmail, setAdminCurrentPage } from '../../redux/user/user-actions';
+import { resetUserUpdateStatus, setAdminCurrentPage } from '../../redux/user/user-actions';
 
 import ReviewForm from '../../components/review-form/review-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './update-review-page-style.scss';
 
-const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targetRestaurant, resetEditUserEmail, setAdminCurrentPage,
+const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targetRestaurant, resetUserUpdateStatus, setAdminCurrentPage,
     resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
@@ -30,7 +30,7 @@ const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targ
         resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
-        resetEditUserEmail();
+        resetUserUpdateStatus();
     }, []);
 
     return (
@@ -103,7 +103,7 @@ const mapDispatchToProps = dispatch => ({
     resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
-    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateReviewPage);

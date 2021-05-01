@@ -6,13 +6,13 @@ import { resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilter
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectReviewCreateSuccess, selectTargetReviewInfo, selectTargetReviewInfoToMap } from '../../redux/review/review-selectors';
 import { selectTargetRestaurantInfo } from '../../redux/restaurant/restaurant-selectors';
-import { resetEditUserEmail, setAdminCurrentPage } from '../../redux/user/user-actions';
+import { resetUserUpdateStatus, setAdminCurrentPage } from '../../redux/user/user-actions';
 
 import ReviewForm from '../../components/review-form/review-form-component';
 import { Typography, Card, Button } from '@material-ui/core';
 import './create-review-page-style.scss';
 
-const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targetRestaurant, resetEditUserEmail, setAdminCurrentPage,
+const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targetRestaurant, resetUserUpdateStatus, setAdminCurrentPage,
     resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants, 
     resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
         
@@ -31,7 +31,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
         resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
-        resetEditUserEmail();
+        resetUserUpdateStatus();
     }, []);
 
     return (
@@ -105,7 +105,7 @@ const mapDispatchToProps = dispatch => ({
     resetDeleteReviewStatus: () => dispatch(resetDeleteReviewStatus()),
     resetRequestReviewsStatus: () => dispatch(resetRequestReviewsStatus()),
     resetRequestUserReviewsStatus: () => dispatch(resetRequestUserReviewsStatus()),
-    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateReviewPage);

@@ -197,6 +197,20 @@ let theme = createMuiTheme({
                     fontSize: '3rem'
                 },
             }
+        },
+        MuiAlert: {
+            root: {
+                minHeight: '53px',
+            },
+            icon: {
+                padding: '10px 0'
+            },
+            action: {
+                height: 'fit-content',
+                paddingTop: '5px',
+                paddingLeft: '10px',
+                marginRight: '-5px'
+            }
         }
     }
   });

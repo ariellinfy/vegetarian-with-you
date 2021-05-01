@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { signUpStart } from '../../redux/user/user-actions';
-import { selectAuthPending } from '../../redux/user/user-selectors';
+import { signUpStart, signUpFailure, resetAuthStatus } from '../../redux/user/user-actions';
+import { selectSignUpPending, selectSignUpErr } from '../../redux/user/user-selectors';
 
 import Uploader from '../uploading/uploading-component';
+import AlertMessage from '../alert-message/alert-message-component';
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-up-style.scss';
 
-const SignUp = ({ signUpStart, authPending }) => {
+const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, signUpErr }) => {
+    useEffect(() => {
+        resetAuthStatus();
+    }, []);
+
     const [userCredential, setCredential] = useState({
         publicName: '',
         email: '',
@@ -20,7 +25,7 @@ const SignUp = ({ signUpStart, authPending }) => {
     const handleSubmit = event => {
         event.preventDefault();
         if (password !== confirmPassword) {
-            alert("Passwords don't match");
+            signUpFailure("Passwords don't match");
             return;
         };
         signUpStart({publicName, email, password});
@@ -35,6 +40,9 @@ const SignUp = ({ signUpStart, authPending }) => {
         <div className='sign-up-container'>
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <Typography variant="h6">Don't have an account? Let's get started now!</Typography>
+                {
+                    signUpErr.length ? <AlertMessage severity="error" errMsg={signUpErr} /> : null
+                }
                 <TextField 
                     className='text-field publicName' 
                     label='Name' 
@@ -79,7 +87,7 @@ const SignUp = ({ signUpStart, authPending }) => {
                     <Button type='submit' className='button-input' variant="contained" color="secondary">Sign Up</Button>
                 </div>
                 {
-                    authPending ? <Uploader /> : null
+                    signUpPending ? <Uploader /> : null
                 }
             </form>
         </div>
@@ -87,11 +95,14 @@ const SignUp = ({ signUpStart, authPending }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-    authPending: selectAuthPending
+    signUpPending: selectSignUpPending,
+    signUpErr: selectSignUpErr
 });
 
 const mapDispatchToProps = dispatch => ({
-    signUpStart: userCredential => dispatch(signUpStart(userCredential))
+    signUpStart: userCredential => dispatch(signUpStart(userCredential)),
+    signUpFailure: error => dispatch(signUpFailure(error)),
+    resetAuthStatus: () => dispatch(resetAuthStatus())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

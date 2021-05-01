@@ -1,33 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { signInStart } from '../../redux/user/user-actions';
-import { selectAuthPending } from '../../redux/user/user-selectors';
+import { signInStart, resetAuthStatus } from '../../redux/user/user-actions';
+import { selectSignInPending, selectSignInErr } from '../../redux/user/user-selectors';
 
 import Uploader from '../uploading/uploading-component';
+import AlertMessage from '../alert-message/alert-message-component';
 import { TextField, Button, Typography } from '@material-ui/core';
 import './sign-in-style.scss';
 
-const SignIn = ({ signInStart, authPending }) => {
+const SignIn = ({ signInStart, signInPending, signInErr, resetAuthStatus }) => {
+    useEffect(() => {
+        resetAuthStatus();
+    }, []);
+    
     const [userCredential, setCredential] = useState({
         email: '',
         password: ''
-    })
+    });
+
     const { email, password } = userCredential;
 
     const handleSubmit = event => {
         event.preventDefault();
         signInStart({ email, password });
-    }
+    };
     
     const handleChange = event => {
         const { value, name } = event.target;
         setCredential({ ...userCredential, [name]: value });
-    }
+    };
 
     return (
         <div className='sign-in-container'>
             <Typography variant="h6">Sign in with your email and password</Typography>
+            {
+                signInErr.length ? <AlertMessage severity="error" errMsg={signInErr} /> : null
+            }
             <form className='sign-in-form' onSubmit={handleSubmit}>
                 <TextField 
                     className='text-field email' 
@@ -55,7 +64,7 @@ const SignIn = ({ signInStart, authPending }) => {
                     
                 </div>
                 {
-                    authPending ? <Uploader /> : null
+                    signInPending ? <Uploader /> : null
                 }
             </form>
         </div>
@@ -63,11 +72,13 @@ const SignIn = ({ signInStart, authPending }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-    authPending: selectAuthPending
+    signInPending: selectSignInPending,
+    signInErr: selectSignInErr
 });
 
 const mapDispatchToProps = dispatch => ({
-    signInStart: userCredential => dispatch(signInStart(userCredential))
+    signInStart: userCredential => dispatch(signInStart(userCredential)),
+    resetAuthStatus: () => dispatch(resetAuthStatus())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

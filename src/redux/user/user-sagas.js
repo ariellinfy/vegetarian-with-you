@@ -4,7 +4,7 @@ import {
     signUpSuccess, signUpFailure, 
     signInSuccess, signInFailure, 
     signOutSuccess, signOutFailure, 
-    requestUserSuccess, requestUserFailure,
+    checkUserSessionSuccess, checkUserSessionFailure,
     editProfileSuccess, editProfileFailure, 
     uploadAvatarSuccess, uploadAvatarFailure, 
     deleteAvatarSuccess, deleteAvatarFailure, 
@@ -18,8 +18,7 @@ export function* request(url, method, headers, body, auth = null) {
     const token = auth ? auth : null;
     try {
         const response = yield call(fetch, url, addHeader(options, token));
-        const checkedResponse = yield checkStatus(response);
-        return checkedResponse;
+        return yield response.json();
     } catch (e) {
        console.log(e, 'something went wrong');
     }
@@ -40,14 +39,6 @@ function addHeader(options = {}, token) {
     return newOptions;
 }
 
-function checkStatus(response) {
-    if (response.ok) {
-        return response.json();
-    } else {
-        console.log('fetch response failed');
-    }
-}
-
 export function* signUp({ payload: { publicName, email, password } }) {
     try {
         const url = 'http://localhost:5000/users/signup';
@@ -58,12 +49,15 @@ export function* signUp({ payload: { publicName, email, password } }) {
             email: email,
             password: password
         });
-        const user = yield call(request, url, method, headers, body);
-        if (user !== undefined) {
-            localStorage.setItem('token', user.token);
-            yield put(signUpSuccess(user.user));
-        } 
+        const data = yield call(request, url, method, headers, body);
+        if (data.user) {
+            localStorage.setItem('token', data.token);
+            yield put(signUpSuccess(data.user));
+        } else {
+            yield put(signUpFailure(data.error));
+        }
     } catch (error) {
+        console.log('signup', error);
         yield put(signUpFailure(error));
     }
 }
@@ -77,12 +71,15 @@ export function* signIn({ payload: { email, password } }) {
             email: email,
             password: password
         });
-        const user = yield call(request, url, method, headers, body);
-        if (user !== undefined) {
-            localStorage.setItem('token', user.token);
-            yield put(signInSuccess(user.user));
-        } 
+        const data = yield call(request, url, method, headers, body);
+        if (data.user) {
+            localStorage.setItem('token', data.token);
+            yield put(signInSuccess(data.user));
+        } else {
+            yield put(signInFailure(data.error));
+        }
     } catch (error) {
+        console.log('signin', error);
         yield put(signInFailure(error));
     }
 }
@@ -97,23 +94,28 @@ export function* signOut({ payload: { currentUserToken } }) {
         localStorage.removeItem('token');
         yield put(signOutSuccess());
     } catch (error) {
+        console.log('signout', error);
         yield put(signOutFailure(error));
     }
 }
 
-export function* requestUser({ payload: { currentUserToken } }) {
+export function* checkUserSession({ payload: { currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users';
         const method = 'GET';
         const headers = null;
         const body = null;
-        const user = yield call(request, url, method, headers, body, currentUserToken);
-        if (user !== undefined) {
-            localStorage.setItem('token', user.token);
-            yield put(requestUserSuccess(user.data));
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.user) {
+            localStorage.setItem('token', data.token);
+            yield put(checkUserSessionSuccess(data.user));
+        } else {
+            localStorage.removeItem('token');
+            yield put(signOutSuccess());
         }
     } catch (error) {
-        yield put(requestUserFailure(error));
+        console.log('request user', error);
+        yield put(checkUserSessionFailure(error));
     }
 }
 
@@ -126,11 +128,13 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
             public_name: name,
             location: city
         });
-        const user = yield call(request, url, method, headers, body, currentUserToken);
-        if (user !== undefined) {
-            localStorage.setItem('token', user.token);
-            yield put(editProfileSuccess(user.user));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.user) {
+            localStorage.setItem('token', data.token);
+            yield put(editProfileSuccess(data.user));
+        } else {
+            yield put(editProfileFailure(data.error));
+        }
     } catch (error) {
         yield put(editProfileFailure(error));
     }
@@ -244,8 +248,8 @@ export function* onSignOutStart() {
     yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
-export function* onRequestUserStart() {
-    yield takeLatest(UserActionTypes.REQUEST_USER_START, requestUser);
+export function* onCheckUserSessionStart() {
+    yield takeLatest(UserActionTypes.CHECK_USER_SESSION_START, checkUserSession);
 }
 
 export function* onEditProfileStart() {
@@ -277,7 +281,7 @@ export function* userSagas() {
         call(onSignUpStart),
         call(onSignInStart),
         call(onSignOutStart),
-        call(onRequestUserStart),
+        call(onCheckUserSessionStart),
         call(onEditProfileStart),
         call(onUploadAvatarStart),
         call(onDeleteAvatarStart),

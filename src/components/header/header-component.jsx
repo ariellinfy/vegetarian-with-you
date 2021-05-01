@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
-import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail } from '../../redux/user/user-actions';
+import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetUserUpdateStatus } from '../../redux/user/user-actions';
 import { resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 
@@ -15,7 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetEditUserEmail, 
+const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetUserUpdateStatus, 
     resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus }) => {
 
     const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
@@ -58,7 +58,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         resetUpdateReviewStatus();
         resetDeleteReviewStatus();
         resetRequestUserReviewsStatus();
-        resetEditUserEmail();
+        resetUserUpdateStatus();
         resetAdminCurrentPage();
         signOutStart({ currentUserToken });
         setAnchorEl(null);
@@ -210,7 +210,7 @@ const mapDispatchToProps = dispatch => ({
     signOutStart: token => dispatch(signOutStart(token)),
     setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber)),
     resetAdminCurrentPage: () => dispatch(resetAdminCurrentPage()),
-    resetEditUserEmail: () => dispatch(resetEditUserEmail()),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),
     resetUpdateReviewStatus: () => dispatch(resetUpdateReviewStatus()),

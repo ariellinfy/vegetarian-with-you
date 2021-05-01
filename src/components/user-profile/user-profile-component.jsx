@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { requestUserStart } from '../../redux/user/user-actions';
 import { selectEditProfilePending } from '../../redux/user/user-selectors';
 
 import Uploader from '../uploading/uploading-component';
@@ -14,13 +13,7 @@ import EventIcon from '@material-ui/icons/Event';
 import CreateIcon from '@material-ui/icons/Create';
 import './user-profile-style.scss';
 
-const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined }, requestUserStart, editProfilePending }) => {
-
-    let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-
-    useEffect(() => {
-        requestUserStart({ currentUserToken });
-    }, []);
+const UserProfile = ({ user: { user_id, public_name, avatar, contributions, location, joined }, editProfilePending }) => {
 
     const [openEditProfile, setEditProfileOpen] = useState(false);
 
@@ -119,8 +112,4 @@ const mapStateToProps = createStructuredSelector({
     editProfilePending: selectEditProfilePending
 });
 
-const mapDispatchToProps = dispatch => ({
-    requestUserStart: currentUserToken => dispatch(requestUserStart(currentUserToken)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps)(UserProfile);
