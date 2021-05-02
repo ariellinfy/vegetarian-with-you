@@ -31,6 +31,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
 
     const [uploadAvatar, setUploadAvatar] = useState(null);
     let croppedAvatar = null;
+    let compressedAvatar = null;
     const [openUploadAvatar, setUploadAvatarOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -42,17 +43,18 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
     const onChangeFile = event => {
         const imageFile = event.target.files[0];
         setAvatarOnChange(true);
+
         if (!imageFile) {
-            uploadAvatarFailure('Please select an image.')
-          return false;
-        }
+            uploadAvatarFailure('Please select an image.');
+            return false;
+        };
         if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
-            uploadAvatarFailure('File type must be .jpg/jpeg or .png')
-          return false;
+            uploadAvatarFailure('File type must be .jpg/jpeg or .png');
+            return false;
         } else {
             setUploadAvatar(URL.createObjectURL(imageFile));
             setUploadAvatarOpen(true);
-        }
+        };
     };
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
@@ -61,47 +63,44 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
 
     const getCroppedImage = useCallback(async () => {
         try {
-            console.log(avatarOnChange, 'start crop')
-            croppedAvatar = await getCroppedImg(uploadAvatar, croppedAreaPixels, rotation, `${userId}.jpg`);
-            console.log(avatarOnChange, 'cropping')
-            return croppedAvatar;
+            return await getCroppedImg(uploadAvatar, croppedAreaPixels, rotation, `${userId}.jpg`);
         } catch (e) {
           console.error(e);
         }
     }, [croppedAreaPixels]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        croppedAvatar = await getCroppedImage();
+    const getCompressedImage = useCallback(async (croppedAvatar, avatarOnChange) => {
         const options = {
             maxSizeMB: 1,
             maxWidthOrHeight: 250,
             useWebWorker: true
         };
         try {
-            console.log(avatarOnChange, 'start resizing')
-            await imageCompression(croppedAvatar, options).then(compressedImg => {
-                const file = new File([compressedImg], compressedImg.name, {
+            return await imageCompression(croppedAvatar, options).then(compressedImg => {
+                return new File([compressedImg], compressedImg.name, {
                     type: compressedImg.type
                 });
-                console.log(avatarOnChange, 'resizing')
-                croppedAvatar = file;
-                console.log(avatarOnChange, 'done')
             });
-        } catch (err) {
-            console.log(err);
+        } catch (e) {
+            console.error(e);
         }
-        await uploadAvatarStart({ croppedAvatar, currentUserToken });
-        updateAvatarPending ? setAvatarOnChange(true) : setAvatarOnChange(false);
+    }, [croppedAvatar]);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        croppedAvatar = await getCroppedImage();
+        compressedAvatar = await getCompressedImage(croppedAvatar, avatarOnChange);
+        await uploadAvatarStart({ compressedAvatar, currentUserToken });
+        setAvatarOnChange(false);
     };
 
     const handleRemoveAvatar = () => {
         setAvatarOnChange(true);
         deleteAvatarStart({ avatar, currentUserToken });
         setAnchorEl(null);
-        updateAvatarPending ? setAvatarOnChange(true) : setAvatarOnChange(false);
+        setAvatarOnChange(false);
     };
-    console.log(avatarOnChange, updateAvatarPending)
+
     return (
         <div className='upload-avatar-container'>
             <UserAvatar avatar={avatar} />
@@ -115,7 +114,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
                     className='avatar-edit-btn'
                 >
                     {
-                        avatarOnChange || updateAvatarPending ? <CircularProgress size={15} /> : 'Edit'
+                        (avatarOnChange || updateAvatarPending) ? <CircularProgress size={15} /> : 'Edit'
                     }
                 </Button>
                 <Menu
