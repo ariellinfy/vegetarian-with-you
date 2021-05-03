@@ -4,21 +4,23 @@ import { createStructuredSelector } from 'reselect';
 import { signOutStart } from '../../redux/user/user-actions';
 
 const SessionTimeout = ({ currentUser, signOutStart }) => {
-    console.log(currentUser);
-    const [authState, setAuth] = useState({
-        currentUserToken: localStorage.getItem('token') ? localStorage.getItem('token') : '',
-        isAuthenticated: Object.keys(currentUser).length ? true : false
-    });
-    const { currentUserToken, isAuthenticated } = authState;
+    let currentUserToken = '';
+    let isAuthenticated = false;
 
-    const [events, setEvents] = useState(['mousedown', 'click', 'load', 'scroll', 'keydown', 'mousemove']);
+    if (Object.keys(currentUser).length) {
+        currentUserToken = localStorage.getItem('token');
+        isAuthenticated = true;
+    };
+    console.log(isAuthenticated, currentUser);
+
+    const [events, setEvents] = useState(['mousedown', 'click', 'load', 'scroll', 'keydown']);
     const [isOpen, setOpen] = useState(false);
     let timeStamp = 0;
     let warningInactiveInterval = useRef();
     let startTimerInterval = useRef();
-    console.log(isAuthenticated);
-
+    
     let timeChecker = () => {
+        console.log('time check start')
         startTimerInterval.current = setTimeout(() => {
           let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
           warningInactive(storedTimeStamp);
@@ -26,11 +28,12 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
     };
 
     let warningInactive = (lastTimeStamp) => {
+        console.log('start warning interval')
         clearTimeout(startTimerInterval.current);
-    
+
         warningInactiveInterval.current = setInterval(() => {
-            const maxTime = 1 * 60;
-            const popTime = 0.5 * 60;
+            const maxTime = 0.5 * 60;
+            const popTime = 0.25 * 60;
             const secPast = Math.floor(Date.now() / 1000) - lastTimeStamp;
             console.log(secPast, lastTimeStamp);
 
@@ -46,15 +49,14 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
                 signOutStart({ currentUserToken });
                 clearInterval(warningInactiveInterval.current);
                 sessionStorage.removeItem('lastTimeStamp');
-                events.forEach((event) => {
-                    window.removeEventListener(event, resetTimer);
-                });
+                isAuthenticated = false;
+                return;
             }
         }, 1000);
     };
 
     let resetTimer = useCallback(() => {
-        console.log('reset timer')
+        console.log('reset timer');
         clearTimeout(startTimerInterval.current);
         clearInterval(warningInactiveInterval.current);
     
@@ -62,14 +64,6 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
             timeStamp = Math.floor(Date.now() / 1000);
             sessionStorage.setItem('lastTimeStamp', timeStamp);
             timeChecker();
-        } else {
-            console.log(warningInactiveInterval.current);
-            clearInterval(warningInactiveInterval.current);
-            console.log(sessionStorage.getItem('lastTimeStamp'));
-            sessionStorage.removeItem('lastTimeStamp');
-            events.forEach((event) => {
-                window.removeEventListener(event, resetTimer);
-            });
         };
         setOpen(false);
     }, [isAuthenticated]);
@@ -81,20 +75,19 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
     
     useEffect(() => {
         console.log('first render');
-        events.forEach((event) => {
-            window.addEventListener(event, resetTimer);
-        });
+        if (isAuthenticated) {
+            events.forEach((event) => {
+                window.addEventListener(event, resetTimer);
+            });
+        };
+
         return () => {
-            console.log('clean up');
             events.forEach((event) => {
                 window.removeEventListener(event, resetTimer);
             });
-            clearTimeout(startTimerInterval.current);
-            clearInterval(warningInactiveInterval.current);
-          //   resetTimer();
         };
     }, [resetTimer, events, timeChecker]);
-
+    
     return isOpen ? <Fragment /> : null;
 };
 
