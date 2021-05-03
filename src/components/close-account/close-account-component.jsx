@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     actions: {
         padding: '8px 24px 16px 24px',
     }
-  }));
+}));
 
 const CloseAccount = ({ email, open, handleClose, closeAccountStart }) => {
     const classes = useStyles();

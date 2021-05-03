@@ -3,7 +3,22 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { signOutStart } from '../../redux/user/user-actions';
 
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Dialog, DialogTitle, Divider, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    text: {
+        color: 'grey',
+        marginTop: '0.5em',
+        marginBottom: '0.25em'
+    },
+    actions: {
+        padding: '8px 24px 16px 24px',
+    }
+}));
+
 const SessionTimeout = ({ currentUser, signOutStart }) => {
+    const classes = useStyles();
     let currentUserToken = '';
     let isAuthenticated = false;
 
@@ -14,7 +29,7 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
     console.log(isAuthenticated, currentUser);
 
     const [events, setEvents] = useState(['mousedown', 'click', 'load', 'scroll', 'keydown']);
-    const [isOpen, setOpen] = useState(false);
+    const [warningOpen, setOpen] = useState(false);
     let timeStamp = 0;
     let warningInactiveInterval = useRef();
     let startTimerInterval = useRef();
@@ -39,7 +54,6 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
 
             if (secPast === popTime) {
                 console.log('pop');
-                // alert("You will be logged out automatically in 1 minute.");
                 setOpen(true);
             };
     
@@ -65,12 +79,22 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
             sessionStorage.setItem('lastTimeStamp', timeStamp);
             timeChecker();
         };
-        setOpen(false);
     }, [isAuthenticated]);
 
     const handleClose = () => {
         setOpen(false);
         resetTimer();
+    };
+
+    const handleLogout = async () => {
+        console.log('logging out');
+        isAuthenticated = false;
+        await clearTimeout(startTimerInterval.current);
+        await clearInterval(warningInactiveInterval.current);
+        await signOutStart({ currentUserToken });
+        await sessionStorage.removeItem('lastTimeStamp');
+        setOpen(false);
+        return;
     };
     
     useEffect(() => {
@@ -88,7 +112,25 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
         };
     }, [resetTimer, events, timeChecker]);
     
-    return isOpen ? <Fragment /> : null;
+    return warningOpen ? (
+            <Dialog open={warningOpen} onClose={handleClose}>
+                <DialogTitle id="idle-warning">You Have Been Idle!</DialogTitle>
+                <Divider />
+                <DialogContent>
+                    <DialogContentText className={classes.text}>
+                        You will be logged out automatically in 5 minutes. Would you want to stay?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions className={classes.actions}>
+                    <Button onClick={handleLogout} variant="contained" color="secondary">
+                        Sign Out
+                    </Button>
+                    <Button onClick={handleClose} variant="contained" color="primary" type="submit">
+                        Stay
+                    </Button>
+                </DialogActions>
+            </Dialog>
+    ) : null;
 };
 
 const mapStateToProps = createStructuredSelector({
