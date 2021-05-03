@@ -12,6 +12,7 @@ import './App.css';
 import Loader from '../components/loading/loading-component';
 import Header from '../components/header/header-component';
 import Footer from '../components/footer/footer-component';
+import SessionTimeout from '../components/auto-logout/auto-logout-component';
 import ErrorBoundary from '../components/error-boundary/error-boundary-component';
 const HomePage = lazy(() => import('./home-page/home-page-component'));
 const SignInAndSignUpPage = lazy(() => import('./signin-signup-page/signin-signup-page-component'));
@@ -55,6 +56,7 @@ const App = ({ currentUser, checkUserSessionStart, history }) => {
             </Switch>
           <Footer />
       </div>
+      <SessionTimeout currentUser={currentUser} />
     </ThemeProvider>
   );
 }
