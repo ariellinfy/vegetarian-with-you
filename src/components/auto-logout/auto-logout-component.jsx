@@ -28,7 +28,7 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
     };
     console.log(isAuthenticated, currentUser);
 
-    const [events, setEvents] = useState(['mousedown', 'click', 'load', 'scroll', 'keydown']);
+    const [events, setEvents] = useState(['mousedown', 'load', 'scroll', 'keydown', 'mousemove']);
     const [warningOpen, setOpen] = useState(false);
     let timeStamp = 0;
     let warningInactiveInterval = useRef();
@@ -86,15 +86,14 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
         resetTimer();
     };
 
-    const handleLogout = async () => {
+    const handleLogout = () => {
         console.log('logging out');
         isAuthenticated = false;
-        await clearTimeout(startTimerInterval.current);
-        await clearInterval(warningInactiveInterval.current);
-        await signOutStart({ currentUserToken });
-        await sessionStorage.removeItem('lastTimeStamp');
+        clearTimeout(startTimerInterval.current);
+        clearInterval(warningInactiveInterval.current);
+        signOutStart({ currentUserToken });
+        sessionStorage.removeItem('lastTimeStamp');
         setOpen(false);
-        return;
     };
     
     useEffect(() => {
@@ -112,7 +111,7 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
         };
     }, [resetTimer, events, timeChecker]);
     
-    return warningOpen ? (
+    return isAuthenticated ? (
             <Dialog open={warningOpen} onClose={handleClose}>
                 <DialogTitle id="idle-warning">You Have Been Idle!</DialogTitle>
                 <Divider />
