@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     actions: {
         padding: '8px 24px 16px 24px',
     }
-  }));
+}));
 
 const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
     const classes = useStyles();
@@ -24,7 +24,7 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
         oldPassword: "",
         newPassword: "",
         confirmNewPassword: ""
-    })
+    });
     const { oldPassword, newPassword, confirmNewPassword } = userPassword;
 
     const handleSubmit = event => {
@@ -39,12 +39,12 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
             newPassword: "",
             confirmNewPassword: ""
         });
-    }
+    };
     
     const handleChange = event => {
         const { value, name } = event.target;
         setPassword({ ...userPassword, [name]: value });
-    }
+    };
 
     return (
         <div className='edit-profile-page'>
@@ -105,7 +105,7 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    resetPasswordStart: userCredential => dispatch(resetPasswordStart(userCredential))
+    resetPasswordStart: userInfo => dispatch(resetPasswordStart(userInfo))
 });
 
 export default connect(null, mapDispatchToProps)(UpdatePassword);

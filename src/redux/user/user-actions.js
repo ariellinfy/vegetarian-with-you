@@ -142,9 +142,9 @@ export const deleteAvatarFailure = error => ({
 
 // Update email
 
-export const updateEmailStart = userCredential => ({
+export const updateEmailStart = userInfo => ({
     type: UserActionTypes.UPDATE_EMAIL_START,
-    payload: userCredential
+    payload: userInfo
 });
 
 export const updateEmailSuccess = user => ({
@@ -159,14 +159,13 @@ export const updateEmailFailure = error => ({
 
 // Reset password
 
-export const resetPasswordStart = userCredential => ({
+export const resetPasswordStart = userInfo => ({
     type: UserActionTypes.RESET_PASSWORD_START,
-    payload: userCredential
+    payload: userInfo
 });
 
-export const resetPasswordSuccess = user => ({
+export const resetPasswordSuccess = () => ({
     type: UserActionTypes.RESET_PASSWORD_SUCCESS,
-    payload: user
 });
 
 export const resetPasswordFailure = error => ({
@@ -176,14 +175,13 @@ export const resetPasswordFailure = error => ({
 
 // Close account
 
-export const closeAccountStart = userCredential => ({
+export const closeAccountStart = userInfo => ({
     type: UserActionTypes.CLOSE_ACCOUNT_START,
-    payload: userCredential
+    payload: userInfo
 });
 
-export const closeAccountSuccess = user => ({
+export const closeAccountSuccess = () => ({
     type: UserActionTypes.CLOSE_ACCOUNT_SUCCESS,
-    payload: user
 });
 
 export const closeAccountFailure = error => ({

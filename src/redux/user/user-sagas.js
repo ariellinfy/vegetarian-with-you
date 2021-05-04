@@ -23,7 +23,7 @@ export function* request(url, method, headers, body, auth = null) {
     } catch (e) {
        console.log(e, 'something went wrong');
     }
-}
+};
 
 function addHeader(options = {}, token) {
     const newOptions = { ...options };
@@ -38,7 +38,7 @@ function addHeader(options = {}, token) {
       newOptions.headers.Authorization = `Bearer ${token}`;
     }
     return newOptions;
-}
+};
 
 export function* checkUserSession({ payload: { currentUserToken } }) {
     try {
@@ -50,14 +50,16 @@ export function* checkUserSession({ payload: { currentUserToken } }) {
         if (data.user) {
             yield put(checkUserSessionSuccess(data.user));
         } else {
-            localStorage.removeItem('userToken');
             yield put(signOutSuccess());
-        }
+            localStorage.removeItem('userToken');
+            sessionStorage.removeItem('lastTimeStamp');
+            yield put(checkUserSessionFailure(data.error));
+        };
     } catch (error) {
         console.log('request user', error);
         yield put(checkUserSessionFailure(error));
     }
-}
+};
 
 export function* refreshToken({ payload: { currentUserToken } }) {
     try {
@@ -79,7 +81,7 @@ export function* refreshToken({ payload: { currentUserToken } }) {
         console.log('refresh token', error);
         yield put(refreshTokenFailure(error));
     }
-}
+};
 
 export function* signUp({ payload: { publicName, email, password } }) {
     try {
@@ -164,9 +166,10 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
             yield put(editProfileFailure(data.error));
         }
     } catch (error) {
+        console.log('edit profile', error);
         yield put(editProfileFailure(error));
     }
-}
+};
 
 export function* uploadAvatar({ payload: { compressedAvatar, currentUserToken } }) {
     try {
@@ -180,14 +183,17 @@ export function* uploadAvatar({ payload: { compressedAvatar, currentUserToken } 
             },
             body: formData
         });
-        const user = yield response.json();
-        if (user !== undefined) {
-            yield put(uploadAvatarSuccess(user.data));
-        } 
+        const data = yield response.json();
+        if (data.user) {
+            yield put(uploadAvatarSuccess(data.user));
+        } else {
+            yield put(uploadAvatarFailure(data.error));
+        }
     } catch (error) {
+        console.log('upload avatar', error);
         yield put(uploadAvatarFailure(error));
     }
-}
+};
 
 export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
     try {
@@ -197,14 +203,17 @@ export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
         const body = JSON.stringify({
             avatar: avatar
         });
-        const user = yield call(request, url, method, headers, body, currentUserToken);
-        if (user !== undefined) {
-            yield put(deleteAvatarSuccess(user.data));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.user) {
+            yield put(deleteAvatarSuccess(data.user));
+        } else {
+            yield put(deleteAvatarFailure(data.error));
+        }
     } catch (error) {
+        console.log('delete avatar', error);
         yield put(deleteAvatarFailure(error));
     }
-}
+};
 
 export function* updateEmail({ payload: { email, userEmail, currentUserToken } }) {
     try {
@@ -215,14 +224,17 @@ export function* updateEmail({ payload: { email, userEmail, currentUserToken } }
             oldEmail: email,
             newEmail: userEmail
         });
-        const user = yield call(request, url, method, headers, body, currentUserToken);
-        if (user !== undefined) {
-            yield put(updateEmailSuccess(user.user));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.user) {
+            yield put(updateEmailSuccess(data.user));
+        } else {
+            yield put(updateEmailFailure(data.error));
+        }
     } catch (error) {
+        console.log('update email', error);
         yield put(updateEmailFailure(error));
     }
-}
+};
 
 export function* resetPassword({ payload: { email, oldPassword, newPassword, currentUserToken } }) {
     try {
@@ -234,14 +246,17 @@ export function* resetPassword({ payload: { email, oldPassword, newPassword, cur
             oldPassword: oldPassword,
             newPassword: newPassword
         });
-        const user = yield call(request, url, method, headers, body, currentUserToken);
-        if (user !== undefined) {
-            yield put(resetPasswordSuccess(user.user));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
+            yield put(resetPasswordSuccess());
+        } else {
+            yield put(resetPasswordFailure(data.error));
+        }
     } catch (error) {
+        console.log('reset password', error);
         yield put(resetPasswordFailure(error));
     }
-}
+};
 
 export function* closeAccount({ payload: { email, confirmPassword, currentUserToken } }) {
     try {
@@ -254,11 +269,13 @@ export function* closeAccount({ payload: { email, confirmPassword, currentUserTo
         });
         yield call(request, url, method, headers, body, currentUserToken);
         localStorage.removeItem('userToken');
+        sessionStorage.removeItem('lastTimeStamp');
         yield put(closeAccountSuccess());
     } catch (error) {
+        console.log('close account', error);
         yield put(closeAccountFailure(error));
     }
-}
+};
 
 export function* onCheckUserSessionStart() {
     yield takeLatest(UserActionTypes.CHECK_USER_SESSION_START, checkUserSession);

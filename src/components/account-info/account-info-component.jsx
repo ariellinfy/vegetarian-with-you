@@ -19,10 +19,12 @@ const AccountInfo = ({ user: { email }, editEmailStatus, updateEmailPending, res
         event.preventDefault();
         updateEmailStart({ email, userEmail, currentUserToken });
         onEditUserEmail();
+        setUserEmail('');
     };
 
     const handleEditClick = () => {
         onEditUserEmail();
+        setUserEmail('');
     };
     
     const handleChange = event => {
@@ -78,7 +80,7 @@ const AccountInfo = ({ user: { email }, editEmailStatus, updateEmailPending, res
                                             />
                                             <div className='btn-group'>
                                                 <Button className='credential-btn' size='small' variant="contained" color="secondary" onClick={handleEditClick}>Cancel</Button>
-                                                <Button className='credential-btn' size='small' variant="contained" color="secondary" type='submit'>Save</Button>
+                                                <Button className='credential-btn' size='small' variant="contained" color="secondary" type='submit' disabled = {userEmail.length ? false : true}>Save</Button>
                                             </div>
                                         </form>
                                     </div>

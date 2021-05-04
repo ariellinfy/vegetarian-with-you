@@ -25,10 +25,9 @@ const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, si
     const handleSubmit = event => {
         event.preventDefault();
         if (password !== confirmPassword) {
-            signUpFailure("Passwords don't match");
-            return;
+            return signUpFailure("Passwords don't match");
         };
-        signUpStart({publicName, email, password});
+        signUpStart({ publicName, email, password });
     };
     
     const handleChange = event => {

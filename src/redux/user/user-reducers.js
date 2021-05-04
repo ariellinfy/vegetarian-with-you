@@ -242,7 +242,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
         case UserActionTypes.RESET_PASSWORD_SUCCESS:
             return {
                 ...state,
-                currentUser: action.payload,
                 resetPasswordPending: false,
                 updateSuccess: true,
                 resetPasswordErr: '',

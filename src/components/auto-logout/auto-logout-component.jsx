@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 import { signOutStart, refreshTokenStart } from '../../redux/user/user-actions';
 
@@ -33,12 +33,12 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     let warningInactiveInterval = useRef();
     let startTimerInterval = useRef();
     
-    let timeChecker = () => {
+    let timeChecker = useCallback(() => {
         startTimerInterval.current = setTimeout(() => {
           let storedTimeStamp = parseInt(sessionStorage.getItem('lastTimeStamp'));
           warningInactive(storedTimeStamp);
         }, 10000);
-    };
+    }, []);
 
     let warningInactive = (lastTimeStamp) => {
         clearTimeout(startTimerInterval.current);
@@ -106,7 +106,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
                 window.removeEventListener(event, resetTimer);
             });
         };
-    }, [resetTimer, events, timeChecker, ]);
+    }, [resetTimer, events, timeChecker, isAuthenticated]);
     
     return isAuthenticated ? (
             <Dialog open={warningOpen} onClose={handleClose}>

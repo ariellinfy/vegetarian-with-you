@@ -66,10 +66,10 @@ const CloseAccount = ({ email, open, handleClose, closeAccountStart }) => {
             </Dialog>
         </div>
     )
-}
+};
 
 const mapDispatchToProps = dispatch => ({
-    closeAccountStart: userCredential => dispatch(closeAccountStart(userCredential))
+    closeAccountStart: userInfo => dispatch(closeAccountStart(userInfo))
 });
 
 export default connect(null, mapDispatchToProps)(CloseAccount);

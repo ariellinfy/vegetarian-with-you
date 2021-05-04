@@ -29,7 +29,7 @@ const App = ({ currentUser, checkUserSessionStart, history }) => {
   useEffect(() => {
     if (Object.keys(currentUser).length) {
       const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
-      checkUserSessionStart({ currentUserToken })
+      checkUserSessionStart({ currentUserToken });
     };
   }, [checkUserSessionStart]);
 
