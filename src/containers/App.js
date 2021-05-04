@@ -54,7 +54,7 @@ const App = ({ currentUser, checkUserSessionStart, history }) => {
               </ErrorBoundary>
             </Switch>
           <Footer />
-      </div>
+        </div>
       <SessionTimeout currentUser={currentUser} />
     </ThemeProvider>
   );

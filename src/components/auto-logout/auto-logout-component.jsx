@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { signOutStart, refreshTokenStart } from '../../redux/user/user-actions';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,63 +25,55 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     if (Object.keys(currentUser).length) {
         currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
         isAuthenticated = true;
-        tokenExp = JSON.parse(localStorage.getItem('userToken')).exp;
+        tokenExp = parseInt(JSON.parse(localStorage.getItem('userToken')).exp);
     };
-    console.log(isAuthenticated, currentUser, tokenExp);
 
-    const [events, setEvents] = useState(['mousedown', 'load', 'scroll', 'keydown', 'mousemove']);
+    const [events, setEvents] = useState(['mousedown', 'load', 'scroll', 'keydown']);
     const [warningOpen, setOpen] = useState(false);
-    let timeStamp = 0;
     let warningInactiveInterval = useRef();
     let startTimerInterval = useRef();
     
     let timeChecker = () => {
-        console.log('time check start')
         startTimerInterval.current = setTimeout(() => {
-          let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
+          let storedTimeStamp = parseInt(sessionStorage.getItem('lastTimeStamp'));
           warningInactive(storedTimeStamp);
-        }, 5000);
+        }, 10000);
     };
 
     let warningInactive = (lastTimeStamp) => {
-        console.log('start warning interval')
         clearTimeout(startTimerInterval.current);
-
         warningInactiveInterval.current = setInterval(() => {
-            const maxTime = 5 * 60;
-            const popTime = 2.5 * 60;
-            const secPast = Math.floor(Date.now() / 1000) - lastTimeStamp;
-            console.log(secPast, lastTimeStamp);
-
-            if (lastTimeStamp + (30 * 60) === tokenExp) {
+            const maxTime = 30 * 60;
+            const popTime = 25 * 60;
+            const now = Math.floor(Date.now() / 1000);
+            const secPast = now - lastTimeStamp;
+ 
+            if (5 === tokenExp - now) {
                 refreshTokenStart({ currentUserToken });
-            }
+            };
+
+            if (5 >= tokenExp - now) {
+                tokenExp = parseInt(JSON.parse(localStorage.getItem('userToken')).exp);
+            };
 
             if (secPast === popTime) {
-                console.log('pop');
                 setOpen(true);
             };
     
             if (secPast === maxTime) {
-                console.log('timeout');
                 setOpen(false);
                 signOutStart({ currentUserToken });
                 clearInterval(warningInactiveInterval.current);
-                sessionStorage.removeItem('lastTimeStamp');
                 isAuthenticated = false;
-                return;
-            }
+            };
         }, 1000);
     };
 
     let resetTimer = useCallback(() => {
-        console.log('reset timer');
         clearTimeout(startTimerInterval.current);
         clearInterval(warningInactiveInterval.current);
-    
         if (isAuthenticated) {
-            timeStamp = Math.floor(Date.now() / 1000);
-            sessionStorage.setItem('lastTimeStamp', timeStamp);
+            sessionStorage.setItem('lastTimeStamp', Math.floor(Date.now() / 1000));
             timeChecker();
         };
     }, [isAuthenticated]);
@@ -93,29 +84,29 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     };
 
     const handleLogout = () => {
-        console.log('logging out');
         isAuthenticated = false;
         clearTimeout(startTimerInterval.current);
         clearInterval(warningInactiveInterval.current);
         signOutStart({ currentUserToken });
-        sessionStorage.removeItem('lastTimeStamp');
         setOpen(false);
     };
     
     useEffect(() => {
-        console.log('first render');
         if (isAuthenticated) {
             events.forEach((event) => {
                 window.addEventListener(event, resetTimer);
             });
+            resetTimer();
         };
 
         return () => {
+            clearTimeout(startTimerInterval.current);
+            clearInterval(warningInactiveInterval.current);
             events.forEach((event) => {
                 window.removeEventListener(event, resetTimer);
             });
         };
-    }, [resetTimer, events, timeChecker]);
+    }, [resetTimer, events, timeChecker, ]);
     
     return isAuthenticated ? (
             <Dialog open={warningOpen} onClose={handleClose}>

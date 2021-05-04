@@ -140,6 +140,7 @@ export function* signOut({ payload: { currentUserToken } }) {
         const body = null;
         yield call(request, url, method, headers, body, currentUserToken);
         localStorage.removeItem('userToken');
+        sessionStorage.removeItem('lastTimeStamp');
         yield put(signOutSuccess());
     } catch (error) {
         console.log('signout', error);
