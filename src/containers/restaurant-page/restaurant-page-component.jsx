@@ -19,7 +19,7 @@ const RestaurantPage = ({ targetRestaurant, requestReviewsStart, requestReviewsA
     resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus,
     currentUser, match }) => {
 
-    const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
     let restaurantId = targetRestaurant.restaurant_id ? targetRestaurant.restaurant_id : match.params.id;
     let query = `?&restaurantId=${restaurantId}&sortBy=last_modified:desc`;
 

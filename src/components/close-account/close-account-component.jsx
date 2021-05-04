@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CloseAccount = ({ email, open, handleClose, closeAccountStart }) => {
     const classes = useStyles();
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [confirmPassword, setPassword] = useState("");
 

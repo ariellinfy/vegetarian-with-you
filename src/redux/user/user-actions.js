@@ -2,9 +2,9 @@ import UserActionTypes from './user-types';
 
 // Request user info
 
-export const checkUserSessionStart = currentUserToken => ({
+export const checkUserSessionStart = token => ({
     type: UserActionTypes.CHECK_USER_SESSION_START,
-    payload: currentUserToken
+    payload: token
 });
 
 export const checkUserSessionSuccess = user => ({
@@ -14,6 +14,22 @@ export const checkUserSessionSuccess = user => ({
 
 export const checkUserSessionFailure = error => ({
     type: UserActionTypes.CHECK_USER_SESSION_FAILURE,
+    payload: error
+});
+
+// Refresh token
+
+export const refreshTokenStart = token => ({
+    type: UserActionTypes.REFRESH_TOKEN_START,
+    payload: token
+});
+
+export const refreshTokenSuccess = () => ({
+    type: UserActionTypes.REFRESH_TOKEN_SUCCESS,
+});
+
+export const refreshTokenFailure = error => ({
+    type: UserActionTypes.REFRESH_TOKEN_FAILURE,
     payload: error
 });
 

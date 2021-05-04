@@ -76,7 +76,7 @@ export function* createRestaurant({ payload:
         });
         const restaurant = yield call(request, url, method, headers, body, currentUserToken);
         if (restaurant !== undefined) {
-            localStorage.setItem('token', restaurant.token);
+            // localStorage.setItem('token', restaurant.token);
             yield put(createRestaurantSuccess(restaurant.data));
         } 
     } catch (error) {
@@ -117,7 +117,7 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
         });
         const restaurant = yield call(request, url, method, headers, body, currentUserToken);
         if (restaurant !== undefined) {
-            localStorage.setItem('token', restaurant.token);
+            // localStorage.setItem('token', restaurant.token);
             yield put(updateRestaurantSuccess(restaurant.data));
         } 
     } catch (error) {

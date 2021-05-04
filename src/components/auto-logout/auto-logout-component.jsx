@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { signOutStart } from '../../redux/user/user-actions';
+import { signOutStart, refreshTokenStart } from '../../redux/user/user-actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Dialog, DialogTitle, Divider, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
@@ -17,16 +17,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SessionTimeout = ({ currentUser, signOutStart }) => {
+const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     const classes = useStyles();
     let currentUserToken = '';
     let isAuthenticated = false;
+    let tokenExp = 0;
 
     if (Object.keys(currentUser).length) {
-        currentUserToken = localStorage.getItem('token');
+        currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
         isAuthenticated = true;
+        tokenExp = JSON.parse(localStorage.getItem('userToken')).exp;
     };
-    console.log(isAuthenticated, currentUser);
+    console.log(isAuthenticated, currentUser, tokenExp);
 
     const [events, setEvents] = useState(['mousedown', 'load', 'scroll', 'keydown', 'mousemove']);
     const [warningOpen, setOpen] = useState(false);
@@ -47,10 +49,14 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
         clearTimeout(startTimerInterval.current);
 
         warningInactiveInterval.current = setInterval(() => {
-            const maxTime = 0.5 * 60;
-            const popTime = 0.25 * 60;
+            const maxTime = 5 * 60;
+            const popTime = 2.5 * 60;
             const secPast = Math.floor(Date.now() / 1000) - lastTimeStamp;
             console.log(secPast, lastTimeStamp);
+
+            if (lastTimeStamp + (30 * 60) === tokenExp) {
+                refreshTokenStart({ currentUserToken });
+            }
 
             if (secPast === popTime) {
                 console.log('pop');
@@ -132,12 +138,9 @@ const SessionTimeout = ({ currentUser, signOutStart }) => {
     ) : null;
 };
 
-const mapStateToProps = createStructuredSelector({
-
-});
-
 const mapDispatchToProps = dispatch => ({
-    signOutStart: currentUserToken => dispatch(signOutStart(currentUserToken)),
+    signOutStart: token => dispatch(signOutStart(token)),
+    refreshTokenStart: token => dispatch(refreshTokenStart(token)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SessionTimeout);
+export default connect(null, mapDispatchToProps)(SessionTimeout);

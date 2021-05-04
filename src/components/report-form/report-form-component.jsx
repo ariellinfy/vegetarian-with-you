@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const ReportForm = ({ restaurantId, reviewId, open, handleClose, reportReviewStart }) => {
 
     const classes = useStyles();
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [reportText, setReportText] = useState('');
 

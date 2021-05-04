@@ -26,10 +26,9 @@ const UpdateReviewPage = lazy(() => import('./update-review-page/update-review-p
 const RestaurantPage = lazy(() => import('./restaurant-page/restaurant-page-component')); 
 
 const App = ({ currentUser, checkUserSessionStart, history }) => {
-  let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-
   useEffect(() => {
     if (Object.keys(currentUser).length) {
+      const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
       checkUserSessionStart({ currentUserToken })
     };
   }, [checkUserSessionStart]);
@@ -66,7 +65,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  checkUserSessionStart: currentUserToken => dispatch(checkUserSessionStart(currentUserToken)),
+  checkUserSessionStart: token => dispatch(checkUserSessionStart(token)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

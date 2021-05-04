@@ -18,7 +18,7 @@ import './review-preview-style.scss';
 
 const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
 
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const { review_id, restaurant_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, photos,
         user_helpful, helpful_count, review_owner, create_at, public_name, avatar, contributions, helpful_votes } = review;

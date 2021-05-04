@@ -16,7 +16,7 @@ const UpdateReviewPage = ({ updateSuccess, targetReview, targetReviewToMap, targ
     resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
     resetCreateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     useEffect(() => {
         window.scrollTo(0, 0);

@@ -10,7 +10,7 @@ import './user-reviews-style.scss';
 
 const UserReviews = ({ userReviewsCollection, reviewRequestPending, requestUserReviewsStart }) => {
 
-    let currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     useEffect(() => {
         requestUserReviewsStart(currentUserToken);

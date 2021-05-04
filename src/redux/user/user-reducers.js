@@ -4,6 +4,8 @@ const INITIAL_STATE = {
     currentUser: {},
     authPending: false,
     authErr: '',
+    refreshTokenPending: false,
+    refreshTokenErr: '',
     signUpPending: false,
     signUpErr: '',
     signInPending: false,
@@ -50,6 +52,28 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 authPending: false,
                 authSuccess: false,
                 authErr: action.payload
+            };
+        // refresh token
+        case UserActionTypes.REFRESH_TOKEN_START:
+            return {
+                ...state,
+                refreshTokenPending: true,
+                authSuccess: false,
+                refreshTokenErr: '',
+            };
+        case UserActionTypes.REFRESH_TOKEN_SUCCESS:
+            return {
+                ...state,
+                refreshTokenPending: false,
+                authSuccess: true,
+                refreshTokenErr: ''
+            };
+        case UserActionTypes.REFRESH_TOKEN_FAILURE:
+            return {
+                ...state,
+                refreshTokenPending: false,
+                authSuccess: false,
+                refreshTokenErr: action.payload
             };
         // sign up
         case UserActionTypes.SIGN_UP_START:
@@ -126,6 +150,8 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 authPending: false,
                 authErr: '',
+                refreshTokenPending: false,
+                refreshTokenErr: '',
                 signUpPending: false,
                 signUpErr: '',
                 signInPending: false,

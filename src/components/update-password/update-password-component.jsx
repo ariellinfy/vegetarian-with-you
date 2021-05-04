@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
     const classes = useStyles();
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [userPassword, setPassword] = useState({
         oldPassword: "",

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
     const classes = useStyles();
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [uploadAvatar, setUploadAvatar] = useState(null);
     let croppedAvatar = null;

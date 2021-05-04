@@ -17,8 +17,6 @@ import './header-style.scss';
 
 const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetUserUpdateStatus, 
     resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus }) => {
-
-    const currentUserToken = localStorage.getItem('token') ? localStorage.getItem('token') : '';
     
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -53,6 +51,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
     };
 
     const handleSignOut = () => {
+        const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
         resetUpdateReviewStatus();

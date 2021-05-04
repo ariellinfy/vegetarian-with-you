@@ -76,7 +76,7 @@ export function* createReview({ payload: { restaurantId,
         });
         const review = yield response.json();
         if (review !== undefined) {
-            localStorage.setItem('token', review.token);
+            // localStorage.setItem('token', review.token);
             yield put(createReviewSuccess(review.data));
         } 
     } catch (error) {
@@ -121,7 +121,7 @@ export function* updateReview({ payload: { reviewId, restaurantId,
         });
         const review = yield response.json();
         if (review !== undefined) {
-            localStorage.setItem('token', review.token);
+            // localStorage.setItem('token', review.token);
             yield put(updateReviewSuccess(review.data));
         } 
     } catch (error) {
@@ -152,7 +152,7 @@ export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }
         const body = null;
         const reviews = yield call(request, url, method, headers, body, currentUserToken);
         if (reviews !== undefined) {
-            localStorage.setItem('token', reviews.token);
+            // localStorage.setItem('token', reviews.token);
             yield put(requestReviewsAuthSuccess(reviews.data));
         } 
     } catch (error) {
@@ -171,7 +171,7 @@ export function* requestUserReviews({ payload }) {
         const body = null;
         const reviews = yield call(request, url, method, headers, body, payload);
         if (reviews !== undefined) {
-            localStorage.setItem('token', reviews.token);
+            // localStorage.setItem('token', reviews.token);
             yield put(requestUserReviewsSuccess(reviews.data));
         } 
     } catch (error) {
@@ -191,7 +191,7 @@ export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpfu
         });
         const token = yield call(request, url, method, headers, body, currentUserToken);
         if (token !== undefined) {
-            localStorage.setItem('token', token);
+            // localStorage.setItem('token', token);
             yield put(reviewHelpfulSuccess());
         } 
     } catch (error) {
@@ -211,7 +211,7 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
         });
         const token = yield call(request, url, method, headers, body, currentUserToken);
         if (token !== undefined) {
-            localStorage.setItem('token', token);
+            // localStorage.setItem('token', token);
             yield put(reportReviewSuccess());
         } 
     } catch (error) {
@@ -231,7 +231,7 @@ export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete
         });
         const token = yield call(request, url, method, headers, body, currentUserToken);
         if (token !== undefined) {
-            localStorage.setItem('token', token);
+            // localStorage.setItem('token', token);
             yield put(deleteReviewSuccess());
         } 
     } catch (error) {

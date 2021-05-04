@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
 
 const DeleteReview = ({ restaurantId, reviewId, query, open, handleClose, deleteReviewStart, requestReviewsAuthStart }) => {
     const classes = useStyles();
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [confirmDelete, setConfirmation] = useState(false);
 

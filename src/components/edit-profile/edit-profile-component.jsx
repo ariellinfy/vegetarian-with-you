@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditProfile = ({ publicName, location, open, handleClose, editProfileStart }) => {
     const classes = useStyles();
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     location = !location ? "" : location;
 

@@ -11,7 +11,7 @@ import CloseAccount from '../close-account/close-account-component';
 import './account-info-style.scss';
 
 const AccountInfo = ({ user: { email }, editEmailStatus, updateEmailPending, resetPasswordPending, closeAccountPending, onEditUserEmail, updateEmailStart }) => {
-    const currentUserToken = localStorage.getItem('token');
+    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [userEmail, setUserEmail] = useState('');
 
