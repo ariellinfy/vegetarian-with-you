@@ -2,16 +2,15 @@ import UserActionTypes from './user-types';
 
 const INITIAL_STATE = {
     currentUser: {},
+    authSuccessMessage: '',
+    authErrorMessage: '',
     authPending: false,
-    authErr: '',
     refreshTokenPending: false,
-    refreshTokenErr: '',
     signUpPending: false,
     signUpErr: '',
     signInPending: false,
     signInErr: '',
     signOutPending: false,
-    signOutErr: '',
     authSuccess: false,
     editProfilePending: false,
     editProfileErr: '',
@@ -36,7 +35,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 authPending: true,
                 authSuccess: false,
-                authErr: '',
             };
         case UserActionTypes.CHECK_USER_SESSION_SUCCESS:
             return {
@@ -44,14 +42,13 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 currentUser: action.payload,
                 authPending: false,
                 authSuccess: true,
-                authErr: ''
             };
         case UserActionTypes.CHECK_USER_SESSION_FAILURE:
             return {
                 ...state,
                 authPending: false,
                 authSuccess: false,
-                authErr: action.payload
+                authErrorMessage: action.payload
             };
         // refresh token
         case UserActionTypes.REFRESH_TOKEN_START:
@@ -59,21 +56,19 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 refreshTokenPending: true,
                 authSuccess: false,
-                refreshTokenErr: '',
             };
         case UserActionTypes.REFRESH_TOKEN_SUCCESS:
             return {
                 ...state,
                 refreshTokenPending: false,
                 authSuccess: true,
-                refreshTokenErr: ''
             };
         case UserActionTypes.REFRESH_TOKEN_FAILURE:
             return {
                 ...state,
                 refreshTokenPending: false,
                 authSuccess: false,
-                refreshTokenErr: action.payload
+                authErrorMessage: action.payload
             };
         // sign up
         case UserActionTypes.SIGN_UP_START:
@@ -89,7 +84,8 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 currentUser: action.payload,
                 signUpPending: false,
                 authSuccess: true,
-                signUpErr: ''
+                signUpErr: '',
+                authSuccessMessage: `You've successfully signed in!`
             };
         case UserActionTypes.SIGN_UP_FAILURE:
             return {
@@ -112,7 +108,8 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 currentUser: action.payload,
                 signInPending: false,
                 authSuccess: true,
-                signInErr: ''
+                signInErr: '',
+                authSuccessMessage: `You've successfully signed in!`
             };
         case UserActionTypes.SIGN_IN_FAILURE:
             return {
@@ -127,7 +124,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 signOutPending: true,
                 authSuccess: false,
-                signOutErr: '',
             };
         case UserActionTypes.SIGN_OUT_SUCCESS:
             return {
@@ -135,29 +131,27 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 currentUser: {},
                 signOutPending: false,
                 authSuccess: true,
-                signOutErr: ''
+                authSuccessMessage: `You've successfully signed out!`,
+                adminCurrentPage: 0
             };
         case UserActionTypes.SIGN_OUT_FAILURE:
             return {
                 ...state,
                 signOutPending: false,
                 authSuccess: false,
-                signOutErr: action.payload
+                authErrorMessage: action.payload
             };
         // reset auth status
         case UserActionTypes.RESET_AUTH_STATUS:
             return {
                 ...state,
                 authPending: false,
-                authErr: '',
                 refreshTokenPending: false,
-                refreshTokenErr: '',
                 signUpPending: false,
                 signUpErr: '',
                 signInPending: false,
                 signInErr: '',
                 signOutPending: false,
-                signOutErr: '',
             };
         // edit profile
         case UserActionTypes.EDIT_PROFILE_START:
@@ -174,6 +168,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 editProfilePending: false,
                 updateSuccess: true,
                 editProfileErr: '',
+                authSuccessMessage: `Successfully updated profile!`
             };
         case UserActionTypes.EDIT_PROFILE_FAILURE:
             return {
@@ -199,6 +194,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 updateAvatarPending: false,
                 updateSuccess: true,
                 updateAvatarErr: '',
+                authSuccessMessage: `Successfully updated avatar!`
             };
         case UserActionTypes.UPLOAD_AVATAR_FAILURE:
         case UserActionTypes.DELETE_AVATAR_FAILURE:
@@ -223,6 +219,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 updateEmailPending: false,
                 updateSuccess: true,
                 updateEmailErr: '',
+                authSuccessMessage: `Successfully updated email!`
             };
         case UserActionTypes.UPDATE_EMAIL_FAILURE:
             return {
@@ -245,6 +242,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 resetPasswordPending: false,
                 updateSuccess: true,
                 resetPasswordErr: '',
+                authSuccessMessage: `Successfully reset password!`
             };
         case UserActionTypes.RESET_PASSWORD_FAILURE:
             return {
@@ -268,6 +266,8 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 closeAccountPending: false,
                 updateSuccess: true,
                 closeAccountErr: '',
+                authSuccessMessage: `Successfully closed account!`,
+                adminCurrentPage: 0
             };
         case UserActionTypes.CLOSE_ACCOUNT_FAILURE:
             return {
@@ -292,6 +292,13 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 closeAccountErr: '',
                 updateSuccess: false,
                 onEditUserEmail: false,
+            };
+        // reset user update status
+        case UserActionTypes.RESET_STATUS_MESSAGE:
+            return {
+                ...state,
+                authSuccessMessage: '',
+                authErrorMessage: '',
             };
         // update edit email status
         case UserActionTypes.CHANGE_EDIT_EMAIL_STATUS:

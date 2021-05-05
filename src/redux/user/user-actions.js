@@ -195,6 +195,12 @@ export const resetUserUpdateStatus = () => ({
     type: UserActionTypes.RESET_USER_UPDATE_STATUS,
 });
 
+// Reset status message
+
+export const resetStatusMessage = () => ({
+    type: UserActionTypes.RESET_STATUS_MESSAGE,
+});
+
 // Set email field status
 
 export const onEditUserEmail  = () => ({

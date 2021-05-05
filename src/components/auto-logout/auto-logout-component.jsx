@@ -34,6 +34,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     let startTimerInterval = useRef();
     
     let timeChecker = useCallback(() => {
+        console.log('start time check');
         startTimerInterval.current = setTimeout(() => {
           let storedTimeStamp = parseInt(sessionStorage.getItem('lastTimeStamp'));
           warningInactive(storedTimeStamp);
@@ -47,6 +48,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
             const popTime = 25 * 60;
             const now = Math.floor(Date.now() / 1000);
             const secPast = now - lastTimeStamp;
+            console.log(secPast, tokenExp - now);
  
             if (5 === tokenExp - now) {
                 refreshTokenStart({ currentUserToken });
@@ -70,6 +72,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     };
 
     let resetTimer = useCallback(() => {
+        console.log('reset timer');
         clearTimeout(startTimerInterval.current);
         clearInterval(warningInactiveInterval.current);
         if (isAuthenticated) {
@@ -93,6 +96,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     
     useEffect(() => {
         if (isAuthenticated) {
+            console.log('isAuthenticated');
             events.forEach((event) => {
                 window.addEventListener(event, resetTimer);
             });
@@ -100,6 +104,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
         };
 
         return () => {
+            console.log('clean up');
             clearTimeout(startTimerInterval.current);
             clearInterval(warningInactiveInterval.current);
             events.forEach((event) => {

@@ -7,12 +7,12 @@ import { Button, Divider, TextField, Dialog, DialogActions, DialogContent, Dialo
 
 const useStyles = makeStyles((theme) => ({
     text: {
-        fontSize: '16px',
+        fontSize: '19px',
         marginTop: '0.5em',
         marginBottom: '0.25em'
     },
     actions: {
-        padding: '8px 24px 16px 24px',
+        padding: '8px 24px 20px 24px',
     }
 }));
 

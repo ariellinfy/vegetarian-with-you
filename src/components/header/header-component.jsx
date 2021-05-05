@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
-import { signOutStart, setAdminCurrentPage, resetAdminCurrentPage, resetUserUpdateStatus } from '../../redux/user/user-actions';
+import { signOutStart, setAdminCurrentPage, resetUserUpdateStatus } from '../../redux/user/user-actions';
 import { resetUpdateRestaurantStatus } from '../../redux/restaurant/restaurant-actions';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 
@@ -15,7 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png';
 import './header-style.scss';
 
-const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurrentPage, resetUserUpdateStatus, 
+const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetUserUpdateStatus, 
     resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestUserReviewsStatus }) => {
     
     const [anchorEl, setAnchorEl] = useState(null);
@@ -58,7 +58,6 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetAdminCurr
         resetDeleteReviewStatus();
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
-        resetAdminCurrentPage();
         signOutStart({ currentUserToken });
         setAnchorEl(null);
         setAnchorElSmall(null);
@@ -208,7 +207,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     signOutStart: token => dispatch(signOutStart(token)),
     setAdminCurrentPage: pageNumber => dispatch(setAdminCurrentPage(pageNumber)),
-    resetAdminCurrentPage: () => dispatch(resetAdminCurrentPage()),
     resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetCreateReviewStatus: () => dispatch(resetCreateReviewStatus()),

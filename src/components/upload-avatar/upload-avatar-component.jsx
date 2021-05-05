@@ -46,12 +46,15 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
 
         if (!imageFile) {
             uploadAvatarFailure('Please select an image.');
+            setAvatarOnChange(false);
             return false;
         };
         if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
             uploadAvatarFailure('File type must be .jpg/jpeg or .png');
+            setAvatarOnChange(false);
             return false;
         } else {
+            uploadAvatarFailure('');
             setUploadAvatar(URL.createObjectURL(imageFile));
             setUploadAvatarOpen(true);
         };

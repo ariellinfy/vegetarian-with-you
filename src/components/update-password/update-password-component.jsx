@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { resetPasswordStart } from '../../redux/user/user-actions';
+import { resetPasswordStart, resetPasswordFailure } from '../../redux/user/user-actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Divider, TextField, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '0.25em'
     },
     actions: {
-        padding: '8px 24px 16px 24px',
+        padding: '8px 24px 24px 24px',
     }
 }));
 
-const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
+const UpdatePassword = ({ email, open, handleClose, resetPasswordStart, resetPasswordFailure }) => {
     const classes = useStyles();
     const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
@@ -30,9 +30,10 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
     const handleSubmit = event => {
         event.preventDefault();
         if (newPassword !== confirmNewPassword) {
-            alert("Passwords don't match");
+            resetPasswordFailure("Passwords don't match");
             return;
         };
+        resetPasswordFailure('');
         resetPasswordStart({ email, oldPassword, newPassword, currentUserToken });
         setPassword({
             oldPassword: "",
@@ -105,7 +106,8 @@ const UpdatePassword = ({ email, open, handleClose, resetPasswordStart }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    resetPasswordStart: userInfo => dispatch(resetPasswordStart(userInfo))
+    resetPasswordStart: userInfo => dispatch(resetPasswordStart(userInfo)),
+    resetPasswordFailure: error => dispatch(resetPasswordFailure(error))
 });
 
 export default connect(null, mapDispatchToProps)(UpdatePassword);

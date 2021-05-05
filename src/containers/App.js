@@ -2,7 +2,7 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../redux/user/user-selectors';
+import { selectCurrentUser, selectAuthSuccessMessage, selectAuthErrorMessage } from '../redux/user/user-selectors';
 import { checkUserSessionStart } from '../redux/user/user-actions';
 
 import theme from './material-ui-theme';
@@ -11,6 +11,7 @@ import './App.css';
 
 import Loader from '../components/loading/loading-component';
 import Header from '../components/header/header-component';
+import Toast from '../components/snack-bar/snack-bar-component';
 import Footer from '../components/footer/footer-component';
 import SessionTimeout from '../components/auto-logout/auto-logout-component';
 import ErrorBoundary from '../components/error-boundary/error-boundary-component';
@@ -25,7 +26,7 @@ const CreateReviewPage = lazy(() => import('./create-review-page/create-review-p
 const UpdateReviewPage = lazy(() => import('./update-review-page/update-review-page-component')); 
 const RestaurantPage = lazy(() => import('./restaurant-page/restaurant-page-component')); 
 
-const App = ({ currentUser, checkUserSessionStart, history }) => {
+const App = ({ currentUser, authSuccessMessage, authErrorMessage, checkUserSessionStart, history }) => {
   useEffect(() => {
     if (Object.keys(currentUser).length) {
       const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
@@ -37,6 +38,9 @@ const App = ({ currentUser, checkUserSessionStart, history }) => {
     <ThemeProvider theme={theme}>
         <div className='App'>
           <Header />
+          {
+            authSuccessMessage.length || authErrorMessage.length ? <Toast authSuccessMessage={authSuccessMessage} authErrorMessage={authErrorMessage} /> : null
+          }
             <Switch>
               <ErrorBoundary>
                 <Suspense fallback={<Loader />}>
@@ -61,7 +65,9 @@ const App = ({ currentUser, checkUserSessionStart, history }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  authSuccessMessage: selectAuthSuccessMessage,
+  authErrorMessage: selectAuthErrorMessage,
 });
 
 const mapDispatchToProps = dispatch => ({

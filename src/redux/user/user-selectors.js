@@ -8,12 +8,12 @@ export const selectEditEmailStatus = createSelector([selectUser], user => user.o
 
 export const selectAdminCurrentPage = createSelector([selectUser], user => user.adminCurrentPage);
 
+export const selectAuthSuccessMessage = createSelector([selectUser], user => user.authSuccessMessage);
+export const selectAuthErrorMessage = createSelector([selectUser], user => user.authErrorMessage);
 
 export const selectAuthPending = createSelector([selectUser], user => user.authPending);
-export const selectAuthErr = createSelector([selectUser], user => user.authErr);
 
 export const selectRefreshTokenPending = createSelector([selectUser], user => user.refreshTokenPending);
-export const selectRefreshTokenErr = createSelector([selectUser], user => user.refreshTokenErr);
 
 export const selectSignUpPending = createSelector([selectUser], user => user.signUpPending);
 export const selectSignUpErr = createSelector([selectUser], user => user.signUpErr);
@@ -22,7 +22,6 @@ export const selectSignInPending = createSelector([selectUser], user => user.sig
 export const selectSignInErr = createSelector([selectUser], user => user.signInErr);
 
 export const selectSignOutPending = createSelector([selectUser], user => user.signOutPending);
-export const selectSignOutErr = createSelector([selectUser], user => user.signOutErr);
 
 export const selectAuthSuccess = createSelector([selectUser], user => user.authSuccess);
 

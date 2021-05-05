@@ -107,7 +107,7 @@ export function* signUp({ payload: { publicName, email, password } }) {
         console.log('signup', error);
         yield put(signUpFailure(error));
     }
-}
+};
 
 export function* signIn({ payload: { email, password } }) {
     try {
@@ -132,7 +132,7 @@ export function* signIn({ payload: { email, password } }) {
         console.log('signin', error);
         yield put(signInFailure(error));
     }
-}
+};
 
 export function* signOut({ payload: { currentUserToken } }) {
     try {
@@ -140,15 +140,19 @@ export function* signOut({ payload: { currentUserToken } }) {
         const method = 'POST';
         const headers = null;
         const body = null;
-        yield call(request, url, method, headers, body, currentUserToken);
-        localStorage.removeItem('userToken');
-        sessionStorage.removeItem('lastTimeStamp');
-        yield put(signOutSuccess());
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
+            yield put(signOutSuccess());
+            localStorage.removeItem('userToken');
+            sessionStorage.removeItem('lastTimeStamp');
+        } else {
+            yield put(signOutFailure(data.error));
+        }
     } catch (error) {
         console.log('signout', error);
         yield put(signOutFailure(error));
     }
-}
+};
 
 export function* editProfile({ payload: { name, city, currentUserToken } }) {
     try {
@@ -267,10 +271,14 @@ export function* closeAccount({ payload: { email, confirmPassword, currentUserTo
             email: email,
             password: confirmPassword
         });
-        yield call(request, url, method, headers, body, currentUserToken);
-        localStorage.removeItem('userToken');
-        sessionStorage.removeItem('lastTimeStamp');
-        yield put(closeAccountSuccess());
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
+            yield put(closeAccountSuccess());
+            localStorage.removeItem('userToken');
+            sessionStorage.removeItem('lastTimeStamp');
+        } else {
+            yield put(closeAccountFailure(data.error));
+        }
     } catch (error) {
         console.log('close account', error);
         yield put(closeAccountFailure(error));
@@ -279,47 +287,47 @@ export function* closeAccount({ payload: { email, confirmPassword, currentUserTo
 
 export function* onCheckUserSessionStart() {
     yield takeLatest(UserActionTypes.CHECK_USER_SESSION_START, checkUserSession);
-}
+};
 
 export function* onRefreshTokenStart() {
     yield takeLatest(UserActionTypes.REFRESH_TOKEN_START, refreshToken);
-}
+};
 
 export function* onSignUpStart() {
     yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
-}
+};
 
 export function* onSignInStart() {
     yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
-}
+};
 
 export function* onSignOutStart() {
     yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
-}
+};
 
 export function* onEditProfileStart() {
     yield takeLatest(UserActionTypes.EDIT_PROFILE_START, editProfile);
-}
+};
 
 export function* onUploadAvatarStart() {
     yield takeLatest(UserActionTypes.UPLOAD_AVATAR_START, uploadAvatar);
-}
+};
 
 export function* onDeleteAvatarStart() {
     yield takeLatest(UserActionTypes.DELETE_AVATAR_START, deleteAvatar);
-}
+};
 
 export function* onUpdateEmailStart() {
     yield takeLatest(UserActionTypes.UPDATE_EMAIL_START, updateEmail);
-}
+};
 
 export function* onResetPasswordStart() {
     yield takeLatest(UserActionTypes.RESET_PASSWORD_START, resetPassword);
-}
+};
 
 export function* onCloseAccountStart() {
     yield takeLatest(UserActionTypes.CLOSE_ACCOUNT_START, closeAccount);
-}
+};
 
 export function* userSagas() {
     yield all([
@@ -335,4 +343,4 @@ export function* userSagas() {
         call(onResetPasswordStart),
         call(onCloseAccountStart),
     ]);
-}
+};
