@@ -6,7 +6,7 @@ import { selectSignUpPending, selectSignUpErr } from '../../redux/user/user-sele
 
 import Uploader from '../uploading/uploading-component';
 import AlertMessage from '../alert-message/alert-message-component';
-import { TextField, Button, Typography } from '@material-ui/core';
+import { TextField, Button, Typography, Tooltip } from '@material-ui/core';
 import './sign-up-style.scss';
 
 const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, signUpErr }) => {
@@ -22,6 +22,14 @@ const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, si
     })
     const { publicName, email, password, confirmPassword } = userCredential;
 
+    const [credentialValidation, validateCredential] = useState({
+        validName: false,
+        validEmail: false,
+        validPassword: false,
+        validConfirmPassword: false
+    })
+    const { validName, validEmail, validPassword, validConfirmPassword } = credentialValidation;
+
     const handleSubmit = event => {
         event.preventDefault();
         if (password !== confirmPassword) {
@@ -32,8 +40,42 @@ const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, si
     
     const handleChange = event => {
         const { value, name } = event.target;
+        console.log(name, value)
         setCredential({ ...userCredential, [name]: value });
+        console.log(nameValidation())
+
+        validateCredential({ ...credentialValidation, validName: true });
+        
+        validateCredential({ ...credentialValidation, validConfirmPassword: confirmPasswordValidation() ? true : false });
+        if (name === 'email') {
+            validateCredential({ ...credentialValidation, validEmail: emailValidation(value) ? true : false });
+        } else if (name === 'password') {
+            validateCredential({ ...credentialValidation, validPassword: passwordValidation(value) ? true : false });
+        }
     };
+
+    const nameValidation = () => {
+        return publicName.length ? true : false;
+    };
+
+    const emailValidation = email => {
+        let reg = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g);
+        return reg.test(email);
+    };
+
+    const passwordValidation = password => {
+        let reg = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,}$/g);
+        return reg.test(password);
+    };
+
+    const confirmPasswordValidation = () => {
+        return password === confirmPassword ? true : false;
+    };
+
+    console.log('validName', validName);
+    // console.log('validEmail', validEmail);
+    // console.log('validPassword', validPassword);
+    // console.log('validConfirmPassword', validConfirmPassword);
 
     return (
         <div className='sign-up-container'>
@@ -82,6 +124,7 @@ const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, si
                     onChange={handleChange}
                     fullWidth required 
                 />
+                <Typography variant='body2' color='primary'>Password must contain at least 8 characters: at least one number, one uppercase letter, one lowercase letter and one special character</Typography> 
                 <div className='buttons-group'>
                     <Button type='submit' className='button-input' variant="contained" color="secondary">Sign Up</Button>
                 </div>
