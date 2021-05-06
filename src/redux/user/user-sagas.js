@@ -137,7 +137,7 @@ export function* signIn({ payload: { email, password } }) {
 export function* signOut({ payload: { currentUserToken } }) {
     try {
         const url = 'http://localhost:5000/users/signout';
-        const method = 'POST';
+        const method = 'GET';
         const headers = null;
         const body = null;
         const data = yield call(request, url, method, headers, body, currentUserToken);

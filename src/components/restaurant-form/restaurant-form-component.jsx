@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { createRestaurantStart, updateRestaurantStart } from '../../redux/restaurant/restaurant-actions';
+import { createRestaurantStart, updateRestaurantStart, createRestaurantFailure, updateRestaurantFailure } from '../../redux/restaurant/restaurant-actions';
 import { selectRestaurantToBeUpdate, selectRestaurantActionPending, selectRestaurantActionFailure, selectCreateRestaurantErr, selectUpdateRestaurantErr } from '../../redux/restaurant/restaurant-selectors';
 
+import AlertMessage from '../alert-message/alert-message-component';
 import Uploader from '../uploading/uploading-component';
 import { TextField, FormControl, FormLabel, RadioGroup, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, Radio, Checkbox, Button, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -62,7 +63,7 @@ class RestaurantForm extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { currentUserToken, restaurantToBeUpdate, createRestaurantStart, updateRestaurantStart } = this.props;
+        const { currentUserToken, restaurantToBeUpdate, createRestaurantStart, updateRestaurantStart, createRestaurantFailure, updateRestaurantFailure } = this.props;
         const { 
             restaurantName, 
             restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
@@ -72,15 +73,20 @@ class RestaurantForm extends Component {
         } = this.state;
 
         if (Object.keys(restaurantToBeUpdate).length === 0) {
+            if (restaurantPhone.length < 8) {
+                return createRestaurantFailure('Incorrect phone number format');
+            };
             createRestaurantStart({
-                restaurantName, 
-                restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
+                restaurantName, restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
                 restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
                 breakfast, brunch, lunch, dinner,
                 restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
                 currentUserToken
             });
         } else {
+            if (restaurantPhone.length < 8) {
+                return updateRestaurantFailure('Incorrect phone number format');
+            };
             const restaurantId = restaurantToBeUpdate.restaurant_id;
             updateRestaurantStart({
                 restaurantId, restaurantName, 
@@ -137,6 +143,9 @@ class RestaurantForm extends Component {
                     <LocationOnIcon fontSize="large" className='page-icon'/>
                     <Typography variant="h3">Add a Place</Typography>
                 </div>
+                {
+                    actionFailure ? (Object.keys(restaurantToBeUpdate).length === 0 ? <AlertMessage severity='error' errMsg={createErrMsg} /> : <AlertMessage severity='error' errMsg={updateErrMsg} />) : null
+                }
                 <form className='restaurant-form' onSubmit={this.handleSubmit}>
                     <TextField 
                         className='text-field restaurant-name' 
@@ -230,9 +239,8 @@ class RestaurantForm extends Component {
                         variant="standard"
                         onChange={value => this.setState({...this.state, restaurantPhone: value})}
                         value={restaurantPhone}
-                        fullWidth disableAreaCodes
-                        // className={touched.contactPhoneNumber && errors.contactPhoneNumber ? "has-error" : null}
-                   />
+                        fullWidth disableAreaCodes required
+                    />
     
                     <TextField 
                         className='text-field restaurant-website' 
@@ -448,10 +456,6 @@ class RestaurantForm extends Component {
                         actionPending ? (<Uploader />) : null
                     }
 
-                    {
-                        actionFailure ? (Object.keys(restaurantToBeUpdate).length === 0 ? <Typography variant="body1">{createErrMsg}</Typography> : <Typography variant="body1">{updateErrMsg}</Typography>) : null
-                    }
-
                 </form>
             </div>
         )
@@ -469,6 +473,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     createRestaurantStart: restaurantInfo => dispatch(createRestaurantStart(restaurantInfo)),
     updateRestaurantStart: restaurantInfo => dispatch(updateRestaurantStart(restaurantInfo)),
+    createRestaurantFailure: error => dispatch(createRestaurantFailure(error)),
+    updateRestaurantFailure: error => dispatch(updateRestaurantFailure(error)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantForm));

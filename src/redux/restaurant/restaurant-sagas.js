@@ -12,12 +12,11 @@ export function* request(url, method, headers, body, auth = null) {
     const token = auth ? auth : null;
     try {
         const response = yield call(fetch, url, addHeader(options, token));
-        const checkedResponse = yield checkStatus(response);
-        return checkedResponse;
+        return yield response.json();
     } catch (e) {
        console.log(e, 'something went wrong');
     }
-}
+};
 
 function addHeader(options = {}, token) {
     const newOptions = { ...options };
@@ -32,19 +31,10 @@ function addHeader(options = {}, token) {
       newOptions.headers.Authorization = `Bearer ${token}`;
     }
     return newOptions;
-}
-
-function checkStatus(response) {
-    if (response.ok) {
-        return response.json();
-    } else {
-        console.log('fetch response failed');
-    }
-}
+};
 
 export function* createRestaurant({ payload: 
-    { restaurantName, 
-      restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
+    { restaurantName, restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
       restaurantPhone, restaurantWebsite, restaurantType, restaurantCuisine,
       breakfast, brunch, lunch, dinner,
       restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
@@ -74,15 +64,17 @@ export function* createRestaurant({ payload:
             restaurantDelivery: restaurantDelivery,
             restaurantPungent: restaurantPungent
         });
-        const restaurant = yield call(request, url, method, headers, body, currentUserToken);
-        if (restaurant !== undefined) {
-            // localStorage.setItem('token', restaurant.token);
-            yield put(createRestaurantSuccess(restaurant.data));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.restaurant) {
+            yield put(createRestaurantSuccess(data.restaurant));
+        } else {
+            yield put(createRestaurantFailure(data.error));
+        }
     } catch (error) {
+        console.log('create restaurant', error);
         yield put(createRestaurantFailure(error));
     }
-}
+};
 
 export function* updateRestaurant({ payload: { restaurantId, restaurantName, 
     restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
@@ -115,15 +107,17 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
             restaurantDelivery: restaurantDelivery,
             restaurantPungent: restaurantPungent
         });
-        const restaurant = yield call(request, url, method, headers, body, currentUserToken);
-        if (restaurant !== undefined) {
-            // localStorage.setItem('token', restaurant.token);
-            yield put(updateRestaurantSuccess(restaurant.data));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.restaurant) {
+            yield put(updateRestaurantSuccess(data.restaurant));
+        } else {
+            yield put(updateRestaurantFailure(data.error));
+        }
     } catch (error) {
+        console.log('update restaurant', error);
         yield put(updateRestaurantFailure(error));
     }
-}
+};
 
 export function* restaurantsQuerySelector({ payload }) {
     try {
@@ -136,14 +130,17 @@ export function* restaurantsQuerySelector({ payload }) {
         const method = 'GET';
         const headers = null;
         const body = null;
-        const restaurants = yield call(request, url, method, headers, body);
-        if (restaurants !== undefined) {
-            yield put(requestAllRestaurantsSuccess(restaurants.data));
-        } 
+        const data = yield call(request, url, method, headers, body);
+        if (data.restaurants) {
+            yield put(requestAllRestaurantsSuccess(data.restaurants));
+        } else {
+            yield put(requestAllRestaurantsFailure(data.error));
+        }
     } catch (error) {
+        console.log('request all restaurants', error);
         yield put(requestAllRestaurantsFailure(error));
     }
-}
+};
 
 export function* requestRestaurantById({ payload }) {
     try {
@@ -151,30 +148,33 @@ export function* requestRestaurantById({ payload }) {
         const method = 'GET';
         const headers = null;
         const body = null;
-        const restaurant = yield call(request, url, method, headers, body);
-        if (restaurant !== undefined) {
-            yield put(requestRestaurantByIdSuccess(restaurant.data));
-        } 
+        const data = yield call(request, url, method, headers, body);
+        if (data.restaurant) {
+            yield put(requestRestaurantByIdSuccess(data.restaurant));
+        } else {
+            yield put(requestRestaurantByIdFailure(data.error));
+        }
     } catch (error) {
+        console.log('request restaurant by id', error);
         yield put(requestRestaurantByIdFailure(error));
     }
-}
+};
 
 export function* oncreateRestaurantStart() {
     yield takeLatest(RestaurantActionTypes.CREATE_RESTAURANT_START, createRestaurant);
-}
+};
 
 export function* onUpdateRestaurantStart() {
     yield takeLatest(RestaurantActionTypes.UPDATE_RESTAURANT_START, updateRestaurant);
-}
+};
 
 export function* onRequestAllRestaurantsStart() {
     yield takeLatest(RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_START, restaurantsQuerySelector);
-}
+};
 
 export function* onRequestRestaurantByIdStart() {
     yield takeLatest(RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_START, requestRestaurantById);
-}
+};
 
 export function* restaurantSagas() {
     yield all([
@@ -183,4 +183,4 @@ export function* restaurantSagas() {
         call(onRequestAllRestaurantsStart),
         call(onRequestRestaurantByIdStart),
     ]);
-}
+};

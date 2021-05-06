@@ -10,6 +10,7 @@ import { resetUserUpdateStatus } from '../../redux/user/user-actions';
 
 import createImage from '../../assets/new.svg';
 import Downloader from '../../components/downloading/downloading-componet';
+import AlertMessage from '../../components/alert-message/alert-message-component';
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
 import RestaurantPreviewTwo from '../../components/restaurant-preview-2/restaurant-preview-2-component';
@@ -91,7 +92,7 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                                         </div>
                                     )
                                 )
-                            ) : (<Typography variant="h5">{requestError}</Typography>)
+                            ) : <AlertMessage severity='error' errMsg={requestError} />
                         )
                     }
                 </div>

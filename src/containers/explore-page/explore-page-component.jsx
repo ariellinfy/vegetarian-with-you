@@ -10,6 +10,7 @@ import { resetUserUpdateStatus } from '../../redux/user/user-actions';
 
 import createImage from '../../assets/new.svg';
 import Downloader from '../../components/downloading/downloading-componet';
+import AlertMessage from '../../components/alert-message/alert-message-component';
 import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
 import SortByButton from '../../components/sort-by-btn/sort-by-btn-component';
@@ -65,7 +66,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
                 </div>
                 <div className='explore-body'>
                     {
-                        requestPending ? (<Downloader />) : (
+                        requestPending ? <Downloader /> : (
                             requestSuccess ? (
                                 filteredRestaurants.length ? (
                                     typeof filteredRestaurants  !== 'string' ? (
@@ -92,7 +93,7 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
                                         </div>
                                     )
                                 )
-                            ) : (<Typography variant="h5">{requestError}</Typography>)
+                            ) : <AlertMessage severity='error' errMsg={requestError} />
                         )
                     }
                 </div>

@@ -32,7 +32,6 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, cou
     const handleReviewClick = async () => {
         await requestRestaurantByIdStart(restaurantId);
         await requestRestaurantByIdSuccess({ restaurantId });
-
         if (Object.keys(currentUser).length) {
             if (requestSuccess) {
                 history.push('/createreview');
@@ -63,7 +62,13 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, cou
                     />
                     <Typography variant="body2" color="textSecondary" component="p" gutterBottom className='restaurant-features'>
                         {
-                            price_range !== 'unknown' ? (`${cuisine}, ${type}, ${price_range}`) : (`${cuisine}, ${type}`)
+                            cuisine.length ? (`${cuisine}`) : (``)
+                        }
+                        {
+                            type.length ? (cuisine.length ? `, ${type}` : `${type}`) : (``)
+                        }
+                        {
+                            price_range !== 'unknown' ? (cuisine.length || type.length ? `, ${price_range}` : `${price_range}`) : (``)
                         }
                     </Typography>
                     <Typography variant="body1" color="textSecondary" component="p" className='restaurant-location'>
@@ -81,7 +86,7 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, cou
             </div>
         </div>
     )
-}
+};
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,

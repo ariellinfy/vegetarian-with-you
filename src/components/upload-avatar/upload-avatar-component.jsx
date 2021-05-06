@@ -185,7 +185,10 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
                         </div>
                     </DialogContent>
                     <DialogActions className={classes.actions}>
-                        <Button onClick={() => setUploadAvatarOpen(false)} variant="outlined" color="primary">
+                        <Button variant="outlined" color="primary" onClick={() => {
+                            setUploadAvatarOpen(false);
+                            setAvatarOnChange(false);
+                            }}>
                             Cancel
                         </Button>
                         <Button onClick={() => setUploadAvatarOpen(false)} variant="contained" color="secondary" type="submit">

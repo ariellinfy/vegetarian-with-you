@@ -24,7 +24,7 @@ export const filterRestaurants = (keyword, allRestaurants) => {
         return filteredRestaurants;
     } else {
         return 'no matches found';
-    };
+    }
 };
 
 export const filterRestaurantsByFeature = (keyword, keywordLocation, allRestaurants, filteredRestaurants) => {
@@ -75,7 +75,7 @@ export const filterRestaurantsByFeature = (keyword, keywordLocation, allRestaura
         return selectedRestaurants;
     } else {
         return 'no matches found';
-    };
+    }
 };
 
 export const filterRestaurantsByLocation = (keyword, keywordFeature, allRestaurants, filteredRestaurants) => {
@@ -116,5 +116,5 @@ export const filterRestaurantsByLocation = (keyword, keywordFeature, allRestaura
         return selectedRestaurants;
     } else {
         return 'no matches found';
-    };
+    }
 };

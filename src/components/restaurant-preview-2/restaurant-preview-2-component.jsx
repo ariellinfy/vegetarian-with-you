@@ -30,7 +30,6 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
     const handleReviewClick = async () => {
         await requestRestaurantByIdStart(restaurantId);
         await requestRestaurantByIdSuccess({ restaurantId });
-
         if (Object.keys(currentUser).length) {
             if (requestSuccess) {
                 history.push('/createreview');
@@ -39,6 +38,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
             history.push('/signin')
         };
    };
+
     return (
         <div className='restaurant-preview-2-container'>
             <img
@@ -54,7 +54,13 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p" className='restaurant-features'>
                     {
-                        price_range !== 'unknown' ? (`${cuisine}, ${type}, ${price_range}`) : (`${cuisine}, ${type}`)
+                        cuisine.length ? (`${cuisine}`) : (``)
+                    }
+                    {
+                        type.length ? (cuisine.length ? `, ${type}` : `${type}`) : (``)
+                    }
+                    {
+                        price_range !== 'unknown' ? (cuisine.length || type.length ? `, ${price_range}` : `${price_range}`) : (``)
                     }
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary" component="p" className='restaurant-location'>
@@ -70,7 +76,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
             </div>
         </div>
     )
-}
+};
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
@@ -79,7 +85,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     requestRestaurantByIdStart: restaurantId => dispatch(requestRestaurantByIdStart(restaurantId)),
-    requestRestaurantByIdSuccess: restaurantInfo => dispatch(requestRestaurantByIdSuccess(restaurantInfo)),
+    requestRestaurantByIdSuccess: restaurant => dispatch(requestRestaurantByIdSuccess(restaurant)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RestaurantPreviewTwo));

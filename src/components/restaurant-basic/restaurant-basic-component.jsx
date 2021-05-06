@@ -109,7 +109,13 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
                     <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
                         <Typography className='capitalize-text' component="span" variant="body1">
                             {
-                                price_range !== 'unknown' ? (`${cuisine}, ${type}, ${price_range}`) : (`${cuisine}, ${type}`)
+                                cuisine.length ? (`${cuisine}`) : (``)
+                            }
+                            {
+                                type.length ? (cuisine.length ? `, ${type}` : `${type}`) : (``)
+                            }
+                            {
+                                price_range !== 'unknown' ? (cuisine.length || type.length ? `, ${price_range}` : `${price_range}`) : (``)
                             }
                         </Typography>
                     </Box>

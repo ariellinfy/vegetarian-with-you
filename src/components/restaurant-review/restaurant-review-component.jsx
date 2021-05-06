@@ -16,7 +16,7 @@ const RestaurantReview = ({ currentUser, targetRestaurant, query,
 
     const { restaurant_id, review_count, restaurant_name, country } = targetRestaurant;
 
-    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
+    let currentUserToken = localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')).token : '';
 
     const handleChange = event => {
         setReviewSortbyFilter(event.target.value);
