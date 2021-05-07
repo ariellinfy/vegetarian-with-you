@@ -44,7 +44,6 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
                             <Typography variant="h5" className="review-name">{`--- ${targetReview.review_title} ---`}</Typography>
                         </div>
                         <Card className="review-body" elevation={0}>
-
                                 {
                                     targetReviewToMap ? (
                                         targetReviewToMap
@@ -70,7 +69,6 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
                                             </Typography>
                                     )})) : null
                                 }
-
                         </Card>
                         <div className="review-actions">
                             <Typography variant="h5">

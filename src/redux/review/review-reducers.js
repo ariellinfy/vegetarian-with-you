@@ -10,13 +10,14 @@ const INITIAL_STATE = {
     reviewActionFailure: false,
     createReviewErr: '',
     updateReviewErr: '',
-    deleteReviewErr: '',
     reviewsCollection: [],
     userReviews: [],
     reviewRequestPending: false,
     reviewRequestSuccess: false,
     requestReviewErr: '',
     reviewSortbyFilter: 'Sort By',
+    reviewSuccessMessage: '',
+    reviewErrorMessage: '',
 }
 
 const reviewReducer = (state=INITIAL_STATE, action) => {
@@ -166,22 +167,27 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionPending: true,
                 reviewUpdateSuccess: false,
                 reviewActionFailure: false,
-                updateReviewErr: '',
             };
         case ReviewActionTypes.REVIEW_HELPFUL_SUCCESS:
+            return {
+                ...state,
+                reviewActionPending: false,
+                reviewUpdateSuccess: true,
+                reviewActionFailure: false,
+            };
         case ReviewActionTypes.REPORT_REVIEW_SUCCESS:
             return {
                 ...state,
                 reviewActionPending: false,
                 reviewUpdateSuccess: true,
                 reviewActionFailure: false,
-                updateReviewErr: '',
+                reviewSuccessMessage: 'Report has been sent to our team for further review, thank you for your continued support!'
             };
         case ReviewActionTypes.REVIEW_HELPFUL_FAILURE:
         case ReviewActionTypes.REPORT_REVIEW_FAILURE:
             return {
                 ...state,
-                updateReviewErr: action.payload,
+                reviewErrorMessage: action.payload,
                 reviewActionPending: false,
                 reviewUpdateSuccess: false,
                 reviewActionFailure: true,
@@ -193,7 +199,6 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionPending: true,
                 reviewDeleteSuccess: false,
                 reviewActionFailure: false,
-                deleteReviewErr: '',
             };
         case ReviewActionTypes.DELETE_REVIEW_SUCCESS:
             return {
@@ -201,7 +206,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionPending: false,
                 reviewDeleteSuccess: true,
                 reviewActionFailure: false,
-                deleteReviewErr: '',
+                reviewSuccessMessage: 'Successfully deleted review, thank you for all your contribution and support, looking forward to seeing you back!'
             };
         case ReviewActionTypes.DELETE_REVIEW_FAILURE:
             return {
@@ -209,7 +214,7 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionPending: false,
                 reviewDeleteSuccess: false,
                 reviewActionFailure: true,
-                deleteReviewErr: action.payload,
+                reviewErrorMessage: action.payload,
             };
         case ReviewActionTypes.RESET_DELETE_REVIEW_STATUS:
             return {
@@ -217,7 +222,13 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 reviewActionPending: false,
                 reviewDeleteSuccess: false,
                 reviewActionFailure: false,
-                deleteReviewErr: '',
+            };
+
+        case ReviewActionTypes.RESET_REVIEW_STATUS_MESSAGE:
+            return {
+                ...state,
+                reviewSuccessMessage: '',
+                reviewErrorMessage: '',
             };
 
         default:

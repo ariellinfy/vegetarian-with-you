@@ -19,6 +19,9 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
     let { restaurant_name, address, city, region, country, postal_code, phone, website, 
         type, cuisine, overall_rate, price_range, review_count } = targetRestaurant;
 
+    type = type === undefined ? '' : type;
+    cuisine = cuisine === undefined ? '' : cuisine;
+
     if (Math.round(price_range) === 1) {
         price_range = 'cheap eats';
     } else if (Math.round(price_range) === 2) {

@@ -17,8 +17,6 @@ const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage
     resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus }) => {
 
     useEffect(() => {
-        resetRequestRestaurantsStatus();
-        resetFilteredRestaurants();
         resetCreateRestaurantStatus();
         resetUpdateRestaurantStatus();
         resetCreateReviewStatus();
@@ -26,6 +24,8 @@ const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage
         resetDeleteReviewStatus();
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
+        resetRequestRestaurantsStatus();
+        resetFilteredRestaurants();
         resetUserUpdateStatus();
     }, []);
 

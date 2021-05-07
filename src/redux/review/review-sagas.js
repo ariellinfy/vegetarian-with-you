@@ -16,12 +16,11 @@ export function* request(url, method, headers, body, auth = null) {
     const token = auth ? auth : null;
     try {
         const response = yield call(fetch, url, addHeader(options, token));
-        const checkedResponse = yield checkStatus(response);
-        return checkedResponse;
+        return yield response.json();
     } catch (e) {
        console.log(e, 'something went wrong');
     }
-}
+};
 
 function addHeader(options = {}, token) {
     const newOptions = { ...options };
@@ -36,15 +35,7 @@ function addHeader(options = {}, token) {
       newOptions.headers.Authorization = `Bearer ${token}`;
     }
     return newOptions;
-}
-
-function checkStatus(response) {
-    if (response.ok) {
-        return response.json();
-    } else {
-        console.log('fetch response failed');
-    }
-}
+};
 
 export function* createReview({ payload: { restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
@@ -74,15 +65,17 @@ export function* createReview({ payload: { restaurantId,
             },
             body: formData
         });
-        const review = yield response.json();
-        if (review !== undefined) {
-            // localStorage.setItem('token', review.token);
-            yield put(createReviewSuccess(review.data));
-        } 
+        const data = yield response.json();
+        if (data.review) {
+            yield put(createReviewSuccess(data.review));
+        } else {
+            yield put(createReviewFailure(data.error));
+        }
     } catch (error) {
+        console.log('create review', error);
         yield put(createReviewFailure(error));
     }
-}
+};
 
 export function* updateReview({ payload: { reviewId, restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
@@ -119,15 +112,17 @@ export function* updateReview({ payload: { reviewId, restaurantId,
             },
             body: formData
         });
-        const review = yield response.json();
-        if (review !== undefined) {
-            // localStorage.setItem('token', review.token);
-            yield put(updateReviewSuccess(review.data));
-        } 
+        const data = yield response.json();
+        if (data.review) {
+            yield put(updateReviewSuccess(data.review));
+        } else {
+            yield put(updateReviewFailure(data.error));
+        }
     } catch (error) {
+        console.log('update review', error);
         yield put(updateReviewFailure(error));
     }
-}
+};
 
 export function* requestReviews({ payload: { query } }) {
     try {
@@ -135,14 +130,17 @@ export function* requestReviews({ payload: { query } }) {
         const method = 'GET';
         const headers = null;
         const body = null;
-        const reviews = yield call(request, url, method, headers, body);
-        if (reviews !== undefined) {
-            yield put(requestReviewsSuccess(reviews.data));
-        } 
+        const data = yield call(request, url, method, headers, body);
+        if (data.reviews) {
+            yield put(requestReviewsSuccess(data.reviews));
+        } else {
+            yield put(requestReviewsFailure(data.error));
+        }
     } catch (error) {
+        console.log('request reviews', error);
         yield put(requestReviewsFailure(error));
     }
-}
+};
 
 export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }) {
     try {
@@ -150,34 +148,35 @@ export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }
         const method = 'GET';
         const headers = null;
         const body = null;
-        const reviews = yield call(request, url, method, headers, body, currentUserToken);
-        if (reviews !== undefined) {
-            // localStorage.setItem('token', reviews.token);
-            yield put(requestReviewsAuthSuccess(reviews.data));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.reviews) {
+            yield put(requestReviewsAuthSuccess(data.reviews));
+        } else {
+            yield put(requestReviewsAuthFailure(data.error));
+        }
     } catch (error) {
+        console.log('request reviews with auth', error);
         yield put(requestReviewsAuthFailure(error));
     }
-}
+};
 
-export function* requestUserReviews({ payload }) {
+export function* requestUserReviews({ payload: { currentUserToken } }) {
     try {
-        if (!payload.length) {
-            yield put(requestUserReviewsFailure('please provide user token'));
-        };
         const url = `http://localhost:5000/reviews/user`;
         const method = 'GET';
         const headers = null;
         const body = null;
-        const reviews = yield call(request, url, method, headers, body, payload);
-        if (reviews !== undefined) {
-            // localStorage.setItem('token', reviews.token);
-            yield put(requestUserReviewsSuccess(reviews.data));
-        } 
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.reviews) {
+            yield put(requestUserReviewsSuccess(data.reviews));
+        } else {
+            yield put(requestUserReviewsFailure(data.error));
+        }
     } catch (error) {
+        console.log('request user reviews', error);
         yield put(requestUserReviewsFailure(error));
     }
-}
+};
 
 export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpful, currentUserToken } }) {
     try {
@@ -189,15 +188,17 @@ export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpfu
             reviewId: review_id,
             userHelpful: userHelpful
         });
-        const token = yield call(request, url, method, headers, body, currentUserToken);
-        if (token !== undefined) {
-            // localStorage.setItem('token', token);
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
             yield put(reviewHelpfulSuccess());
-        } 
+        } else {
+            yield put(reviewHelpfulFailure(data.error));
+        }
     } catch (error) {
+        console.log('helpful vote', error);
         yield put(reviewHelpfulFailure(error));
     }
-}
+};
 
 export function* reportReview({ payload: { restaurantId, reviewId, reportText, currentUserToken } }) {
     try {
@@ -209,15 +210,17 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
             reviewId: reviewId,
             reportText: reportText
         });
-        const token = yield call(request, url, method, headers, body, currentUserToken);
-        if (token !== undefined) {
-            // localStorage.setItem('token', token);
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
             yield put(reportReviewSuccess());
-        } 
+        } else {
+            yield put(reportReviewFailure(data.error));
+        }
     } catch (error) {
+        console.log('report review', error);
         yield put(reportReviewFailure(error));
     }
-}
+};
 
 export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete, currentUserToken } }) {
     try {
@@ -229,47 +232,49 @@ export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete
             restaurantId: restaurantId,
             confirmDelete: confirmDelete
         });
-        const token = yield call(request, url, method, headers, body, currentUserToken);
-        if (token !== undefined) {
-            // localStorage.setItem('token', token);
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
             yield put(deleteReviewSuccess());
-        } 
+        } else {
+            yield put(deleteReviewFailure(data.error));
+        }
     } catch (error) {
+        console.log('delete review', error);
         yield put(deleteReviewFailure(error));
     }
-}
+};
 
 export function* oncreateReviewStart() {
     yield takeLatest(ReviewActionTypes.CREATE_REVIEW_START, createReview);
-}
+};
 
 export function* onUpdateReviewStart() {
     yield takeLatest(ReviewActionTypes.UPDATE_REVIEW_START, updateReview);
-}
+};
 
 export function* onRequestReviewsStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START, requestReviews);
-}
+};
 
 export function* onRequestReviewsAuthStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_START, requestReviewsWithAuth);
-}
+};
 
 export function* onRequestUserReviewStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_USER_REVIEWS_START, requestUserReviews);
-}
+};
 
 export function* onReviewHelpfulStart() {
     yield takeLatest(ReviewActionTypes.REVIEW_HELPFUL_START, reviewHelpful);
-}
+};
 
 export function* onReportReviewStart() {
     yield takeLatest(ReviewActionTypes.REPORT_REVIEW_START, reportReview);
-}
+};
 
 export function* onDeleteReviewStart() {
     yield takeLatest(ReviewActionTypes.DELETE_REVIEW_START, deleteReview);
-}
+};
 
 export function* reviewSagas() {
     yield all([
@@ -282,4 +287,4 @@ export function* reviewSagas() {
         call(onReportReviewStart),
         call(onDeleteReviewStart),
     ]);
-}
+};

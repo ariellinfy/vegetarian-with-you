@@ -294,7 +294,7 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 onEditUserEmail: false,
             };
         // reset user update status
-        case UserActionTypes.RESET_STATUS_MESSAGE:
+        case UserActionTypes.RESET_USER_STATUS_MESSAGE:
             return {
                 ...state,
                 authSuccessMessage: '',

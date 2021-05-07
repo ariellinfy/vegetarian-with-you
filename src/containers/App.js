@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser, selectAuthSuccessMessage, selectAuthErrorMessage } from '../redux/user/user-selectors';
+import { selectReviewSuccessMessage, selectReviewErrorMessage } from '../redux/review/review-selectors';
 import { checkUserSessionStart } from '../redux/user/user-actions';
 
 import theme from './material-ui-theme';
@@ -26,7 +27,7 @@ const CreateReviewPage = lazy(() => import('./create-review-page/create-review-p
 const UpdateReviewPage = lazy(() => import('./update-review-page/update-review-page-component')); 
 const RestaurantPage = lazy(() => import('./restaurant-page/restaurant-page-component')); 
 
-const App = ({ currentUser, authSuccessMessage, authErrorMessage, checkUserSessionStart, history }) => {
+const App = ({ currentUser, authSuccessMessage, authErrorMessage, reviewSuccessMessage, reviewErrorMessage, checkUserSessionStart, history }) => {
   useEffect(() => {
     if (Object.keys(currentUser).length) {
       const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
@@ -39,7 +40,10 @@ const App = ({ currentUser, authSuccessMessage, authErrorMessage, checkUserSessi
         <div className='App'>
           <Header />
           {
-            authSuccessMessage.length || authErrorMessage.length ? <Toast authSuccessMessage={authSuccessMessage} authErrorMessage={authErrorMessage} /> : null
+            authSuccessMessage.length || authErrorMessage.length ? <Toast successMessage={authSuccessMessage} errorMessage={authErrorMessage} /> : null
+          }
+          {
+            reviewSuccessMessage.length || reviewErrorMessage.length ? <Toast successMessage={reviewSuccessMessage} errorMessage={reviewErrorMessage} /> : null
           }
             <Switch>
               <ErrorBoundary>
@@ -68,6 +72,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   authSuccessMessage: selectAuthSuccessMessage,
   authErrorMessage: selectAuthErrorMessage,
+  reviewSuccessMessage: selectReviewSuccessMessage,
+  reviewErrorMessage: selectReviewErrorMessage,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { resetStatusMessage } from '../../redux/user/user-actions';
+import { resetUserStatusMessage } from '../../redux/user/user-actions';
+import { resetReviewStatusMessage } from '../../redux/review/review-actions';
 
 import Alert from '@material-ui/lab/Alert';
 import { Snackbar, makeStyles } from '@material-ui/core';
@@ -14,14 +15,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Toast = ({ authSuccessMessage, authErrorMessage, resetStatusMessage }) => {
+const Toast = ({ successMessage, errorMessage, resetUserStatusMessage, resetReviewStatusMessage }) => {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
     let messageTimeout = null;
 
     const updateMessage = () => {
         messageTimeout = setTimeout(() => {
-            resetStatusMessage();
+            resetUserStatusMessage();
+            resetReviewStatusMessage();
             clearTimeout(messageTimeout);
         }, 6000);
     };
@@ -40,19 +42,19 @@ const Toast = ({ authSuccessMessage, authErrorMessage, resetStatusMessage }) => 
     return (
         <div className={classes.root}>
             {
-                authSuccessMessage.length ? (
+                successMessage.length ? (
                     <Snackbar open={open} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} onClose={handleClose}>
                         <Alert variant="filled" elevation={6} severity='success' onClose={handleClose}>
-                            {authSuccessMessage}
+                            {successMessage}
                         </Alert>
                     </Snackbar>
                 ) : null
             }
             {
-                authErrorMessage.length ? (
+                errorMessage.length ? (
                     <Snackbar open={open} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} onClose={handleClose}>
                         <Alert variant="filled" elevation={6} severity='error' onClose={handleClose}>
-                            {authErrorMessage}
+                            {errorMessage}
                         </Alert>
                     </Snackbar>
                 ) : null
@@ -62,7 +64,8 @@ const Toast = ({ authSuccessMessage, authErrorMessage, resetStatusMessage }) => 
 };
 
 const mapDispatchToProps = dispatch => ({
-    resetStatusMessage: () => dispatch(resetStatusMessage()),
+    resetUserStatusMessage: () => dispatch(resetUserStatusMessage()),
+    resetReviewStatusMessage: () => dispatch(resetReviewStatusMessage())
 });
 
 export default connect(null, mapDispatchToProps)(Toast);

@@ -1,7 +1,6 @@
 import ReviewActionTypes from './review-types';
 
 // Create review
-
 export const createReviewStart = reviewDetail => ({
     type: ReviewActionTypes.CREATE_REVIEW_START,
     payload: reviewDetail
@@ -22,7 +21,6 @@ export const resetCreateReviewStatus = () => ({
 });
 
 // Update review
-
 export const setReviewToBeUpdate = review => ({
     type: ReviewActionTypes.REVIEW_TO_BE_UPDATE,
     payload: review
@@ -48,7 +46,6 @@ export const resetUpdateReviewStatus = () => ({
 });
 
 // Request restaurant reviews
-
 export const requestReviewsStart = data => ({
     type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START,
     payload: data
@@ -74,7 +71,6 @@ export const resetRequestReviewsStatus = () => ({
 });
 
 // Request restaurant reviews (with auth)
-
 export const requestReviewsAuthStart = data => ({
     type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_START,
     payload: data
@@ -91,7 +87,6 @@ export const requestReviewsAuthFailure = error => ({
 });
 
 // Request user reviews
-
 export const requestUserReviewsStart = currentUserToken => ({
     type: ReviewActionTypes.REQUEST_USER_REVIEWS_START,
     payload: currentUserToken
@@ -112,7 +107,6 @@ export const resetRequestUserReviewsStatus = () => ({
 });
 
 // Update review helpful record
-
 export const reviewHelpfulStart = data => ({
     type: ReviewActionTypes.REVIEW_HELPFUL_START,
     payload: data
@@ -128,7 +122,6 @@ export const reviewHelpfulFailure = error => ({
 });
 
 // Report review
-
 export const reportReviewStart = data => ({
     type: ReviewActionTypes.REPORT_REVIEW_START,
     payload: data
@@ -144,7 +137,6 @@ export const reportReviewFailure = error => ({
 });
 
 // Delete review
-
 export const deleteReviewStart = data => ({
     type: ReviewActionTypes.DELETE_REVIEW_START,
     payload: data
@@ -161,4 +153,9 @@ export const deleteReviewFailure = error => ({
 
 export const resetDeleteReviewStatus = () => ({
     type: ReviewActionTypes.RESET_DELETE_REVIEW_STATUS
+});
+
+// Reset review message status
+export const resetReviewStatusMessage = () => ({
+    type: ReviewActionTypes.RESET_REVIEW_STATUS_MESSAGE
 });

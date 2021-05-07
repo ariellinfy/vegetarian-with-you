@@ -6,13 +6,15 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: '100%',
-      marginBottom: '0.75em',
-      '& > * + *': {
-        marginTop: theme.spacing(2),
-      },
+        alignSelf: 'center',
+        width: '100%',
+        marginTop: '0.75em',
+        marginBottom: '0.75em',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
     },
-  }));
+}));
 
 const AlertMessage = ({ severity, errMsg }) => {
     const classes = useStyles();

@@ -5,7 +5,7 @@ const selectReview = state => state.review;
 export const selectTargetReviewInfo = createSelector([selectReview], review => review.targetReview);
 
 export const selectTargetReviewInfoToMap = createSelector([selectTargetReviewInfo], targetReview => {
-    return Object.entries(targetReview).filter(([key, value]) => value !== null && (value.length > 0 || !isNaN(value)))
+    return Object.entries(targetReview).filter(([key, value]) => value !== null && (Array.isArray(value) ? value.length > 0 : (value.length > 0 || !isNaN(value))))
 });
 
 // Create / Update review actions
@@ -26,7 +26,9 @@ export const selectCreateReviewErr = createSelector([selectReview], review => re
 
 export const selectUpdateReviewErr = createSelector([selectReview], review => review.updateReviewErr);
 
-export const selectDeleteReviewErr = createSelector([selectReview], review => review.deleteReviewErr);
+export const selectReviewSuccessMessage = createSelector([selectReview], review => review.reviewSuccessMessage);
+
+export const selectReviewErrorMessage = createSelector([selectReview], review => review.reviewErrorMessage);
 
 // Request reviews
 

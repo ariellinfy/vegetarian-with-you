@@ -145,7 +145,7 @@
     .content-body {
       display: flex;
       flex-direction: column;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
 
       .review-title {
         margin-top: 0.15em;
@@ -241,6 +241,7 @@
 
       .review-helpful {
         margin-top: 0.75em;
+        font-weight: 500;
       }
     }
 

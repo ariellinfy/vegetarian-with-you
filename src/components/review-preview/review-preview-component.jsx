@@ -18,7 +18,7 @@ import './review-preview-style.scss';
 
 const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
 
-    const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
+    let currentUserToken = localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')).token : '';
 
     const { review_id, restaurant_id, review_title, review_body, overall_rate, visit_period, recommended_dishes, photos,
         user_helpful, helpful_count, review_owner, create_at, public_name, avatar, contributions, helpful_votes } = review;
@@ -156,8 +156,8 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                                     open={Boolean(anchorEl)}
                                     onClose={handleReviewClose}
                                 >
-                                    <MenuItem onClick={handleUpdateReview} >Update Review</MenuItem>
-                                    <MenuItem onClick={handleClickOpenDeleteReview} >Delete Review</MenuItem>
+                                    <MenuItem onClick={handleUpdateReview}>Update Review</MenuItem>
+                                    <MenuItem onClick={handleClickOpenDeleteReview}>Delete Review</MenuItem>
                                     <DeleteReview restaurantId={restaurant_id} reviewId={review_id} query={query} open={openDeleteReview} handleClose={handleCloseDeleteReview}/>
                                 </Menu>
                             </div>
@@ -189,7 +189,7 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                     </Typography>
 
                     {
-                        helpfulCount ? (<Typography className='review-helpful' variant="subtitle2">{helpfulCount} people found this helpful</Typography>) : null
+                        helpfulCount ? (<Typography className='review-helpful' variant="body2">{helpfulCount} people found this helpful</Typography>) : null
                     }
                 </div>
 

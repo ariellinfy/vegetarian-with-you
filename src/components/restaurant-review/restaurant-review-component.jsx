@@ -2,9 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectReviewsCollection, selectReviewSortbyFilter } from '../../redux/review/review-selectors';
+import { selectReviewsCollection, selectReviewSortbyFilter, selectReviewRequestPending, selectReviewRequestSuccess, selectRequestReviewErr } from '../../redux/review/review-selectors';
 import { setReviewSortbyFilter, requestReviewsStart, requestReviewsAuthStart } from '../../redux/review/review-actions';
 
+import AlertMessage from '../../components/alert-message/alert-message-component';
+import Downloader from '../../components/downloading/downloading-componet';
 import createImage from '../../assets/dog.svg';
 import ReviewPreview from '../../components/review-preview/review-preview-component';
 import { Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core';
@@ -12,7 +14,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import './restaurant-review-style.scss';
 
 const RestaurantReview = ({ currentUser, targetRestaurant, query, 
-    reviewsCollection, reviewSortbyFilter, setReviewSortbyFilter, requestReviewsStart, requestReviewsAuthStart, history }) => {
+    reviewsCollection, reviewSortbyFilter, requestPending, requestSuccess, requestError,
+    setReviewSortbyFilter, requestReviewsStart, requestReviewsAuthStart, history }) => {
 
     const { restaurant_id, review_count, restaurant_name, country } = targetRestaurant;
 
@@ -50,14 +53,18 @@ const RestaurantReview = ({ currentUser, targetRestaurant, query,
                 </div>
             </div>
             {
-                reviewsCollection.length ? reviewsCollection.map(review => (
-                    <ReviewPreview key={review.review_id} currentUser={currentUser} review={review} query={query} />
-                )) : (
-                    <div className='no-review'>
-                        <img alt='create' src={createImage} />
-                        <Typography variant="subtitle1">There are no reviews for {restaurant_name}, {country} yet.</Typography>
-                        <Typography variant="subtitle1">Be the first to write a review!</Typography> 
-                    </div>
+                requestPending ? <Downloader /> : (
+                    requestSuccess ? (
+                        reviewsCollection.length ? reviewsCollection.map(review => (
+                            <ReviewPreview key={review.review_id} currentUser={currentUser} review={review} query={query} />
+                        )) : (
+                            <div className='no-review'>
+                                <img alt='create' src={createImage} />
+                                <Typography variant="subtitle1">There are no reviews for {restaurant_name}, {country} yet.</Typography>
+                                <Typography variant="subtitle1">Be the first to write a review!</Typography> 
+                            </div>
+                        )
+                    ) : <AlertMessage severity='error' errMsg={requestError} />
                 )
             }
         </div>
@@ -67,6 +74,9 @@ const RestaurantReview = ({ currentUser, targetRestaurant, query,
 const mapStateToProps = createStructuredSelector({
     reviewsCollection: selectReviewsCollection,
     reviewSortbyFilter: selectReviewSortbyFilter,
+    requestPending: selectReviewRequestPending,
+    requestSuccess: selectReviewRequestSuccess,
+    requestError: selectRequestReviewErr,
 });
 
 const mapDispatchToProps = dispatch => ({

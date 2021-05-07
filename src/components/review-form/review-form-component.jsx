@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { createReviewStart, updateReviewStart } from '../../redux/review/review-actions';
+import { createReviewStart, updateReviewStart, createReviewFailure, updateReviewFailure } from '../../redux/review/review-actions';
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
 
+import AlertMessage from '../alert-message/alert-message-component';
 import Uploader from '../uploading/uploading-component';
 import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-component';
 import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, GridList, GridListTile, IconButton } from '@material-ui/core';
@@ -75,8 +76,7 @@ class ReviewForm extends Component {
     handleSubmit = async event => {
         event.preventDefault();
         const { currentUserToken, reviewToBeUpdate, createReviewStart, updateReviewStart, targetRestaurant } = this.props;
-        const { 
-            foodRate, serviceRate, valueRate, atmosphereRate, 
+        const { foodRate, serviceRate, valueRate, atmosphereRate, 
             reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
         } = this.state;
         const restaurantId = targetRestaurant.restaurant_id;
@@ -111,25 +111,45 @@ class ReviewForm extends Component {
     };
 
     handleUploadPhotos = async event => {
+        const { reviewToBeUpdate, createReviewFailure, updateReviewFailure } = this.props;
         let imageFiles = Object.values(event.target.files);
         const options = {
             maxSizeMB: 1,
             maxWidthOrHeight: 1024,
             useWebWorker: true
         };
-        try {
-            await imageFiles.forEach(img => {
-                imageCompression(img, options).then(compressedImg => {
-                    const file = new File([compressedImg], compressedImg.name, {
-                        lastModified: compressedImg.lastModified,
-                        type: compressedImg.type
+
+        if (imageFiles.length) {
+            imageFiles.forEach(img => {
+                if (!img.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|svg)$/)) {
+                    if (Object.keys(reviewToBeUpdate).length === 0) {
+                        createReviewFailure('File type must be .jpg/jpeg or .png or .svg')
+                    } else {
+                        updateReviewFailure('File type must be .jpg/jpeg or .png or .svg')
+                    }
+                    return false;
+                } else if (img.name.match(/\.(svg)$/)) {
+                    this.setState({ ...this.state, photos: this.state.photos.concat([img]) });
+                } else {
+                    imageFiles.forEach(img => {
+                        imageCompression(img, options).then(compressedImg => {
+                            const file = new File([compressedImg], compressedImg.name, {
+                                lastModified: compressedImg.lastModified,
+                                type: compressedImg.type
+                            });
+                            this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
+                        });
                     });
-                    this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
-                });
-            });
-        } catch (err) {
-            console.log(err);
-        }
+                }
+            })
+        } else {
+            if (Object.keys(reviewToBeUpdate).length === 0) {
+                createReviewFailure('Please select an image.')
+            } else {
+                updateReviewFailure('Please select an image.')
+            }
+            return false;
+        };
     };
 
     handleClearImg = i => {
@@ -139,8 +159,7 @@ class ReviewForm extends Component {
 
     render() {
         const { reviewToBeUpdate, targetRestaurant, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
-        const { 
-            foodRate, serviceRate, valueRate, atmosphereRate, 
+        const { foodRate, serviceRate, valueRate, atmosphereRate, 
             foodHover, serviceHover, valueHover, atmosphereHover, 
             reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
         } = this.state;
@@ -299,7 +318,7 @@ class ReviewForm extends Component {
                         className='text-field recommend-dish' 
                         label='What dish(es) do you recommend?' 
                         name='recommendDish' 
-                        value={recommendDish} 
+                        value={recommendDish || ''} 
                         onChange={this.handleChange}
                         variant="outlined" 
                         fullWidth  
@@ -351,21 +370,18 @@ class ReviewForm extends Component {
                                 label="I certify that this review is based on my own experience and is my genuine opinion of this restaurant, and that I have no personal or business relationship with this establishment, and have not been offered any incentive or payment originating from the establishment to write this review."
                             />
                         </FormControl>
-    
+                        {
+                            actionFailure ? (Object.keys(reviewToBeUpdate).length === 0 ? <AlertMessage severity='error' errMsg={createErrMsg} /> : <AlertMessage severity='error' errMsg={updateErrMsg} />) : null
+                        }
                         <div className='buttons-group'>
                             <Button type='button' onClick={() => history.goBack()} className='button-input' variant="contained" color="primary">Back</Button>
-                            <Button type='submit' className='button-input' variant="contained" color="secondary">Submit</Button>
+                            <Button type='submit' className='button-input' variant="contained" color="secondary" disabled={ disclosure ? false : true }>Submit</Button>
                         </div>
                     </div>
                     {
-                        actionPending ? (<Uploader />) : null
-                    }
-
-                    {
-                        actionFailure ? (Object.keys(reviewToBeUpdate).length === 0 ? <Typography variant="body1">{createErrMsg}</Typography> : <Typography variant="body1">{updateErrMsg}</Typography>) : null
+                        actionPending ? <Uploader /> : null
                     }
                 </form>
-                
             </div>
         )
     }
@@ -382,6 +398,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     createReviewStart: reviewDetail => dispatch(createReviewStart(reviewDetail)),
     updateReviewStart: reviewDetail => dispatch(updateReviewStart(reviewDetail)),
+    createReviewFailure: error => dispatch(createReviewFailure(error)),
+    updateReviewFailure: error => dispatch(updateReviewFailure(error)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewForm));
