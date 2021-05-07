@@ -56,6 +56,13 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
                 tokenExp = parseInt(JSON.parse(localStorage.getItem('userToken')).exp);
             };
 
+            if (tokenExp - now <= 0) {
+                setOpen(false);
+                signOutStart({ currentUserToken });
+                clearInterval(warningInactiveInterval.current);
+                isAuthenticated = false;
+            };
+
             if (secPast === popTime) {
                 setOpen(true);
             };
