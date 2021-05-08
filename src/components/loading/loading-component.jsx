@@ -4,7 +4,7 @@ import './loading-style.scss';
 
 const Loader = () => (
     <div className='loading-container'>
-        <object type="image/svg+xml" data={loading || ''}>svg-animation</object>        
+        <object type="image/svg+xml" data={loading || ''}>Loading</object>        
     </div>
 );
 

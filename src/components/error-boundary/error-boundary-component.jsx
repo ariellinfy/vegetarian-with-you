@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ErrorImg from '../../assets/under-construction.svg'
 import './error-boundary-style.scss';
 
@@ -31,6 +30,6 @@ class ErrorBoundary extends React.Component {
         }
         return this.props.children;
     }
-}
+};
 
 export default ErrorBoundary;

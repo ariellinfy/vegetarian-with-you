@@ -14,7 +14,7 @@ import './sign-up-style.scss';
 const SignUp = ({ signUpStart, signUpFailure, resetAuthStatus, signUpPending, signUpErr }) => {
     useEffect(() => {
         resetAuthStatus();
-    }, []);
+    }, [resetAuthStatus]);
 
     const [userCredential, setCredential] = useState({
         publicName: '',

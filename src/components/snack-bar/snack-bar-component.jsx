@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { resetUserStatusMessage } from '../../redux/user/user-actions';
 import { resetReviewStatusMessage } from '../../redux/review/review-actions';
@@ -18,15 +18,14 @@ const useStyles = makeStyles((theme) => ({
 const Toast = ({ successMessage, errorMessage, resetUserStatusMessage, resetReviewStatusMessage }) => {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
-    let messageTimeout = null;
 
-    const updateMessage = () => {
-        messageTimeout = setTimeout(() => {
+    const updateMessage = useCallback(() => {
+        const messageTimeout = setTimeout(() => {
             resetUserStatusMessage();
             resetReviewStatusMessage();
             clearTimeout(messageTimeout);
         }, 6000);
-    };
+    }, [resetUserStatusMessage, resetReviewStatusMessage]);
     
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

@@ -39,7 +39,9 @@ const ExplorePage = ({ allRestaurants, requestPending, requestSuccess, requestEr
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
         requestAllRestaurantsStart('');
-    }, []);
+    }, [resetRequestRestaurantsStatus, resetFilteredRestaurants, resetCreateRestaurantStatus, resetUpdateRestaurantStatus,
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus, 
+        requestAllRestaurantsStart]);
 
     const handleChange = event => {
         requestFilteredRestaurants(event.target.value);

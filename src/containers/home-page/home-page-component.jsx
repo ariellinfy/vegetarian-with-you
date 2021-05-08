@@ -25,7 +25,8 @@ const HomePage = ({ resetCreateRestaurantStatus, resetUpdateRestaurantStatus, re
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
-    }, []);
+    }, [resetRequestRestaurantsStatus, resetFilteredRestaurants, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, 
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus]);
 
     return (
         <div className='home-page'>

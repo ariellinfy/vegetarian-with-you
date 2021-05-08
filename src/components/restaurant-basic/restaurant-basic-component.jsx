@@ -32,7 +32,7 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
         price_range = 'unknown';
     };
 
-    const tel = (phone || '').replace(/[\(\)\-]/g, "").replace(/\s/g, "");
+    const tel = (phone || '').replace(/[()-]/g, "").replace(/\s/g, "");
     const target_lat = 0;
     const target_lng = 0;
 

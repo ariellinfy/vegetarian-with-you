@@ -39,7 +39,9 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
         requestAllRestaurantsStart('');
-    }, []);
+    }, [resetRequestRestaurantsStatus, resetFilteredRestaurants, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, 
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus, 
+        requestAllRestaurantsStart]);
 
     return (
         <div className='find-restaurant-page'>

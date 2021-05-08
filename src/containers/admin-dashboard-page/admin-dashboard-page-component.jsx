@@ -26,13 +26,13 @@ const AdminDashboardPage = ({ currentUser, adminCurrentPage, setAdminCurrentPage
         resetRequestUserReviewsStatus();
         resetRequestRestaurantsStatus();
         resetFilteredRestaurants();
-        resetUserUpdateStatus();
-    }, []);
+    }, [resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, 
+        resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants]);
 
     useEffect(() => {
         resetUserUpdateStatus();
         setValue(adminCurrentPage);
-    }, [adminCurrentPage]);
+    }, [adminCurrentPage, resetUserUpdateStatus]);
 
     const [ value, setValue ] = useState(adminCurrentPage);
     const handleChange = (event, newValue) => {

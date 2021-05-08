@@ -32,7 +32,8 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
-    }, []);
+    }, [resetRequestRestaurantsStatus, resetFilteredRestaurants, resetUpdateRestaurantStatus, 
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus]);
 
     return (
         <div className='create-review-page'>

@@ -12,7 +12,7 @@ import './sign-in-style.scss';
 const SignIn = ({ signInStart, signInPending, signInErr, resetAuthStatus }) => {
     useEffect(() => {
         resetAuthStatus();
-    }, []);
+    }, [resetAuthStatus]);
     
     const [userCredential, setCredential] = useState({
         email: '',

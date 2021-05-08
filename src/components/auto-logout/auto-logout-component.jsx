@@ -28,18 +28,12 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
         tokenExp = parseInt(JSON.parse(localStorage.getItem('userToken')).exp);
     };
 
+    // eslint-disable-next-line
     const [events, setEvents] = useState(['mousedown', 'load', 'scroll', 'keydown']);
     const [warningOpen, setOpen] = useState(false);
     let warningInactiveInterval = useRef();
     let startTimerInterval = useRef();
     
-    let timeChecker = useCallback(() => {
-        startTimerInterval.current = setTimeout(() => {
-          let storedTimeStamp = parseInt(sessionStorage.getItem('lastTimeStamp'));
-          warningInactive(storedTimeStamp);
-        }, 10000);
-    }, []);
-
     let warningInactive = (lastTimeStamp) => {
         clearTimeout(startTimerInterval.current);
         warningInactiveInterval.current = setInterval(() => {
@@ -47,7 +41,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
             const popTime = 25 * 60;
             const now = Math.floor(Date.now() / 1000);
             const secPast = now - lastTimeStamp;
- 
+
             if (5 === tokenExp - now) {
                 refreshTokenStart({ currentUserToken });
             };
@@ -56,18 +50,11 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
                 tokenExp = parseInt(JSON.parse(localStorage.getItem('userToken')).exp);
             };
 
-            if (tokenExp - now <= 0) {
-                setOpen(false);
-                signOutStart({ currentUserToken });
-                clearInterval(warningInactiveInterval.current);
-                isAuthenticated = false;
-            };
-
             if (secPast === popTime) {
                 setOpen(true);
             };
     
-            if (secPast === maxTime) {
+            if (tokenExp - now <= 0 || secPast === maxTime) {
                 setOpen(false);
                 signOutStart({ currentUserToken });
                 clearInterval(warningInactiveInterval.current);
@@ -75,6 +62,14 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
             };
         }, 1000);
     };
+    
+    let timeChecker = useCallback(() => {
+        startTimerInterval.current = setTimeout(() => {
+          let storedTimeStamp = parseInt(sessionStorage.getItem('lastTimeStamp'));
+          warningInactive(storedTimeStamp);
+        }, 10000);
+        // eslint-disable-next-line
+    }, []);
 
     let resetTimer = useCallback(() => {
         clearTimeout(startTimerInterval.current);
@@ -83,6 +78,7 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
             sessionStorage.setItem('lastTimeStamp', Math.floor(Date.now() / 1000));
             timeChecker();
         };
+        // eslint-disable-next-line
     }, [isAuthenticated]);
 
     const handleClose = () => {
@@ -113,8 +109,8 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
                 window.removeEventListener(event, resetTimer);
             });
         };
-    }, [resetTimer, events, timeChecker, isAuthenticated]);
-    
+    }, [resetTimer, events, isAuthenticated]);
+
     return isAuthenticated ? (
             <Dialog open={warningOpen} onClose={handleClose}>
                 <DialogTitle id="idle-warning">You Have Been Idle!</DialogTitle>

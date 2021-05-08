@@ -15,7 +15,7 @@ const UserReviews = ({ userReviewsCollection, requestPending, requestError, requ
 
     useEffect(() => {
         requestUserReviewsStart({ currentUserToken });
-    }, []);
+    }, [requestUserReviewsStart, currentUserToken]);
 
     return (
         <div className='user-reviews-page'>

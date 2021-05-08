@@ -70,7 +70,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
         } catch (e) {
           console.error(e);
         }
-    }, [croppedAreaPixels]);
+    }, [croppedAreaPixels, rotation, uploadAvatar, userId]);
 
     const getCompressedImage = useCallback(async (croppedAvatar, avatarOnChange) => {
         const options = {
@@ -87,7 +87,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
         } catch (e) {
             console.error(e);
         }
-    }, [croppedAvatar]);
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

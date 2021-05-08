@@ -31,7 +31,8 @@ const UpdateRestaurantPage = ({ updateSuccess, targetRestaurant, targetRestauran
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
-    }, []);
+    }, [resetRequestRestaurantsStatus, resetFilteredRestaurants, resetCreateRestaurantStatus, 
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus]);
 
     return (
         <div className='update-restaurant-page'>

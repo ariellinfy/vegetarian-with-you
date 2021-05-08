@@ -42,7 +42,9 @@ const RestaurantPage = ({ targetRestaurant, currentUser, requestPending, request
         resetUserUpdateStatus();
         requestRestaurantByIdStart(restaurantId);
         Object.keys(currentUser).length ? requestReviewsAuthStart({ query, currentUserToken }) : requestReviewsStart({ query });
-    }, []);
+    }, [resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants, 
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus, 
+        requestRestaurantByIdStart, requestReviewsAuthStart, requestReviewsStart, restaurantId, currentUser, query, currentUserToken]);
 
     return (
         <div className='restaurant-page'>

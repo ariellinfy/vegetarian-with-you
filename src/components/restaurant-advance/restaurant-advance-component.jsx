@@ -19,7 +19,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
         free_wifi, takeout, delivery, exclude_pungent,
         overall_rate, food_rate, service_rate, value_rate, atmosphere_rate } = targetRestaurant;
         
-    const tel = (phone || '').replace(/[\(\)\-]/g, "").replace(/\s/g, "");
+    const tel = (phone || '').replace(/[()-]/g, "").replace(/\s/g, "");
     const target_lat = 0;
     const target_lng = 0;
 

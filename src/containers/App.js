@@ -33,6 +33,7 @@ const App = ({ currentUser, authSuccessMessage, authErrorMessage, reviewSuccessM
       const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
       checkUserSessionStart({ currentUserToken });
     };
+    // eslint-disable-next-line
   }, [checkUserSessionStart]);
 
   return (

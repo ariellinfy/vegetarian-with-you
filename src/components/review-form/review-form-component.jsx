@@ -110,7 +110,7 @@ class ReviewForm extends Component {
         }
     };
 
-    handleUploadPhotos = async event => {
+    handleUploadPhotos = event => {
         const { reviewToBeUpdate, createReviewFailure, updateReviewFailure } = this.props;
         let imageFiles = Object.values(event.target.files);
         const options = {
@@ -129,16 +129,14 @@ class ReviewForm extends Component {
                     }
                     return false;
                 } else if (img.name.match(/\.(svg)$/)) {
-                    this.setState({ ...this.state, photos: this.state.photos.concat([img]) });
+                    return this.setState({ ...this.state, photos: this.state.photos.concat([img]) });
                 } else {
-                    imageFiles.forEach(img => {
-                        imageCompression(img, options).then(compressedImg => {
-                            const file = new File([compressedImg], compressedImg.name, {
-                                lastModified: compressedImg.lastModified,
-                                type: compressedImg.type
-                            });
-                            this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
+                    return imageCompression(img, options).then(compressedImg => {
+                        const file = new File([compressedImg], compressedImg.name, {
+                            lastModified: compressedImg.lastModified,
+                            type: compressedImg.type
                         });
+                        return this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
                     });
                 }
             })
@@ -149,7 +147,7 @@ class ReviewForm extends Component {
                 updateReviewFailure('Please select an image.')
             }
             return false;
-        };
+        }
     };
 
     handleClearImg = i => {

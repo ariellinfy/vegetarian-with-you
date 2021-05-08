@@ -32,7 +32,8 @@ const CreateRestaurantPage = ({ createSuccess, targetRestaurant, targetRestauran
         resetRequestReviewsStatus();
         resetRequestUserReviewsStatus();
         resetUserUpdateStatus();
-    }, []);
+    }, [resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
+        resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus]);
 
     return (
         <div className='create-restaurant-page'>
