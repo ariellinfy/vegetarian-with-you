@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
     "browser-image-compression": "^1.0.14",
+    "file-loader": "^6.2.0",
     "font-awesome": "^4.7.0",
     "material-ui-phone-number": "^2.2.6",
     "node-sass": "^5.0.0",

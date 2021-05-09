@@ -18,10 +18,12 @@ const RestaurantImageGallery = ({ restaurantId, photos, history }) => {
     });
 
     const [open, setOpen] = useState(false);
+    const [selectImage, setCurrentImage] = useState(0);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const handleClickOpen = () => {
+    const handleClickOpen = event => {
+        setCurrentImage(parseInt(event.target.alt.split('/')[1]));
         setOpen(true);
     };
     
@@ -53,7 +55,9 @@ const RestaurantImageGallery = ({ restaurantId, photos, history }) => {
                 open={open}
                 onClose={handleClose}
             >
-                <ImageGallery items={photos} />
+                <ImageGallery 
+                  items={photos}
+                  startIndex={selectImage} />
             </Dialog>
         </div>
     )

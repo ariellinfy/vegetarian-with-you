@@ -4,7 +4,7 @@ import './uploading-style.scss';
 
 const Uploader = () => (
     <div className='upload-container'>
-        <object type="image/svg+xml" data={upload || ''}>Uploading</object>
+        <object type="image/svg+xml" data={'' || upload} data-gramm="false">Uploading</object>
     </div>
 );
 

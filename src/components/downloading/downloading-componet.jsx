@@ -4,7 +4,7 @@ import './downloading-style.scss';
 
 const Downloader = () => (
     <div className='download-container'>
-        <object type="image/svg+xml" data={download || ''}>Downloading</object>        
+        <object type="image/svg+xml" data={'' || download} data-gramm="false">Downloading</object>    
     </div>
 );
 
