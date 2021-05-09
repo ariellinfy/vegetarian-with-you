@@ -20,8 +20,7 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
         overall_rate, food_rate, service_rate, value_rate, atmosphere_rate } = targetRestaurant;
         
     const tel = (phone || '').replace(/[()-]/g, "").replace(/\s/g, "");
-    const target_lat = 0;
-    const target_lng = 0;
+    const fullAddress = city ? `${address}, ${city}, ${region} ${postal_code}, ${country}` : `${address}, ${region} ${postal_code}, ${country}`;
 
     return (
         <div className='restaurant-category restaurant-advance'>
@@ -121,11 +120,9 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                 <div className='paper-container contacts'>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
                         <RoomIcon style={{ color: blue[400] }} fontSize="small" />
-                        <Link href={"https://maps.google.com?q="+target_lat+","+target_lng} target="_blank" rel="noopener">
+                        <Link href={"https://maps.google.com?q="+fullAddress} target="_blank" rel="noopener">
                             <Typography className='item contact' component="p" variant="body1">    
-                                {
-                                    city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
-                                }
+                                { fullAddress }
                             </Typography>
                         </Link>
                     </Box>

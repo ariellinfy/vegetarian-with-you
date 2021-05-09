@@ -33,8 +33,7 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
     };
 
     const tel = (phone || '').replace(/[()-]/g, "").replace(/\s/g, "");
-    const target_lat = 0;
-    const target_lng = 0;
+    const fullAddress = city ? `${address}, ${city}, ${region} ${postal_code}, ${country}` : `${address}, ${region} ${postal_code}, ${country}`;
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -127,11 +126,9 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
                 <div className='restaurant-basic-detail'>
                     <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
                         <LocationOnIcon style={{ color: green[500] }} fontSize="small" />
-                        <Link href={"https://maps.google.com?q="+target_lat+","+target_lng} target="_blank" rel="noopener">
+                        <Link href={"https://maps.google.com?q="+fullAddress} target="_blank" rel="noopener">
                             <Typography className='display-item' component="span" variant="body1">    
-                                {
-                                    city ? (`${address}, ${city}, ${region} ${postal_code} ${country}`) : (`${address}, ${region} ${postal_code} ${country}`)
-                                }
+                                { fullAddress }
                             </Typography>
                         </Link>
                     </Box>
