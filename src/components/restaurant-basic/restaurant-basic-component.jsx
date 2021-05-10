@@ -146,11 +146,17 @@ const RestaurantBasic = ({ targetRestaurant, currentUser, setRestaurantToBeUpdat
 
                     <Box className='items-container' component="fieldset" mb={3} borderColor="transparent">
                         <OpenInNewIcon style={{ color: grey[800] }} fontSize="small" />
-                        <Link href={website} target="_blank" rel="noopener">
-                            <Typography className='display-item' component="span" variant="body1">
+                        {
+                            website ? (
+                            <Link href={website} target="_blank" rel="noopener">
+                                <Typography className='display-item' component="span" variant="body1">
                                     website
-                            </Typography>
-                        </Link>
+                                </Typography>
+                            </Link>
+                            ) : (
+                                <Typography className='display-item' component="span" variant="body1" onClick={handleUpdateRestaurant}>Add website</Typography>
+                            )
+                        }
                     </Box>
                 </div>
             </div>

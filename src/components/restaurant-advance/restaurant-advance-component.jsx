@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Rating from '@material-ui/lab/Rating';
 import { Typography, Box, Paper, Link } from '@material-ui/core';
 import { red, pink, amber, blue, green, deepPurple } from '@material-ui/core/colors';
@@ -133,12 +132,18 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
                         </Link>
                     </Box>
                     <Box className='item-container contact-container' component="fieldset" mb={3} borderColor="transparent">
-                        <OpenInNewIcon style={{ color: deepPurple[500] }} fontSize="small" />
-                        <Link href={website} target="_blank" rel="noopener">
-                            <Typography className='item contact' component="span" variant="body1">
-                                    website
-                            </Typography>
-                        </Link>
+                        {
+                            website ? (
+                                <>
+                                <OpenInNewIcon style={{ color: deepPurple[500] }} fontSize="small" />
+                                <Link href={website} target="_blank" rel="noopener">
+                                    <Typography className='item contact' component="span" variant="body1">
+                                        website
+                                    </Typography>
+                                </Link>
+                                </>
+                            ) : null
+                        }
                     </Box>
                 </div>
             </Paper>
@@ -175,6 +180,6 @@ const RestaurantAdvance = ({ targetRestaurant }) => {
 
         </div>
     )
-}
+};
 
 export default RestaurantAdvance;

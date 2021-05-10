@@ -74,7 +74,7 @@ class RestaurantForm extends Component {
 
         if (Object.keys(restaurantToBeUpdate).length === 0) {
             if (restaurantPhone.length < 8) {
-                return createRestaurantFailure('Incorrect phone number format');
+                return createRestaurantFailure('Please enter valid phone number.');
             };
             createRestaurantStart({
                 restaurantName, restaurantAddress, restaurantCity, restaurantRegion, restaurantCountry, restaurantPostalCode, 
@@ -85,7 +85,7 @@ class RestaurantForm extends Component {
             });
         } else {
             if (restaurantPhone.length < 8) {
-                return updateRestaurantFailure('Incorrect phone number format');
+                return updateRestaurantFailure('Please enter valid phone number.');
             };
             const restaurantId = restaurantToBeUpdate.restaurant_id;
             updateRestaurantStart({
