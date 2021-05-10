@@ -94,6 +94,18 @@ export const resetFilteredRestaurants = () => ({
     type: RestaurantActionTypes.RESET_FILTERED_RESTAURANTS,
 });
 
+// Restaurant pagination
+
+export const setCurrentPage = page => ({
+    type: RestaurantActionTypes.SET_CURRENT_PAGE,
+    payload: page
+});
+
+export const setTotalPages = page => ({
+    type: RestaurantActionTypes.SET_TOTAL_PAGES,
+    payload: page
+});
+
 // Request target restaurant by ID
 
 export const requestRestaurantByIdStart = restaurantId => ({

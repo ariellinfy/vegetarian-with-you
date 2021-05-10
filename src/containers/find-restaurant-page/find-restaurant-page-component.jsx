@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
-import { requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants } from '../../redux/restaurant/restaurant-actions';
-import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilteredRestaurants, selectFilterFeatureKeyword, selectFilterLocationKeyword } from '../../redux/restaurant/restaurant-selectors';
+import { requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants, setCurrentPage, setTotalPages } from '../../redux/restaurant/restaurant-actions';
+import { selectAllRestaurants, selectRestaurantRequestPending, selectRestaurantRequestSuccess, selectRequestRestaurantErr, selectFilteredRestaurants, selectFilterFeatureKeyword, selectFilterLocationKeyword, selectCurrentPage, selectTotalPages } from '../../redux/restaurant/restaurant-selectors';
 import { resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus } from '../../redux/review/review-actions';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { resetUserUpdateStatus } from '../../redux/user/user-actions';
@@ -11,12 +11,14 @@ import { resetUserUpdateStatus } from '../../redux/user/user-actions';
 import createImage from '../../assets/new.svg';
 import Downloader from '../../components/downloading/downloading-componet';
 import AlertMessage from '../../components/alert-message/alert-message-component';
-import { Typography, Button } from '@material-ui/core';
 import SearchBar from '../../components/search-bar/search-bar-component';
 import RestaurantPreviewTwo from '../../components/restaurant-preview-2/restaurant-preview-2-component';
+import { Typography, Button } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
 import './find-restaurant-page-style.scss';
 
 const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, requestError, 
+    currentPage, totalPages, setCurrentPage, setTotalPages,
     filteredRestaurants, featureKeyword, locationKeyword, resetUserUpdateStatus,
     requestAllRestaurantsStart, requestFilteredRestaurantsByFeature, requestFilteredRestaurantsByLocation, 
     resetCreateRestaurantStatus, resetUpdateRestaurantStatus, resetRequestRestaurantsStatus, resetFilteredRestaurants,
@@ -43,6 +45,19 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
         resetCreateReviewStatus, resetUpdateReviewStatus, resetDeleteReviewStatus, resetRequestReviewsStatus, resetRequestUserReviewsStatus, resetUserUpdateStatus, 
         requestAllRestaurantsStart]);
 
+    useEffect(() => {
+        filteredRestaurants.length ? (
+            typeof filteredRestaurants  !== 'string' ? setTotalPages(Math.ceil(filteredRestaurants.length / 5)) : setTotalPages(0)
+        ) : (
+            allRestaurants.length ? setTotalPages(Math.ceil(allRestaurants.length / 5)) : setTotalPages(0)
+        );
+    }, [setTotalPages, allRestaurants, filteredRestaurants]);
+
+    
+    const handlePagination = (event, value) => {
+        setCurrentPage(value);
+    };
+
     return (
         <div className='find-restaurant-page'>
             <div className='find-container'>
@@ -65,9 +80,15 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                             requestSuccess ? (
                                 filteredRestaurants.length ? (
                                     typeof filteredRestaurants  !== 'string' ? (
-                                        filteredRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
-                                            <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
-                                        ))
+                                        currentPage === totalPages ? (
+                                            filteredRestaurants.slice((currentPage-1)*5).map(({ restaurant_id, ...otherRestaurantProps }) => (
+                                                <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                            ))
+                                        ) : (
+                                            filteredRestaurants.slice((currentPage-1)*5, currentPage*5).map(({ restaurant_id, ...otherRestaurantProps }) => (
+                                                <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                            ))
+                                        )
                                     ) : (           
                                         <div className='find-no-match'>
                                             <img alt='create' src={createImage} />
@@ -80,9 +101,15 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                                     )
                                 ) : (
                                     allRestaurants.length ? (
-                                        allRestaurants.map(({ restaurant_id, ...otherRestaurantProps }) => (
-                                            <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
-                                        ))
+                                        currentPage === totalPages ? (
+                                            allRestaurants.slice((currentPage-1)*5).map(({ restaurant_id, ...otherRestaurantProps }) => (
+                                                <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                            ))
+                                        ) : (
+                                            allRestaurants.slice((currentPage-1)*5, currentPage*5).map(({ restaurant_id, ...otherRestaurantProps }) => (
+                                                <RestaurantPreviewTwo key={restaurant_id} restaurantId={restaurant_id} {...otherRestaurantProps} />
+                                            ))
+                                        )
                                     ) : (
                                         <div className='find-no-match'>
                                             <img alt='create' src={createImage} />
@@ -98,6 +125,17 @@ const FindRestaurantPage = ({ allRestaurants, requestPending, requestSuccess, re
                         )
                     }
                 </div>
+                <div className='pagination-container'>
+                    {
+                        totalPages ? 
+                        <Pagination 
+                            count={totalPages} 
+                            page={currentPage} 
+                            size="large"
+                            onChange={handlePagination} 
+                        /> : null
+                    }
+                </div>
             </div>
         </div>
     )
@@ -111,13 +149,17 @@ const mapStateToProps = createStructuredSelector({
     filteredRestaurants: selectFilteredRestaurants,
     featureKeyword: selectFilterFeatureKeyword,
     locationKeyword: selectFilterLocationKeyword,
-    currentUser: selectCurrentUser
+    currentUser: selectCurrentUser,
+    currentPage: selectCurrentPage,
+    totalPages: selectTotalPages
 });
 
 const mapDispatchToProps = dispatch => ({
     requestAllRestaurantsStart: query => dispatch(requestAllRestaurantsStart(query)),
     requestFilteredRestaurantsByFeature: keyword => dispatch(requestFilteredRestaurantsByFeature(keyword)),
     requestFilteredRestaurantsByLocation: keyword => dispatch(requestFilteredRestaurantsByLocation(keyword)),
+    setCurrentPage: page => dispatch(setCurrentPage(page)),
+    setTotalPages: page => dispatch(setTotalPages(page)),
     resetCreateRestaurantStatus: () => dispatch(resetCreateRestaurantStatus()),
     resetUpdateRestaurantStatus: () => dispatch(resetUpdateRestaurantStatus()),
     resetRequestRestaurantsStatus: () => dispatch(resetRequestRestaurantsStatus()),

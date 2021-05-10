@@ -19,6 +19,8 @@ const INITIAL_STATE = {
     keyword: '',
     keywordFeature: '',
     keywordLocation: '',
+    currentPage: 1,
+    totalPages: 0
 }
 
 const restaurantReducer = (state=INITIAL_STATE, action) => {
@@ -106,7 +108,7 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 restaurantRequestPending: true,
-                restaurantRequestSuccess: false
+                restaurantRequestSuccess: false,
             };
         case RestaurantActionTypes.REQUEST_ALL_RESTAURANTS_SUCCESS:
             return {
@@ -136,6 +138,8 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 restaurantRequestSuccess: false,
                 requestRestaurantErr: '',
                 restaurantSortbyFilter: 'Sort By',
+                currentPage: 1,
+                totalPages: 0
             };
 
         case RestaurantActionTypes.REQUEST_FILTERED_RESTAURANTS:
@@ -163,6 +167,18 @@ const restaurantReducer = (state=INITIAL_STATE, action) => {
                 keyword: '',
                 keywordFeature: '',
                 keywordLocation: '',
+                currentPage: 1,
+            };
+
+        case RestaurantActionTypes.SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload
+            };
+        case RestaurantActionTypes.SET_TOTAL_PAGES:
+            return {
+                ...state,
+                totalPages: action.payload
             };
         
         case RestaurantActionTypes.REQUEST_RESTAURANT_BY_ID_START:

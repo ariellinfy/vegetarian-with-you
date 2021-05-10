@@ -45,3 +45,7 @@ export const selectFilterKeyword = createSelector([selectRestaurant], restaurant
 export const selectFilterFeatureKeyword = createSelector([selectRestaurant], restaurant => restaurant.keywordFeature);
 
 export const selectFilterLocationKeyword = createSelector([selectRestaurant], restaurant => restaurant.keywordLocation);
+
+export const selectCurrentPage = createSelector([selectRestaurant], restaurant => restaurant.currentPage);
+
+export const selectTotalPages = createSelector([selectRestaurant], restaurant => restaurant.totalPages);
