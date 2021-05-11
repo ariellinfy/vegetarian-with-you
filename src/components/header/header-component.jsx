@@ -117,7 +117,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetUserUpdat
                             </div>
                         ) : (
                             <Button component={Link} to={'/signin'} color="primary" variant="contained" className='header-btn' onClick={handleClose}>
-                                <Typography variant="body1" className='header-btn-label' component='span'>Sign In</Typography>
+                                <Typography variant="body1" className='sign-in-label' component='span'>Sign In</Typography>
                             </Button>
                         )}
                     </div>
