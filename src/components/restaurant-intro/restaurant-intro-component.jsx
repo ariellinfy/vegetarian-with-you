@@ -12,7 +12,7 @@ const RestaurantIntro = ({ targetRestaurant }) => {
         <div className='restaurant-intro-container'>
             <div className='intro-container' elevation={0}>
                 <div className='restaurant-info'>
-                    <img className='restaurant-image' alt={restaurant_name} src={photos.length ? `http://localhost:5000/${photos[0].path}` : restaurantDefault}/>
+                    <img className='restaurant-image' alt={restaurant_name} src={photos.length ? `https://vegetarian-with-you-api.herokuapp.com/${photos[0].path}` : restaurantDefault}/>
                     <div className='restaurant-detail'>
                         <Typography gutterBottom variant="h4">
                             {restaurant_name}

@@ -99,7 +99,7 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
             <div className='card-header'>
                 <div className='header-avatar'>
                     {
-                        avatar ? (<img className='img-avatar' alt={public_name} src={`http://localhost:5000/public/uploads/users/${review_owner}.jpg`} />) : (<Avatar className='font-avatar'>{public_name[0]}</Avatar>)
+                        avatar ? (<img className='img-avatar' alt={public_name} src={`https://vegetarian-with-you-api.herokuapp.com/public/uploads/users/${review_owner}.jpg`} />) : (<Avatar className='font-avatar'>{public_name[0]}</Avatar>)
                     }
                 </div>
                 <Typography className='header-user' variant="subtitle1">{public_name}</Typography>
@@ -174,7 +174,7 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                             {
                                 photos.map((photo, index) => (
                                 <GridListTile key={photo.filename}>
-                                    <img className='review-image' src={`http://localhost:5000/${photo.path}`} alt={`${review_id}/${index}`} />
+                                    <img className='review-image' src={`https://vegetarian-with-you-api.herokuapp.com/${photo.path}`} alt={`${review_id}/${index}`} />
                                 </GridListTile>
                                 ))
                             }

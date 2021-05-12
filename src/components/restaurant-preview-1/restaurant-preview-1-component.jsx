@@ -48,7 +48,7 @@ const RestaurantPreviewOne = ({ restaurantId, restaurant_name, city, region, cou
                     className='restaurant-image'
                     alt={restaurant_name}
                     height="200"
-                    src={photos ? `http://localhost:5000/${photos[0].path}` : restaurantDefault}
+                    src={photos ? `https://vegetarian-with-you-api.herokuapp.com/${photos[0].path}` : restaurantDefault}
                 />
                 <div className='restaurant-detail'>
                     <Typography variant="h5">

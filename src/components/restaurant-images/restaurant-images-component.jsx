@@ -12,8 +12,8 @@ const RestaurantImageGallery = ({ restaurantId, photos, history }) => {
     photos = (photos || []).map(photo => {
         return {
           ...photo,
-          original: `http://localhost:5000/${photo.path}`,
-          thumbnail: `http://localhost:5000/${photo.path}`
+          original: `https://vegetarian-with-you-api.herokuapp.com/${photo.path}`,
+          thumbnail: `https://vegetarian-with-you-api.herokuapp.com/${photo.path}`
         }
     });
 

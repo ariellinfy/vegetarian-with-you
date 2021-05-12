@@ -45,7 +45,7 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
                 className='restaurant-image'
                 alt={restaurant_name}
                 height="180"
-                src={photos ? `http://localhost:5000/${photos[0].path}` : restaurantDefault}
+                src={photos ? `https://vegetarian-with-you-api.herokuapp.com/${photos[0].path}` : restaurantDefault}
                 onClick={handleRestaurantClick}
             />
             <div className='restaurant-detail'>

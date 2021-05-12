@@ -41,7 +41,7 @@ export function* createRestaurant({ payload:
       currentUserToken } 
 }) {
     try {
-        const url = 'http://localhost:5000/onrestaurant/createrestaurant';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/onrestaurant/createrestaurant';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -83,7 +83,7 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
     restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
     currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/onrestaurant/updaterestaurant';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/onrestaurant/updaterestaurant';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -123,9 +123,9 @@ export function* restaurantsQuerySelector({ payload }) {
     try {
         let url = '';
         if (payload) {
-            url = `http://localhost:5000/restaurants${payload}`;
+            url = `https://vegetarian-with-you-api.herokuapp.com/restaurants${payload}`;
         } else {
-            url = `http://localhost:5000/restaurants`;
+            url = `https://vegetarian-with-you-api.herokuapp.com/restaurants`;
         };
         const method = 'GET';
         const headers = null;
@@ -144,7 +144,7 @@ export function* restaurantsQuerySelector({ payload }) {
 
 export function* requestRestaurantById({ payload }) {
     try {
-        const url = `http://localhost:5000/restaurants/${payload}`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/restaurants/${payload}`;
         const method = 'GET';
         const headers = null;
         const body = null;

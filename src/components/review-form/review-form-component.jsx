@@ -349,7 +349,7 @@ class ReviewForm extends Component {
                                                     <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
                                                         <ClearRoundedIcon fontSize="small" />
                                                     </IconButton>
-                                                    <img className='preview' src={photo.path ? `http://localhost:5000/${photo.path}` : URL.createObjectURL(photo)} alt={photo.name} />
+                                                    <img className='preview' src={photo.path ? `https://vegetarian-with-you-api.herokuapp.com/${photo.path}` : URL.createObjectURL(photo)} alt={photo.name} />
                                                 </GridListTile>
                                             )})}
                                         </GridList>
