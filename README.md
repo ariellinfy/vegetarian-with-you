@@ -4,7 +4,7 @@
 
 ## About
 
-Vegetarian With You is a restaurant review website that allows users to discover and share amazing vegan restaurants as well as their visit experiences and opinions. All authenticated users are welcome to create and enhance public restaurants, write, update or delete their own reviews, voting helpful/ report harmful reviews. The user account also enables several functionalities: update profile, update/delete avatar, edit email, reset password and delete account.
+Vegetarian With You is a restaurant review website that allows users to discover and share amazing vegan restaurants, visit experiences and opinions. All authenticated users are welcome to create and enhance public restaurants, write, update or delete their own reviews, voting helpful/ report harmful reviews. The user account also enables several management functionalities: update profile, update/delete avatar, edit email, reset password and delete account.
 
 ## Resource
 
@@ -16,14 +16,14 @@ Vegetarian With You is a restaurant review website that allows users to discover
 
 ## Credits
 
-<span>SVG illustrations <a href="https://delesign.com/free-designs/graphics/">DELESIGN</a></span>
-<span>Logo from <a href="https://www.graphicsprings.com/logo-maker">Graphic Springs</a></span>
-<span>Photo by <a href="https://unsplash.com/@ellaolsson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ella Olsson</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@dragonflyave?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Marci Angeles</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@goumbik?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lukas Blazek</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@jessbaileydesigns?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jess Bailey</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@andreas_haslinger?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Andreas Haslinger</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@olia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Olia Gozha</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@wirhabenzeit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dominik Schröder</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@timchowstudio?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Tim Chow</a> on Unsplash</span>
-<span>Photo by <a href="https://unsplash.com/@pawel_czerwinski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Pawel Czerwinski</a> on Unsplash</span>
+- <span>SVG illustrations <a href="https://delesign.com/free-designs/graphics/">DELESIGN</a></span>
+- <span>Logo from <a href="https://www.graphicsprings.com/logo-maker">Graphic Springs</a></span>
+- <span>Photo by <a href="https://unsplash.com/@ellaolsson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ella Olsson</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@dragonflyave?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Marci Angeles</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@goumbik?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lukas Blazek</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@jessbaileydesigns?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jess Bailey</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@andreas_haslinger?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Andreas Haslinger</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@olia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Olia Gozha</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@wirhabenzeit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dominik Schröder</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@timchowstudio?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Tim Chow</a> on Unsplash</span>
+- <span>Photo by <a href="https://unsplash.com/@pawel_czerwinski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Pawel Czerwinski</a> on Unsplash</span>
