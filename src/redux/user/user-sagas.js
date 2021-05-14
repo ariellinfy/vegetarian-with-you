@@ -42,7 +42,7 @@ function addHeader(options = {}, token) {
 
 export function* checkUserSession({ payload: { currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users';
+        const url = 'http://localhost:5000/users';
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -56,14 +56,13 @@ export function* checkUserSession({ payload: { currentUserToken } }) {
             yield put(checkUserSessionFailure(data.error));
         };
     } catch (error) {
-        console.log('request user', error);
         yield put(checkUserSessionFailure(error));
     }
 };
 
 export function* refreshToken({ payload: { currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/refreshtoken';
+        const url = 'http://localhost:5000/users/refreshtoken';
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -78,14 +77,13 @@ export function* refreshToken({ payload: { currentUserToken } }) {
             yield put(refreshTokenFailure(data.error));
         }
     } catch (error) {
-        console.log('refresh token', error);
         yield put(refreshTokenFailure(error));
     }
 };
 
 export function* signUp({ payload: { publicName, email, password } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/signup';
+        const url = 'http://localhost:5000/users/signup';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -104,14 +102,13 @@ export function* signUp({ payload: { publicName, email, password } }) {
             yield put(signUpFailure(data.error));
         }
     } catch (error) {
-        console.log('signup', error);
         yield put(signUpFailure(error));
     }
 };
 
 export function* signIn({ payload: { email, password } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/signin';
+        const url = 'http://localhost:5000/users/signin';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -129,14 +126,13 @@ export function* signIn({ payload: { email, password } }) {
             yield put(signInFailure(data.error));
         }
     } catch (error) {
-        console.log('signin', error);
         yield put(signInFailure(error));
     }
 };
 
 export function* signOut({ payload: { currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/signout';
+        const url = 'http://localhost:5000/users/signout';
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -149,14 +145,13 @@ export function* signOut({ payload: { currentUserToken } }) {
             yield put(signOutFailure(data.error));
         }
     } catch (error) {
-        console.log('signout', error);
         yield put(signOutFailure(error));
     }
 };
 
 export function* editProfile({ payload: { name, city, currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/editprofile';
+        const url = 'http://localhost:5000/users/editprofile';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -170,7 +165,6 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
             yield put(editProfileFailure(data.error));
         }
     } catch (error) {
-        console.log('edit profile', error);
         yield put(editProfileFailure(error));
     }
 };
@@ -179,7 +173,7 @@ export function* uploadAvatar({ payload: { compressedAvatar, currentUserToken } 
     try {
         const formData = new FormData();
         formData.append('avatar', compressedAvatar);
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/uploadavatar';
+        const url = 'http://localhost:5000/users/uploadavatar';
         const response = yield call(fetch, url, {
             method: 'POST',
             headers: {
@@ -194,14 +188,13 @@ export function* uploadAvatar({ payload: { compressedAvatar, currentUserToken } 
             yield put(uploadAvatarFailure(data.error));
         }
     } catch (error) {
-        console.log('upload avatar', error);
         yield put(uploadAvatarFailure(error));
     }
 };
 
 export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/deleteavatar';
+        const url = 'http://localhost:5000/users/deleteavatar';
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
@@ -214,14 +207,13 @@ export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
             yield put(deleteAvatarFailure(data.error));
         }
     } catch (error) {
-        console.log('delete avatar', error);
         yield put(deleteAvatarFailure(error));
     }
 };
 
 export function* updateEmail({ payload: { email, userEmail, currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/updateemail';
+        const url = 'http://localhost:5000/users/updateemail';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -235,14 +227,13 @@ export function* updateEmail({ payload: { email, userEmail, currentUserToken } }
             yield put(updateEmailFailure(data.error));
         }
     } catch (error) {
-        console.log('update email', error);
         yield put(updateEmailFailure(error));
     }
 };
 
 export function* resetPassword({ payload: { email, oldPassword, newPassword, currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/resetpassword';
+        const url = 'http://localhost:5000/users/resetpassword';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -257,14 +248,13 @@ export function* resetPassword({ payload: { email, oldPassword, newPassword, cur
             yield put(resetPasswordFailure(data.error));
         }
     } catch (error) {
-        console.log('reset password', error);
         yield put(resetPasswordFailure(error));
     }
 };
 
 export function* closeAccount({ payload: { email, confirmPassword, currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/closeaccount';
+        const url = 'http://localhost:5000/users/closeaccount';
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
@@ -280,7 +270,6 @@ export function* closeAccount({ payload: { email, confirmPassword, currentUserTo
             yield put(closeAccountFailure(data.error));
         }
     } catch (error) {
-        console.log('close account', error);
         yield put(closeAccountFailure(error));
     }
 };

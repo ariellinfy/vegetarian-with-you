@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart } from '../../redux/user/user-actions';
+import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus } from '../../redux/user/user-actions';
 import { selectUpdateAvatarPending } from '../../redux/user/user-selectors';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart }) => {
+const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus }) => {
     const classes = useStyles();
     const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
@@ -54,7 +54,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
             setAvatarOnChange(false);
             return false;
         } else {
-            uploadAvatarFailure('');
+            resetUserUpdateStatus();
             setUploadAvatar(URL.createObjectURL(imageFile));
             setUploadAvatarOpen(true);
         };
@@ -209,6 +209,7 @@ const mapDispatchToProps = dispatch => ({
     uploadAvatarStart: userInfo => dispatch(uploadAvatarStart(userInfo)),
     uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error)),
     deleteAvatarStart: userInfo => dispatch(deleteAvatarStart(userInfo)),
+    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadAvatar);

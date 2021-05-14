@@ -41,7 +41,7 @@ export function* createRestaurant({ payload:
       currentUserToken } 
 }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onrestaurant/createrestaurant';
+        const url = 'http://localhost:5000/onrestaurant/createrestaurant';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -71,7 +71,6 @@ export function* createRestaurant({ payload:
             yield put(createRestaurantFailure(data.error));
         }
     } catch (error) {
-        console.log('create restaurant', error);
         yield put(createRestaurantFailure(error));
     }
 };
@@ -83,7 +82,7 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
     restaurantWifi, restaurantTakeout, restaurantDelivery, restaurantPungent,
     currentUserToken } }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onrestaurant/updaterestaurant';
+        const url = 'http://localhost:5000/onrestaurant/updaterestaurant';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -114,7 +113,6 @@ export function* updateRestaurant({ payload: { restaurantId, restaurantName,
             yield put(updateRestaurantFailure(data.error));
         }
     } catch (error) {
-        console.log('update restaurant', error);
         yield put(updateRestaurantFailure(error));
     }
 };
@@ -123,9 +121,9 @@ export function* restaurantsQuerySelector({ payload }) {
     try {
         let url = '';
         if (payload) {
-            url = `https://vegetarian-with-you-api.herokuapp.com/restaurants${payload}`;
+            url = `http://localhost:5000/restaurants${payload}`;
         } else {
-            url = `https://vegetarian-with-you-api.herokuapp.com/restaurants`;
+            url = `http://localhost:5000/restaurants`;
         };
         const method = 'GET';
         const headers = null;
@@ -137,14 +135,13 @@ export function* restaurantsQuerySelector({ payload }) {
             yield put(requestAllRestaurantsFailure(data.error));
         }
     } catch (error) {
-        console.log('request all restaurants', error);
         yield put(requestAllRestaurantsFailure(error));
     }
 };
 
 export function* requestRestaurantById({ payload }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/restaurants/${payload}`;
+        const url = `http://localhost:5000/restaurants/${payload}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -155,7 +152,6 @@ export function* requestRestaurantById({ payload }) {
             yield put(requestRestaurantByIdFailure(data.error));
         }
     } catch (error) {
-        console.log('request restaurant by id', error);
         yield put(requestRestaurantByIdFailure(error));
     }
 };

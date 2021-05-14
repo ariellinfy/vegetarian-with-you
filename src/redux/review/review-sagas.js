@@ -57,7 +57,7 @@ export function* createReview({ payload: { restaurantId,
         formData.append('recommendDish', recommendDish);
         photos.forEach(photo => formData.append('photoNew', photo));
         formData.append('disclosure', disclosure);
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/createreview';
+        const url = 'http://localhost:5000/onreview/createreview';
         const response = yield call(fetch, url, {
             method: 'POST',
             headers: {
@@ -72,7 +72,6 @@ export function* createReview({ payload: { restaurantId,
             yield put(createReviewFailure(data.error));
         }
     } catch (error) {
-        console.log('create review', error);
         yield put(createReviewFailure(error));
     }
 };
@@ -104,7 +103,7 @@ export function* updateReview({ payload: { reviewId, restaurantId,
         const photoOld = photos.filter(photo => photo.path);
         formData.append('photoOld', JSON.stringify(photoOld));
         formData.append('disclosure', disclosure);
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/updatereview';
+        const url = 'http://localhost:5000/onreview/updatereview';
         const response = yield call(fetch, url, {
             method: 'PATCH',
             headers: {
@@ -119,14 +118,13 @@ export function* updateReview({ payload: { reviewId, restaurantId,
             yield put(updateReviewFailure(data.error));
         }
     } catch (error) {
-        console.log('update review', error);
         yield put(updateReviewFailure(error));
     }
 };
 
 export function* requestReviews({ payload: { query } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews${query}`;
+        const url = `http://localhost:5000/reviews${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -137,14 +135,13 @@ export function* requestReviews({ payload: { query } }) {
             yield put(requestReviewsFailure(data.error));
         }
     } catch (error) {
-        console.log('request reviews', error);
         yield put(requestReviewsFailure(error));
     }
 };
 
 export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews/auth${query}`;
+        const url = `http://localhost:5000/reviews/auth${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -155,14 +152,13 @@ export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }
             yield put(requestReviewsAuthFailure(data.error));
         }
     } catch (error) {
-        console.log('request reviews with auth', error);
         yield put(requestReviewsAuthFailure(error));
     }
 };
 
 export function* requestUserReviews({ payload: { currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews/user`;
+        const url = `http://localhost:5000/reviews/user`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -173,14 +169,13 @@ export function* requestUserReviews({ payload: { currentUserToken } }) {
             yield put(requestUserReviewsFailure(data.error));
         }
     } catch (error) {
-        console.log('request user reviews', error);
         yield put(requestUserReviewsFailure(error));
     }
 };
 
 export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpful, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/reviewhelpful`;
+        const url = `http://localhost:5000/onreview/reviewhelpful`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -195,14 +190,13 @@ export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpfu
             yield put(reviewHelpfulFailure(data.error));
         }
     } catch (error) {
-        console.log('helpful vote', error);
         yield put(reviewHelpfulFailure(error));
     }
 };
 
 export function* reportReview({ payload: { restaurantId, reviewId, reportText, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/reportreview`;
+        const url = `http://localhost:5000/onreview/reportreview`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -217,14 +211,13 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
             yield put(reportReviewFailure(data.error));
         }
     } catch (error) {
-        console.log('report review', error);
         yield put(reportReviewFailure(error));
     }
 };
 
 export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/deletereview`;
+        const url = `http://localhost:5000/onreview/deletereview`;
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
@@ -239,7 +232,6 @@ export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete
             yield put(deleteReviewFailure(data.error));
         }
     } catch (error) {
-        console.log('delete review', error);
         yield put(deleteReviewFailure(error));
     }
 };
