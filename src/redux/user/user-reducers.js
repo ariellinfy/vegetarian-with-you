@@ -24,11 +24,33 @@ const INITIAL_STATE = {
     closeAccountErr: '',
     updateSuccess: false,
     onEditUserEmail: false,
-    adminCurrentPage: 0
+    adminCurrentPage: 0,
+    signature: ''
 };
 
 const userReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
+        // generate signature
+        case UserActionTypes.GENERATE_SIGNATURE_START:
+            return {
+                ...state,
+                authPending: true,
+                authSuccess: false,
+            };
+        case UserActionTypes.GENERATE_SIGNATURE_SUCCESS:
+            return {
+                ...state,
+                signature: action.payload,
+                authPending: false,
+                authSuccess: true,
+            };
+        case UserActionTypes.GENERATE_SIGNATURE_FAILURE:
+            return {
+                ...state,
+                authPending: false,
+                authSuccess: false,
+                authErrorMessage: action.payload
+            };
         // request user
         case UserActionTypes.CHECK_USER_SESSION_START:
             return {
@@ -132,7 +154,8 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 signOutPending: false,
                 authSuccess: true,
                 authSuccessMessage: `You've successfully signed out!`,
-                adminCurrentPage: 0
+                adminCurrentPage: 0,
+                signature: ''
             };
         case UserActionTypes.SIGN_OUT_FAILURE:
             return {
@@ -267,7 +290,8 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 updateSuccess: true,
                 closeAccountErr: '',
                 authSuccessMessage: `Successfully closed account!`,
-                adminCurrentPage: 0
+                adminCurrentPage: 0,
+                signature: ''
             };
         case UserActionTypes.CLOSE_ACCOUNT_FAILURE:
             return {

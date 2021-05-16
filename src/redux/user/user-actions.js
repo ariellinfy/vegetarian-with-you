@@ -1,5 +1,22 @@
 import UserActionTypes from './user-types';
 
+// Generate signature
+
+export const generateSignatureStart = data => ({
+    type: UserActionTypes.GENERATE_SIGNATURE_START,
+    payload: data
+});
+
+export const generateSignatureSuccess = signature => ({
+    type: UserActionTypes.GENERATE_SIGNATURE_SUCCESS,
+    payload: signature
+});
+
+export const generateSignatureFailure = error => ({
+    type: UserActionTypes.GENERATE_SIGNATURE_FAILURE,
+    payload: error
+});
+
 // Request user info
 
 export const checkUserSessionStart = token => ({

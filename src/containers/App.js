@@ -27,7 +27,9 @@ const CreateReviewPage = lazy(() => import('./create-review-page/create-review-p
 const UpdateReviewPage = lazy(() => import('./update-review-page/update-review-page-component')); 
 const RestaurantPage = lazy(() => import('./restaurant-page/restaurant-page-component')); 
 
-const App = ({ currentUser, authSuccessMessage, authErrorMessage, reviewSuccessMessage, reviewErrorMessage, checkUserSessionStart, history }) => {
+const App = ({ currentUser, authSuccessMessage, authErrorMessage, reviewSuccessMessage, reviewErrorMessage, 
+  checkUserSessionStart, history }) => {
+
   useEffect(() => {
     if (Object.keys(currentUser).length) {
       const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;

@@ -1,6 +1,7 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import UserActionTypes from './user-types';
 import { 
+    generateSignatureSuccess, generateSignatureFailure, 
     checkUserSessionSuccess, checkUserSessionFailure,
     refreshTokenSuccess, refreshTokenFailure,
     signUpSuccess, signUpFailure, 
@@ -38,6 +39,25 @@ function addHeader(options = {}, token) {
       newOptions.headers.Authorization = `Bearer ${token}`;
     }
     return newOptions;
+};
+
+export function* generateSignature({ payload: { currentUserToken, ...otherProps } }) {
+    try {
+        const url = 'http://localhost:5000/users/generatesignature';
+        const method = 'POST';
+        const headers = null;
+        const body = JSON.stringify({
+            ...otherProps
+        });
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (data.signature) {
+            yield put(generateSignatureSuccess(data.signature));
+        } else {
+            yield put(generateSignatureFailure(data.error));
+        };
+    } catch (error) {
+        yield put(generateSignatureFailure(error));
+    }
 };
 
 export function* checkUserSession({ payload: { currentUserToken } }) {
@@ -274,6 +294,10 @@ export function* closeAccount({ payload: { email, confirmPassword, currentUserTo
     }
 };
 
+export function* onGenerateSignatureStart() {
+    yield takeLatest(UserActionTypes.GENERATE_SIGNATURE_START, generateSignature);
+};
+
 export function* onCheckUserSessionStart() {
     yield takeLatest(UserActionTypes.CHECK_USER_SESSION_START, checkUserSession);
 };
@@ -320,6 +344,7 @@ export function* onCloseAccountStart() {
 
 export function* userSagas() {
     yield all([
+        call(onGenerateSignatureStart),
         call(onCheckUserSessionStart),
         call(onRefreshTokenStart),
         call(onSignUpStart),
