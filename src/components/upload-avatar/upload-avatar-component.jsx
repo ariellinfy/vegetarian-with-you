@@ -54,7 +54,7 @@ const UploadAvatar = ({ userId, avatar, uploadSignature,
         avatarWidget.open();
     };
     
-    useEffect(() => {
+    const generateSignature = () => {
         generateSignatureStart({ 
             uploadPreset: 'vwy-user-avatar-preset', 
             multiple: false,
@@ -63,7 +63,7 @@ const UploadAvatar = ({ userId, avatar, uploadSignature,
             publicId: userId,
             currentUserToken
         })
-      }, [uploadSignature]);
+    };
 
     const avatarWidget = window.cloudinary.createUploadWidget({
         apiKey : "225325956632848",
