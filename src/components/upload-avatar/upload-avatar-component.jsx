@@ -35,13 +35,11 @@ const UploadAvatar = ({ userId, avatar, uploadSignature,
     //     };
     // };
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     croppedAvatar = await getCroppedImage();
-    //     compressedAvatar = await getCompressedImage(croppedAvatar, avatarOnChange);
-    //     await uploadAvatarStart({ compressedAvatar, currentUserToken });
-    //     setAvatarOnChange(false);
-    // };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        // await uploadAvatarStart({ compressedAvatar, currentUserToken });
+        setAvatarOnChange(false);
+    };
 
     const handleRemoveAvatar = () => {
         setAvatarOnChange(true);
