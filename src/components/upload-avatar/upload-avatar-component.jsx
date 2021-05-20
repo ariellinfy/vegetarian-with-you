@@ -92,8 +92,8 @@ const UploadAvatar = ({ userId, avatar,
             }
             if (!error && result && result.event === "success") { 
                 console.log('Done! Here is the image info: ', result.info); 
-                setUploadAvatar(result.info.secure_url);
-                uploadAvatarStart({ uploadAvatar: result.info.secure_url, currentUserToken });
+                setUploadAvatar(result.info);
+                uploadAvatarStart({ uploadAvatar: result.info, currentUserToken });
                 setAvatarOnChange(false);
             }
         }

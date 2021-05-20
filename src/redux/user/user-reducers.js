@@ -133,7 +133,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 authSuccess: true,
                 authSuccessMessage: `You've successfully signed out!`,
                 adminCurrentPage: 0,
-                signature: ''
             };
         case UserActionTypes.SIGN_OUT_FAILURE:
             return {
@@ -269,7 +268,6 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 closeAccountErr: '',
                 authSuccessMessage: `Successfully closed account!`,
                 adminCurrentPage: 0,
-                signature: ''
             };
         case UserActionTypes.CLOSE_ACCOUNT_FAILURE:
             return {

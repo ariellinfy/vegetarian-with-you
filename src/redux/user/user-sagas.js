@@ -179,7 +179,7 @@ export function* uploadAvatar({ payload: { uploadAvatar, currentUserToken } }) {
         });
         const data = yield call(request, url, method, headers, body, currentUserToken);
         if (data.user) {
-            yield put(uploadAvatarSuccess(data.user));
+            yield put(uploadAvatarSuccess(JSON.parse(data.user.avatar), ...data.user));
         } else {
             yield put(uploadAvatarFailure(data.error));
         }

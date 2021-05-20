@@ -10,7 +10,7 @@ const UserAvatar = ({ currentUser, avatar }) => (
     <div className='avatar-container'>
         {
             Object.keys(currentUser).length ? (
-                currentUser.avatar ? (<img className='img-avatar' alt={currentUser.public_name} src={avatar} />) : (<Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>)
+                currentUser.avatar.secure_url ? (<img className='img-avatar' alt={currentUser.public_name} src={avatar.secure_url} />) : (<Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>)
             ) : (<Avatar className='user-default-avatar' />)
             
         }
