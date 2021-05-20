@@ -25,32 +25,10 @@ const INITIAL_STATE = {
     updateSuccess: false,
     onEditUserEmail: false,
     adminCurrentPage: 0,
-    signature: ''
 };
 
 const userReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
-        // generate signature
-        case UserActionTypes.GENERATE_SIGNATURE_START:
-            return {
-                ...state,
-                authPending: true,
-                authSuccess: false,
-            };
-        case UserActionTypes.GENERATE_SIGNATURE_SUCCESS:
-            return {
-                ...state,
-                signature: action.payload,
-                authPending: false,
-                authSuccess: true,
-            };
-        case UserActionTypes.GENERATE_SIGNATURE_FAILURE:
-            return {
-                ...state,
-                authPending: false,
-                authSuccess: false,
-                authErrorMessage: action.payload
-            };
         // request user
         case UserActionTypes.CHECK_USER_SESSION_START:
             return {

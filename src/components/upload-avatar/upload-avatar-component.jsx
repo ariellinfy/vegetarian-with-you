@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { generateSignatureStart, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus } from '../../redux/user/user-actions';
-import { selectUpdateAvatarPending, selectSignature } from '../../redux/user/user-selectors';
+import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus } from '../../redux/user/user-actions';
+import { selectUpdateAvatarPending } from '../../redux/user/user-selectors';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
 import { Menu, MenuItem, Button, CircularProgress } from '@material-ui/core';
 import './upload-avatar-style.scss';
 
-const UploadAvatar = ({ userId, avatar, uploadSignature, 
-    generateSignatureStart, updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus }) => {
+const UploadAvatar = ({ userId, avatar,
+    updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus }) => {
     const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [uploadAvatar, setUploadAvatar] = useState(avatar);
     const [avatarOnChange, setAvatarOnChange] = useState(false);
 
     // const onChangeFile = event => {
     //     const imageFile = event.target.files[0];
-    //     setAvatarOnChange(true);
-
+    //     
     //     if (!imageFile) {
     //         uploadAvatarFailure('Please select an image.');
     //         setAvatarOnChange(false);
@@ -35,12 +35,6 @@ const UploadAvatar = ({ userId, avatar, uploadSignature,
     //     };
     // };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        // await uploadAvatarStart({ compressedAvatar, currentUserToken });
-        setAvatarOnChange(false);
-    };
-
     const handleRemoveAvatar = () => {
         setAvatarOnChange(true);
         deleteAvatarStart({ avatar, currentUserToken });
@@ -49,41 +43,65 @@ const UploadAvatar = ({ userId, avatar, uploadSignature,
     };
 
     const showWidget = () => {
+        setAvatarOnChange(true);
         avatarWidget.open();
+        setAnchorEl(null);
     };
     
-    const generateSignature = () => {
-        generateSignatureStart({ 
-            uploadPreset: 'vwy-user-avatar-preset', 
-            multiple: false,
-            cropping: true,
-            croppingAspectRatio: 1,
-            publicId: userId,
-            currentUserToken
-        })
+    let generateSignature = async function (callback, params_to_sign) {
+        try {
+            const url = 'http://localhost:5000/users/generatesignature';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${currentUserToken}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    params_to_sign
+                })
+            });
+            const data = await response.json();
+            if (data.signature) {
+                callback(data.signature);
+            };
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const avatarWidget = window.cloudinary.createUploadWidget({
+    const uploadSettings = {
         apiKey : "225325956632848",
         cloudName: 'alinfy', 
         uploadPreset: 'vwy-user-avatar-preset', 
-        uploadSignature: uploadSignature,
+        publicId: userId,
         multiple: false,
         cropping: true,
         croppingAspectRatio: 1,
-        publicId: userId,
         resourceType: 'image'
+    };
+
+    const avatarWidget = window.cloudinary.createUploadWidget({
+        ...uploadSettings,        
+        uploadSignature: generateSignature,
         },
         (error, result) => { 
+            if (error) {
+                console.log(error);
+            }
             if (!error && result && result.event === "success") { 
                 console.log('Done! Here is the image info: ', result.info); 
+                setUploadAvatar(result.info.secure_url);
+                uploadAvatarStart({ uploadAvatar: result.info.secure_url, currentUserToken });
+                setAvatarOnChange(false);
             }
         }
     );
 
     return (
         <div className='upload-avatar-container'>
-            <UserAvatar avatar={avatar} />
+            <UserAvatar avatar={uploadAvatar} />
             <div className='avatar-edit-container'>
                 <Button
                     aria-controls="edit-avatar"
@@ -116,11 +134,9 @@ const UploadAvatar = ({ userId, avatar, uploadSignature,
 
 const mapStateToProps = createStructuredSelector({
     updateAvatarPending: selectUpdateAvatarPending,
-    uploadSignature: selectSignature
 });
 
 const mapDispatchToProps = dispatch => ({
-    generateSignatureStart: data => dispatch(generateSignatureStart(data)),
     uploadAvatarStart: userInfo => dispatch(uploadAvatarStart(userInfo)),
     uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error)),
     deleteAvatarStart: userInfo => dispatch(deleteAvatarStart(userInfo)),

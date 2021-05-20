@@ -10,7 +10,7 @@ const UserAvatar = ({ currentUser, avatar }) => (
     <div className='avatar-container'>
         {
             Object.keys(currentUser).length ? (
-                currentUser.avatar ? (<img className='img-avatar' alt={currentUser.public_name} src={`https://vegetarian-with-you-api.herokuapp.com/${avatar}`} />) : (<Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>)
+                currentUser.avatar ? (<img className='img-avatar' alt={currentUser.public_name} src={avatar} />) : (<Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>)
             ) : (<Avatar className='user-default-avatar' />)
             
         }
