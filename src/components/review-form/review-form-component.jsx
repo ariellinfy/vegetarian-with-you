@@ -11,7 +11,6 @@ import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-
 import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, GridList, GridListTile, IconButton } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import imageCompression from 'browser-image-compression';
 import './review-form-style.scss';
 
 const labels = {
@@ -110,50 +109,102 @@ class ReviewForm extends Component {
         }
     };
 
-    handleUploadPhotos = event => {
-        const { reviewToBeUpdate, createReviewFailure, updateReviewFailure } = this.props;
-        let imageFiles = Object.values(event.target.files);
-        const options = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 1024,
-            useWebWorker: true
-        };
-
-        if (imageFiles.length) {
-            imageFiles.forEach(img => {
-                if (!img.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|svg)$/)) {
-                    if (Object.keys(reviewToBeUpdate).length === 0) {
-                        createReviewFailure('File type must be .jpg/jpeg or .png or .svg')
-                    } else {
-                        updateReviewFailure('File type must be .jpg/jpeg or .png or .svg')
-                    }
-                    return false;
-                } else if (img.name.match(/\.(svg)$/)) {
-                    return this.setState({ ...this.state, photos: this.state.photos.concat([img]) });
-                } else {
-                    return imageCompression(img, options).then(compressedImg => {
-                        const file = new File([compressedImg], compressedImg.name, {
-                            lastModified: compressedImg.lastModified,
-                            type: compressedImg.type
-                        });
-                        return this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
-                    });
-                }
-            })
-        } else {
-            if (Object.keys(reviewToBeUpdate).length === 0) {
-                createReviewFailure('Please select an image.')
-            } else {
-                updateReviewFailure('Please select an image.')
-            }
-            return false;
+    showWidget = () => {
+        // setAvatarOnChange(true);
+        photosWidget.open();
+        setAnchorEl(null);
+    };
+    
+    generateSignature = async function (callback, params_to_sign) {
+        try {
+            const url = 'http://localhost:5000/users/generatesignature';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${currentUserToken}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    params_to_sign
+                })
+            });
+            const data = await response.json();
+            if (data.signature) {
+                callback(data.signature);
+            };
+        } catch (error) {
+            console.log(error);
         }
     };
 
-    handleClearImg = i => {
-        this.state.photos.splice(i, 1);
-        this.setState({ ...this.state, photos: this.state.photos });
+    uploadSettings = {
+        apiKey : "225325956632848",
+        cloudName: 'alinfy', 
+        uploadPreset: 'vwy-restaurant-photos-preset', 
+        publicId: userId,
+        multiple: true,
+        resourceType: 'image'
     };
+
+    photosWidget = window.cloudinary.createUploadWidget({
+        ...uploadSettings,        
+        uploadSignature: generateSignature,
+        },
+        (error, result) => { 
+            if (error) {
+                console.log(error);
+            }
+            if (!error && result && result.event === "success") { 
+                console.log('Done! Here is the image info: ', result.info); 
+            }
+        }
+    );
+
+    // handleUploadPhotos = event => {
+    //     const { reviewToBeUpdate, createReviewFailure, updateReviewFailure } = this.props;
+    //     let imageFiles = Object.values(event.target.files);
+    //     const options = {
+    //         maxSizeMB: 1,
+    //         maxWidthOrHeight: 1024,
+    //         useWebWorker: true
+    //     };
+
+    //     if (imageFiles.length) {
+    //         imageFiles.forEach(img => {
+    //             if (!img.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|svg)$/)) {
+    //                 if (Object.keys(reviewToBeUpdate).length === 0) {
+    //                     createReviewFailure('File type must be .jpg/jpeg or .png or .svg')
+    //                 } else {
+    //                     updateReviewFailure('File type must be .jpg/jpeg or .png or .svg')
+    //                 }
+    //                 return false;
+    //             } else if (img.name.match(/\.(svg)$/)) {
+    //                 return this.setState({ ...this.state, photos: this.state.photos.concat([img]) });
+    //             } else {
+    //                 return imageCompression(img, options).then(compressedImg => {
+    //                     const file = new File([compressedImg], compressedImg.name, {
+    //                         lastModified: compressedImg.lastModified,
+    //                         type: compressedImg.type
+    //                     });
+    //                     return this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
+    //                 });
+    //             }
+    //         })
+    //     } else {
+    //         if (Object.keys(reviewToBeUpdate).length === 0) {
+    //             createReviewFailure('Please select an image.')
+    //         } else {
+    //             updateReviewFailure('Please select an image.')
+    //         }
+    //         return false;
+    //     }
+    // };
+
+    // handleClearImg = i => {
+    //     this.state.photos.splice(i, 1);
+    //     this.setState({ ...this.state, photos: this.state.photos });
+    // };
 
     render() {
         const { reviewToBeUpdate, targetRestaurant, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
@@ -339,23 +390,23 @@ class ReviewForm extends Component {
                             </Button>
                         </label>
                         {
-                            photos.length ? (
-                                <div className='photo-preview-container'>
-                                    {
-                                        <GridList className='image-list' cols={4} cellHeight='auto'>
-                                            {photos.map((photo, i) => {
-                                                return (
-                                                <GridListTile className='image-box' key={photo.path ? photo.filename : photo.lastModified + '-' + photo.name}>
-                                                    <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
-                                                        <ClearRoundedIcon fontSize="small" />
-                                                    </IconButton>
-                                                    <img className='preview' src={photo.path ? `https://vegetarian-with-you-api.herokuapp.com/${photo.path}` : URL.createObjectURL(photo)} alt={photo.name} />
-                                                </GridListTile>
-                                            )})}
-                                        </GridList>
-                                    }
-                                </div>
-                            ) : null
+                            // photos.length ? (
+                            //     <div className='photo-preview-container'>
+                            //         {
+                            //             <GridList className='image-list' cols={4} cellHeight='auto'>
+                            //                 {photos.map((photo, i) => {
+                            //                     return (
+                            //                     <GridListTile className='image-box' key={photo.path ? photo.filename : photo.lastModified + '-' + photo.name}>
+                            //                         <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
+                            //                             <ClearRoundedIcon fontSize="small" />
+                            //                         </IconButton>
+                            //                         <img className='preview' src={photo.path ? `https://vegetarian-with-you-api.herokuapp.com/${photo.path}` : URL.createObjectURL(photo)} alt={photo.name} />
+                            //                     </GridListTile>
+                            //                 )})}
+                            //             </GridList>
+                            //         }
+                            //     </div>
+                            // ) : null
                         }
                     </FormControl>
     
