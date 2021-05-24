@@ -23,8 +23,8 @@ const UserAvatar = ({ currentUser }) => (
                         <Transformation width="140" crop="scale" />
                         <Transformation quality="auto" fetchFormat="auto" />
                     </Image>
-                ) : (<Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>)
-            ) : (<Avatar className='user-default-avatar' />)
+                ) : <Avatar className='font-avatar'>{currentUser.public_name[0]}</Avatar>
+            ) : <Avatar className='user-default-avatar' />
             
         }
     </div>

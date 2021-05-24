@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { createReviewStart, updateReviewStart, createReviewFailure, updateReviewFailure } from '../../redux/review/review-actions';
+import { createReviewStart, updateReviewStart } from '../../redux/review/review-actions';
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
-
+import { Image, Transformation } from 'cloudinary-react';
 import AlertMessage from '../alert-message/alert-message-component';
 import Uploader from '../uploading/uploading-component';
 import RestaurantIntro from '../../components/restaurant-intro/restaurant-intro-component';
-import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, GridList, GridListTile, IconButton } from '@material-ui/core';
+import { TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Box, Typography, Button, Checkbox, Divider, IconButton } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import './review-form-style.scss';
@@ -24,6 +24,12 @@ const labels = {
     4: 'Good+',
     4.5: 'Excellent',
     5: 'Excellent+',
+};
+
+const uploadSettings = {
+    apiKey : "225325956632848",
+    cloudName: 'alinfy', 
+    uploadPreset: 'vwy-restaurant-photos-preset', 
 };
 
 class ReviewForm extends Component {
@@ -48,7 +54,7 @@ class ReviewForm extends Component {
                 price: 0,
                 recommendDish: '',
                 photos: [],
-                disclosure: false
+                disclosure: false,
             };
         } else {
             this.state = {
@@ -70,6 +76,23 @@ class ReviewForm extends Component {
                 disclosure: false
             };
         };
+        this.state = {
+            ...this.state,
+            photosWidget: window.cloudinary.createUploadWidget({
+                ...uploadSettings,        
+                uploadSignature: this.generateSignature,
+                }, (error, result) => { 
+                    if (error) {
+                        console.log(error);
+                    }
+                    if (!error && result && result.event === "success") { 
+                        console.log('Done! Here is the image info: ', result.info); 
+                        this.handleUploadPhotos(result.info);
+                    }
+                }
+            )
+        };
+        this.photosWidget = this.state.photosWidget;
     };
 
     handleSubmit = async event => {
@@ -109,102 +132,43 @@ class ReviewForm extends Component {
         }
     };
 
-    // showWidget = () => {
-    //     // setAvatarOnChange(true);
-    //     photosWidget.open();
-    //     setAnchorEl(null);
-    // };
+    showWidget = (e) => {
+        e.preventDefault();
+        this.photosWidget.open();
+    };
     
-    // generateSignature = async function (callback, params_to_sign) {
-    //     try {
-    //         const url = 'http://localhost:5000/users/generatesignature';
-    //         const response = await fetch(url, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Authorization': `Bearer ${currentUserToken}`,
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 params_to_sign
-    //             })
-    //         });
-    //         const data = await response.json();
-    //         if (data.signature) {
-    //             callback(data.signature);
-    //         };
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    generateSignature = async (callback, params_to_sign) => {
+        const { currentUserToken } = this.props;
+        try {
+            const url = 'http://localhost:5000/users/generatesignature';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${currentUserToken}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    params_to_sign
+                })
+            });
+            const data = await response.json();
+            if (data.signature) {
+                callback(data.signature);
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    // uploadSettings = {
-    //     apiKey : "225325956632848",
-    //     cloudName: 'alinfy', 
-    //     uploadPreset: 'vwy-restaurant-photos-preset', 
-    //     publicId: userId,
-    //     multiple: true,
-    //     resourceType: 'image'
-    // };
+    handleUploadPhotos = img => {
+        return this.setState({ ...this.state, photos: this.state.photos.concat([img]) });    
+    };
 
-    // photosWidget = window.cloudinary.createUploadWidget({
-    //     ...uploadSettings,        
-    //     uploadSignature: generateSignature,
-    //     },
-    //     (error, result) => { 
-    //         if (error) {
-    //             console.log(error);
-    //         }
-    //         if (!error && result && result.event === "success") { 
-    //             console.log('Done! Here is the image info: ', result.info); 
-    //         }
-    //     }
-    // );
-
-    // handleUploadPhotos = event => {
-    //     const { reviewToBeUpdate, createReviewFailure, updateReviewFailure } = this.props;
-    //     let imageFiles = Object.values(event.target.files);
-    //     const options = {
-    //         maxSizeMB: 1,
-    //         maxWidthOrHeight: 1024,
-    //         useWebWorker: true
-    //     };
-
-    //     if (imageFiles.length) {
-    //         imageFiles.forEach(img => {
-    //             if (!img.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|svg)$/)) {
-    //                 if (Object.keys(reviewToBeUpdate).length === 0) {
-    //                     createReviewFailure('File type must be .jpg/jpeg or .png or .svg')
-    //                 } else {
-    //                     updateReviewFailure('File type must be .jpg/jpeg or .png or .svg')
-    //                 }
-    //                 return false;
-    //             } else if (img.name.match(/\.(svg)$/)) {
-    //                 return this.setState({ ...this.state, photos: this.state.photos.concat([img]) });
-    //             } else {
-    //                 return imageCompression(img, options).then(compressedImg => {
-    //                     const file = new File([compressedImg], compressedImg.name, {
-    //                         lastModified: compressedImg.lastModified,
-    //                         type: compressedImg.type
-    //                     });
-    //                     return this.setState({ ...this.state, photos: this.state.photos.concat([file]) });
-    //                 });
-    //             }
-    //         })
-    //     } else {
-    //         if (Object.keys(reviewToBeUpdate).length === 0) {
-    //             createReviewFailure('Please select an image.')
-    //         } else {
-    //             updateReviewFailure('Please select an image.')
-    //         }
-    //         return false;
-    //     }
-    // };
-
-    // handleClearImg = i => {
-    //     this.state.photos.splice(i, 1);
-    //     this.setState({ ...this.state, photos: this.state.photos });
-    // };
+    handleClearImg = i => {
+        this.state.photos.splice(i, 1);
+        this.setState({ ...this.state, photos: this.state.photos });
+    };
 
     render() {
         const { reviewToBeUpdate, targetRestaurant, actionPending, actionFailure, createErrMsg, updateErrMsg, history } = this.props;
@@ -375,38 +339,27 @@ class ReviewForm extends Component {
     
                     <FormControl className='selection-group upload-photo-container' component="fieldset">
                         <FormLabel className='selection-label' component="legend">Do you have photo(s) to share?</FormLabel>
-                        <input
-                            accept="image/*"
-                            id="upload-button"
-                            name='photos'
-                            type="file"
-                            style={{display:"none"}}
-                            multiple
-                            onChange={this.handleUploadPhotos}
-                        />
-                        <label className='upload-photos' htmlFor="upload-button">
-                            <Button variant="contained" color="primary" component="span">
-                                Upload
-                            </Button>
-                        </label>
+                        <Button onClick={this.showWidget} variant="contained" color="primary" component="span" className='upload-photos'>
+                            Upload
+                        </Button>
                         {
-                            // photos.length ? (
-                            //     <div className='photo-preview-container'>
-                            //         {
-                            //             <GridList className='image-list' cols={4} cellHeight='auto'>
-                            //                 {photos.map((photo, i) => {
-                            //                     return (
-                            //                     <GridListTile className='image-box' key={photo.path ? photo.filename : photo.lastModified + '-' + photo.name}>
-                            //                         <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
-                            //                             <ClearRoundedIcon fontSize="small" />
-                            //                         </IconButton>
-                            //                         <img className='preview' src={photo.path ? `https://vegetarian-with-you-api.herokuapp.com/${photo.path}` : URL.createObjectURL(photo)} alt={photo.name} />
-                            //                     </GridListTile>
-                            //                 )})}
-                            //             </GridList>
-                            //         }
-                            //     </div>
-                            // ) : null
+                            photos.length ? (
+                                <div className='photo-preview-container'>
+                                    {
+                                        photos.map((photo, i) => (
+                                            <div className='image-box'>
+                                                <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
+                                                    <ClearRoundedIcon fontSize="small" />
+                                                </IconButton>
+                                                <Image cloud_name='alinfy' publicId={photo.path} secure="true">
+                                                    <Transformation height='100' width="auto" crop="fill" />
+                                                    <Transformation quality="auto" fetchFormat="auto" />
+                                                </Image>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            ) : null
                         }
                     </FormControl>
     
@@ -447,8 +400,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     createReviewStart: reviewDetail => dispatch(createReviewStart(reviewDetail)),
     updateReviewStart: reviewDetail => dispatch(updateReviewStart(reviewDetail)),
-    createReviewFailure: error => dispatch(createReviewFailure(error)),
-    updateReviewFailure: error => dispatch(updateReviewFailure(error)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewForm));

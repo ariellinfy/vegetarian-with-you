@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reviewHelpfulStart, setReviewToBeUpdate } from '../../redux/review/review-actions';
-
+import { Image, Transformation } from 'cloudinary-react';
 import DeleteReview from '../delete-review/delete-review-component';
 import ReportForm from '../report-form/report-form-component';
 import { Avatar, Button, Box, Typography, GridList, GridListTile, Menu, MenuItem, IconButton } from '@material-ui/core';
@@ -99,7 +99,20 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
             <div className='card-header'>
                 <div className='header-avatar'>
                     {
-                        avatar ? (<img className='img-avatar' alt={public_name} src={`https://vegetarian-with-you-api.herokuapp.com/public/uploads/users/${review_owner}.jpg`} />) : (<Avatar className='font-avatar'>{public_name[0]}</Avatar>)
+                        avatar ? (
+                            <Image cloud_name='alinfy' publicId={avatar.path} secure="true" className='img-avatar'>
+                            {
+                                avatar.coordinates ? 
+                                    <Transformation quality="60" crop="crop"
+                                        x={avatar.coordinates.custom[0][0]} y={avatar.coordinates.custom[0][1]} 
+                                        width={avatar.coordinates.custom[0][2]} height={avatar.coordinates.custom[0][3]} />
+                                    : <Transformation quality="60" aspectRatio="1:1" crop="fill" />
+                            }
+                            <Transformation radius="max" />
+                            <Transformation width="120" crop="scale" />
+                            <Transformation quality="auto" fetchFormat="auto" />
+                        </Image>
+                        ) : <Avatar className='font-avatar'>{public_name[0]}</Avatar>
                     }
                 </div>
                 <Typography className='header-user' variant="subtitle1">{public_name}</Typography>
