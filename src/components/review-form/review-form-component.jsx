@@ -109,57 +109,57 @@ class ReviewForm extends Component {
         }
     };
 
-    showWidget = () => {
-        // setAvatarOnChange(true);
-        photosWidget.open();
-        setAnchorEl(null);
-    };
+    // showWidget = () => {
+    //     // setAvatarOnChange(true);
+    //     photosWidget.open();
+    //     setAnchorEl(null);
+    // };
     
-    generateSignature = async function (callback, params_to_sign) {
-        try {
-            const url = 'http://localhost:5000/users/generatesignature';
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${currentUserToken}`,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    params_to_sign
-                })
-            });
-            const data = await response.json();
-            if (data.signature) {
-                callback(data.signature);
-            };
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // generateSignature = async function (callback, params_to_sign) {
+    //     try {
+    //         const url = 'http://localhost:5000/users/generatesignature';
+    //         const response = await fetch(url, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Authorization': `Bearer ${currentUserToken}`,
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 params_to_sign
+    //             })
+    //         });
+    //         const data = await response.json();
+    //         if (data.signature) {
+    //             callback(data.signature);
+    //         };
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
-    uploadSettings = {
-        apiKey : "225325956632848",
-        cloudName: 'alinfy', 
-        uploadPreset: 'vwy-restaurant-photos-preset', 
-        publicId: userId,
-        multiple: true,
-        resourceType: 'image'
-    };
+    // uploadSettings = {
+    //     apiKey : "225325956632848",
+    //     cloudName: 'alinfy', 
+    //     uploadPreset: 'vwy-restaurant-photos-preset', 
+    //     publicId: userId,
+    //     multiple: true,
+    //     resourceType: 'image'
+    // };
 
-    photosWidget = window.cloudinary.createUploadWidget({
-        ...uploadSettings,        
-        uploadSignature: generateSignature,
-        },
-        (error, result) => { 
-            if (error) {
-                console.log(error);
-            }
-            if (!error && result && result.event === "success") { 
-                console.log('Done! Here is the image info: ', result.info); 
-            }
-        }
-    );
+    // photosWidget = window.cloudinary.createUploadWidget({
+    //     ...uploadSettings,        
+    //     uploadSignature: generateSignature,
+    //     },
+    //     (error, result) => { 
+    //         if (error) {
+    //             console.log(error);
+    //         }
+    //         if (!error && result && result.event === "success") { 
+    //             console.log('Done! Here is the image info: ', result.info); 
+    //         }
+    //     }
+    // );
 
     // handleUploadPhotos = event => {
     //     const { reviewToBeUpdate, createReviewFailure, updateReviewFailure } = this.props;

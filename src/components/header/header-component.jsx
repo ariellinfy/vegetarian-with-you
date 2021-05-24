@@ -91,7 +91,7 @@ const Header = ({ signOutStart, currentUser, setAdminCurrentPage, resetUserUpdat
                                     color="primary"
                                     className='header-setting-btn'
                                 >
-                                    <UserAvatar avatar={currentUser.avatar} />
+                                    <UserAvatar />
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"

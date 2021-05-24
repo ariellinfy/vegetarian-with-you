@@ -1,46 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus } from '../../redux/user/user-actions';
+import { uploadAvatarStart, deleteAvatarStart } from '../../redux/user/user-actions';
 import { selectUpdateAvatarPending } from '../../redux/user/user-selectors';
 
 import UserAvatar from '../user-avatar/user-avatar-component';
 import { Menu, MenuItem, Button, CircularProgress } from '@material-ui/core';
 import './upload-avatar-style.scss';
 
-const UploadAvatar = ({ userId, avatar,
-    updateAvatarPending, uploadAvatarStart, uploadAvatarFailure, deleteAvatarStart, resetUserUpdateStatus }) => {
+const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, deleteAvatarStart }) => {
     const currentUserToken = JSON.parse(localStorage.getItem('userToken')).token;
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const [uploadAvatar, setUploadAvatar] = useState(avatar);
     const [avatarOnChange, setAvatarOnChange] = useState(false);
-
-    // const onChangeFile = event => {
-    //     const imageFile = event.target.files[0];
-    //     
-    //     if (!imageFile) {
-    //         uploadAvatarFailure('Please select an image.');
-    //         setAvatarOnChange(false);
-    //         return false;
-    //     };
-    //     if (!imageFile.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
-    //         uploadAvatarFailure('File type must be .jpg/jpeg or .png');
-    //         setAvatarOnChange(false);
-    //         return false;
-    //     } else {
-    //         resetUserUpdateStatus();
-    //         setUploadAvatar(URL.createObjectURL(imageFile));
-    //         setUploadAvatarOpen(true);
-    //     };
-    // };
-
-    const handleRemoveAvatar = () => {
-        setAvatarOnChange(true);
-        deleteAvatarStart({ avatar, currentUserToken });
-        setAnchorEl(null);
-        setAvatarOnChange(false);
-    };
 
     const showWidget = () => {
         setAvatarOnChange(true);
@@ -83,25 +55,33 @@ const UploadAvatar = ({ userId, avatar,
     };
 
     const avatarWidget = window.cloudinary.createUploadWidget({
-        ...uploadSettings,        
-        uploadSignature: generateSignature,
+            ...uploadSettings,        
+            uploadSignature: generateSignature,
         },
         (error, result) => { 
             if (error) {
                 console.log(error);
             }
+            if (result.event === 'close') {
+                setAvatarOnChange(false);
+            }
             if (!error && result && result.event === "success") { 
-                console.log('Done! Here is the image info: ', result.info); 
-                setUploadAvatar(result.info);
                 uploadAvatarStart({ uploadAvatar: result.info, currentUserToken });
                 setAvatarOnChange(false);
             }
         }
     );
 
+    const handleRemoveAvatar = () => {
+        setAvatarOnChange(true);
+        deleteAvatarStart({ avatar, currentUserToken });
+        setAnchorEl(null);
+        setAvatarOnChange(false);
+    };
+
     return (
         <div className='upload-avatar-container'>
-            <UserAvatar avatar={uploadAvatar} />
+            <UserAvatar />
             <div className='avatar-edit-container'>
                 <Button
                     aria-controls="edit-avatar"
@@ -121,7 +101,7 @@ const UploadAvatar = ({ userId, avatar,
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={() => setAnchorEl(null)}
-                    >
+                >
                     <MenuItem id="upload_widget" onClick={showWidget} className='avatar-edit-option'>
                         Upload a photo
                     </MenuItem>
@@ -138,9 +118,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     uploadAvatarStart: userInfo => dispatch(uploadAvatarStart(userInfo)),
-    uploadAvatarFailure: error => dispatch(uploadAvatarFailure(error)),
     deleteAvatarStart: userInfo => dispatch(deleteAvatarStart(userInfo)),
-    resetUserUpdateStatus: () => dispatch(resetUserUpdateStatus())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadAvatar);
