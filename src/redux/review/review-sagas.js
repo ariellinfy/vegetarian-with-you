@@ -44,7 +44,7 @@ export function* createReview({ payload: { restaurantId,
     disclosure, currentUserToken } 
 }) {
     try {
-        const url = 'http://localhost:5000/onreview/createreview';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/createreview';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -79,7 +79,7 @@ export function* updateReview({ payload: { reviewId, restaurantId,
     disclosure, currentUserToken } 
 }) {
     try {
-        const url = 'http://localhost:5000/onreview/updatereview';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/updatereview';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -112,7 +112,7 @@ export function* updateReview({ payload: { reviewId, restaurantId,
 export function* deletePhoto({ payload: { photo, currentUserToken } 
 }) {
     try {
-        const url = 'http://localhost:5000/onreview/deletephoto';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/deletephoto';
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
@@ -131,7 +131,7 @@ export function* deletePhoto({ payload: { photo, currentUserToken }
 
 export function* requestReviews({ payload: { query } }) {
     try {
-        const url = `http://localhost:5000/reviews${query}`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -148,7 +148,7 @@ export function* requestReviews({ payload: { query } }) {
 
 export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }) {
     try {
-        const url = `http://localhost:5000/reviews/auth${query}`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews/auth${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -165,7 +165,7 @@ export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }
 
 export function* requestUserReviews({ payload: { currentUserToken } }) {
     try {
-        const url = `http://localhost:5000/reviews/user`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews/user`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -182,7 +182,7 @@ export function* requestUserReviews({ payload: { currentUserToken } }) {
 
 export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpful, currentUserToken } }) {
     try {
-        const url = `http://localhost:5000/onreview/reviewhelpful`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/reviewhelpful`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -203,7 +203,7 @@ export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpfu
 
 export function* reportReview({ payload: { restaurantId, reviewId, reportText, currentUserToken } }) {
     try {
-        const url = `http://localhost:5000/onreview/reportreview`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/reportreview`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -224,7 +224,7 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
 
 export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete, currentUserToken } }) {
     try {
-        const url = `http://localhost:5000/onreview/deletereview`;
+        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/deletereview`;
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
