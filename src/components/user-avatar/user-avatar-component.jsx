@@ -11,7 +11,7 @@ const UserAvatar = ({ currentUser }) => (
         {
             Object.keys(currentUser).length ? (
                 currentUser.avatar ? (
-                    <Image cloud_name='alinfy' publicId={currentUser.avatar.path} secure="true">
+                    <Image cloud_name='alinfy' publicId={currentUser.avatar.path}>
                         {
                             currentUser.avatar.coordinates ? 
                                 <Transformation quality="60" crop="crop"

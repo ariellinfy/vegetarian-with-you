@@ -100,7 +100,7 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                 <div className='header-avatar'>
                     {
                         avatar ? (
-                            <Image cloud_name='alinfy' publicId={avatar.path} secure="true" className='img-avatar'>
+                            <Image cloud_name='alinfy' publicId={avatar.path} className='img-avatar'>
                             {
                                 avatar.coordinates ? 
                                     <Transformation quality="60" crop="crop"
