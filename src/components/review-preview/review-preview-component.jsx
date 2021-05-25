@@ -186,8 +186,10 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                         <GridList className='image-list' cols={5}>
                             {
                                 photos.map((photo, index) => (
-                                <GridListTile key={photo.filename}>
-                                    <img className='review-image' src={`https://vegetarian-with-you-api.herokuapp.com/${photo.path}`} alt={`${review_id}/${index}`} />
+                                <GridListTile key={photo.asset_id}>
+                                    <Image cloud_name='alinfy' publicId={photo.path} className='review-image' alt={`${review_id}/${index}`}>
+                                        <Transformation quality="auto" fetchFormat="auto" />
+                                    </Image>
                                 </GridListTile>
                                 ))
                             }

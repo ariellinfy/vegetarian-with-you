@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { createReviewStart, updateReviewStart } from '../../redux/review/review-actions';
+import { createReviewStart, updateReviewStart, deletePhotoStart } from '../../redux/review/review-actions';
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
 import { Image, Transformation } from 'cloudinary-react';
 import AlertMessage from '../alert-message/alert-message-component';
@@ -86,7 +86,7 @@ class ReviewForm extends Component {
                         console.log(error);
                     }
                     if (!error && result && result.event === "success") { 
-                        console.log('Done! Here is the image info: ', result.info); 
+                        // console.log('Done! Here is the image info: ', result.info); 
                         this.handleUploadPhotos(result.info);
                     }
                 }
@@ -165,7 +165,9 @@ class ReviewForm extends Component {
         return this.setState({ ...this.state, photos: this.state.photos.concat([img]) });    
     };
 
-    handleClearImg = i => {
+    handleClearImg = (i, photo) => {
+        const { deletePhotoStart, currentUserToken } = this.props;
+        deletePhotoStart({ photo, currentUserToken });
         this.state.photos.splice(i, 1);
         this.setState({ ...this.state, photos: this.state.photos });
     };
@@ -347,8 +349,8 @@ class ReviewForm extends Component {
                                 <div className='photo-preview-container'>
                                     {
                                         photos.map((photo, i) => (
-                                            <div className='image-box'>
-                                                <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i)}>
+                                            <div key={photo.asset_id} className='image-box'>
+                                                <IconButton className='clear-btn' aria-label="delete" onClick={this.handleClearImg.bind(this, i, photo)}>
                                                     <ClearRoundedIcon fontSize="small" />
                                                 </IconButton>
                                                 <Image cloud_name='alinfy' publicId={photo.path} secure="true">
@@ -400,6 +402,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     createReviewStart: reviewDetail => dispatch(createReviewStart(reviewDetail)),
     updateReviewStart: reviewDetail => dispatch(updateReviewStart(reviewDetail)),
+    deletePhotoStart: data => dispatch(deletePhotoStart(data))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewForm));

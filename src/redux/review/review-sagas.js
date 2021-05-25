@@ -3,6 +3,7 @@ import ReviewActionTypes from './review-types';
 import { 
     createReviewSuccess, createReviewFailure, 
     updateReviewSuccess, updateReviewFailure, 
+    deletePhotoSuccess, deletePhotoFailure, 
     requestReviewsSuccess, requestReviewsFailure, 
     requestReviewsAuthSuccess, requestReviewsAuthFailure,
     requestUserReviewsSuccess, requestUserReviewsFailure,
@@ -78,36 +79,26 @@ export function* updateReview({ payload: { reviewId, restaurantId,
     disclosure, currentUserToken } 
 }) {
     try {
-        const formData = new FormData();
-        formData.append('reviewId', reviewId);
-        formData.append('restaurantId', restaurantId);
-        formData.append('foodRate', foodRate);
-        formData.append('serviceRate', serviceRate);
-        formData.append('valueRate', valueRate);
-        formData.append('atmosphereRate', atmosphereRate);
-        formData.append('reviewTitle', reviewTitle);
-        formData.append('reviewBody', reviewBody);
-        formData.append('visitPeriod', visitPeriod);
-        formData.append('visitType', visitType);
-        formData.append('price', price);
-        formData.append('recommendDish', recommendDish);
-        photos.forEach(photo => {
-            if (!photo.path) {
-                return formData.append('photoNew', photo);
-            }
-        }); 
-        const photoOld = photos.filter(photo => photo.path);
-        formData.append('photoOld', JSON.stringify(photoOld));
-        formData.append('disclosure', disclosure);
         const url = 'http://localhost:5000/onreview/updatereview';
-        const response = yield call(fetch, url, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${currentUserToken}`
-            },
-            body: formData
+        const method = 'PATCH';
+        const headers = null;
+        const body = JSON.stringify({
+            reviewId: reviewId,
+            restaurantId: restaurantId,
+            foodRate: foodRate,
+            serviceRate: serviceRate,
+            valueRate: valueRate,
+            atmosphereRate: atmosphereRate,
+            reviewTitle: reviewTitle,
+            reviewBody: reviewBody,
+            visitPeriod: visitPeriod,
+            visitType: visitType,
+            price: price,
+            recommendDish: recommendDish,
+            photos: photos,
+            disclosure: disclosure
         });
-        const data = yield response.json();
+        const data = yield call(request, url, method, headers, body, currentUserToken);
         if (data.review) {
             yield put(updateReviewSuccess(data.review));
         } else {
@@ -115,6 +106,26 @@ export function* updateReview({ payload: { reviewId, restaurantId,
         }
     } catch (error) {
         yield put(updateReviewFailure(error));
+    }
+};
+
+export function* deletePhoto({ payload: { photo, currentUserToken } 
+}) {
+    try {
+        const url = 'http://localhost:5000/onreview/deletephoto';
+        const method = 'DELETE';
+        const headers = null;
+        const body = JSON.stringify({
+            photo: photo
+        });
+        const data = yield call(request, url, method, headers, body, currentUserToken);
+        if (!data.error) {
+            yield put(deletePhotoSuccess());
+        } else {
+            yield put(deletePhotoFailure(data.error));
+        }
+    } catch (error) {
+        yield put(deletePhotoFailure(error));
     }
 };
 
@@ -240,6 +251,10 @@ export function* onUpdateReviewStart() {
     yield takeLatest(ReviewActionTypes.UPDATE_REVIEW_START, updateReview);
 };
 
+export function* onDeletePhotoStart() {
+    yield takeLatest(ReviewActionTypes.DELETE_PHOTO_START, deletePhoto);
+};
+
 export function* onRequestReviewsStart() {
     yield takeLatest(ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START, requestReviews);
 };
@@ -268,6 +283,7 @@ export function* reviewSagas() {
     yield all([
         call(oncreateReviewStart),
         call(onUpdateReviewStart),
+        call(onDeletePhotoStart),
         call(onRequestReviewsStart),
         call(onRequestReviewsAuthStart),
         call(onRequestUserReviewStart),

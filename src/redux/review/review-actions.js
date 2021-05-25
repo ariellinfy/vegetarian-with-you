@@ -45,6 +45,21 @@ export const resetUpdateReviewStatus = () => ({
     type: ReviewActionTypes.RESET_UPDATE_REVIEW_STATUS
 });
 
+// Delete photo
+export const deletePhotoStart = data => ({
+    type: ReviewActionTypes.DELETE_PHOTO_START,
+    payload: data
+});
+
+export const deletePhotoSuccess = () => ({
+    type: ReviewActionTypes.DELETE_PHOTO_SUCCESS,
+});
+
+export const deletePhotoFailure = error => ({
+    type: ReviewActionTypes.DELETE_PHOTO_FAILURE,
+    payload: error
+});
+
 // Request restaurant reviews
 export const requestReviewsStart = data => ({
     type: ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START,

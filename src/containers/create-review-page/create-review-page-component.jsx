@@ -62,7 +62,7 @@ const CreateReviewPage = ({ createSuccess, targetReview, targetReviewToMap, targ
                                                 }
                                             };
                                             if (item[0] === 'photos') {
-                                                item[1] = `${item[1].map(item => item.originalname)}`
+                                                item[1] = `${item[1].map(item => ' ' + item.original_filename + '.' + item.format)}`;
                                             };
                                             return (
                                             <Typography key={item[0]} className="review-detail" color="textPrimary">

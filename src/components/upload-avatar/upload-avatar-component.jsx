@@ -14,7 +14,8 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
     const [anchorEl, setAnchorEl] = useState(null);
     const [avatarOnChange, setAvatarOnChange] = useState(false);
 
-    const showWidget = () => {
+    const showWidget = (e) => {
+        e.preventDefault();
         setAvatarOnChange(true);
         avatarWidget.open();
         setAnchorEl(null);

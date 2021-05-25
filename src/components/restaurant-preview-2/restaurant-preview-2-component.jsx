@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { selectCurrentUser } from '../../redux/user/user-selectors';
 import { requestRestaurantByIdStart, requestRestaurantByIdSuccess } from '../../redux/restaurant/restaurant-actions';
 import { selectRestaurantRequestSuccess } from '../../redux/restaurant/restaurant-selectors';
-
+import { Image, Transformation } from 'cloudinary-react';
 import { Typography, Button } from '@material-ui/core';
 import restaurantDefault from "../../assets/restaurant-default.svg";
 import './restaurant-preview-2-style.scss';
@@ -41,13 +41,13 @@ const RestaurantPreviewTwo = ({ restaurantId, restaurant_name, city, region, cou
 
     return (
         <div className='restaurant-preview-2-container'>
-            <img
-                className='restaurant-image'
-                alt={restaurant_name}
-                height="180"
-                src={photos ? `https://vegetarian-with-you-api.herokuapp.com/${photos[0].path}` : restaurantDefault}
-                onClick={handleRestaurantClick}
-            />
+            {
+                photos ? (
+                    <Image cloud_name='alinfy' publicId={photos[0].path} className='restaurant-image' alt={restaurant_name} height="180" onClick={handleRestaurantClick}>
+                        <Transformation quality="auto" fetchFormat="auto" />
+                    </Image>
+                ) : <img className='restaurant-image' alt={restaurant_name} src={restaurantDefault} height="180" onClick={handleRestaurantClick} />
+            }
             <div className='restaurant-detail'>
                 <Typography variant="h5" onClick={handleRestaurantClick}>
                     {restaurant_name}

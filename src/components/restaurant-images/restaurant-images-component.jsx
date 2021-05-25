@@ -12,8 +12,8 @@ const RestaurantImageGallery = ({ restaurantId, photos, history }) => {
     photos = (photos || []).map(photo => {
         return {
           ...photo,
-          original: `https://vegetarian-with-you-api.herokuapp.com/${photo.path}`,
-          thumbnail: `https://vegetarian-with-you-api.herokuapp.com/${photo.path}`
+          original: photo.secure_url,
+          thumbnail: photo.thumbnail_url
         }
     });
 
@@ -36,7 +36,7 @@ const RestaurantImageGallery = ({ restaurantId, photos, history }) => {
             <GridList className='image-list' cols={3.5} cellHeight='auto'>
               {
                 (photos.length || [].length) ? (photos || []).map((photo, index) => (
-                  <GridListTile key={photo.filename}>
+                  <GridListTile key={photo.asset_id}>
                     <img src={photo.original} alt={`${restaurantId}/${index}`} onClick={handleClickOpen} />
                   </GridListTile>
                 )) : (
