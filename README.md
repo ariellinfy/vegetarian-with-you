@@ -11,7 +11,8 @@ Vegetarian With You is a restaurant review website that allows users to discover
 Frontend:
 
 - [Material UI](https://material-ui.com/)
-- [cloudinary-react](https://cloudinary.com/documentation/react_integration)
+- [Cloudinary Upload Widget](https://cloudinary.com/documentation/upload_widget)
+- [Cloudinary Product Gallery](https://cloudinary.com/documentation/product_gallery)
 - [material-ui-phone-number](https://www.npmjs.com/package/material-ui-phone-number)
 
 Backend:

@@ -37,8 +37,8 @@ const SessionTimeout = ({ currentUser, signOutStart, refreshTokenStart }) => {
     let warningInactive = (lastTimeStamp) => {
         clearTimeout(startTimerInterval.current);
         warningInactiveInterval.current = setInterval(() => {
-            const maxTime = 30 * 60;
-            const popTime = 25 * 60;
+            const maxTime = 20 * 60;
+            const popTime = 15 * 60;
             const now = Math.floor(Date.now() / 1000);
             const secPast = now - lastTimeStamp;
 
