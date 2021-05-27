@@ -102,14 +102,6 @@ const reviewReducer = (state=INITIAL_STATE, action) => {
                 updateReviewErr: '',
             };
 
-        case ReviewActionTypes.DELETE_PHOTO_FAILURE:
-            return {
-                ...state,
-                createReviewErr: action.payload,
-                updateReviewErr: action.payload,
-                reviewActionFailure: true,
-            };
-
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_START:
         case ReviewActionTypes.REQUEST_RESTAURANT_REVIEWS_AUTH_START:
         case ReviewActionTypes.REQUEST_USER_REVIEWS_START:

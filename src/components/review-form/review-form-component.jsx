@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
-import { createReviewStart, updateReviewStart, deletePhotoStart } from '../../redux/review/review-actions';
+import { createReviewStart, updateReviewStart } from '../../redux/review/review-actions';
 import { selectReviewToBeUpdate, selectReviewActionPending, selectReviewActionFailure, selectCreateReviewErr, selectUpdateReviewErr } from '../../redux/review/review-selectors';
 import { Image, Transformation } from 'cloudinary-react';
 import AlertMessage from '../alert-message/alert-message-component';
@@ -55,6 +55,7 @@ class ReviewForm extends Component {
                 recommendDish: '',
                 photos: [],
                 disclosure: false,
+                photosToDelete: []
             };
         } else {
             this.state = {
@@ -73,7 +74,8 @@ class ReviewForm extends Component {
                 price: this.props.reviewToBeUpdate.price_range,
                 recommendDish: this.props.reviewToBeUpdate.recommended_dishes,
                 photos: this.props.reviewToBeUpdate.photos,
-                disclosure: false
+                disclosure: false,
+                photosToDelete: []
             };
         };
         this.state = {
@@ -86,7 +88,6 @@ class ReviewForm extends Component {
                         console.log(error);
                     }
                     if (!error && result && result.event === "success") { 
-                        // console.log('Done! Here is the image info: ', result.info); 
                         this.handleUploadPhotos(result.info);
                     }
                 }
@@ -99,7 +100,7 @@ class ReviewForm extends Component {
         event.preventDefault();
         const { currentUserToken, reviewToBeUpdate, createReviewStart, updateReviewStart, targetRestaurant } = this.props;
         const { foodRate, serviceRate, valueRate, atmosphereRate, 
-            reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure
+            reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos, disclosure, photosToDelete
         } = this.state;
         const restaurantId = targetRestaurant.restaurant_id;
 
@@ -108,7 +109,7 @@ class ReviewForm extends Component {
                 restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
                 reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
-                disclosure, currentUserToken
+                disclosure, photosToDelete, currentUserToken
             });
         } else {
             const reviewId = reviewToBeUpdate.review_id;
@@ -116,7 +117,7 @@ class ReviewForm extends Component {
                 reviewId, restaurantId,
                 foodRate, serviceRate, valueRate, atmosphereRate, 
                 reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
-                disclosure, currentUserToken
+                disclosure, photosToDelete, currentUserToken
             });
         }
     };
@@ -140,7 +141,7 @@ class ReviewForm extends Component {
     generateSignature = async (callback, params_to_sign) => {
         const { currentUserToken } = this.props;
         try {
-            const url = 'https://vegetarian-with-you-api.herokuapp.com/users/generatesignature';
+            const url = 'http://localhost:5000/users/generatesignature';
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -166,10 +167,9 @@ class ReviewForm extends Component {
     };
 
     handleClearImg = (i, photo) => {
-        const { deletePhotoStart, currentUserToken } = this.props;
-        deletePhotoStart({ photo, currentUserToken });
         this.state.photos.splice(i, 1);
         this.setState({ ...this.state, photos: this.state.photos });
+        return this.setState({ ...this.state, photosToDelete: this.state.photosToDelete.concat([photo]) }); 
     };
 
     render() {
@@ -402,7 +402,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     createReviewStart: reviewDetail => dispatch(createReviewStart(reviewDetail)),
     updateReviewStart: reviewDetail => dispatch(updateReviewStart(reviewDetail)),
-    deletePhotoStart: data => dispatch(deletePhotoStart(data))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReviewForm));

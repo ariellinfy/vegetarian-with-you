@@ -3,7 +3,6 @@ import ReviewActionTypes from './review-types';
 import { 
     createReviewSuccess, createReviewFailure, 
     updateReviewSuccess, updateReviewFailure, 
-    deletePhotoSuccess, deletePhotoFailure, 
     requestReviewsSuccess, requestReviewsFailure, 
     requestReviewsAuthSuccess, requestReviewsAuthFailure,
     requestUserReviewsSuccess, requestUserReviewsFailure,
@@ -41,10 +40,10 @@ function addHeader(options = {}, token) {
 export function* createReview({ payload: { restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
     reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
-    disclosure, currentUserToken } 
+    disclosure, photosToDelete, currentUserToken } 
 }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/createreview';
+        const url = 'http://localhost:5000/onreview/createreview';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -60,7 +59,8 @@ export function* createReview({ payload: { restaurantId,
             price: price,
             recommendDish: recommendDish,
             photos: photos,
-            disclosure: disclosure
+            disclosure: disclosure,
+            photosToDelete: photosToDelete
         });
         const data = yield call(request, url, method, headers, body, currentUserToken);
         if (data.review) {
@@ -76,10 +76,10 @@ export function* createReview({ payload: { restaurantId,
 export function* updateReview({ payload: { reviewId, restaurantId,
     foodRate, serviceRate, valueRate, atmosphereRate, 
     reviewTitle, reviewBody, visitPeriod, visitType, price, recommendDish, photos,
-    disclosure, currentUserToken } 
+    disclosure, photosToDelete, currentUserToken } 
 }) {
     try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/updatereview';
+        const url = 'http://localhost:5000/onreview/updatereview';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -96,7 +96,8 @@ export function* updateReview({ payload: { reviewId, restaurantId,
             price: price,
             recommendDish: recommendDish,
             photos: photos,
-            disclosure: disclosure
+            disclosure: disclosure,
+            photosToDelete: photosToDelete
         });
         const data = yield call(request, url, method, headers, body, currentUserToken);
         if (data.review) {
@@ -109,29 +110,9 @@ export function* updateReview({ payload: { reviewId, restaurantId,
     }
 };
 
-export function* deletePhoto({ payload: { photo, currentUserToken } 
-}) {
-    try {
-        const url = 'https://vegetarian-with-you-api.herokuapp.com/onreview/deletephoto';
-        const method = 'DELETE';
-        const headers = null;
-        const body = JSON.stringify({
-            photo: photo
-        });
-        const data = yield call(request, url, method, headers, body, currentUserToken);
-        if (!data.error) {
-            yield put(deletePhotoSuccess());
-        } else {
-            yield put(deletePhotoFailure(data.error));
-        }
-    } catch (error) {
-        yield put(deletePhotoFailure(error));
-    }
-};
-
 export function* requestReviews({ payload: { query } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews${query}`;
+        const url = `http://localhost:5000/reviews${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -148,7 +129,7 @@ export function* requestReviews({ payload: { query } }) {
 
 export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews/auth${query}`;
+        const url = `http://localhost:5000/reviews/auth${query}`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -165,7 +146,7 @@ export function* requestReviewsWithAuth({ payload: { query, currentUserToken } }
 
 export function* requestUserReviews({ payload: { currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/reviews/user`;
+        const url = `http://localhost:5000/reviews/user`;
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -182,7 +163,7 @@ export function* requestUserReviews({ payload: { currentUserToken } }) {
 
 export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpful, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/reviewhelpful`;
+        const url = `http://localhost:5000/onreview/reviewhelpful`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -203,7 +184,7 @@ export function* reviewHelpful({ payload: { restaurant_id, review_id, userHelpfu
 
 export function* reportReview({ payload: { restaurantId, reviewId, reportText, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/reportreview`;
+        const url = `http://localhost:5000/onreview/reportreview`;
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -224,7 +205,7 @@ export function* reportReview({ payload: { restaurantId, reviewId, reportText, c
 
 export function* deleteReview({ payload: { reviewId, restaurantId, confirmDelete, currentUserToken } }) {
     try {
-        const url = `https://vegetarian-with-you-api.herokuapp.com/onreview/deletereview`;
+        const url = `http://localhost:5000/onreview/deletereview`;
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
@@ -249,10 +230,6 @@ export function* oncreateReviewStart() {
 
 export function* onUpdateReviewStart() {
     yield takeLatest(ReviewActionTypes.UPDATE_REVIEW_START, updateReview);
-};
-
-export function* onDeletePhotoStart() {
-    yield takeLatest(ReviewActionTypes.DELETE_PHOTO_START, deletePhoto);
 };
 
 export function* onRequestReviewsStart() {
@@ -283,7 +260,6 @@ export function* reviewSagas() {
     yield all([
         call(oncreateReviewStart),
         call(onUpdateReviewStart),
-        call(onDeletePhotoStart),
         call(onRequestReviewsStart),
         call(onRequestReviewsAuthStart),
         call(onRequestUserReviewStart),
