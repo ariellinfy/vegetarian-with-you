@@ -11,9 +11,7 @@ Vegetarian With You is a restaurant review website that allows users to discover
 Frontend:
 
 - [Material UI](https://material-ui.com/)
-- [browser-image-compression](https://www.npmjs.com/package/browser-image-compression)
-- [react-easy-crop](https://www.npmjs.com/package/react-easy-crop)
-- [react-image-gallery](https://www.npmjs.com/package/react-image-gallery)
+- [cloudinary-react](https://cloudinary.com/documentation/react_integration)
 - [material-ui-phone-number](https://www.npmjs.com/package/material-ui-phone-number)
 
 Backend:
@@ -21,7 +19,7 @@ Backend:
 - [knex](http://knexjs.org/)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- [multer](https://www.npmjs.com/package/multer)
+- [cloudinary](https://cloudinary.com/documentation)
 
 ## Credits
 
