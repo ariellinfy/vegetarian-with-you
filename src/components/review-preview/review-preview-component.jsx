@@ -16,7 +16,7 @@ import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import './review-preview-style.scss';
 
-const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setReviewToBeUpdate, history }) => {
+const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setReviewToBeUpdate, history, match }) => {
 
     let currentUserToken = localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')).token : '';
 
@@ -25,8 +25,15 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
 
     const createDate = (create_at || '').split('T')[0];
 
-    // handle helpful votes
+    // open image gallery
+    const openImageGallery = photo => {
+        history.push({
+          pathname: `${match.url}/images`,
+          selectedImage: photo
+        });
+    };
 
+    // handle helpful votes
     const onHelpful = user_helpful === null || user_helpful === undefined ? false : user_helpful;
 
     const [reviewHelpful, setReviewHelpful] = useState({
@@ -48,7 +55,6 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
     };
 
     // handle review report
-
     const [openReport, setOpenReport] = useState(false);
 
     const handleReportClick = () => {
@@ -64,7 +70,6 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
     };
 
     // handle update review
-
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleReviewClick = (event) => {
@@ -82,7 +87,6 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
     };
     
     // handle delete review
-
     const [openDeleteReview, setOpenDeleteReview] = useState(false);
 
     const handleClickOpenDeleteReview = () => {
@@ -187,7 +191,7 @@ const ReviewPreview = ({ currentUser, review, query, reviewHelpfulStart, setRevi
                             {
                                 photos.map((photo, index) => (
                                 <GridListTile key={photo.asset_id}>
-                                    <Image cloud_name='alinfy' publicId={photo.path} className='review-image' alt={`${review_id}/${index}`}>
+                                    <Image cloud_name='alinfy' publicId={photo.path} className='review-image' alt={`${review_id}/${index}`} onClick={openImageGallery.bind(this, photo)}>
                                         <Transformation quality="auto" fetchFormat="auto" />
                                     </Image>
                                 </GridListTile>

@@ -26,6 +26,7 @@ const UpdateRestaurantPage = lazy(() => import('./update-restaurant-page/update-
 const CreateReviewPage = lazy(() => import('./create-review-page/create-review-page-component')); 
 const UpdateReviewPage = lazy(() => import('./update-review-page/update-review-page-component')); 
 const RestaurantPage = lazy(() => import('./restaurant-page/restaurant-page-component')); 
+const RestaurantGalleryPage = lazy(() => import('./restaurant-gallery-page/restaurant-gallery-page-component')); 
 
 const App = ({ currentUser, authSuccessMessage, authErrorMessage, reviewSuccessMessage, reviewErrorMessage, 
   checkUserSessionStart, history }) => {
@@ -60,7 +61,8 @@ const App = ({ currentUser, authSuccessMessage, authErrorMessage, reviewSuccessM
                   <Route exact path='/createreview' render={() => Object.keys(currentUser).length ? (<CreateReviewPage />) : (<SignInAndSignUpPage />)} />
                   <Route exact path='/updaterestaurant' render={() => Object.keys(currentUser).length ? (<UpdateRestaurantPage />) : (<SignInAndSignUpPage />)} />
                   <Route exact path='/updatereview' render={() => Object.keys(currentUser).length ? (<UpdateReviewPage />) : (<SignInAndSignUpPage />)} />
-                  <Route path='/restaurants/:id' component={RestaurantPage} />
+                  <Route exact path='/restaurants/:id' component={RestaurantPage} />
+                  <Route exact path='/restaurants/:id/images' component={RestaurantGalleryPage} />
                 </Suspense>
               </ErrorBoundary>
             </Switch>
