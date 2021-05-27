@@ -21,7 +21,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
         setAnchorEl(null);
     };
     
-    let generateSignature = async function (callback, params_to_sign) {
+    let generateSignature = async (callback, params_to_sign) => {
         try {
             const url = 'https://vegetarian-with-you-api.herokuapp.com/users/generatesignature';
             const response = await fetch(url, {
