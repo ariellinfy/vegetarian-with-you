@@ -27,7 +27,7 @@ const labels = {
 };
 
 const uploadSettings = {
-    apiKey : "225325956632848",
+    apiKey : process.env.CLOUDINARY_API_KEY,
     cloudName: 'alinfy', 
     uploadPreset: 'vwy-restaurant-photos-preset', 
 };
@@ -141,7 +141,7 @@ class ReviewForm extends Component {
     generateSignature = async (callback, params_to_sign) => {
         const { currentUserToken } = this.props;
         try {
-            const url = 'http://localhost:5000/users/generatesignature';
+            const url = 'https://vegetarian-with-you-api.herokuapp.com/users/generatesignature';
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {

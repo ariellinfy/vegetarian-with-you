@@ -42,7 +42,7 @@ function addHeader(options = {}, token) {
 
 export function* checkUserSession({ payload: { currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users';
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -62,7 +62,7 @@ export function* checkUserSession({ payload: { currentUserToken } }) {
 
 export function* refreshToken({ payload: { currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/refreshtoken';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/refreshtoken';
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -83,7 +83,7 @@ export function* refreshToken({ payload: { currentUserToken } }) {
 
 export function* signUp({ payload: { publicName, email, password } }) {
     try {
-        const url = 'http://localhost:5000/users/signup';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/signup';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -108,7 +108,7 @@ export function* signUp({ payload: { publicName, email, password } }) {
 
 export function* signIn({ payload: { email, password } }) {
     try {
-        const url = 'http://localhost:5000/users/signin';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/signin';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -132,7 +132,7 @@ export function* signIn({ payload: { email, password } }) {
 
 export function* signOut({ payload: { currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/signout';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/signout';
         const method = 'GET';
         const headers = null;
         const body = null;
@@ -151,7 +151,7 @@ export function* signOut({ payload: { currentUserToken } }) {
 
 export function* editProfile({ payload: { name, city, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/editprofile';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/editprofile';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -171,7 +171,7 @@ export function* editProfile({ payload: { name, city, currentUserToken } }) {
 
 export function* uploadAvatar({ payload: { uploadAvatar, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/uploadavatar';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/uploadavatar';
         const method = 'POST';
         const headers = null;
         const body = JSON.stringify({
@@ -190,7 +190,7 @@ export function* uploadAvatar({ payload: { uploadAvatar, currentUserToken } }) {
 
 export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/deleteavatar';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/deleteavatar';
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({
@@ -209,7 +209,7 @@ export function* deleteAvatar({ payload: { avatar, currentUserToken } }) {
 
 export function* updateEmail({ payload: { email, userEmail, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/updateemail';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/updateemail';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -229,7 +229,7 @@ export function* updateEmail({ payload: { email, userEmail, currentUserToken } }
 
 export function* resetPassword({ payload: { email, oldPassword, newPassword, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/resetpassword';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/resetpassword';
         const method = 'PATCH';
         const headers = null;
         const body = JSON.stringify({
@@ -250,7 +250,7 @@ export function* resetPassword({ payload: { email, oldPassword, newPassword, cur
 
 export function* closeAccount({ payload: { email, confirmPassword, currentUserToken } }) {
     try {
-        const url = 'http://localhost:5000/users/closeaccount';
+        const url = 'https://vegetarian-with-you-api.herokuapp.com/users/closeaccount';
         const method = 'DELETE';
         const headers = null;
         const body = JSON.stringify({

@@ -15,14 +15,15 @@ const RestaurantGalleryPage = ({ location: { selectedImage }, targetRestaurant }
             container: "#restaurant-image-gallery",
             cloudName: "alinfy",
             mediaAssets: imageAssets,
+            startIndex: targetImageIndex,
             displayProps: {
                 mode: "classic",
                 columns: 1,
                 spacing: 15
             },
-            aspectRatio: "4:3",
+            aspectRatio: "8:5",
             transformation: {
-                crop: "fill"
+                crop: "pad"
             },
             imageBreakpoint: 200,
             bgColor: "transparent",
@@ -32,8 +33,8 @@ const RestaurantGalleryPage = ({ location: { selectedImage }, targetRestaurant }
             thumbnailProps: {
                 mediaSymbolSize: 42,
                 spacing: 20,
-                width: 120,
-                height: 90,
+                width: 112,
+                height: 75,
                 navigationFloat: true,
                 navigationShape: "rectangle",
                 navigationSize: 40,
@@ -60,8 +61,7 @@ const RestaurantGalleryPage = ({ location: { selectedImage }, targetRestaurant }
             zoomProps: {
                 type: "popup",
                 trigger: "click"
-            },
-            startIndex: targetImageIndex
+            }
         });
         cloudnaryGalleryRef.current.render();
     }, [imageAssets, targetImageIndex]);

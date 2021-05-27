@@ -23,7 +23,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
     
     let generateSignature = async (callback, params_to_sign) => {
         try {
-            const url = 'http://localhost:5000/users/generatesignature';
+            const url = 'https://vegetarian-with-you-api.herokuapp.com/users/generatesignature';
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -45,7 +45,7 @@ const UploadAvatar = ({ userId, avatar, updateAvatarPending, uploadAvatarStart, 
     };
 
     const uploadSettings = {
-        apiKey : "225325956632848",
+        apiKey : process.env.CLOUDINARY_API_KEY,
         cloudName: 'alinfy', 
         uploadPreset: 'vwy-user-avatar-preset', 
         publicId: userId,
