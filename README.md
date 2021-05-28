@@ -4,7 +4,7 @@
 
 ## About
 
-Vegetarian With You is a restaurant review website that allows users to discover and share amazing vegan restaurants, visit experiences and opinions. All authenticated users are welcome to create and enhance public restaurants, write, update or delete their own reviews, vote helpful reviews and/or report harmful reviews. The user account also enables several management functionalities: update profile, update/delete avatar, edit email, reset password and delete account.
+Vegetarian With You is a restaurant review website that allows users to discover and share amazing vegan restaurants, visit experiences and opinions. All authenticated users are welcome to create and enhance public restaurants; write, update or delete their own reviews; vote helpful reviews and/or report problematic reviews. The user account also enables several management functionalities: update profile, update/delete avatar, edit email, reset password and delete account.
 
 ## Resource
 
